@@ -11,6 +11,7 @@ Frontend application built with Astro, React, TypeScript, and Bun.
 
 ```bash
 bun install
+bun run hooks:install
 cp .env.example .env
 bun dev
 ```
@@ -27,7 +28,12 @@ bun run typecheck
 bun run lint
 bun run format
 bun run format:check
+bun run hooks:install
 ```
+
+`bun run hooks:install` enables the versioned pre-commit hook in `.githooks/`.
+The hook formats staged files, re-stages them, and lints staged lintable files
+before each commit.
 
 ## Environment Variables
 

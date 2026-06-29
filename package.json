@@ -10,7 +10,8 @@
     "typecheck": "ASTRO_TELEMETRY_DISABLED=1 bunx --bun astro check",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "hooks:install": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.0",
