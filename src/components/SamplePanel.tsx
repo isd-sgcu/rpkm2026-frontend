@@ -1,8 +1,5 @@
+import { getProjectName, type GetProjectNameResponse } from "@lib/api/sample";
 import { useEffect, useState } from "react";
-import {
-  getProjectName,
-  type GetProjectNameResponse,
-} from "../pages/api/sample";
 
 export function SamplePanel() {
   const [project, setProject] = useState<GetProjectNameResponse | null>(null);
