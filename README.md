@@ -48,19 +48,24 @@ Only variables prefixed with `PUBLIC_` are exposed to browser code.
 
 ## Project Structure
 
+## Project Structure
+
 ```text
 src/
-  components/  React components
-  layouts/     Astro layouts
-  lib/         Shared frontend utilities
-  pages/       Astro file-based routes
-  styles/      Global styles
+  components/     React components
+    <feature>/    Components scoped to one feature/page (e.g. login/)
+  layouts/        Astro layouts
+  lib/            Shared frontend utilities
+    client.ts     Core fetch wrapper
+    env.ts        Typed access to public env vars
+    api/          Backend API calls, one file per resource (e.g. api/sample.ts holds every call under that resource's routes)
+  pages/          Astro file-based routes
+    api/          Reserved for endpoints this Astro server serves itself (not calls to the external backend — those live in lib/api/)
+  styles/         Global styles
 ```
 
-## Health Check
-
-This frontend repo includes a small Astro endpoint at `/api/health` for local
-smoke checks. It is not a backend service or replacement for the BE repo.
+Auth is cookie/session based: `lib/client.ts` sends `credentials: "include"` on
+every request and redirects to `/login` on a `401` response.
 
 ## CI/CD Preparation
 
