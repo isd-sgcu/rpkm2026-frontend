@@ -16,8 +16,8 @@ const { title, description = "RPKM 2026 frontend application" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
   </head>
-  <body>
-    <main>
+  <body class="min-h-screen bg-[#f7f4ee] text-[#172026] font-sans">
+    <main class="grid min-h-screen place-items-center p-8">
       <slot />
     </main>
   </body>

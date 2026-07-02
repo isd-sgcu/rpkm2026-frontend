@@ -1,6 +1,4 @@
-import { fetchApi } from "./client";
-
-export const prerender = true;
+import { API } from "@lib/client";
 
 export type GetProjectNameResponse = {
   name: string;
@@ -8,5 +6,5 @@ export type GetProjectNameResponse = {
 };
 
 export function getProjectName() {
-  return fetchApi<GetProjectNameResponse>("/");
+  return API.get<GetProjectNameResponse>("/");
 }

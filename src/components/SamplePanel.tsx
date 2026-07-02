@@ -28,7 +28,7 @@ export function SamplePanel() {
   }
 
   return (
-    <section className="welcome-panel" aria-labelledby="welcome-heading">
+    <section className="grid gap-6 rounded-lg bg-white p-6">
       <p>From the API</p>
       <h2>
         Project Name: {project.name}, Project Version: {project.version}
