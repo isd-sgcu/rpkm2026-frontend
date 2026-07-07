@@ -10,7 +10,7 @@ export function WelcomePanel({ appName }: WelcomePanelProps) {
   const [isReady, setIsReady] = useState(false);
 
   return (
-    <section className="grid gap-6 rounded-lg bg-white p-6">
+    <section className="grid gap-6 rounded-lg bg-white p-6 border">
       <div>
         <h1 className="text-4xl font-bold">{appName}</h1>
         <p className="text-lg text-[#46545b]">
@@ -19,7 +19,11 @@ export function WelcomePanel({ appName }: WelcomePanelProps) {
         </p>
       </div>
 
-      <Button type="button" onClick={() => setIsReady((value) => !value)}>
+      <Button
+        className="border-border"
+        type="button"
+        onClick={() => setIsReady((value) => !value)}
+      >
         {isReady ? "Ready" : "Check React"}
       </Button>
     </section>

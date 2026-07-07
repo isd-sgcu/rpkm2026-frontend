@@ -1,13 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: "Geist Variable", sans-serif;
+  --font-sans: "LINE Seed Sans TH", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -54,7 +53,6 @@
   --color-rpkm-blue: var(--rpkm-blue);
   --color-rpkm-yellow: var(--rpkm-yellow);
   --color-rpkm-grey: var(--rpkm-grey);
-
 }
 
 :root {
@@ -66,7 +64,7 @@
   --rpkm-grey: #a4a3a3;
 
   /* seem like not tokenize yet */
-  --destructive: #d9443e; 
+  --destructive: #d9443e;
 
   /*  Background */
   --background: #fffdf5;
@@ -97,7 +95,6 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -110,4 +107,40 @@
   html {
     @apply font-sans;
   }
+}
+
+@font-face {
+  font-family: "LINE Seed Sans TH";
+  src: url("../assets/fonts/lineseedsans_th_regular.woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LINE Seed Sans TH";
+  src: url("../assets/fonts/lineseedsans_th_thin");
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LINE Seed Sans TH";
+  src: url("../assets/fonts/lineseedsans_th_bold.woff2");
+  /* i know it 600, but shadcn/ui use `medium` a lot */
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LINE Seed Sans TH";
+  src: url("../assets/fonts/lineseedsans_th_extrabold.woff2");
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "LINE Seed Sans TH";
+  src: url("../assets/fonts/lineseedsans_th_heavy.woff2");
+  font-weight: 900;
+  font-display: swap;
 }
