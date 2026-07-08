@@ -1,6 +1,18 @@
 import { useState } from "react";
 
 import { Button } from "@components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@components/ui/alert-dialog";
+import { Drawer, DrawerContent, DrawerTrigger } from "@components/ui/drawer";
 
 type WelcomePanelProps = {
   appName: string;
@@ -26,6 +38,34 @@ export function WelcomePanel({ appName }: WelcomePanelProps) {
       >
         {isReady ? "Ready" : "Check React"}
       </Button>
+
+      <Drawer>
+        <DrawerTrigger render={<Button variant="secondary">drawer</Button>} />
+        <DrawerContent>
+          <div className="p-4">hihi</div>
+        </DrawerContent>
+      </Drawer>
+
+      <AlertDialog>
+        <AlertDialogTrigger
+          render={<Button variant="outline">Show Dialog</Button>}
+        />
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction variant="destructive" className="border-border">
+              Continue
+            </AlertDialogAction>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </section>
   );
 }
