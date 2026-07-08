@@ -13,6 +13,7 @@ import {
   AlertDialogTrigger,
 } from "@components/ui/alert-dialog";
 import { Drawer, DrawerContent, DrawerTrigger } from "@components/ui/drawer";
+import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 
 type WelcomePanelProps = {
   appName: string;
@@ -40,7 +41,13 @@ export function WelcomePanel({ appName }: WelcomePanelProps) {
       </Button>
 
       <Drawer>
-        <DrawerTrigger render={<Button variant="secondary">drawer</Button>} />
+        <DrawerTrigger
+          render={
+            <Button className="border-border" variant="secondary">
+              drawer
+            </Button>
+          }
+        />
         <DrawerContent>
           <div className="p-4">hihi</div>
         </DrawerContent>
@@ -50,7 +57,7 @@ export function WelcomePanel({ appName }: WelcomePanelProps) {
         <AlertDialogTrigger
           render={<Button variant="outline">Show Dialog</Button>}
         />
-        <AlertDialogContent>
+        <AlertDialogContent className="border">
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -66,6 +73,19 @@ export function WelcomePanel({ appName }: WelcomePanelProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <MonotoneNoise className="bg-pink-500 border rounded-lg transition-all">
+        <h2 className="m-3 mb-0 text-white text-xl font-semibold">
+          {" "}
+          Monotone noise{" "}
+        </h2>
+        <p className="text-white m-3 mt-1">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem
+          aspernatur recusandae molestiae adipisci molestias veritatis rerum
+          neque animi voluptate, odio obcaecati ab dolores, dolorem ipsum, porro
+          aliquid. Voluptatem, impedit atque?
+        </p>
+      </MonotoneNoise>
     </section>
   );
 }
