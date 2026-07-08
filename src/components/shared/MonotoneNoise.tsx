@@ -30,6 +30,7 @@ export function MonotoneNoise({
     <div className={cn("overflow-hidden", className)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
+        // yep, this is ass but we dont need a resizeObserver this way (so no layout shift becuase of hydration)
         width="100%"
         height="100%"
         fill="none"
@@ -41,11 +42,7 @@ export function MonotoneNoise({
         <defs>
           <filter
             id="_uMDEIPgmFI"
-            x="0"
-            y="0"
-            width="100%"
-            height="100%"
-            filterUnits="userSpaceOnUse"
+            filterUnits="objectBoundingBox"
             colorInterpolationFilters="sRGB"
           >
             <feTurbulence
