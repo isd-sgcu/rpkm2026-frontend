@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button } from "@components/ui/button";
+import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,8 +12,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@components/ui/alert-dialog";
+import { Button } from "@components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@components/ui/drawer";
-import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 
 type WelcomePanelProps = {
   appName: string;
@@ -74,18 +74,12 @@ export function WelcomePanel({ appName }: WelcomePanelProps) {
         </AlertDialogContent>
       </AlertDialog>
 
-      <MonotoneNoise className="bg-pink-500 border rounded-lg transition-all">
-        <h2 className="m-3 mb-0 text-white text-xl font-semibold">
-          {" "}
-          Monotone noise{" "}
-        </h2>
-        <p className="text-white m-3 mt-1">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem
-          aspernatur recusandae molestiae adipisci molestias veritatis rerum
-          neque animi voluptate, odio obcaecati ab dolores, dolorem ipsum, porro
-          aliquid. Voluptatem, impedit atque?
-        </p>
-      </MonotoneNoise>
+      <MonotoneNoise
+        noiseColor="var(--color-background)"
+        noiseDensity={20}
+        noiseSize={5}
+        className="bg-pink-500 h-50 rounded-lg transition-all"
+      />
     </section>
   );
 }
