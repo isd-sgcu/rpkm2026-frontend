@@ -75,7 +75,7 @@ export function WelcomePanel({ appName }: WelcomePanelProps) {
       </AlertDialog>
 
       <MonotoneNoiseContainer className="bg-rpkm-green rounded-lg border p-4 py-6">
-        <h1 className="text-black font-medium text-xl"> MonotoneNoise </h1>
+        <h1 className="text-black font-bold text-xl"> MonotoneNoise </h1>
         <p>hihi</p>
       </MonotoneNoiseContainer>
     </section>

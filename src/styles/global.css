@@ -128,8 +128,7 @@
 @font-face {
   font-family: "LINE Seed Sans TH";
   src: url("../assets/fonts/lineseedsans_th_bold.woff2");
-  /* i know it 600, but shadcn/ui use `medium` a lot */
-  font-weight: 500;
+  font-weight: 700;
   font-display: swap;
 }
 
