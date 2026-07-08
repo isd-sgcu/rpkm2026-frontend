@@ -1,5 +1,5 @@
 import { cn } from "@lib/utils";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 
 // Same as monotone noise configuration in figma. Please see the design.
 export interface MonotoneNoiseConfiguration {
@@ -7,16 +7,15 @@ export interface MonotoneNoiseConfiguration {
   noiseDensity?: number;
   noiseColor?: string;
   noiseSeed?: number;
-  className?: string;
 }
 
 export function MonotoneNoise({
-  noiseSize = 1,
-  noiseDensity = 20,
-  noiseColor = "rgba(0 0 0 / 0.9)",
+  noiseSize = 3.9,
+  noiseDensity = 15,
+  noiseColor = "rgba(0 0 0 / 0.3)",
   noiseSeed = 25_5444,
   className,
-}: MonotoneNoiseConfiguration) {
+}: MonotoneNoiseConfiguration & { className?: string }) {
   const tableValues = useMemo(() => {
     const radius = Math.round(noiseDensity / 4) * 2;
     // center at 25,26
@@ -75,6 +74,23 @@ export function MonotoneNoise({
           </filter>
         </defs>
       </svg>
+    </div>
+  );
+}
+
+export function MonotoneNoiseContainer({
+  noise,
+  className,
+  children,
+  ...props
+}: { noise?: MonotoneNoiseConfiguration } & React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn("overflow-hidden relative isolate", className)}
+      {...props}
+    >
+      <MonotoneNoise {...noise} className="absolute inset-0 -z-1" />
+      {children}
     </div>
   );
 }

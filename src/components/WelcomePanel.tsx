@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { MonotoneNoise } from "@components/shared/MonotoneNoise";
+import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -74,12 +74,10 @@ export function WelcomePanel({ appName }: WelcomePanelProps) {
         </AlertDialogContent>
       </AlertDialog>
 
-      <MonotoneNoise
-        noiseColor="var(--color-background)"
-        noiseDensity={20}
-        noiseSize={5}
-        className="bg-pink-500 h-50 rounded-lg transition-all"
-      />
+      <MonotoneNoiseContainer className="bg-rpkm-green rounded-lg border p-4 py-6">
+        <h1 className="text-black font-medium text-xl"> MonotoneNoise </h1>
+        <p>hihi</p>
+      </MonotoneNoiseContainer>
     </section>
   );
 }
