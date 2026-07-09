@@ -27,7 +27,6 @@ export function ComponentDemo() {
   return (
     <section className="grid gap-4 p-6 w-full">
       <h1 className="text-xl font-bold font-mono"> Components </h1>
-
       <h2 className="text-lg font-bold font-mono"> i18n </h2>
       <div className="grid gap-2">
         <p className="text-sm text-muted-foreground font-mono">
@@ -55,7 +54,6 @@ export function ComponentDemo() {
         </div>
       </div>
       <hr />
-
       <h2 className="text-lg font-bold font-mono"> Typography </h2>
       <div className="grid gap-1">
         <p className="font-sans font-normal">Regular - สวัสดีครับ Hello</p>
@@ -78,41 +76,29 @@ export function ComponentDemo() {
         <Button type="button" variant="secondary" size="md">
           Secondary md
         </Button>
-        <Button type="button" variant="primaryOutline" size="md">
-          outline md
-        </Button>
-        <Button type="button" variant="red" size="md">
-          red md
-        </Button>
-
         <Button type="button" variant="ghost" size="sm">
           Ghost sm
         </Button>
       </div>
       <hr />
-
       <h2 className="text-lg font-bold font-mono"> Input </h2>
       <Field>
         <Label className="font-bold"> Default </Label>
         <Input placeholder="แคนาดา" />
       </Field>
-
       <hr />
-
       <Label>
         <div className="flex gap-2 items-center">
           <Checkbox />
           Checkbox
         </div>
       </Label>
-
       <Label>
         <div className="flex gap-2 items-center">
           <Switch />
           Switch
         </div>
       </Label>
-
       <Label>
         <RadioGroup defaultValue="default">
           <div className="flex items-center gap-3">
@@ -125,11 +111,8 @@ export function ComponentDemo() {
           </div>
         </RadioGroup>
       </Label>
-
       <hr />
-
       <h2 className="text-lg font-bold font-mono"> Select </h2>
-
       <Select>
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Select a fruit" />
@@ -146,9 +129,7 @@ export function ComponentDemo() {
         </SelectContent>
       </Select>
       <hr />
-
       <h2 className="text-lg font-bold font-mono"> Tabs </h2>
-
       <Tabs defaultValue="overview" className="w-full">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
