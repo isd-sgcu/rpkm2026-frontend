@@ -1,0 +1,9 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import "../../styles/global.css";
+import { appConfig } from "@lib/env";
+---
+
+<BaseLayout title={appConfig.appName}>
+  <h1 class="text-3xl font-bold">สแกนเพื่อรับจิกซอร์</h1>
+</BaseLayout>
