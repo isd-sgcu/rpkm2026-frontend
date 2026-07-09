@@ -1,0 +1,17 @@
+{
+  "welcome": {
+    "title": "{appName}",
+    "description": "Astro, React และ TypeScript พร้อมให้ทีมเริ่มสร้างหน้าจอผลิตภัณฑ์แล้ว",
+    "button": {
+      "checkReact": "เช็ก React",
+      "ready": "พร้อม"
+    }
+  },
+  "landing": {
+    "eyebrow": "กิจกรรม",
+    "titleLine1": "ต้อนรับนิสิตใหม่",
+    "titleLine2": "ในวันแรกพบ",
+    "date": "18 กรกฎาคม 2569",
+    "cta": "เข้าสู่ระบบ"
+  }
+}

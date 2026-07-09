@@ -1,0 +1,17 @@
+{
+  "welcome": {
+    "title": "{appName}",
+    "description": "Astro, React, and TypeScript are ready for the team to start building product screens.",
+    "button": {
+      "checkReact": "Check React",
+      "ready": "Ready"
+    }
+  },
+  "landing": {
+    "eyebrow": "Event",
+    "titleLine1": "Welcoming New Students",
+    "titleLine2": "on First Date",
+    "date": "July 18, 2026",
+    "cta": "Log in"
+  }
+}
