@@ -8,7 +8,7 @@ import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 
 export function Footer() {
   return (
-    <footer className="w-full relative z-0">
+    <footer className="w-full overflow-x-clip relative z-0">
       <div className="w-full sm:max-w-140 mx-auto overflow-x-clip sm:overflow-x-visible relative flex justify-center">
         <img
           src={houseImage.src}
