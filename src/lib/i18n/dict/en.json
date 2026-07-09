@@ -13,5 +13,9 @@
     "titleLine2": "on First Date",
     "date": "July 18, 2026",
     "cta": "Log in"
+  },
+  "nav": {
+    "home": "Home",
+    "logout": "Log out"
   }
 }
