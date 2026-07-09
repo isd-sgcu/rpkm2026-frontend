@@ -29,7 +29,6 @@ export function Footer() {
       <MonotoneNoiseContainer className="bg-rpkm-green/79 flex flex-col items-center text-center gap-3 p-4 pb-7 pt-12">
         <div className="flex gap-3">
           <img src={isdLogo.src} alt="isd logo" className="size-11" />
-          {/* TODO(ongsalt): find better อบจ logo, bitmap is fine. */}
           <img src={อบจLogo.src} alt="อบจ logo" className="size-11" />
         </div>
         <span className="">
