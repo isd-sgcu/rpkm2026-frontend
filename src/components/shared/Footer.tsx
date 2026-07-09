@@ -1,5 +1,5 @@
-import isdLogo from "@assets/images/isd_logo.svg";
-import อบจLogo from "@assets/images/อบจ.svg";
+import isdLogo from "@assets/images/isd_logo.png";
+import อบจLogo from "@assets/images/อบจ.png";
 import instagramIcon from "@assets/images/instagram_icon.svg";
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 
