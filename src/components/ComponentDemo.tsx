@@ -71,17 +71,17 @@ export function ComponentDemo() {
 
       <h2 className="text-lg font-bold font-mono"> Button </h2>
       <div className="flex gap-3 items-center flex-wrap">
+        <Button type="button" size="xl" className="w-full">
+          Default xl w-full
+        </Button>
+        <Button type="button" size="xl" disabled className="w-full">
+          Default xl w-full disabled
+        </Button>
         <Button type="button" variant="outline" size="lg">
           Outline lg
         </Button>
         <Button type="button" variant="outline" size="lg" disabled>
           Outline lg disabled
-        </Button>
-        <Button type="button" variant="secondary" size="md">
-          Secondary md
-        </Button>
-        <Button type="button" variant="secondary" size="md" disabled>
-          Secondary md disabled
         </Button>
         <Button type="button" variant="destructive" size="sm">
           Destructive sm
@@ -89,11 +89,17 @@ export function ComponentDemo() {
         <Button type="button" variant="destructive" size="sm" disabled>
           Destructive sm disabled
         </Button>
-        <Button type="button" size="xl" className="w-full">
-          Default xl w-full
+        <Button type="button" variant="green" size="sm">
+          Green sm
         </Button>
-        <Button type="button" size="xl" disabled className="w-full">
-          Default xl w-full disabled
+        <Button type="button" variant="green" size="sm" disabled>
+          Green sm disabled
+        </Button>
+        <Button type="button" variant="secondary" size="xs">
+          Secondary xs
+        </Button>
+        <Button type="button" variant="secondary" size="xs" disabled>
+          Secondary xs disabled
         </Button>
 
         <Button type="button" iconStart={<Download />}>

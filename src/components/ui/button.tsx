@@ -9,26 +9,35 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary font-bold text-primary-foreground hover:bg-primary/90",
-        secondary:
-          "bg-muted text-primary-foreground font-bold hover:bg-[color-mix(in_oklch,var(--color-muted),var(--color-foreground)_5%)] aria-expanded:bg-muted aria-expanded:text-muted-foreground",
+          "bg-primary font-bold text-primary-foreground hover:bg-primary/80",
         outline:
           "border-border font-bold bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+        secondary:
+          "bg-secondary font-bold text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--color-secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+        green:
+          "bg-rpkm-green font-bold text-background hover:bg-rpkm-green/85 focus-visible:border-rpkm-green/40 focus-visible:ring-rpkm-green/20 dark:bg-rpkm-green/20 dark:hover:bg-rpkm-green/30 dark:focus-visible:ring-rpkm-green/40",
         destructive:
-          "bg-destructive font-bold text-background hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
-        link: "text-primary font-bold underline-offset-4 hover:underline",
+          "bg-destructive font-bold text-background hover:bg-destructive/85 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        sm: "h-7 rounded-full text-sm gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        md: "h-8.5 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        lg: "h-10 text-md gap-1.5 rounded-xl px-3 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        xl: "h-12 text-md gap-2 rounded-full px-3 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+        default:
+          "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+        xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
+        sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
+        lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+        xl: "h-12 text-md gap-2 rounded-full px-3 has-data-[icon=inline-end]:pr-2 [icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         icon: "size-10 rounded-full",
+        "icon-xs":
+          "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
+        "icon-sm":
+          "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
+        "icon-lg": "size-9",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "md",
+      size: "default",
     },
   },
 );
@@ -36,7 +45,7 @@ const buttonVariants = cva(
 function Button({
   className,
   variant = "default",
-  size = "md",
+  size = "default",
   iconStart,
   iconEnd,
   children,

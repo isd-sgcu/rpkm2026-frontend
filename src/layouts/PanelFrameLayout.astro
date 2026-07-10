@@ -1,7 +1,7 @@
 ---
 import { NavigationMenu } from "@components/shared/NavigationMenu";
 import Image from "astro/components/Image.astro";
-import logo from "../assets/images/rpkm_logo.png";
+import logo from "../assets/images/artboard_1.svg";
 import { ChevronLeft } from "lucide-react";
 import type { HTMLAttributes } from "astro/types";
 
@@ -22,15 +22,15 @@ const {
 <div class:list={["relative w-full min-h-200"]} {...rest}>
   {
     showLogo && (
-      <div class="absolute left-0 right-0 top-[8.5cqw] grid place-items-center">
-        <Image src={logo} alt="rpkm logo" class="h-[40cqw] w-fit" />
+      <div class="absolute left-0 right-0 top-[4.5cqw] sm:top-5 grid place-items-center">
+        <Image src={logo} alt="rpkm logo" class="h-[40cqw] sm:h-45 w-fit" />
       </div>
     )
   }
 
   {
     navigateBack && (
-      <div class="absolute left-4 right-4 top-[4.5cqw] flex items-center">
+      <div class="absolute left-4 top-[4.5cqw] sm:top-4.5 flex items-center">
         <a href={navigateBack}>
           <ChevronLeft className="size-6.5 text-foreground" />
         </a>
@@ -40,14 +40,14 @@ const {
 
   {
     showMenu && (
-      <div class="absolute right-4 top-[2.5cqw] flex items-center">
+      <div class="absolute right-4 top-[2.5cqw] sm:top-2.5 flex items-center">
         <NavigationMenu client:load />
       </div>
     )
   }
 
   <div
-    class="absolute inset-0 flex flex-col px-[1.25em] pt-[40cqw] pointer-events-none"
+    class="absolute inset-0 flex flex-col px-[1.25em] pt-[40cqw] sm:pt-45 pointer-events-none"
   >
     <div class="contents pointer-events-auto">
       <slot />
