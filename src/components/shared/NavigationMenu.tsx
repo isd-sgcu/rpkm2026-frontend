@@ -35,8 +35,8 @@ export function NavigationMenu() {
             <div className="flex items-center gap-0.5">
               <Button
                 type="button"
-                variant="ghost"
-                className="text-lg active:bg-accent p-2 size-10.5 rounded"
+                variant="outline"
+                className="border-none text-lg active:bg-accent p-2 size-10.5 rounded"
                 onClick={() => setLocale(locale === "th" ? "en" : "th")}
               >
                 {locale === "th" ? "TH" : "EN"}

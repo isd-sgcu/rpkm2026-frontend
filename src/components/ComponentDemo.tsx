@@ -19,6 +19,7 @@ import {
 } from "./ui/select";
 import { Switch } from "./ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import { ArrowRight, Download, PencilIcon } from "lucide-react";
 
 export function ComponentDemo() {
   const t = useT();
@@ -70,15 +71,38 @@ export function ComponentDemo() {
 
       <h2 className="text-lg font-bold font-mono"> Button </h2>
       <div className="flex gap-3 items-center flex-wrap">
-        <Button type="button" size="lg">
-          Default lg
+        <Button type="button" variant="outline" size="lg">
+          Outline lg
+        </Button>
+        <Button type="button" variant="outline" size="lg" disabled>
+          Outline lg disabled
         </Button>
         <Button type="button" variant="secondary" size="md">
           Secondary md
         </Button>
-        <Button type="button" variant="ghost" size="sm">
-          Ghost sm
+        <Button type="button" variant="secondary" size="md" disabled>
+          Secondary md disabled
         </Button>
+        <Button type="button" variant="destructive" size="sm">
+          Destructive sm
+        </Button>
+        <Button type="button" variant="destructive" size="sm" disabled>
+          Destructive sm disabled
+        </Button>
+        <Button type="button" size="xl" className="w-full">
+          Default xl w-full
+        </Button>
+        <Button type="button" size="xl" disabled className="w-full">
+          Default xl w-full disabled
+        </Button>
+
+        <Button type="button" iconStart={<Download />}>
+          Download
+        </Button>
+        <Button type="button" variant="outline" iconEnd={<ArrowRight />}>
+          เข้าห้อง
+        </Button>
+        <Button size="icon" variant="outline" iconStart={<PencilIcon />} />
       </div>
       <hr />
       <h2 className="text-lg font-bold font-mono"> Input </h2>
