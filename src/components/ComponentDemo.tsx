@@ -32,7 +32,7 @@ export function ComponentDemo() {
         <p className="text-sm text-muted-foreground font-mono">
           current locale: {locale}
         </p>
-        <p>{t("welcome.title", { appName: "firstdate" })}</p>
+        <p>{t("welcome.title", { appName: "RPKM" })}</p>
         <p className="text-sm">{t("welcome.description")}</p>
         <div className="flex gap-2">
           <Button

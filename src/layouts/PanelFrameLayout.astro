@@ -19,11 +19,11 @@ const {
 } = Astro.props;
 ---
 
-<div class:list={["relative w-full min-h-200 frameContainer"]} {...rest}>
+<div class:list={["relative w-full min-h-200"]} {...rest}>
   {
     showLogo && (
       <div class="absolute left-0 right-0 top-[8.5cqw] grid place-items-center">
-        <Image src={logo} alt="firstdate logo" class="h-[40cqw] w-fit" />
+        <Image src={logo} alt="rpkm logo" class="h-[40cqw] w-fit" />
       </div>
     )
   }
@@ -54,9 +54,3 @@ const {
     </div>
   </div>
 </div>
-
-<style>
-  .frameContainer {
-    container-type: inline-size;
-  }
-</style>
