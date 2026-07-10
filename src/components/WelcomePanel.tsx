@@ -40,7 +40,7 @@ export function WelcomePanel({ appName }: WelcomePanelProps) {
         {isReady ? "Ready" : "Check React"}
       </Button>
 
-      <Drawer>
+      <Drawer swipeDirection="up">
         <DrawerTrigger
           render={
             <Button className="border-border" variant="secondary">
