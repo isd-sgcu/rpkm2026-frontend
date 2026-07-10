@@ -1,11 +1,19 @@
 ---
+import { Footer } from "@components/shared/Footer";
+import { cn } from "@lib/utils";
 import "@styles/global.css";
 
 type Props = {
   title: string;
   description?: string;
+  showFooter?: boolean;
 };
-const { title, description = "RPKM 2026 frontend application" } = Astro.props;
+
+const {
+  title,
+  description = "RPKM 2026 frontend application",
+  showFooter = false,
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -16,9 +24,15 @@ const { title, description = "RPKM 2026 frontend application" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen bg-[#f7f4ee] text-[#172026] font-sans">
-    <main class="grid min-h-screen place-items-center p-8">
+  <body class="min-h-screen bg-background text-foreground font-sans">
+    <main
+      class={cn(
+        "sm:max-w-md sm:mx-auto grid place-items-center relative z-1",
+        showFooter ? "min-h-[calc(100vh-1rem)]" : "min-h-screen",
+      )}
+    >
       <slot />
     </main>
+    {showFooter && <Footer client:load />}
   </body>
 </html>
