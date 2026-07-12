@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { cn } from "@lib/utils";
+import { useT } from "@lib/i18n/useT";
+import { ActivityTabs, type Tab } from "@components/walkrally/ActivityTabs";
+import { ActivityList } from "@components/walkrally/ActivityList";
+import { EventDetail } from "@components/walkrally/EventDetail";
 
 type Topic = "white" | "black";
 
@@ -14,13 +18,13 @@ interface WalkRallyPanelProps {
 
 type Screen = { type: "events" } | { type: "eventDetail"; eventName: string };
 
-// TODO: replace with real activity data
-const sampleEvents = ["ปั้นลูกชุบ", "ทำพิมพ์สนำ", "เพ้นท์ถุงผ้า"];
-
 const WalkRallyPanel = ({ topic = "white" }: WalkRallyPanelProps) => {
+  const t = useT();
+  const [tab, setTab] = useState<Tab>("workshop");
   const [screen, setScreen] = useState<Screen>({ type: "events" });
 
-  const headerTitle = screen.type === "events" ? "กิจกรรม" : screen.eventName;
+  const headerTitle =
+    screen.type === "events" ? t("walkrally.title") : screen.eventName;
 
   return (
     <>
@@ -30,39 +34,26 @@ const WalkRallyPanel = ({ topic = "white" }: WalkRallyPanelProps) => {
           topicTextClass[topic],
         )}
       >
-        {/* TODO: i18n */}
         {headerTitle}
       </div>
 
       {screen.type === "events" && (
-        <div className="flex flex-col gap-3">
-          {sampleEvents.map((eventName) => (
-            <button
-              key={eventName}
-              type="button"
-              className="rounded-2xl bg-background p-4 text-left"
-              onClick={() => setScreen({ type: "eventDetail", eventName })}
-            >
-              {eventName}
-            </button>
-          ))}
+        <div className="flex flex-col">
+          <ActivityTabs tab={tab} onTabChange={setTab} />
+          <ActivityList
+            tab={tab}
+            onSelect={(activity) =>
+              setScreen({ type: "eventDetail", eventName: activity.name })
+            }
+          />
         </div>
       )}
 
       {screen.type === "eventDetail" && (
-        <div className="flex flex-col gap-3">
-          <button
-            type="button"
-            className="self-start text-sm underline"
-            onClick={() => setScreen({ type: "events" })}
-          >
-            {/* TODO: i18n */}
-            กลับ
-          </button>
-          <div className="rounded-2xl bg-background p-4">
-            รายละเอียดกิจกรรม: {screen.eventName}
-          </div>
-        </div>
+        <EventDetail
+          eventName={screen.eventName}
+          onBack={() => setScreen({ type: "events" })}
+        />
       )}
     </>
   );

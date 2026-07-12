@@ -17,5 +17,15 @@
   "nav": {
     "home": "หน้าหลัก",
     "logout": "ออกจากระบบ"
+  },
+  "walkrally": {
+    "title": "กิจกรรม",
+    "back": "กลับ",
+    "eventDetailPrefix": "รายละเอียดกิจกรรม",
+    "tabs": {
+      "workshop": "Workshop",
+      "walkingTour": "Walking Tour",
+      "minigame": "Mini Game"
+    }
   }
 }

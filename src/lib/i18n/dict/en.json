@@ -17,5 +17,15 @@
   "nav": {
     "home": "Home",
     "logout": "Log out"
+  },
+  "walkrally": {
+    "title": "Activities",
+    "back": "Back",
+    "eventDetailPrefix": "Event details",
+    "tabs": {
+      "workshop": "Workshop",
+      "walkingTour": "Walking Tour",
+      "minigame": "Mini Game"
+    }
   }
 }

@@ -1,0 +1,62 @@
+{
+  "workshop": [
+    {
+      "nameTh": "ปั้นลูกชุบ",
+      "nameEn": "Lookchoop Workshop",
+      "descriptionTh": "ปั้นความสนุก แต่งแต้มสีสันกับ Workshop ลูกชุบ ที่จะเปลี่ยนถั่วกวนธรรมดา ให้กลายเป็นผลงานชิ้นเล็กแสนพิเศษ",
+      "descriptionEn": "Mold some fun and add a splash of color at the Lookchoop Workshop, turning ordinary mashed mung bean paste into a small, extra-special creation.",
+      "imageName": "lookchoop.png"
+    },
+    {
+      "nameTh": "ทำพิมเสนน้ำ",
+      "nameEn": "Pimsen Nam Workshop",
+      "descriptionTh": "สร้างสรรค์ความสดชื่นกับ Workshop พิมเสนน้ำ ที่จะเปลี่ยนส่วนผสมจากสมุนไพรไทย ให้กลายเป็นพิมเสนน้ำขวดพิเศษของคุณ",
+      "descriptionEn": "Create your own refreshment at the Pimsen Nam Workshop, turning traditional Thai herbal ingredients into your own special bottle of cooling tonic.",
+      "imageName": "pimsennam.png"
+    },
+    {
+      "nameTh": "เพ้นท์ถุงผ้า",
+      "nameEn": "Tote Bag Painting Workshop",
+      "descriptionTh": "ปล่อยจินตนาการ ถ่ายทอดความเป็นตัวเองกับ Workshop เพ้นท์ถุงผ้า ให้ทุกลวดลายสะท้อนเอกลักษณ์ที่เป็นคุณ",
+      "descriptionEn": "Let your imagination run free and express yourself at the Tote Bag Painting Workshop, where every design reflects who you are.",
+      "imageName": "painttungpa.png"
+    }
+  ],
+  "walkingTour": [
+    {
+      "nameTh": "พิพิธภัณฑ์จุฬาฯ",
+      "nameEn": "Chulalongkorn University Museum",
+      "descriptionTh": "\"จุฬาฯ ในฐานะปัญญาแห่งแผ่นดิน\" แหล่งรวมองค์ความรู้ ที่สร้างคุณค่าเพื่อสังคม จากอดีต...สู่ปัจจุบัน ร่วมสร้างอนาคตไปด้วยกัน",
+      "descriptionEn": "\"Chula as the Wisdom of the Land\" — a hub of knowledge that creates value for society. From the past... to the present, let's build the future together.",
+      "imageName": "cumuseum.png"
+    },
+    {
+      "nameTh": "หอประวัติจุฬาฯ",
+      "nameEn": "CU Heritage Hall",
+      "descriptionTh": "ทุกภาพ ทุกบันทึก คือหน้าหนึ่งของประวัติศาสตร์ ร่วมย้อนรอยเรื่องราว ของจุฬาฯ ตลอดกว่าศตวรรษ",
+      "descriptionEn": "Every photo, every record is a page of history. Join us in retracing the story of Chula across more than a century.",
+      "imageName": "cuhistory.png"
+    },
+    {
+      "nameTh": "พิพิธภัณฑสถานธรรมชาติวิทยา",
+      "nameEn": "Natural History Museum",
+      "descriptionTh": "เรื่องราวของธรรมชาติ ที่ถูกบันทึกผ่านกาลเวลา ร่วมค้นพบความหลากหลายของสิ่งมีชีวิต",
+      "descriptionEn": "The story of nature, recorded through time. Discover the diversity of living things."
+    },
+    {
+      "nameTh": "พิพิธภัณฑ์พืชมีชีวิต",
+      "nameEn": "Living Plant Museum",
+      "descriptionTh": "เรื่องราวของพรรณไม้ จากหลากหลายระบบนิเวศ สู่การเรียนรู้เพื่อธรรมชาติที่ยั่งยืน",
+      "descriptionEn": "The story of plants from diverse ecosystems, leading to learning for a more sustainable nature.",
+      "imageName": "plantmuseum.png"
+    }
+  ],
+  "minigame": [
+    { "nameTh": "ผู้ตรวจการแห่งนอตติงแฮม", "nameEn": "Sheriff of Nottingham" },
+    { "nameTh": "Dixit", "nameEn": "Dixit" },
+    { "nameTh": "The Mind", "nameEn": "The Mind" },
+    { "nameTh": "Insider", "nameEn": "Insider" },
+    { "nameTh": "Muffin Time", "nameEn": "Muffin Time" },
+    { "nameTh": "Exploding Kittens", "nameEn": "Exploding Kittens" }
+  ]
+}
