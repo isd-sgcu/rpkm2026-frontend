@@ -1,6 +1,7 @@
 import { Plus } from "lucide-react";
 import { useT } from "@lib/i18n/useT";
 import { MonotoneNoise } from "@components/shared/MonotoneNoise";
+import { RegisteredActivityCard } from "@components/walkrally/RegisteredActivityCard";
 
 const ACCENT_ORANGE = "#e65325";
 
@@ -11,6 +12,45 @@ const mockProfile = {
   faculty: "คณะวิศวกรรมศาสตร์",
   points: 0,
 };
+
+// TODO: replace with real registration data
+const mockRegisteredActivities = [
+  {
+    id: "lookchoop",
+    name: "Lookchoop",
+    description:
+      "ปั้นความสนุก แต่งแต้มสีสันกับ Workshop ลูกชุบ ที่จะเปลี่ยนถั่วกวนธรรมดา",
+    round: 1,
+    start: "12:00",
+    end: "12:30",
+    ticketNumber: "12",
+    imageName: "lookchoop.png",
+    accentColor: "#e65325",
+  },
+  {
+    id: "cu-museum",
+    name: "Chulalongkorn University Museum",
+    description:
+      "หอประวัติศาสตร์และองค์ความรู้ ที่สร้างคุณค่าเพื่อสังคม จากอดีตสู่ปัจจุบัน",
+    round: 4,
+    start: "14:20",
+    end: "14:50",
+    ticketNumber: "08",
+    imageName: "cumuseum.png",
+    accentColor: "#5fa667",
+  },
+  {
+    id: "mini-games",
+    name: "Mini Games",
+    description:
+      "ร่วมสนุกกับ 1 ใน 6 บอร์ดเกม พร้อมสร้างมิตรภาพผ่านทุกทุกกิจกรรม",
+    round: 2,
+    start: "12:35",
+    end: "13:05",
+    ticketNumber: "05",
+    accentColor: "#8b688d",
+  },
+];
 
 export function WalkRallyHomePanel() {
   const t = useT();
@@ -68,23 +108,32 @@ export function WalkRallyHomePanel() {
           {t("walkrally.home.registeredTitle")}
         </h2>
 
-        <div className="flex flex-col items-center min-h-50 justify-center gap-4 rounded-3xl border border-black bg-rpkm-beige p-6 text-center">
-          <p className="text-xl text-foreground">
-            {t("walkrally.home.emptyState")}
-          </p>
-          <a
-            href="/walkrally/events"
-            className="relative isolate flex items-center gap-2 overflow-hidden rounded-full border-2 border-black bg-[#e65325] py-1.5 pr-5 pl-1.5 font-bold text-background"
-          >
-            <MonotoneNoise className="absolute inset-0 -z-1 pointer-events-none" />
-            <div className="flex size-9 shrink-0 items-center justify-center rounded-full border border-black bg-white p-0.5">
-              <div className="flex size-full items-center justify-center rounded-full border border-black bg-rpkm-beige">
-                <Plus className="size-4 text-foreground" strokeWidth={3} />
-              </div>
+        {mockRegisteredActivities.length > 0 ? (
+          <div className="flex flex-col gap-3">
+            {mockRegisteredActivities.map((activity) => (
+              <RegisteredActivityCard key={activity.id} activity={activity} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center min-h-50 justify-center gap-4 rounded-3xl border border-black bg-rpkm-beige p-6 text-center">
+            <p className="text-xl text-foreground">
+              {t("walkrally.home.emptyState")}
+            </p>
+          </div>
+        )}
+
+        <a
+          href="/walkrally/events"
+          className="relative isolate flex items-center gap-2 self-center overflow-hidden rounded-full border-2 border-black bg-[#e65325] py-1.5 pr-5 pl-1.5 font-bold text-background"
+        >
+          <MonotoneNoise className="absolute inset-0 -z-1 pointer-events-none" />
+          <div className="flex size-9 shrink-0 items-center justify-center rounded-full border border-black bg-white p-0.5">
+            <div className="flex size-full items-center justify-center rounded-full border border-black bg-rpkm-beige">
+              <Plus className="size-4 text-foreground" strokeWidth={3} />
             </div>
-            {t("walkrally.home.addActivity")}
-          </a>
-        </div>
+          </div>
+          {t("walkrally.home.addActivity")}
+        </a>
       </div>
     </>
   );
