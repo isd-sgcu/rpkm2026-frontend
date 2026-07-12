@@ -2,6 +2,7 @@ import { getImageUrl } from "@lib/function";
 import { ChevronRight } from "lucide-react";
 
 export interface Activity {
+  id: string;
   name: string;
   description?: string;
   imageName?: string;
@@ -10,23 +11,17 @@ export interface Activity {
 interface ActivityCardProps {
   activity: Activity;
   accentColor: string;
-  onClick: () => void;
 }
 
-export function ActivityCard({
-  activity,
-  accentColor,
-  onClick,
-}: ActivityCardProps) {
+export function ActivityCard({ activity, accentColor }: ActivityCardProps) {
   const imageUrl = getImageUrl(activity.imageName ?? "");
   const frameStyle = { backgroundColor: accentColor };
 
   return (
-    <button
-      type="button"
+    <a
+      href={`/walkrally/${activity.id}`}
       style={frameStyle}
       className="rounded-3xl border border-black p-1 text-left"
-      onClick={onClick}
     >
       <div className="relative flex items-center gap-3 rounded-[1.15rem] border border-black bg-[#FFFAC9] p-2 pr-10 sm:gap-4 sm:p-3">
         <div
@@ -53,6 +48,6 @@ export function ActivityCard({
         </div>
         <ChevronRight className="text-black absolute right-2 bottom-2 size-6 shrink-0" />
       </div>
-    </button>
+    </a>
   );
 }

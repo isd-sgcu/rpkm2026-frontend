@@ -26,6 +26,15 @@
       "workshop": "Workshop",
       "walkingTour": "Walking Tour",
       "minigame": "Mini Game"
-    }
+    },
+    "rounds": "รอบการทำกิจกรรม",
+    "roundsNote": "ทุกที่เวลาเพื่อเลือก บางรายการอาจเลือกไม่ได้เนื่องจากติดเงื่อนไข",
+    "roundLabel": "รอบที่ {index}",
+    "full": "เต็ม",
+    "conflictMessage": "คุณลงเวลานี้ไม่ได้เพราะติดกิจกรรมอื่นที่เลือกไว้แล้ว",
+    "confirmTitle": "ยืนยันการเลือก",
+    "confirmMessage": "คุณต้องการเพิ่มกิจกรรม {name} รอบที่ {index} ใช่หรือไม่ ?",
+    "confirm": "ยืนยัน",
+    "cancel": "ยกเลิก"
   }
 }

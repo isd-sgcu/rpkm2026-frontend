@@ -26,6 +26,15 @@
       "workshop": "Workshop",
       "walkingTour": "Walking Tour",
       "minigame": "Mini Game"
-    }
+    },
+    "rounds": "Activity Rounds",
+    "roundsNote": "Please select a time slot. Some rounds may be unavailable due to conditions.",
+    "roundLabel": "Round {index}",
+    "full": "Full",
+    "conflictMessage": "You can't book this time slot because it conflicts with another activity you've already selected.",
+    "confirmTitle": "Confirm Selection",
+    "confirmMessage": "Do you want to add {name}, Round {index}?",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   }
 }

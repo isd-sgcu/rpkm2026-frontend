@@ -16,14 +16,14 @@ const tabAccentColor: Record<Tab, string> = {
 
 interface ActivityListProps {
   tab: Tab;
-  onSelect: (activity: Activity) => void;
 }
 
-export function ActivityList({ tab, onSelect }: ActivityListProps) {
+export function ActivityList({ tab }: ActivityListProps) {
   const t = useT();
   const locale = useStore($locale);
 
   const activities: Activity[] = walkrally[tab].map((entry) => ({
+    id: entry.id,
     name: locale === "th" ? entry.nameTh : entry.nameEn,
     description:
       locale === "th"
@@ -43,10 +43,9 @@ export function ActivityList({ tab, onSelect }: ActivityListProps) {
       </h1>
       {activities.map((activity) => (
         <ActivityCard
-          key={activity.name}
+          key={activity.id}
           activity={activity}
           accentColor={tabAccentColor[tab]}
-          onClick={() => onSelect(activity)}
         />
       ))}
     </div>
