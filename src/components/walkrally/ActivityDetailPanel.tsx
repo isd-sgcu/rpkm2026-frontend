@@ -74,12 +74,12 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
         )}
       </div>
 
-      <div className="rounded-3xl bg-rpkm-red p-4 text-background">
+      <div className="rounded-3xl bg-rpkm-red p-4 text-background mx-4">
         <h2 className="text-center text-lg font-bold">
           {t("walkrally.rounds")}
         </h2>
         <p className="mb-3 text-center text-xs">{t("walkrally.roundsNote")}</p>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4">
           {rounds.map((round) => (
             <button
               key={round.index}
@@ -90,7 +90,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
                 setStep("confirm");
               }}
               className={cn(
-                "flex flex-col rounded-xl p-2 text-left text-foreground disabled:cursor-not-allowed",
+                "flex flex-col rounded-xl p-2 text-left text-foreground disabled:cursor-not-allowed border border-black",
                 round.status === "available" ? "bg-background" : "bg-[#f4c3ab]",
               )}
             >

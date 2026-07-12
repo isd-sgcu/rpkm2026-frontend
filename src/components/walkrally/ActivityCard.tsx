@@ -21,21 +21,21 @@ export function ActivityCard({ activity, accentColor }: ActivityCardProps) {
     <a
       href={`/walkrally/${activity.id}`}
       style={frameStyle}
-      className="rounded-3xl border border-black p-1 text-left"
+      className="relative isolate overflow-hidden rounded-3xl border border-black p-1 text-left"
     >
       <div className="relative flex items-center gap-3 rounded-[1.15rem] border border-black bg-[#FFFAC9] p-2 pr-10 sm:gap-4 sm:p-3">
         <div
           style={frameStyle}
-          className="shrink-0 rounded-2xl border border-black p-1"
+          className="relative isolate shrink-0 overflow-hidden rounded-2xl border border-black p-1"
         >
           {activity.imageName ? (
             <img
               src={imageUrl}
               alt=""
-              className="size-24 rounded-xl border border-black object-cover sm:size-28"
+              className="relative size-30 rounded-xl border border-black object-cover sm:size-28"
             />
           ) : (
-            <div className="size-24 rounded-xl border border-black bg-muted sm:size-28" />
+            <div className="relative size-30 rounded-xl border border-black bg-muted sm:size-28" />
           )}
         </div>
         <div className="min-w-0 flex-1">

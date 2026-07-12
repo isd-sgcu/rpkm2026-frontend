@@ -1,6 +1,7 @@
 import { useStore } from "@nanostores/react";
 import { useT } from "@lib/i18n/useT";
 import { $locale } from "@lib/i18n/locale";
+import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 import {
   ActivityCard,
   type Activity,
@@ -37,7 +38,7 @@ export function ActivityList({ tab }: ActivityListProps) {
   }));
 
   return (
-    <div className="flex flex-col gap-3 rounded-3xl bg-background p-4">
+    <MonotoneNoiseContainer className="flex flex-col gap-3 rounded-3xl bg-[#e3ffe7] p-4 border border-black">
       <h1 className="text-center text-2xl font-bold pt-4">
         {t(`walkrally.tabs.${tab}`)}
       </h1>
@@ -48,6 +49,6 @@ export function ActivityList({ tab }: ActivityListProps) {
           accentColor={tabAccentColor[tab]}
         />
       ))}
-    </div>
+    </MonotoneNoiseContainer>
   );
 }

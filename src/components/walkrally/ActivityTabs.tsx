@@ -1,5 +1,6 @@
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
+import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 
 export type Tab = "workshop" | "walkingTour" | "minigame";
 
@@ -28,18 +29,20 @@ export function ActivityTabs({ tab, onTabChange }: ActivityTabsProps) {
             key={tabOption}
             type="button"
             className={cn(
-              "absolute bottom-0 flex w-[25cqw] items-center justify-center overflow-hidden rounded-t-2xl border border-b-0 border-black px-2 sm:w-28",
+              "relative isolate flex w-[25cqw] items-center justify-center overflow-hidden rounded-t-2xl border border-b-0 border-black px-2 sm:w-28",
               rightOffsetClass[index],
               active
-                ? "z-10 h-12 bg-[#f0a9cb] p-1.5"
-                : "z-0 h-9 bg-background text-xs font-bold text-foreground",
+                ? "absolute bottom-0 z-10 h-12 bg-[#f0a9cb] p-1.5"
+                : "absolute bottom-0 z-0 h-9 bg-background text-xs font-bold text-foreground",
             )}
             onClick={() => onTabChange(tabOption)}
           >
+            {active && (
+              <MonotoneNoise className="absolute inset-0 -z-1 pointer-events-none" />
+            )}
             {active ? (
-              // TODO: replace with a real category icon/illustration
               <div
-                className="h-6 w-full rounded-full bg-gray-300"
+                className="h-6 w-full rounded-full bg-[#f3eeee]"
                 aria-hidden="true"
               />
             ) : (
