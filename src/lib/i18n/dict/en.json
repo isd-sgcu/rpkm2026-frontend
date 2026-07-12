@@ -25,7 +25,15 @@
       "pointsUnit": "pts",
       "registeredTitle": "Registered Activities",
       "emptyState": "No activities registered yet",
-      "addActivity": "Add Activity"
+      "addActivity": "Add Activity",
+      "cancelTitle": "Cancel Activity",
+      "cancelMessage": "Do you want to cancel {name}, Round {index}?",
+      "cancelConfirm": "Confirm",
+      "cancelDismiss": "Cancel",
+      "cancelSuccessTitle": "Activity Cancelled",
+      "cancelSuccessMessage": "{name}, Round {index} has been cancelled.",
+      "cancelFailTitle": "Cancellation Failed",
+      "cancelFailMessage": "Something went wrong. Please try again."
     },
     "events": {
       "title": "Activities",
@@ -40,6 +48,7 @@
       "roundsNote": "Please select a time slot. Some rounds may be unavailable due to conditions.",
       "roundLabel": "Round {index}",
       "full": "Full",
+      "alreadySelected": "Your selected round",
       "conflictMessage": "You can't book this time slot because it conflicts with another activity you've already selected.",
       "confirmTitle": "Confirm Selection",
       "confirmMessage": "Do you want to add {name}, Round {index}?",

@@ -13,6 +13,7 @@ import {
   DialogDescription,
 } from "@components/ui/dialog";
 import { rounds, type Round } from "@components/walkrally/events/rounds";
+import registrations from "@components/walkrally/registrations.json";
 
 export interface WalkRallyEntry {
   id: string;
@@ -39,6 +40,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
   const description =
     locale === "th" ? entry.descriptionTh : entry.descriptionEn;
   const imageUrl = getImageUrl(entry.imageName ?? "");
+  const registration = registrations.find((r) => r.activityId === entry.id);
 
   useEffect(() => {
     document.title = name;
@@ -86,49 +88,60 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
           {t("walkrally.events.roundsNote")}
         </p>
         <div className="flex flex-col gap-4">
-          {rounds.map((round) => (
-            <button
-              key={round.index}
-              type="button"
-              disabled={round.status !== "available"}
-              onClick={() => {
-                setSelectedRound(round);
-                setStep("confirm");
-              }}
-              className={cn(
-                "flex flex-col rounded-xl p-2 text-left text-foreground disabled:cursor-not-allowed border border-black",
-                round.status === "available" ? "bg-background" : "bg-[#f4c3ab]",
-              )}
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span className="flex items-baseline gap-2">
-                  <span className="font-bold">
-                    {t("walkrally.events.roundLabel", {
-                      index: String(round.index),
-                    })}
-                  </span>
-                  <span className="text-sm">
-                    {round.start}-{round.end}
-                  </span>
-                </span>
-                {round.status === "full" ? (
-                  <span className="text-sm font-bold text-rpkm-red">
-                    {t("walkrally.events.full")}
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-1 text-xs">
-                    <Users className="size-3.5" />
-                    {round.booked}/{round.capacity}
-                  </span>
+          {rounds.map((round) => {
+            const isSelected = registration?.round === round.index;
+            return (
+              <button
+                key={round.index}
+                type="button"
+                disabled={Boolean(registration) || round.status !== "available"}
+                onClick={() => {
+                  setSelectedRound(round);
+                  setStep("confirm");
+                }}
+                className={cn(
+                  "flex flex-col rounded-xl p-2 text-left text-foreground disabled:cursor-not-allowed border border-black",
+                  isSelected
+                    ? "border-2 border-rpkm-green bg-background"
+                    : round.status === "available"
+                      ? "bg-background"
+                      : "bg-[#f4c3ab]",
                 )}
-              </div>
-              {round.status === "conflict" && (
-                <p className="text-xs text-rpkm-red">
-                  {t("walkrally.events.conflictMessage")}
-                </p>
-              )}
-            </button>
-          ))}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="flex items-baseline gap-2">
+                    <span className="font-bold">
+                      {t("walkrally.events.roundLabel", {
+                        index: String(round.index),
+                      })}
+                    </span>
+                    <span className="text-sm">
+                      {round.start}-{round.end}
+                    </span>
+                  </span>
+                  {isSelected ? (
+                    <span className="text-sm font-bold text-rpkm-green">
+                      {t("walkrally.events.alreadySelected")}
+                    </span>
+                  ) : round.status === "full" ? (
+                    <span className="text-sm font-bold text-rpkm-red">
+                      {t("walkrally.events.full")}
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1 text-xs">
+                      <Users className="size-3.5" />
+                      {round.booked}/{round.capacity}
+                    </span>
+                  )}
+                </div>
+                {!isSelected && round.status === "conflict" && (
+                  <p className="text-xs text-rpkm-red">
+                    {t("walkrally.events.conflictMessage")}
+                  </p>
+                )}
+              </button>
+            );
+          })}
         </div>
       </div>
 

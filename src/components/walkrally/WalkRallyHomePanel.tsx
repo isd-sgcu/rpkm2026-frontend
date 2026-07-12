@@ -1,9 +1,19 @@
 import { Plus } from "lucide-react";
+import { useStore } from "@nanostores/react";
 import { useT } from "@lib/i18n/useT";
+import { $locale } from "@lib/i18n/locale";
 import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 import { RegisteredActivityCard } from "@components/walkrally/RegisteredActivityCard";
+import events from "@components/walkrally/events/events.json";
+import registrations from "@components/walkrally/registrations.json";
 
 const ACCENT_ORANGE = "#e65325";
+
+const tabAccentColor: Record<string, string> = {
+  workshop: "#e65325",
+  walkingTour: "#5fa667",
+  minigame: "#8b688d",
+};
 
 // TODO: replace with real user/auth data
 const mockProfile = {
@@ -13,47 +23,35 @@ const mockProfile = {
   points: 0,
 };
 
-// TODO: replace with real registration data
-const mockRegisteredActivities = [
-  {
-    id: "lookchoop",
-    name: "Lookchoop",
-    description:
-      "ปั้นความสนุก แต่งแต้มสีสันกับ Workshop ลูกชุบ ที่จะเปลี่ยนถั่วกวนธรรมดา",
-    round: 1,
-    start: "12:00",
-    end: "12:30",
-    ticketNumber: "12",
-    imageName: "lookchoop.png",
-    accentColor: "#e65325",
-  },
-  {
-    id: "cu-museum",
-    name: "Chulalongkorn University Museum",
-    description:
-      "หอประวัติศาสตร์และองค์ความรู้ ที่สร้างคุณค่าเพื่อสังคม จากอดีตสู่ปัจจุบัน",
-    round: 4,
-    start: "14:20",
-    end: "14:50",
-    ticketNumber: "08",
-    imageName: "cumuseum.png",
-    accentColor: "#5fa667",
-  },
-  {
-    id: "mini-games",
-    name: "Mini Games",
-    description:
-      "ร่วมสนุกกับ 1 ใน 6 บอร์ดเกม พร้อมสร้างมิตรภาพผ่านทุกทุกกิจกรรม",
-    round: 2,
-    start: "12:35",
-    end: "13:05",
-    ticketNumber: "05",
-    accentColor: "#8b688d",
-  },
-];
-
 export function WalkRallyHomePanel() {
   const t = useT();
+  const locale = useStore($locale);
+
+  const registeredActivities = registrations.flatMap((reg) => {
+    for (const [group, list] of Object.entries(events)) {
+      const entry = list.find((e) => e.id === reg.activityId);
+      if (!entry) continue;
+      return [
+        {
+          id: entry.id,
+          name: locale === "th" ? entry.nameTh : entry.nameEn,
+          description: (locale === "th"
+            ? "descriptionTh" in entry
+              ? entry.descriptionTh
+              : undefined
+            : "descriptionEn" in entry
+              ? entry.descriptionEn
+              : undefined) as string | undefined,
+          imageName: ("imageName" in entry ? entry.imageName : undefined) as
+            string | undefined,
+          round: reg.round,
+          ticketNumber: reg.ticketNumber,
+          accentColor: tabAccentColor[group],
+        },
+      ];
+    }
+    return [];
+  });
 
   return (
     <>
@@ -108,9 +106,9 @@ export function WalkRallyHomePanel() {
           {t("walkrally.home.registeredTitle")}
         </h2>
 
-        {mockRegisteredActivities.length > 0 ? (
+        {registeredActivities.length > 0 ? (
           <div className="flex flex-col gap-3">
-            {mockRegisteredActivities.map((activity) => (
+            {registeredActivities.map((activity) => (
               <RegisteredActivityCard key={activity.id} activity={activity} />
             ))}
           </div>
