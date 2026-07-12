@@ -1,5 +1,4 @@
 import { useStore } from "@nanostores/react";
-import { useT } from "@lib/i18n/useT";
 import { $locale } from "@lib/i18n/locale";
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 import {
@@ -8,6 +7,7 @@ import {
 } from "@components/walkrally/events/ActivityCard";
 import type { Tab } from "@components/walkrally/events/ActivityTabs";
 import walkrally from "@components/walkrally/events/events.json";
+import { getImageUrl } from "@lib/function";
 
 const tabAccentColor: Record<Tab, string> = {
   workshop: "#e65325",
@@ -20,8 +20,8 @@ interface ActivityListProps {
 }
 
 export function ActivityList({ tab }: ActivityListProps) {
-  const t = useT();
   const locale = useStore($locale);
+  const header = getImageUrl(`walkrally_${tab}.svg`);
 
   const activities: Activity[] = walkrally[tab].map((entry) => ({
     id: entry.id,
@@ -38,10 +38,10 @@ export function ActivityList({ tab }: ActivityListProps) {
   }));
 
   return (
-    <MonotoneNoiseContainer className="flex flex-col gap-3 rounded-3xl bg-[#e3ffe7] p-4 border border-black">
-      <h1 className="text-center text-2xl font-bold pt-4">
-        {t(`walkrally.events.tabs.${tab}`)}
-      </h1>
+    <MonotoneNoiseContainer className="flex flex-col gap-4 rounded-3xl bg-[#e3ffe7] p-4 border border-black">
+      <div className="w-full flex justify-center py-2">
+        <img src={header} alt={`walkrally_${tab}`} className="size-24" />
+      </div>
       {activities.map((activity) => (
         <ActivityCard
           key={activity.id}
