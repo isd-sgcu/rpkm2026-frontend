@@ -13,7 +13,19 @@ function readStoredLocale(): LocaleType {
   return stored === "th" || stored === "en" ? stored : DEFAULT_LOCALE;
 }
 
-export const $locale = atom<LocaleType>(readStoredLocale());
+// Always start at DEFAULT_LOCALE so the client's first hydration pass
+// matches the server-rendered markup exactly. The real stored locale is
+// applied later via syncStoredLocale(), called from a useEffect (which
+// React guarantees runs after commit) so it's a normal client re-render
+// rather than something that can race the hydration diff itself.
+export const $locale = atom<LocaleType>(DEFAULT_LOCALE);
+
+export function syncStoredLocale() {
+  const stored = readStoredLocale();
+  if (stored !== $locale.get()) {
+    $locale.set(stored);
+  }
+}
 
 export function setLocale(locale: LocaleType) {
   if (typeof window !== "undefined") {

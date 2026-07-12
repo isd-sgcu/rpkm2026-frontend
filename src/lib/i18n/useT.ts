@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import { useStore } from "@nanostores/react";
 
-import { $locale } from "./locale";
+import { $locale, syncStoredLocale } from "./locale";
 import en from "./dict/en.json";
 import th from "./dict/th.json";
 
@@ -27,6 +28,10 @@ function resolve(node: unknown, path: string): string {
 
 export function useT() {
   const locale = useStore($locale);
+
+  useEffect(() => {
+    syncStoredLocale();
+  }, []);
 
   return function t(key: DictKey<Dict>, vars?: Record<string, string>) {
     const template = resolve(dict[locale], key);
