@@ -11,6 +11,7 @@ import flowerBlue from "../assets/images/artboard_40.svg";
 import potVase from "../assets/images/artboard_16.svg";
 import { ChevronLeft } from "lucide-react";
 import "@styles/global.css";
+import type { HTMLAttributes } from "astro/types";
 
 type BgColor = "green" | "lightpink" | "beige";
 
@@ -20,11 +21,12 @@ const bgColorClass: Record<BgColor, string> = {
   beige: "bg-rpkm-beige",
 };
 
-interface Props {
+interface Props extends HTMLAttributes<"div"> {
   title: string;
   description?: string;
   navigateBack?: string;
   showMenu?: boolean;
+  haveNoise?: boolean;
   bgColor?: BgColor;
 }
 
@@ -33,7 +35,9 @@ const {
   description = "RPKM 2026 frontend application",
   navigateBack = "",
   showMenu = true,
+  haveNoise = true,
   bgColor = "green",
+  ...rest
 } = Astro.props;
 ---
 
@@ -51,11 +55,16 @@ const {
         "relative w-full min-h-screen overflow-hidden sm:max-w-md sm:mx-auto",
         bgColorClass[bgColor],
       ]}
+      {...rest}
     >
-      <MonotoneNoise
-        className="absolute inset-0 z-0 pointer-events-none"
-        client:load
-      />
+      {
+        haveNoise && (
+          <MonotoneNoise
+            className="absolute inset-0 z-0 pointer-events-none"
+            client:load
+          />
+        )
+      }
 
       {
         navigateBack && (

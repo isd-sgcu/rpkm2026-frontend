@@ -19,6 +19,14 @@
     "logout": "Log out"
   },
   "walkrally": {
+    "home": {
+      "title": "Walk Rally",
+      "pointsLabel": "Points Earned",
+      "pointsUnit": "pts",
+      "registeredTitle": "Registered Activities",
+      "emptyState": "No activities registered yet",
+      "addActivity": "Add Activity"
+    },
     "events": {
       "title": "Activities",
       "back": "Back",

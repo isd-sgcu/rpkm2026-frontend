@@ -19,6 +19,14 @@
     "logout": "ออกจากระบบ"
   },
   "walkrally": {
+    "home": {
+      "title": "Walk Rally",
+      "pointsLabel": "เก็บแต้มได้",
+      "pointsUnit": "แต้ม",
+      "registeredTitle": "กิจกรรมที่ลงทะเบียนไว้",
+      "emptyState": "ยังไม่มีกิจกรรมที่ลงทะเบียนไว้",
+      "addActivity": "เพิ่มกิจกรรม"
+    },
     "events": {
       "title": "กิจกรรม",
       "back": "กลับ",

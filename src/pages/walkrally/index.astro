@@ -1,7 +1,13 @@
 ---
 import WalkRallyLayout from "@layouts/WalkRallyLayout.astro";
+import { WalkRallyHomePanel } from "@components/walkrally/WalkRallyHomePanel";
 ---
 
-<WalkRallyLayout title={"Walk Rally"} bgColor="lightpink">
-  This is walk rally page
+<WalkRallyLayout
+  title={"Walk Rally"}
+  bgColor="lightpink"
+  navigateBack={"/"}
+  haveNoise={false}
+>
+  <WalkRallyHomePanel client:load />
 </WalkRallyLayout>
