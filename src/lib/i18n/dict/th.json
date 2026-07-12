@@ -19,28 +19,30 @@
     "logout": "ออกจากระบบ"
   },
   "walkrally": {
-    "title": "กิจกรรม",
-    "back": "กลับ",
-    "eventDetailPrefix": "รายละเอียดกิจกรรม",
-    "tabs": {
-      "workshop": "Workshop",
-      "walkingTour": "Walking Tour",
-      "minigame": "Mini Game"
-    },
-    "rounds": "รอบการทำกิจกรรม",
-    "roundsNote": "ทุกที่เวลาเพื่อเลือก บางรายการอาจเลือกไม่ได้เนื่องจากติดเงื่อนไข",
-    "roundLabel": "รอบที่ {index}",
-    "full": "เต็ม",
-    "conflictMessage": "คุณลงเวลานี้ไม่ได้เพราะติดกิจกรรมอื่นที่เลือกไว้แล้ว",
-    "confirmTitle": "ยืนยันการเลือก",
-    "confirmMessage": "คุณต้องการเพิ่มกิจกรรม {name} รอบที่ {index} ใช่หรือไม่ ?",
-    "confirm": "ยืนยัน",
-    "cancel": "ยกเลิก",
-    "successTitle": "บันทึกข้อมูลสำเร็จ",
-    "successMessage": "ลงทะเบียนกิจกรรม {name} รอบที่ {index} เรียบร้อยแล้ว",
-    "failTitle": "ลงทะเบียนไม่สำเร็จ",
-    "failMessage": "เลขนิสิตไม่ถูกต้องหรือนิสิตยังไม่ได้ลงทะเบียนในระบบ",
-    "ok": "ตกลง",
-    "retry": "ลองอีกครั้ง"
+    "events": {
+      "title": "กิจกรรม",
+      "back": "กลับ",
+      "eventDetailPrefix": "รายละเอียดกิจกรรม",
+      "tabs": {
+        "workshop": "Workshop",
+        "walkingTour": "Walking Tour",
+        "minigame": "Mini Game"
+      },
+      "rounds": "รอบการทำกิจกรรม",
+      "roundsNote": "ทุกที่เวลาเพื่อเลือก บางรายการอาจเลือกไม่ได้เนื่องจากติดเงื่อนไข",
+      "roundLabel": "รอบที่ {index}",
+      "full": "เต็ม",
+      "conflictMessage": "คุณลงเวลานี้ไม่ได้เพราะติดกิจกรรมอื่นที่เลือกไว้แล้ว",
+      "confirmTitle": "ยืนยันการเลือก",
+      "confirmMessage": "คุณต้องการเพิ่มกิจกรรม {name} รอบที่ {index} ใช่หรือไม่ ?",
+      "confirm": "ยืนยัน",
+      "cancel": "ยกเลิก",
+      "successTitle": "บันทึกข้อมูลสำเร็จ",
+      "successMessage": "ลงทะเบียนกิจกรรม {name} รอบที่ {index} เรียบร้อยแล้ว",
+      "failTitle": "ลงทะเบียนไม่สำเร็จ",
+      "failMessage": "เลขนิสิตไม่ถูกต้องหรือนิสิตยังไม่ได้ลงทะเบียนในระบบ",
+      "ok": "ตกลง",
+      "retry": "ลองอีกครั้ง"
+    }
   }
 }

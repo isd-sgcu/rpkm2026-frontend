@@ -5,9 +5,9 @@ import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 import {
   ActivityCard,
   type Activity,
-} from "@components/walkrally/ActivityCard";
-import type { Tab } from "@components/walkrally/ActivityTabs";
-import walkrally from "@components/walkrally/walkrally.json";
+} from "@components/walkrally/events/ActivityCard";
+import type { Tab } from "@components/walkrally/events/ActivityTabs";
+import walkrally from "@components/walkrally/events/events.json";
 
 const tabAccentColor: Record<Tab, string> = {
   workshop: "#e65325",
@@ -40,7 +40,7 @@ export function ActivityList({ tab }: ActivityListProps) {
   return (
     <MonotoneNoiseContainer className="flex flex-col gap-3 rounded-3xl bg-[#e3ffe7] p-4 border border-black">
       <h1 className="text-center text-2xl font-bold pt-4">
-        {t(`walkrally.tabs.${tab}`)}
+        {t(`walkrally.events.tabs.${tab}`)}
       </h1>
       {activities.map((activity) => (
         <ActivityCard

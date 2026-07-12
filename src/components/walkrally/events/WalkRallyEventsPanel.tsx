@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
-import { ActivityTabs, type Tab } from "@components/walkrally/ActivityTabs";
-import { ActivityList } from "@components/walkrally/ActivityList";
+import {
+  ActivityTabs,
+  type Tab,
+} from "@components/walkrally/events/ActivityTabs";
+import { ActivityList } from "@components/walkrally/events/ActivityList";
 
 type Topic = "white" | "black";
 
@@ -15,7 +18,7 @@ interface WalkRallyPanelProps {
   topic?: Topic;
 }
 
-const WalkRallyPanel = ({ topic = "white" }: WalkRallyPanelProps) => {
+const WalkRallyEventPanel = ({ topic = "white" }: WalkRallyPanelProps) => {
   const t = useT();
   const [tab, setTab] = useState<Tab>("workshop");
 
@@ -27,7 +30,7 @@ const WalkRallyPanel = ({ topic = "white" }: WalkRallyPanelProps) => {
           topicTextClass[topic],
         )}
       >
-        {t("walkrally.title")}
+        {t("walkrally.events.title")}
       </div>
 
       <div className="flex flex-col">
@@ -38,4 +41,4 @@ const WalkRallyPanel = ({ topic = "white" }: WalkRallyPanelProps) => {
   );
 };
 
-export default WalkRallyPanel;
+export default WalkRallyEventPanel;

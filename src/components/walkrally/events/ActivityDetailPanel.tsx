@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AlertCircle, CheckCircle2, Users } from "lucide-react";
 import { useStore } from "@nanostores/react";
 import { cn } from "@lib/utils";
@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@components/ui/dialog";
-import { rounds, type Round } from "@components/walkrally/rounds";
+import { rounds, type Round } from "@components/walkrally/events/rounds";
 
 export interface WalkRallyEntry {
   id: string;
@@ -40,6 +40,10 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
     locale === "th" ? entry.descriptionTh : entry.descriptionEn;
   const imageUrl = getImageUrl(entry.imageName ?? "");
 
+  useEffect(() => {
+    document.title = name;
+  }, [name]);
+
   function closeDialog() {
     setSelectedRound(null);
   }
@@ -55,7 +59,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="pointer-events-none absolute inset-x-0 top-[4.5cqw] flex h-10 items-center justify-center px-14 text-center text-2xl leading-[1.4] font-bold text-foreground sm:top-4.5 ">
+      <div className="pointer-events-none absolute inset-x-0 top-[4.5cqw] flex min-h-10 items-center justify-center px-14 text-center text-2xl leading-[1.4] font-bold text-foreground sm:top-4.5 ">
         {name}
       </div>
 
@@ -76,9 +80,11 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
 
       <div className="rounded-3xl bg-rpkm-red p-4 text-background mx-4">
         <h2 className="text-center text-lg font-bold">
-          {t("walkrally.rounds")}
+          {t("walkrally.events.rounds")}
         </h2>
-        <p className="mb-3 text-center text-xs">{t("walkrally.roundsNote")}</p>
+        <p className="mb-3 text-center text-xs">
+          {t("walkrally.events.roundsNote")}
+        </p>
         <div className="flex flex-col gap-4">
           {rounds.map((round) => (
             <button
@@ -97,7 +103,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
               <div className="flex items-center justify-between gap-2">
                 <span className="flex items-baseline gap-2">
                   <span className="font-bold">
-                    {t("walkrally.roundLabel", {
+                    {t("walkrally.events.roundLabel", {
                       index: String(round.index),
                     })}
                   </span>
@@ -107,7 +113,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
                 </span>
                 {round.status === "full" ? (
                   <span className="text-sm font-bold text-rpkm-red">
-                    {t("walkrally.full")}
+                    {t("walkrally.events.full")}
                   </span>
                 ) : (
                   <span className="flex items-center gap-1 text-xs">
@@ -118,7 +124,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
               </div>
               {round.status === "conflict" && (
                 <p className="text-xs text-rpkm-red">
-                  {t("walkrally.conflictMessage")}
+                  {t("walkrally.events.conflictMessage")}
                 </p>
               )}
             </button>
@@ -139,11 +145,11 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
               <div className="flex flex-col items-center gap-4 px-4 pb-6 text-center">
                 <div className="flex flex-col items-center gap-1">
                   <DialogTitle className="text-2xl font-bold">
-                    {t("walkrally.confirmTitle")}
+                    {t("walkrally.events.confirmTitle")}
                   </DialogTitle>
                   {selectedRound && (
                     <DialogDescription className="text-foreground">
-                      {t("walkrally.confirmMessage", {
+                      {t("walkrally.events.confirmMessage", {
                         name,
                         index: String(selectedRound.index),
                       })}
@@ -156,10 +162,10 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
                     className="bg-[#d33d3d] hover:bg-[#d33d3d]/85"
                     onClick={handleConfirm}
                   >
-                    {t("walkrally.confirm")}
+                    {t("walkrally.events.confirm")}
                   </Button>
                   <Button variant="outline" onClick={closeDialog}>
-                    {t("walkrally.cancel")}
+                    {t("walkrally.events.cancel")}
                   </Button>
                 </div>
               </div>
@@ -174,11 +180,11 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
               <div className="flex flex-col items-center gap-4 px-4 pb-6 text-center">
                 <div className="flex flex-col items-center gap-1">
                   <DialogTitle className="text-2xl font-bold">
-                    {t("walkrally.successTitle")}
+                    {t("walkrally.events.successTitle")}
                   </DialogTitle>
                   {selectedRound && (
                     <DialogDescription className="text-foreground">
-                      {t("walkrally.successMessage", {
+                      {t("walkrally.events.successMessage", {
                         name,
                         index: String(selectedRound.index),
                       })}
@@ -186,7 +192,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
                   )}
                 </div>
                 <Button variant="green" onClick={closeDialog}>
-                  {t("walkrally.ok")}
+                  {t("walkrally.events.ok")}
                 </Button>
               </div>
             </>
@@ -200,18 +206,18 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
               <div className="flex flex-col items-center gap-4 px-4 pb-6 text-center">
                 <div className="flex flex-col items-center gap-1">
                   <DialogTitle className="text-2xl font-bold">
-                    {t("walkrally.failTitle")}
+                    {t("walkrally.events.failTitle")}
                   </DialogTitle>
                   <DialogDescription className="text-foreground">
-                    {t("walkrally.failMessage")}
+                    {t("walkrally.events.failMessage")}
                   </DialogDescription>
                 </div>
                 <Button
                   variant="outline"
-                  className="border-[#d33d3d] text-[#d33d3d]"
+                  className="border-destructive text-destructive"
                   onClick={() => setStep("confirm")}
                 >
-                  {t("walkrally.retry")}
+                  {t("walkrally.events.retry")}
                 </Button>
               </div>
             </>

@@ -46,7 +46,7 @@ export function ActivityTabs({ tab, onTabChange }: ActivityTabsProps) {
                 aria-hidden="true"
               />
             ) : (
-              t(`walkrally.tabs.${tabOption}`)
+              t(`walkrally.events.tabs.${tabOption}`)
             )}
           </button>
         );
