@@ -5,6 +5,7 @@ import {
   ActivityCard,
   type Activity,
 } from "@components/walkrally/events/ActivityCard";
+import { MinigamePanel } from "@components/walkrally/events/MinigamePanel";
 import type { Tab } from "@components/walkrally/events/ActivityTabs";
 import walkrally from "@components/walkrally/events/events.json";
 import { getImageUrl } from "@lib/function";
@@ -38,17 +39,21 @@ export function ActivityList({ tab }: ActivityListProps) {
   }));
 
   return (
-    <MonotoneNoiseContainer className="flex flex-col gap-4 rounded-3xl bg-[#e3ffe7] p-4 border border-black">
+    <MonotoneNoiseContainer className="flex flex-col gap-4 rounded-3xl bg-rpkm-light-green p-4 border border-black">
       <div className="w-full flex justify-center py-2">
         <img src={header} alt={`walkrally_${tab}`} className="size-24" />
       </div>
-      {activities.map((activity) => (
-        <ActivityCard
-          key={activity.id}
-          activity={activity}
-          accentColor={tabAccentColor[tab]}
-        />
-      ))}
+      {tab === "minigame" ? (
+        <MinigamePanel />
+      ) : (
+        activities.map((activity) => (
+          <ActivityCard
+            key={activity.id}
+            activity={activity}
+            accentColor={tabAccentColor[tab]}
+          />
+        ))
+      )}
     </MonotoneNoiseContainer>
   );
 }

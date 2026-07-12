@@ -60,18 +60,52 @@
   ],
   "minigame": [
     {
+      "id": "dixit",
+      "nameTh": "Dixit",
+      "nameEn": "Dixit",
+      "descriptionTh": "บอร์ดเกมแนวเล่าเรื่องที่เน้นการใช้จินตนาการ ผู้เล่นคนหนึ่งเป็น \"นักเล่าเรื่อง\" ให้คำใบ้จากภาพวาดสุดแฟนตาซี ส่วนคนอื่นต้องทายว่าภาพไหนตรงกับคำใบ้",
+      "descriptionEn": "A storytelling card game full of imagination — one player becomes the \"storyteller\" and gives a clue from a dreamlike illustration, while everyone else guesses which card matches.",
+      "imageName": "dixit.png"
+    },
+    {
       "id": "sheriff-of-nottingham",
       "nameTh": "Sheriff of Nottingham",
-      "nameEn": "Sheriff of Nottingham"
+      "nameEn": "Sheriff of Nottingham",
+      "descriptionTh": "เกมการ์ดที่ให้ผู้เล่นสวมบทเป็น \"พ่อค้า\" ลักลอบนำสินค้าเข้าเมือง โดยหลีกเลี่ยงการตรวจของ \"นายอากร\" ผู้คอยจับผิดสินค้าปลอม",
+      "descriptionEn": "Play as a merchant trying to smuggle goods into the city while dodging the Sheriff's inspection — bluff, negotiate, and outwit each other.",
+      "imageName": "sheriff.png"
     },
-    { "id": "dixit", "nameTh": "Dixit", "nameEn": "Dixit" },
-    { "id": "the-mind", "nameTh": "The Mind", "nameEn": "The Mind" },
-    { "id": "insider", "nameTh": "Insider", "nameEn": "Insider" },
-    { "id": "muffin-time", "nameTh": "Muffin Time", "nameEn": "Muffin Time" },
+    {
+      "id": "the-mind",
+      "nameTh": "The Mind",
+      "nameEn": "The Mind",
+      "descriptionTh": "เกมความร่วมมือที่ต้องเล่นการ์ดตัวเลขเรียงลำดับโดยห้ามพูดคุยกันเลย อาศัยจังหวะและสัญชาตญาณร่วมของทั้งทีม",
+      "descriptionEn": "A cooperative game where players must play numbered cards in ascending order without communicating at all — pure teamwork and intuition.",
+      "imageName": "themind.png"
+    },
+    {
+      "id": "insider",
+      "nameTh": "Insider",
+      "nameEn": "Insider",
+      "descriptionTh": "เกมทายคำและจับผิดคนโกหก มีผู้เล่นลับคนหนึ่งที่รู้คำตอบอยู่แล้ว คอยชักจูงทุกคนโดยไม่ให้ถูกจับได้",
+      "descriptionEn": "A social deduction game — one secret \"insider\" already knows the answer and must guide the group there without getting caught.",
+      "imageName": "insider.png"
+    },
+    {
+      "id": "muffin-time",
+      "nameTh": "Muffin Time",
+      "nameEn": "Muffin Time",
+      "descriptionTh": "เกมการ์ดสุดฮาจังหวะไว ใครถือไพ่ \"มัฟฟินไหม้\" ติดมือตอนจบเกมจะเป็นฝ่ายแพ้ทันที",
+      "descriptionEn": "A fast, silly party card game — whoever is left holding the \"burnt muffin\" card when time's up loses instantly.",
+      "imageName": "muffintime.png"
+    },
     {
       "id": "exploding-kittens",
       "nameTh": "Exploding Kittens",
-      "nameEn": "Exploding Kittens"
+      "nameEn": "Exploding Kittens",
+      "descriptionTh": "เกมการ์ดสุ่มไพ่ที่ต้องคอยหลบไพ่ \"แมวระเบิด\" ใช้ไพ่พิเศษป้องกันตัวและหลอกล่อคู่แข่งให้จับไพ่นั้นแทน",
+      "descriptionEn": "Draw cards and avoid the exploding kitten — use special cards to defuse it or trick your opponents into drawing it instead.",
+      "imageName": "explodingkitten.png"
     }
   ]
 }

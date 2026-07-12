@@ -1,10 +1,16 @@
-import { useEffect, useState } from "react";
-import { AlertCircle, Check, CheckCircle2, Users } from "lucide-react";
+import { useState, useSyncExternalStore } from "react";
+import {
+  AlertCircle,
+  Check,
+  CheckCircle2,
+  ChevronRight,
+  Users,
+} from "lucide-react";
 import { useStore } from "@nanostores/react";
 import { cn } from "@lib/utils";
-import { getImageUrl } from "@lib/function";
 import { useT } from "@lib/i18n/useT";
 import { $locale } from "@lib/i18n/locale";
+import { getImageUrl } from "@lib/function";
 import { Button } from "@components/ui/button";
 import {
   Dialog,
@@ -13,46 +19,73 @@ import {
   DialogDescription,
 } from "@components/ui/dialog";
 import { rounds, type Round } from "@components/walkrally/events/rounds";
-import registrations from "@components/walkrally/registrations.json";
+import events from "@components/walkrally/events/events.json";
+import registrationsData from "@components/walkrally/registrations.json";
+import {
+  clearStoredMinigameId,
+  getStoredMinigameId,
+} from "@components/walkrally/events/minigameSelection";
 
-export interface WalkRallyEntry {
-  id: string;
-  nameTh: string;
-  nameEn: string;
-  descriptionTh?: string;
-  descriptionEn?: string;
-  imageName?: string;
+const ACCENT_MINIGAME = "#8b688d";
+const MINIGAME_IDS = events.minigame.map((game) => game.id);
+
+interface Registration {
+  activityId: string;
+  round: number;
+  ticketNumber: string;
 }
 
-interface ActivityDetailPanelProps {
-  entry: WalkRallyEntry;
-}
+const registrations = registrationsData as Registration[];
 
 type Step = "confirm" | "success" | "fail";
 
-export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
+function subscribeNoop() {
+  return () => {};
+}
+
+function getServerPendingGameId(): string | undefined {
+  return undefined;
+}
+
+export function MinigamePanel() {
   const t = useT();
   const locale = useStore($locale);
   const [selectedRound, setSelectedRound] = useState<Round | null>(null);
   const [step, setStep] = useState<Step>("confirm");
+  const pendingGameId = useSyncExternalStore(
+    subscribeNoop,
+    getStoredMinigameId,
+    getServerPendingGameId,
+  );
 
-  const name = locale === "th" ? entry.nameTh : entry.nameEn;
-  const description =
-    locale === "th" ? entry.descriptionTh : entry.descriptionEn;
-  const imageUrl = getImageUrl(entry.imageName ?? "");
-  const registration = registrations.find((r) => r.activityId === entry.id);
-
-  useEffect(() => {
-    document.title = name;
-  }, [name]);
+  const registration = registrations.find((r) =>
+    MINIGAME_IDS.includes(r.activityId),
+  );
+  const chosenGameId = registration?.activityId ?? pendingGameId;
+  const chosenGame = chosenGameId
+    ? events.minigame.find((game) => game.id === chosenGameId)
+    : undefined;
+  const chosenGameName = chosenGame
+    ? locale === "th"
+      ? chosenGame.nameTh
+      : chosenGame.nameEn
+    : undefined;
+  const chosenGameImage =
+    chosenGame && "imageName" in chosenGame
+      ? getImageUrl(chosenGame.imageName as string)
+      : undefined;
 
   function closeDialog() {
     setSelectedRound(null);
   }
 
   async function handleConfirm() {
+    if (!selectedRound) return;
     try {
-      // TODO: call registration API
+      // TODO: call registration API with { activityId: chosenGameId, round: selectedRound.index }
+      // once the API confirms the registration, it becomes the source of truth for chosenGameId,
+      // so the locally-cached in-progress pick is no longer needed
+      clearStoredMinigameId();
       setStep("success");
     } catch {
       setStep("fail");
@@ -61,26 +94,33 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="pointer-events-none absolute inset-x-0 top-[4.5cqw] flex min-h-10 items-center justify-center px-14 text-center text-2xl leading-[1.4] font-bold text-foreground sm:top-4.5 ">
-        {name}
-      </div>
-
-      <div className="flex flex-col items-center gap-3 px-6 pt-10">
-        {entry.imageName && (
-          <img
-            src={imageUrl}
-            alt=""
-            className="-mt-12 size-40 rounded-2xl border-2 border-black object-cover"
-          />
-        )}
-        {description && (
-          <p className="text-center text-base leading-[1.4] font-normal text-foreground">
-            {description}
+      <a
+        href="/walkrally/events/minigames"
+        style={{ backgroundColor: ACCENT_MINIGAME }}
+        className="flex items-center gap-3 rounded-2xl border border-black p-3 text-background"
+      >
+        {chosenGame ? (
+          <>
+            {chosenGameImage ? (
+              <img
+                src={chosenGameImage}
+                alt=""
+                className="size-10 shrink-0 rounded-lg border border-black object-cover"
+              />
+            ) : (
+              <div className="size-10 shrink-0 rounded-lg border border-black bg-muted" />
+            )}
+            <p className="flex-1 text-sm font-bold">{chosenGameName}</p>
+          </>
+        ) : (
+          <p className="flex-1 text-sm whitespace-pre-line">
+            {t("walkrally.events.minigameSummary")}
           </p>
         )}
-      </div>
+        <ChevronRight className="size-5 shrink-0" />
+      </a>
 
-      <div className="rounded-3xl bg-rpkm-red p-4 text-background mx-4">
+      <div className="rounded-3xl bg-rpkm-red p-4 text-background">
         <h2 className="text-center text-lg font-bold">
           {t("walkrally.events.rounds")}
         </h2>
@@ -93,14 +133,13 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
             const sameActivityLocked = Boolean(registration) && !isSelected;
             const crossActivityConflict =
               !registration &&
-              registrations.some(
-                (r) => r.activityId !== entry.id && r.round === round.index,
-              );
+              registrations.some((r) => r.round === round.index);
             return (
               <button
                 key={round.index}
                 type="button"
                 disabled={
+                  !chosenGameId ||
                   Boolean(registration) ||
                   crossActivityConflict ||
                   round.status !== "available"
@@ -110,9 +149,9 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
                   setStep("confirm");
                 }}
                 className={cn(
-                  "flex flex-col rounded-xl p-2 text-left text-foreground disabled:cursor-not-allowed border border-black",
+                  "flex flex-col rounded-xl border border-black p-2 text-left text-foreground disabled:cursor-not-allowed",
                   isSelected
-                    ? "border border-black bg-rpkm-yellow"
+                    ? "border-2 border-black bg-rpkm-yellow"
                     : crossActivityConflict || round.status === "full"
                       ? "bg-[#f4c3ab]"
                       : "bg-background",
@@ -169,7 +208,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
         <DialogContent className="overflow-hidden p-0" showCloseButton={false}>
           {step === "confirm" && (
             <>
-              <div className="flex flex-col items-center gap-1 bg-[#d33d3d] p-4 text-background rounded-2xl border-b border-b-black">
+              <div className="flex flex-col items-center gap-1 rounded-2xl border-b border-b-black bg-[#d33d3d] p-4 text-background">
                 <AlertCircle className="size-11" />
               </div>
               <div className="flex flex-col items-center gap-4 px-4 pb-6 text-center">
@@ -180,7 +219,8 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
                   {selectedRound && (
                     <DialogDescription className="text-foreground">
                       {t("walkrally.events.confirmMessage", {
-                        name,
+                        name:
+                          chosenGameName ?? t("walkrally.events.tabs.minigame"),
                         index: String(selectedRound.index),
                       })}
                     </DialogDescription>
@@ -215,7 +255,8 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
                   {selectedRound && (
                     <DialogDescription className="text-foreground">
                       {t("walkrally.events.successMessage", {
-                        name,
+                        name:
+                          chosenGameName ?? t("walkrally.events.tabs.minigame"),
                         index: String(selectedRound.index),
                       })}
                     </DialogDescription>
@@ -244,7 +285,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
                 </div>
                 <Button
                   variant="outline"
-                  className="border-destructive text-destructive"
+                  className="border-[#d33d3d] text-[#d33d3d]"
                   onClick={() => setStep("confirm")}
                 >
                   {t("walkrally.events.retry")}

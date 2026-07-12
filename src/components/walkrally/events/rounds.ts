@@ -1,6 +1,6 @@
 import roundSchedule from "@components/walkrally/rounds.json";
 
-export type RoundStatus = "available" | "full" | "conflict";
+export type RoundStatus = "available" | "full";
 
 export interface Round {
   index: number;
@@ -24,7 +24,7 @@ const roundStates: RoundState[] = [
   { index: 2, capacity: 30, booked: 19, status: "available" },
   { index: 3, capacity: 30, booked: 30, status: "full" },
   { index: 4, capacity: 30, booked: 25, status: "available" },
-  { index: 5, capacity: 30, booked: 23, status: "conflict" },
+  { index: 5, capacity: 30, booked: 23, status: "available" },
   { index: 6, capacity: 30, booked: 5, status: "available" },
 ];
 

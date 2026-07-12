@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
 import {
@@ -18,9 +18,32 @@ interface WalkRallyPanelProps {
   topic?: Topic;
 }
 
+function subscribeNoop() {
+  return () => {};
+}
+
+function getUrlTabSnapshot(): Tab {
+  const urlTab = new URLSearchParams(window.location.search).get("tab");
+  return urlTab === "workshop" ||
+    urlTab === "walkingTour" ||
+    urlTab === "minigame"
+    ? urlTab
+    : "workshop";
+}
+
+function getServerTabSnapshot(): Tab {
+  return "workshop";
+}
+
 const WalkRallyEventPanel = ({ topic = "white" }: WalkRallyPanelProps) => {
   const t = useT();
-  const [tab, setTab] = useState<Tab>("workshop");
+  const urlTab = useSyncExternalStore(
+    subscribeNoop,
+    getUrlTabSnapshot,
+    getServerTabSnapshot,
+  );
+  const [manualTab, setManualTab] = useState<Tab | null>(null);
+  const tab = manualTab ?? urlTab;
 
   return (
     <>
@@ -34,7 +57,7 @@ const WalkRallyEventPanel = ({ topic = "white" }: WalkRallyPanelProps) => {
       </div>
 
       <div className="flex flex-col">
-        <ActivityTabs tab={tab} onTabChange={setTab} />
+        <ActivityTabs tab={tab} onTabChange={setManualTab} />
         <ActivityList tab={tab} />
       </div>
     </>

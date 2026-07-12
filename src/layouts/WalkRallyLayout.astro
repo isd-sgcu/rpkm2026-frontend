@@ -13,10 +13,11 @@ import { ChevronLeft } from "lucide-react";
 import "@styles/global.css";
 import type { HTMLAttributes } from "astro/types";
 
-type BgColor = "green" | "lightpink" | "beige";
+type BgColor = "green" | "lightgreen" | "lightpink" | "beige";
 
 const bgColorClass: Record<BgColor, string> = {
   green: "bg-rpkm-green",
+  lightgreen: "bg-rpkm-light-green",
   lightpink: "bg-rpkm-light-pink",
   beige: "bg-rpkm-beige",
 };
