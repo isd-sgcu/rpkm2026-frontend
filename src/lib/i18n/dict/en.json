@@ -35,6 +35,12 @@
     "confirmTitle": "Confirm Selection",
     "confirmMessage": "Do you want to add {name}, Round {index}?",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "successTitle": "Registration Successful",
+    "successMessage": "Successfully registered for {name}, Round {index}.",
+    "failTitle": "Registration Failed",
+    "failMessage": "Invalid student ID, or you are not registered in the system.",
+    "ok": "OK",
+    "retry": "Try Again"
   }
 }
