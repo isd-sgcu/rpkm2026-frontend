@@ -1,9 +1,8 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
 import WalkRallyLayout from "@layouts/WalkRallyLayout.astro";
 import WalkRallyPanel from "@components/walkrally/WalkRallyPanel";
 ---
 
-<BaseLayout title={"Walk Rally"} showFooter>
-  <WalkRallyLayout navigateBack={"/"}><WalkRallyPanel /> </WalkRallyLayout>
-</BaseLayout>
+<WalkRallyLayout title={"Walk Rally"} navigateBack={"/"}>
+  <WalkRallyPanel client:load />
+</WalkRallyLayout>
