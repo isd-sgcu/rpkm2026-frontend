@@ -70,7 +70,7 @@ export function FieldBlock({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex w-full min-w-0 flex-col gap-1.5">
       {label && (
         <label className="text-base font-normal text-foreground">{label}</label>
       )}
