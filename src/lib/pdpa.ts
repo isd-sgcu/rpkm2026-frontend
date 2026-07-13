@@ -28,9 +28,9 @@ export interface PdpaContent {
 
 const TH: PdpaContent = {
   title: ["นโยบายคุ้มครอง", "ข้อมูลส่วนบุคคล"],
-  subtitle: "โครงการ CU First Date 2026",
+  subtitle: "โครงการ รับเพื่อนก้าวใหม่ 2026",
   intro: [
-    "โครงการ CU First Date 2026 (“โครงการ ฯ ”) ได้ตระหนักถึงความสำคัญของการคุ้มครองข้อมูลส่วนบุคคลและดำรงไว้ซึ่งมาตรการในการรักษาสิทธิและความปลอดภัยในข้อมูลส่วนบุคคลตามมาตรฐานที่เหมาะสมและเป็นไปตามกฎหมายที่เกี่ยวข้อง",
+    "โครงการ รับเพื่อนก้าวใหม่ 2026 (“โครงการ ฯ ”) ได้ตระหนักถึงความสำคัญของการคุ้มครองข้อมูลส่วนบุคคลและดำรงไว้ซึ่งมาตรการในการรักษาสิทธิและความปลอดภัยในข้อมูลส่วนบุคคลตามมาตรฐานที่เหมาะสมและเป็นไปตามกฎหมายที่เกี่ยวข้อง",
     "จึงได้จัดทำและเผยแพร่นโยบายข้อมูลส่วนบุคคลฉบับนี้ให้กับนิสิตหรือบุคคลภายนอกที่เข้าร่วมกิจกรรมกับทางโครงการ ฯ เพื่อให้รับทราบและเข้าใจถึงนโยบายการคุ้มครองข้อมูลส่วนบุคคลรวมถึงสิทธิในข้อมูลส่วนบุคคล ทั้งนี้ ให้มีผลบังคับใช้กับนิสิตหรือบุคคลภายนอกที่เข้าร่วมกิจกรรมกับทางโครงการ ฯ โดยมีเนื้อหาดังต่อไปนี้",
   ],
   sections: [
@@ -250,7 +250,7 @@ const TH: PdpaContent = {
       blocks: [
         {
           kind: "p",
-          text: "ทางโครงการ ฯ จะได้รับข้อมูลส่วนบุคคลของท่านจากช่องทางต่าง ๆ ได้แก่ แบบสอบถามของโครงการ ฯ แพลตฟอร์มออนไลน์ของโครงการ ฯ การบันทึกภาพนิ่ง วิดีโอ และ/หรือ เสียงจากผู้ปฏิบัติงานภายในโครงการ ฯ ณ วันที่ 18 กรกฎาคม พ.ศ. 2569 (วันงาน CU First Date 2026)",
+          text: "ทางโครงการ ฯ จะได้รับข้อมูลส่วนบุคคลของท่านจากช่องทางต่าง ๆ ได้แก่ แบบสอบถามของโครงการ ฯ แพลตฟอร์มออนไลน์ของโครงการ ฯ การบันทึกภาพนิ่ง วิดีโอ และ/หรือ เสียงจากผู้ปฏิบัติงานภายในโครงการ ฯ ณ วันที่ 18 กรกฎาคม พ.ศ. 2569 (วันงาน รับเพื่อนก้าวใหม่ 2026)",
         },
       ],
     },
@@ -353,7 +353,7 @@ const TH: PdpaContent = {
                   kind: "list",
                   items: [
                     {
-                      text: "ระยะเวลาในการประมวลผลข้อมูลอยู่ที่ 270 วัน นับแต่วันที่ดำเนินการเก็บรวบรวมข้อมูลเข้าสู่ระบบ หรือวันงาน CU First Date 2026",
+                      text: "ระยะเวลาในการประมวลผลข้อมูลอยู่ที่ 270 วัน นับแต่วันที่ดำเนินการเก็บรวบรวมข้อมูลเข้าสู่ระบบ หรือวันงาน รับเพื่อนก้าวใหม่ 2026",
                     },
                     {
                       text: "เมื่อพ้นระยะเวลาการจัดเก็บ ทางโครงการ ฯ จะไม่มีสิทธิหรือไม่สามารถอ้างฐานในการประมวลผลข้อมูลส่วนบุคคลของท่าน และทางโครงการ ฯ จะดำเนินการทำลายข้อมูลส่วนบุคคลนั้นด้วยการลบข้อมูลส่วนบุคคลทั้งหมดจนข้อมูลนั้นไม่สามารถระบุถึงตัวตนเจ้าของข้อมูลส่วนบุคคลได้ และจะดำเนินการให้แล้วเสร็จภายใน 100 วันนับแต่วันสิ้นสุดระยะเวลาดังกล่าว",
@@ -484,9 +484,9 @@ const TH: PdpaContent = {
 
 const EN: PdpaContent = {
   title: ["Personal Data", "Protection Policy"],
-  subtitle: "CU First Date 2026",
+  subtitle: "Rub Puen Kao Mai 2026",
   intro: [
-    "Since the importance of personal data protection and privacy is highly considered in the “CU First Date 2026” (Event) and must abide by the relevant regulations.",
+    "Since the importance of personal data protection and privacy is highly considered in the “Rub Puen Kao Mai 2026” (Event) and must abide by the relevant regulations.",
     "Thus, this Personal Data Protection Policy (Policy) has been developed and endorsed for both students and outsiders who participate in the event to acknowledge and develop their understandings of the Personal Data Protection Policy as well as the right to access Personal Data for both students and outsiders who attended the event with the content stated below.",
   ],
   sections: [
@@ -807,7 +807,7 @@ const EN: PdpaContent = {
                   kind: "list",
                   items: [
                     {
-                      text: "The time of the data processing is 270 days, since storing data into the system (on the CU First Date event day).",
+                      text: "The time of the data processing is 270 days, since storing data into the system (on the Rub Puen Kao Mai event day).",
                     },
                     {
                       text: "After passing the storage period, which the event has either rights or appropriate claims to processing those Personal Data anymore, the event will process an elimination of those Personal Data by deleting all Personal Data until reaching the Personal Data subject is impeccable and must be done within 100 days.",
