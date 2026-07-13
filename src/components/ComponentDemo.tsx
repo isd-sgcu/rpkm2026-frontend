@@ -1,5 +1,4 @@
 import { useStore } from "@nanostores/react";
-
 import { Button } from "@components/ui/button";
 import { $locale, setLocale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";

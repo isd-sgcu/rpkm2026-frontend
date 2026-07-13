@@ -66,7 +66,7 @@ export function ConfirmActionDialog({
       }}
     >
       <DialogContent
-        className="overflow-hidden border-2 border-black p-0"
+        className="overflow-hidden border border-black p-0 rounded-2xl"
         showCloseButton={false}
       >
         {step === "confirm" && (
