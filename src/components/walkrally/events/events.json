@@ -47,7 +47,8 @@
       "nameTh": "พิพิธภัณฑสถานธรรมชาติวิทยา",
       "nameEn": "Natural History Museum",
       "descriptionTh": "เรื่องราวของธรรมชาติ ที่ถูกบันทึกผ่านกาลเวลา ร่วมค้นพบความหลากหลายของสิ่งมีชีวิต",
-      "descriptionEn": "The story of nature, recorded through time. Discover the diversity of living things."
+      "descriptionEn": "The story of nature, recorded through time. Discover the diversity of living things.",
+      "imageName": "naturalmuseum.png"
     },
     {
       "id": "living-plant-museum",

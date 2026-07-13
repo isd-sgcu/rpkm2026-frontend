@@ -1,5 +1,6 @@
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
+import { getImageUrl } from "@lib/function";
 import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 
 export type Tab = "workshop" | "walkingTour" | "minigame";
@@ -32,7 +33,7 @@ export function ActivityTabs({ tab, onTabChange }: ActivityTabsProps) {
               "relative isolate flex w-[25cqw] items-center justify-center overflow-hidden rounded-t-2xl border border-b-0 border-black px-2 sm:w-28",
               rightOffsetClass[index],
               active
-                ? "absolute bottom-0 z-10 h-12 bg-[#f0a9cb] p-1.5"
+                ? "absolute bottom-0 z-10 h-14 bg-rpkm-light-pink p-1.5"
                 : "absolute bottom-0 z-0 h-9 bg-background text-xs font-bold text-foreground",
             )}
             onClick={() => onTabChange(tabOption)}
@@ -41,9 +42,10 @@ export function ActivityTabs({ tab, onTabChange }: ActivityTabsProps) {
               <MonotoneNoise className="absolute inset-0 -z-1 pointer-events-none" />
             )}
             {active ? (
-              <div
-                className="h-6 w-full rounded-full bg-[#f3eeee]"
-                aria-hidden="true"
+              <img
+                src={getImageUrl(`walkrally_${tabOption}.svg`)}
+                alt={t(`walkrally.events.tabs.${tabOption}`)}
+                className="h-8 w-full rounded-full object-contain"
               />
             ) : (
               t(`walkrally.events.tabs.${tabOption}`)
