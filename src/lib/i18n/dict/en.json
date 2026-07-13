@@ -54,27 +54,35 @@
     "rule": {
       "title": "How to Play Chula QR Quest",
       "step1": {
-        "title": "Get Your Passport",
-        "text": "Use the Passport included in your new student handbook"
+        "title": "Log In",
+        "text": "Log in to the system to receive your Scanner"
       },
       "step2": {
         "title": "View the Map",
-        "text": "Open the map to see the locations of all stamp collection points",
+        "text": "Open the map to see the locations of the QR codes",
         "button": "Open Map"
       },
       "step3": {
         "title": "Explore",
-        "text": "Walk to each location. When you arrive, you'll find a stamp for your Passport"
+        "text": "Scan the QR code at each location to collect a stamp"
       },
       "step4": {
         "title": "Collect Them All",
-        "text": "Collect stamps from every designated point"
+        "text": "Collect all the required stamps"
       },
       "step5": {
-        "title": "Redeem Your Reward",
-        "text": "Bring your completed Passport to redeem your reward at the specified date, time, and location",
+        "title": "Claim Your Reward",
+        "text": "Follow reward redemption details on IG: rubpuenkaomai2026",
         "button": "View Reward Details"
       }
+    },
+    "reward": {
+      "title": "Claim Reward",
+      "pointsRequirement": "Collect {points} points",
+      "locked": "Not yet reached",
+      "unlocked": "Reward received!",
+      "footerNote": "Follow reward redemption instructions at",
+      "collectedProgress": "You've collected {collected}/{total} pieces"
     }
   },
   "walkrally": {

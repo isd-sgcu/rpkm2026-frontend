@@ -46,12 +46,8 @@ const {
   }
 
   <div
-    class:list={[
-      "absolute inset-0 flex flex-col px-[1.25em] pointer-events-none pt-[20cqw] sm:pt-20",
-    ]}
+    class:list={["relative flex flex-col px-[1.25em] pt-[24cqw] pb-8 sm:pt-24"]}
   >
-    <div class="contents pointer-events-auto pb-8">
-      <slot />
-    </div>
+    <slot />
   </div>
 </div>

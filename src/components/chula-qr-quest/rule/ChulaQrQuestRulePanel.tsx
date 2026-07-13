@@ -93,7 +93,7 @@ const ChulaQrQuestRulePanel = () => {
             href="/chula-qr-quest/reward"
             className={cn(
               buttonVariants({ variant: "outline", size: "sm" }),
-              "mt-3 w-fit gap-1",
+              "mt-3 h-fit py-2 w-full whitespace-normal gap-1",
             )}
           >
             {t("chulaQrQuest.rule.step5.button")}
