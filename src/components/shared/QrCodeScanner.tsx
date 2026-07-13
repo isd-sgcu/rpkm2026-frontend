@@ -9,18 +9,30 @@ interface QrScannerProps {
   onScan: (contents: string) => void;
 
   // Should pause when you get a scan result while you are showing dialog
-  paused: boolean;
+  paused?: boolean;
+
+  // Corner brackets + scanning-beam chrome drawn over the camera feed
+  overlay?: boolean;
+
+  // Surface a spinner over the camera once a request is slow enough to notice,
+  // so fast responses don't flash it
+  loading?: boolean;
 }
 
-export function QrScanner({ className, paused, onScan }: QrScannerProps) {
-  // only surface the spinner once the request is slow enough to notice,
-  // so fast responses don't flash it
-  const showLoading = false;
+export function QrScanner({
+  className,
+  paused = false,
+  onScan,
+  overlay = true,
+  loading = false,
+}: QrScannerProps) {
   const t = useT();
 
   // TODO: permission flow
   return (
-    <div className={cn("aspect-square w-full", className)}>
+    <div
+      className={cn("relative aspect-square w-full overflow-hidden", className)}
+    >
       <Scanner
         onScan={(codes) => {
           const code = codes[0]?.rawValue;
@@ -35,12 +47,33 @@ export function QrScanner({ className, paused, onScan }: QrScannerProps) {
             ideal: "environment",
           },
         }}
+        components={{ finder: false }}
+        sound={false}
+        styles={{
+          container: { width: "100%", height: "100%" },
+          video: { width: "100%", height: "100%", objectFit: "cover" },
+        }}
       />
-      {showLoading && (
+
+      {overlay && <QrScannerOverlay />}
+
+      {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/40">
           <LoaderCircleIcon className="size-10 animate-spin text-white" />
         </div>
       )}
+    </div>
+  );
+}
+
+function QrScannerOverlay() {
+  return (
+    <div className="pointer-events-none absolute inset-0">
+      {/* corner brackets */}
+      <span className="absolute top-[8%] left-[8%] size-8 rounded-tl-md border-t-4 border-l-4 border-foreground" />
+      <span className="absolute top-[8%] right-[8%] size-8 rounded-tr-md border-t-4 border-r-4 border-foreground" />
+      <span className="absolute bottom-[8%] left-[8%] size-8 rounded-bl-md border-b-4 border-l-4 border-foreground" />
+      <span className="absolute right-[8%] bottom-[8%] size-8 rounded-br-md border-r-4 border-b-4 border-foreground" />
     </div>
   );
 }
