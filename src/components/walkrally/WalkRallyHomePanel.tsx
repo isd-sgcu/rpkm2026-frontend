@@ -60,26 +60,28 @@ export function WalkRallyHomePanel() {
       </div>
 
       <div className="flex flex-col gap-8 px-4">
-        <div className="relative isolate flex min-h-28 items-center gap-3 overflow-hidden rounded-3xl border border-black bg-background p-3">
+        <div className="relative isolate flex min-h-28 flex-col items-center gap-3 overflow-hidden rounded-3xl border border-black bg-background p-3 min-[360px]:flex-row">
           <MonotoneNoise className="absolute inset-0 -z-1 pointer-events-none" />
 
-          <div
-            className="relative isolate size-16 shrink-0 overflow-hidden rounded-full border border-black p-1"
-            style={{ backgroundColor: ACCENT_ORANGE }}
-          >
-            <MonotoneNoise className="absolute inset-0 -z-1 pointer-events-none" />
-            <div className="size-full overflow-hidden rounded-full border border-black bg-muted" />
-          </div>
-
-          <div className="min-w-0 flex-1">
-            <span className="inline-block text-sm rounded-full border border-black bg-rpkm-light-pink px-2 py-0.5 text-[0.65rem] font-bold text-foreground">
-              {mockProfile.studentId}
-            </span>
-            <div className="mt-3 truncate text-xl font-bold text-foreground">
-              {mockProfile.name}
+          <div className="flex w-full min-w-0 items-center gap-3 min-[360px]:w-auto min-[360px]:flex-1">
+            <div
+              className="relative isolate size-16 shrink-0 overflow-hidden rounded-full border border-black p-1"
+              style={{ backgroundColor: ACCENT_ORANGE }}
+            >
+              <MonotoneNoise className="absolute inset-0 -z-1 pointer-events-none" />
+              <div className="size-full overflow-hidden rounded-full border border-black bg-muted" />
             </div>
-            <div className="truncate text-base text-muted-foreground">
-              {mockProfile.faculty}
+
+            <div className="min-w-0 flex-1">
+              <span className="inline-block text-sm rounded-full border border-black bg-rpkm-light-pink px-2 py-0.5 text-[0.65rem] font-bold text-foreground">
+                {mockProfile.studentId}
+              </span>
+              <div className="mt-3 truncate text-xl font-bold text-foreground">
+                {mockProfile.name}
+              </div>
+              <div className="truncate text-base text-muted-foreground">
+                {mockProfile.faculty}
+              </div>
             </div>
           </div>
 

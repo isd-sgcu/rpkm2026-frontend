@@ -1,23 +1,11 @@
 import { useState, useSyncExternalStore } from "react";
-import {
-  AlertCircle,
-  Check,
-  CheckCircle2,
-  ChevronRight,
-  Users,
-} from "lucide-react";
+import { Check, ChevronRight, Users } from "lucide-react";
 import { useStore } from "@nanostores/react";
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
 import { $locale } from "@lib/i18n/locale";
 import { getImageUrl } from "@lib/function";
-import { Button } from "@components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@components/ui/dialog";
+import { ConfirmActionDialog } from "@components/walkrally/ConfirmActionDialog";
 import { rounds, type Round } from "@components/walkrally/events/rounds";
 import events from "@components/walkrally/events/events.json";
 import registrationsData from "@components/walkrally/registrations.json";
@@ -37,8 +25,6 @@ interface Registration {
 
 const registrations = registrationsData as Registration[];
 
-type Step = "confirm" | "success" | "fail";
-
 function subscribeNoop() {
   return () => {};
 }
@@ -51,7 +37,6 @@ export function MinigamePanel() {
   const t = useT();
   const locale = useStore($locale);
   const [selectedRound, setSelectedRound] = useState<Round | null>(null);
-  const [step, setStep] = useState<Step>("confirm");
   const pendingGameId = useSyncExternalStore(
     subscribeNoop,
     getStoredMinigameId,
@@ -74,6 +59,11 @@ export function MinigamePanel() {
     chosenGame && "imageName" in chosenGame
       ? getImageUrl(chosenGame.imageName as string)
       : undefined;
+  const chosenGameDescription = chosenGame
+    ? locale === "th"
+      ? chosenGame.descriptionTh
+      : chosenGame.descriptionEn
+    : undefined;
 
   function closeDialog() {
     setSelectedRound(null);
@@ -81,44 +71,59 @@ export function MinigamePanel() {
 
   async function handleConfirm() {
     if (!selectedRound) return;
-    try {
-      // TODO: call registration API with { activityId: chosenGameId, round: selectedRound.index }
-      // once the API confirms the registration, it becomes the source of truth for chosenGameId,
-      // so the locally-cached in-progress pick is no longer needed
-      clearStoredMinigameId();
-      setStep("success");
-    } catch {
-      setStep("fail");
-    }
+    // TODO: call API
+
+    clearStoredMinigameId();
   }
 
   return (
     <div className="flex flex-col gap-4">
-      <a
-        href="/walkrally/events/minigames"
-        style={{ backgroundColor: ACCENT_MINIGAME }}
-        className="flex items-center gap-3 rounded-2xl border border-black p-3 text-background"
-      >
-        {chosenGame ? (
-          <>
-            {chosenGameImage ? (
-              <img
-                src={chosenGameImage}
-                alt=""
-                className="size-10 shrink-0 rounded-lg border border-black object-cover"
-              />
-            ) : (
-              <div className="size-10 shrink-0 rounded-lg border border-black bg-muted" />
-            )}
-            <p className="flex-1 text-sm font-bold">{chosenGameName}</p>
-          </>
-        ) : (
+      {chosenGame ? (
+        <a
+          href="/walkrally/events/minigames"
+          style={{ backgroundColor: ACCENT_MINIGAME }}
+          className="relative isolate overflow-hidden rounded-3xl border border-black p-1"
+        >
+          <div className="relative flex flex-col items-center gap-3 rounded-[1.15rem] border border-black bg-white p-2 pr-10 sm:gap-4 sm:p-3 min-[360px]:flex-row">
+            <div
+              style={{ backgroundColor: ACCENT_MINIGAME }}
+              className="relative isolate shrink-0 overflow-hidden rounded-2xl border border-black p-1"
+            >
+              {chosenGameImage ? (
+                <img
+                  src={chosenGameImage}
+                  alt=""
+                  className="size-24 rounded-xl border border-black object-cover sm:size-28"
+                />
+              ) : (
+                <div className="size-24 rounded-xl border border-black bg-muted sm:size-28" />
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-base font-bold sm:text-lg">
+                {chosenGameName}
+              </div>
+              {chosenGameDescription && (
+                <p className="text-xs text-muted-foreground sm:text-sm">
+                  {chosenGameDescription}
+                </p>
+              )}
+            </div>
+            <ChevronRight className="absolute right-2 bottom-2 size-6 shrink-0 text-black" />
+          </div>
+        </a>
+      ) : (
+        <a
+          href="/walkrally/events/minigames"
+          style={{ backgroundColor: ACCENT_MINIGAME }}
+          className="flex items-center gap-3 rounded-2xl border border-black p-3 text-background"
+        >
           <p className="flex-1 text-sm whitespace-pre-line">
             {t("walkrally.events.minigameSummary")}
           </p>
-        )}
-        <ChevronRight className="size-5 shrink-0" />
-      </a>
+          <ChevronRight className="size-5 shrink-0" />
+        </a>
+      )}
 
       <div className="rounded-3xl bg-rpkm-red p-4 text-background">
         <h2 className="text-center text-lg font-bold">
@@ -144,10 +149,7 @@ export function MinigamePanel() {
                   crossActivityConflict ||
                   round.status !== "available"
                 }
-                onClick={() => {
-                  setSelectedRound(round);
-                  setStep("confirm");
-                }}
+                onClick={() => setSelectedRound(round)}
                 className={cn(
                   "flex flex-col rounded-xl border border-black p-2 text-left text-foreground disabled:cursor-not-allowed",
                   isSelected
@@ -158,18 +160,18 @@ export function MinigamePanel() {
                   sameActivityLocked && "opacity-50",
                 )}
               >
-                <div className="flex items-center justify-between gap-2">
+                <div className="flex flex-col gap-1 min-[360px]:flex-row min-[360px]:items-center min-[360px]:justify-between min-[360px]:gap-2">
                   <span className="flex items-center gap-2">
                     {isSelected && (
                       <Check className="size-4 shrink-0 text-black" />
                     )}
                     <span className="flex items-baseline gap-2">
-                      <span className="font-bold">
+                      <span className="font-bold whitespace-nowrap">
                         {t("walkrally.events.roundLabel", {
                           index: String(round.index),
                         })}
                       </span>
-                      <span className="text-sm">
+                      <span className="text-sm whitespace-nowrap">
                         {round.start}-{round.end}
                       </span>
                     </span>
@@ -201,100 +203,35 @@ export function MinigamePanel() {
         </div>
       </div>
 
-      <Dialog
+      <ConfirmActionDialog
         open={selectedRound !== null}
         onOpenChange={(open) => !open && closeDialog()}
-      >
-        <DialogContent className="overflow-hidden p-0" showCloseButton={false}>
-          {step === "confirm" && (
-            <>
-              <div className="flex flex-col items-center gap-1 rounded-2xl border-b border-b-black bg-[#d33d3d] p-4 text-background">
-                <AlertCircle className="size-11" />
-              </div>
-              <div className="flex flex-col items-center gap-4 px-4 pb-6 text-center">
-                <div className="flex flex-col items-center gap-1">
-                  <DialogTitle className="text-2xl font-bold">
-                    {t("walkrally.events.confirmTitle")}
-                  </DialogTitle>
-                  {selectedRound && (
-                    <DialogDescription className="text-foreground">
-                      {t("walkrally.events.confirmMessage", {
-                        name:
-                          chosenGameName ?? t("walkrally.events.tabs.minigame"),
-                        index: String(selectedRound.index),
-                      })}
-                    </DialogDescription>
-                  )}
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="destructive"
-                    className="bg-[#d33d3d] hover:bg-[#d33d3d]/85"
-                    onClick={handleConfirm}
-                  >
-                    {t("walkrally.events.confirm")}
-                  </Button>
-                  <Button variant="outline" onClick={closeDialog}>
-                    {t("walkrally.events.cancel")}
-                  </Button>
-                </div>
-              </div>
-            </>
-          )}
-
-          {step === "success" && (
-            <>
-              <div className="flex flex-col items-center gap-1 rounded-b-2xl border-b border-b-black bg-rpkm-green p-4 text-background">
-                <CheckCircle2 className="size-11" />
-              </div>
-              <div className="flex flex-col items-center gap-4 px-4 pb-6 text-center">
-                <div className="flex flex-col items-center gap-1">
-                  <DialogTitle className="text-2xl font-bold">
-                    {t("walkrally.events.successTitle")}
-                  </DialogTitle>
-                  {selectedRound && (
-                    <DialogDescription className="text-foreground">
-                      {t("walkrally.events.successMessage", {
-                        name:
-                          chosenGameName ?? t("walkrally.events.tabs.minigame"),
-                        index: String(selectedRound.index),
-                      })}
-                    </DialogDescription>
-                  )}
-                </div>
-                <Button variant="green" onClick={closeDialog}>
-                  {t("walkrally.events.ok")}
-                </Button>
-              </div>
-            </>
-          )}
-
-          {step === "fail" && (
-            <>
-              <div className="flex flex-col items-center gap-1 rounded-b-2xl border-b border-b-black bg-[#d33d3d] p-4 text-background">
-                <AlertCircle className="size-11" />
-              </div>
-              <div className="flex flex-col items-center gap-4 px-4 pb-6 text-center">
-                <div className="flex flex-col items-center gap-1">
-                  <DialogTitle className="text-2xl font-bold">
-                    {t("walkrally.events.failTitle")}
-                  </DialogTitle>
-                  <DialogDescription className="text-foreground">
-                    {t("walkrally.events.failMessage")}
-                  </DialogDescription>
-                </div>
-                <Button
-                  variant="outline"
-                  className="border-[#d33d3d] text-[#d33d3d]"
-                  onClick={() => setStep("confirm")}
-                >
-                  {t("walkrally.events.retry")}
-                </Button>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+        onConfirm={handleConfirm}
+        confirmTitle={t("walkrally.events.confirmTitle")}
+        confirmMessage={
+          selectedRound
+            ? t("walkrally.events.confirmMessage", {
+                name: chosenGameName ?? t("walkrally.events.tabs.minigame"),
+                index: String(selectedRound.index),
+              })
+            : ""
+        }
+        confirmLabel={t("walkrally.events.confirm")}
+        cancelLabel={t("walkrally.events.cancel")}
+        successTitle={t("walkrally.events.successTitle")}
+        successMessage={
+          selectedRound
+            ? t("walkrally.events.successMessage", {
+                name: chosenGameName ?? t("walkrally.events.tabs.minigame"),
+                index: String(selectedRound.index),
+              })
+            : ""
+        }
+        okLabel={t("walkrally.events.ok")}
+        failTitle={t("walkrally.events.failTitle")}
+        failMessage={t("walkrally.events.failMessage")}
+        retryLabel={t("walkrally.events.retry")}
+      />
     </div>
   );
 }

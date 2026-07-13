@@ -40,27 +40,27 @@ export function MinigameListPanel() {
                 isRegistered ? undefined : () => setStoredMinigameId(game.id)
               }
               style={{ backgroundColor: ACCENT_MINIGAME }}
-              className="relative isolate overflow-hidden rounded-3xl border border-black p-1"
+              className="relative isolate overflow-hidden rounded-3xl border border-foreground p-1"
             >
-              <div className="flex items-center gap-3 rounded-[1.15rem] border border-black bg-white p-2 sm:gap-4 sm:p-3">
+              <div className="flex flex-col items-center gap-3 rounded-[1.15rem] border border-foreground bg-background p-2 sm:gap-4 sm:p-3 min-[360px]:flex-row">
                 <div
                   style={{ backgroundColor: ACCENT_MINIGAME }}
-                  className="relative isolate shrink-0 overflow-hidden rounded-2xl border border-black p-1"
+                  className="relative isolate shrink-0 overflow-hidden rounded-2xl border border-foreground p-1"
                 >
                   {imageUrl ? (
                     <img
                       src={imageUrl}
                       alt=""
-                      className="size-24 rounded-xl border border-black object-cover sm:size-28"
+                      className="size-24 rounded-xl border border-foreground object-cover sm:size-28"
                     />
                   ) : (
-                    <div className="size-24 rounded-xl border border-black bg-muted sm:size-28" />
+                    <div className="size-24 rounded-xl border border-foreground bg-muted sm:size-28" />
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="text-base font-bold sm:text-lg">{name}</div>
+                  <div className="text-lg font-bold sm:text-xl">{name}</div>
                   {description && (
-                    <p className="text-xs text-muted-foreground sm:text-sm">
+                    <p className="line-clamp-3 text-xs text-muted-foreground sm:text-sm">
                       {description}
                     </p>
                   )}

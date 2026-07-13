@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
-import { AlertCircle, Check, CheckCircle2, Users } from "lucide-react";
+import { Check, Users } from "lucide-react";
 import { useStore } from "@nanostores/react";
 import { cn } from "@lib/utils";
 import { getImageUrl } from "@lib/function";
 import { useT } from "@lib/i18n/useT";
 import { $locale } from "@lib/i18n/locale";
-import { Button } from "@components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@components/ui/dialog";
+import { ConfirmActionDialog } from "@components/walkrally/ConfirmActionDialog";
 import { rounds, type Round } from "@components/walkrally/events/rounds";
 import registrations from "@components/walkrally/registrations.json";
 
@@ -28,13 +22,10 @@ interface ActivityDetailPanelProps {
   entry: WalkRallyEntry;
 }
 
-type Step = "confirm" | "success" | "fail";
-
 export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
   const t = useT();
   const locale = useStore($locale);
   const [selectedRound, setSelectedRound] = useState<Round | null>(null);
-  const [step, setStep] = useState<Step>("confirm");
 
   const name = locale === "th" ? entry.nameTh : entry.nameEn;
   const description =
@@ -51,12 +42,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
   }
 
   async function handleConfirm() {
-    try {
-      // TODO: call registration API
-      setStep("success");
-    } catch {
-      setStep("fail");
-    }
+    // TODO: call registration API
   }
 
   return (
@@ -105,10 +91,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
                   crossActivityConflict ||
                   round.status !== "available"
                 }
-                onClick={() => {
-                  setSelectedRound(round);
-                  setStep("confirm");
-                }}
+                onClick={() => setSelectedRound(round)}
                 className={cn(
                   "flex flex-col rounded-xl p-2 text-left text-foreground disabled:cursor-not-allowed border border-black",
                   isSelected
@@ -119,18 +102,18 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
                   sameActivityLocked && "opacity-50",
                 )}
               >
-                <div className="flex items-center justify-between gap-2">
+                <div className="flex flex-col gap-1 min-[360px]:flex-row min-[360px]:items-center min-[360px]:justify-between min-[360px]:gap-2">
                   <span className="flex items-center gap-2">
                     {isSelected && (
                       <Check className="size-4 shrink-0 text-black" />
                     )}
                     <span className="flex items-baseline gap-2">
-                      <span className="font-bold">
+                      <span className="font-bold whitespace-nowrap">
                         {t("walkrally.events.roundLabel", {
                           index: String(round.index),
                         })}
                       </span>
-                      <span className="text-sm">
+                      <span className="text-sm whitespace-nowrap">
                         {round.start}-{round.end}
                       </span>
                     </span>
@@ -162,98 +145,35 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
         </div>
       </div>
 
-      <Dialog
+      <ConfirmActionDialog
         open={selectedRound !== null}
         onOpenChange={(open) => !open && closeDialog()}
-      >
-        <DialogContent className="overflow-hidden p-0" showCloseButton={false}>
-          {step === "confirm" && (
-            <>
-              <div className="flex flex-col items-center gap-1 bg-[#d33d3d] p-4 text-background rounded-2xl border-b border-b-black">
-                <AlertCircle className="size-11" />
-              </div>
-              <div className="flex flex-col items-center gap-4 px-4 pb-6 text-center">
-                <div className="flex flex-col items-center gap-1">
-                  <DialogTitle className="text-2xl font-bold">
-                    {t("walkrally.events.confirmTitle")}
-                  </DialogTitle>
-                  {selectedRound && (
-                    <DialogDescription className="text-foreground">
-                      {t("walkrally.events.confirmMessage", {
-                        name,
-                        index: String(selectedRound.index),
-                      })}
-                    </DialogDescription>
-                  )}
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="destructive"
-                    className="bg-[#d33d3d] hover:bg-[#d33d3d]/85"
-                    onClick={handleConfirm}
-                  >
-                    {t("walkrally.events.confirm")}
-                  </Button>
-                  <Button variant="outline" onClick={closeDialog}>
-                    {t("walkrally.events.cancel")}
-                  </Button>
-                </div>
-              </div>
-            </>
-          )}
-
-          {step === "success" && (
-            <>
-              <div className="flex flex-col items-center gap-1 rounded-b-2xl border-b border-b-black bg-rpkm-green p-4 text-background">
-                <CheckCircle2 className="size-11" />
-              </div>
-              <div className="flex flex-col items-center gap-4 px-4 pb-6 text-center">
-                <div className="flex flex-col items-center gap-1">
-                  <DialogTitle className="text-2xl font-bold">
-                    {t("walkrally.events.successTitle")}
-                  </DialogTitle>
-                  {selectedRound && (
-                    <DialogDescription className="text-foreground">
-                      {t("walkrally.events.successMessage", {
-                        name,
-                        index: String(selectedRound.index),
-                      })}
-                    </DialogDescription>
-                  )}
-                </div>
-                <Button variant="green" onClick={closeDialog}>
-                  {t("walkrally.events.ok")}
-                </Button>
-              </div>
-            </>
-          )}
-
-          {step === "fail" && (
-            <>
-              <div className="flex flex-col items-center gap-1 rounded-b-2xl border-b border-b-black bg-[#d33d3d] p-4 text-background">
-                <AlertCircle className="size-11" />
-              </div>
-              <div className="flex flex-col items-center gap-4 px-4 pb-6 text-center">
-                <div className="flex flex-col items-center gap-1">
-                  <DialogTitle className="text-2xl font-bold">
-                    {t("walkrally.events.failTitle")}
-                  </DialogTitle>
-                  <DialogDescription className="text-foreground">
-                    {t("walkrally.events.failMessage")}
-                  </DialogDescription>
-                </div>
-                <Button
-                  variant="outline"
-                  className="border-destructive text-destructive"
-                  onClick={() => setStep("confirm")}
-                >
-                  {t("walkrally.events.retry")}
-                </Button>
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+        onConfirm={handleConfirm}
+        confirmTitle={t("walkrally.events.confirmTitle")}
+        confirmMessage={
+          selectedRound
+            ? t("walkrally.events.confirmMessage", {
+                name,
+                index: String(selectedRound.index),
+              })
+            : ""
+        }
+        confirmLabel={t("walkrally.events.confirm")}
+        cancelLabel={t("walkrally.events.cancel")}
+        successTitle={t("walkrally.events.successTitle")}
+        successMessage={
+          selectedRound
+            ? t("walkrally.events.successMessage", {
+                name,
+                index: String(selectedRound.index),
+              })
+            : ""
+        }
+        okLabel={t("walkrally.events.ok")}
+        failTitle={t("walkrally.events.failTitle")}
+        failMessage={t("walkrally.events.failMessage")}
+        retryLabel={t("walkrally.events.retry")}
+      />
     </div>
   );
 }

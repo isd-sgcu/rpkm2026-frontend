@@ -1,4 +1,1 @@
-[
-  { "activityId": "lookchoop", "round": 1, "ticketNumber": "12" },
-  { "activityId": "dixit", "round": 6, "ticketNumber": "01" }
-]
+[{ "activityId": "lookchoop", "round": 1, "ticketNumber": "12" }]
