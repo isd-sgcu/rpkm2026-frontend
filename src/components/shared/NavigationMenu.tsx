@@ -95,7 +95,7 @@ export function NavigationMenu() {
                 {/* TODO: link? */}
                 <DrawerClose
                   render={
-                    <a href="/" className={navItemClassName}>
+                    <a href="/house" className={navItemClassName}>
                       <img src={houseIcon.src} alt="" className="size-6" />
                       <span className="pt-1">{t("nav.chooseHouse")}</span>
                     </a>
@@ -123,10 +123,9 @@ export function NavigationMenu() {
               </>
             )}
 
-            {/* TODO: link? */}
             <DrawerClose
               render={
-                <a href="#rpkm-calendar" className={navItemClassName}>
+                <a href="/#rpkm-calendar" className={navItemClassName}>
                   <img src={calendarIcon.src} alt="" className="size-6" />
                   <span className="pt-1">{t("nav.calendar")}</span>
                 </a>

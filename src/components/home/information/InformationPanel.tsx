@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import { getImageUrl } from "@lib/function";
 import { useT } from "@lib/i18n/useT";
-import { Button } from "@components/ui/button";
+import { Button, buttonVariants } from "@components/ui/button";
 import { cn } from "@lib/utils";
 import Calendar from "./Calendar";
 import rpkmLogo from "@assets/images/artboard_1.svg";
@@ -67,7 +67,7 @@ const InformationPanel = () => {
   const isStaff = false;
 
   return (
-    <div className="flex w-full flex-col gap-6">
+    <div className="flex w-full flex-col gap-12">
       {!isStaff && (
         <>
           <div className="flex flex-col gap-4">
@@ -141,6 +141,16 @@ const InformationPanel = () => {
         </h2>
         <Calendar />
       </div>
+
+      <a
+        href="/emergency"
+        className={cn(
+          buttonVariants({ variant: "outline", size: "lg" }),
+          "w-fit self-center px-6 py-4",
+        )}
+      >
+        {t("emergency.title")}
+      </a>
 
       <div className="mt-16 flex justify-center sm:mt-24">
         <img
