@@ -51,6 +51,15 @@
     }
   },
   "chulaQrQuest": {
+    "home": {
+      "title1": "กิจกรรมล่าตราประทับ",
+      "title2": "Chula QR Quest",
+      "subtitle": "สะสมตราประทับจากสถานที่สำคัญรอบจุฬาฯ ให้ครบ แล้วนำไปแลกรางวัล!",
+      "dateRange": "20 กรกฎาคม - 7 สิงหาคม",
+      "playButton": "วิธีการเล่น",
+      "scanButton": "สแกนเพื่อสะสมแสตมป์",
+      "openInMaps": "เปิดใน Google Maps"
+    },
     "rule": {
       "title": "วิธีเล่น Chula QR Quest",
       "step1": {

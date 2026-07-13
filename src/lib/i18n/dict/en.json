@@ -51,6 +51,15 @@
     }
   },
   "chulaQrQuest": {
+    "home": {
+      "title1": "Stamp Hunting Activity",
+      "title2": "Chula QR Quest",
+      "subtitle": "Collect stamps from important locations around Chula, then redeem them for a reward!",
+      "dateRange": "July 20 - August 7",
+      "playButton": "How to Play",
+      "scanButton": "Scan to Collect Stamps",
+      "openInMaps": "Open in Google Maps"
+    },
     "rule": {
       "title": "How to Play Chula QR Quest",
       "step1": {
