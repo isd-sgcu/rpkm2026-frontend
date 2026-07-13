@@ -1,6 +1,7 @@
 import { useState, useSyncExternalStore } from "react";
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
+import { QueryProvider } from "@components/shared/QueryProvider";
 import {
   ActivityTabs,
   type Tab,
@@ -36,6 +37,14 @@ function getServerTabSnapshot(): Tab {
 }
 
 const WalkRallyEventPanel = ({ topic = "white" }: WalkRallyPanelProps) => {
+  return (
+    <QueryProvider>
+      <WalkRallyEventPanelContent topic={topic} />
+    </QueryProvider>
+  );
+};
+
+function WalkRallyEventPanelContent({ topic = "white" }: WalkRallyPanelProps) {
   const t = useT();
   const urlTab = useSyncExternalStore(
     subscribeNoop,
@@ -62,6 +71,6 @@ const WalkRallyEventPanel = ({ topic = "white" }: WalkRallyPanelProps) => {
       </div>
     </>
   );
-};
+}
 
 export default WalkRallyEventPanel;

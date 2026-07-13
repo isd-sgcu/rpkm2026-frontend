@@ -8,6 +8,7 @@ import { getImageUrl } from "@lib/function";
 import { ConfirmActionDialog } from "@components/walkrally/ConfirmActionDialog";
 import { rounds, type Round } from "@components/walkrally/events/rounds";
 import events from "@components/walkrally/events/events.json";
+// TODO: fetch the user's registrations from API (e.g. via TanStack Query) instead of static JSON
 import registrationsData from "@components/walkrally/registrations.json";
 import {
   clearStoredMinigameId,
@@ -71,7 +72,7 @@ export function MinigamePanel() {
 
   async function handleConfirm() {
     if (!selectedRound) return;
-    // TODO: call API
+    // TODO: call registration API (e.g. via a TanStack Query mutation)
 
     clearStoredMinigameId();
   }

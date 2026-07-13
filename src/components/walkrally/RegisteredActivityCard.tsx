@@ -29,7 +29,7 @@ export function RegisteredActivityCard({
   const [open, setOpen] = useState(false);
 
   async function handleConfirmCancel() {
-    // TODO: call cancellation API
+    // TODO: call cancellation API (e.g. via a TanStack Query mutation)
   }
 
   return (

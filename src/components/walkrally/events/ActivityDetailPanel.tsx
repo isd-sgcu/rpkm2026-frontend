@@ -6,7 +6,9 @@ import { getImageUrl } from "@lib/function";
 import { useT } from "@lib/i18n/useT";
 import { $locale } from "@lib/i18n/locale";
 import { ConfirmActionDialog } from "@components/walkrally/ConfirmActionDialog";
+import { QueryProvider } from "@components/shared/QueryProvider";
 import { rounds, type Round } from "@components/walkrally/events/rounds";
+// TODO: fetch the user's registrations from API (e.g. via TanStack Query) instead of static JSON
 import registrations from "@components/walkrally/registrations.json";
 
 export interface WalkRallyEntry {
@@ -22,7 +24,15 @@ interface ActivityDetailPanelProps {
   entry: WalkRallyEntry;
 }
 
-export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
+export function ActivityDetailPanel(props: ActivityDetailPanelProps) {
+  return (
+    <QueryProvider>
+      <ActivityDetailPanelContent {...props} />
+    </QueryProvider>
+  );
+}
+
+function ActivityDetailPanelContent({ entry }: ActivityDetailPanelProps) {
   const t = useT();
   const locale = useStore($locale);
   const [selectedRound, setSelectedRound] = useState<Round | null>(null);
@@ -42,7 +52,7 @@ export function ActivityDetailPanel({ entry }: ActivityDetailPanelProps) {
   }
 
   async function handleConfirm() {
-    // TODO: call registration API
+    // TODO: call registration API (e.g. via a TanStack Query mutation)
   }
 
   return (

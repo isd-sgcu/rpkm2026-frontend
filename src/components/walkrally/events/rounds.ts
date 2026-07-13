@@ -18,7 +18,7 @@ interface RoundState {
   status: RoundStatus;
 }
 
-// TODO: Replace booked with real data from API
+// TODO: Replace booked/status with real data from API (e.g. via TanStack Query)
 const roundStates: RoundState[] = [
   { index: 1, capacity: 30, booked: 20, status: "available" },
   { index: 2, capacity: 30, booked: 19, status: "available" },

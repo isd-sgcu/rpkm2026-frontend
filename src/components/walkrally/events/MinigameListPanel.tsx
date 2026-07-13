@@ -2,13 +2,23 @@ import { useStore } from "@nanostores/react";
 import { $locale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
 import { getImageUrl } from "@lib/function";
+import { QueryProvider } from "@components/shared/QueryProvider";
 import events from "@components/walkrally/events/events.json";
+// TODO: fetch the user's registrations from API (e.g. via TanStack Query) instead of static JSON
 import registrations from "@components/walkrally/registrations.json";
 import { setStoredMinigameId } from "@components/walkrally/events/minigameSelection";
 
 const ACCENT_MINIGAME = "#8b688d";
 
 export function MinigameListPanel() {
+  return (
+    <QueryProvider>
+      <MinigameListPanelContent />
+    </QueryProvider>
+  );
+}
+
+function MinigameListPanelContent() {
   const t = useT();
   const locale = useStore($locale);
   const games = events.minigame;

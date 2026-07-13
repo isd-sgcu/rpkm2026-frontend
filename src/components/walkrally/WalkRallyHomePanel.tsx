@@ -3,8 +3,11 @@ import { useStore } from "@nanostores/react";
 import { useT } from "@lib/i18n/useT";
 import { $locale } from "@lib/i18n/locale";
 import { MonotoneNoise } from "@components/shared/MonotoneNoise";
+import { QueryProvider } from "@components/shared/QueryProvider";
 import { RegisteredActivityCard } from "@components/walkrally/RegisteredActivityCard";
+
 import events from "@components/walkrally/events/events.json";
+// TODO: fetch the user's registrations from API (e.g. via TanStack Query) instead of static JSON
 import registrations from "@components/walkrally/registrations.json";
 
 const ACCENT_ORANGE = "#e65325";
@@ -15,7 +18,7 @@ const tabAccentColor: Record<string, string> = {
   minigame: "#8b688d",
 };
 
-// TODO: replace with real user/auth data
+// TODO: replace with real user/auth data (e.g. via TanStack Query)
 const mockProfile = {
   studentId: "690282282",
   name: "คิตตี้ คุกิมิยะ",
@@ -24,6 +27,14 @@ const mockProfile = {
 };
 
 export function WalkRallyHomePanel() {
+  return (
+    <QueryProvider>
+      <WalkRallyHomePanelContent />
+    </QueryProvider>
+  );
+}
+
+function WalkRallyHomePanelContent() {
   const t = useT();
   const locale = useStore($locale);
 
