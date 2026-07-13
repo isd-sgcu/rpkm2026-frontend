@@ -63,5 +63,30 @@
       "ok": "OK",
       "retry": "Try Again"
     }
+  },
+  "myfreshystory": {
+    "header": {
+      "description": "Record your best moments from RPKM via Reels or TikTok, and win prizes by using our hashtags.",
+      "date": "20 July - 3 August",
+      "caution": "Only for first-year Chulalongkorn students."
+    },
+    "igstory": {
+      "description": "Share your Chula Jigsaw or Chula QR Quest hunt moments using the 'Add Yours' sticker on Instagram Stories.",
+      "gift": "First 50 to join win free prizes!",
+      "howto": "How to join:",
+      "finish": "Take part in Chula Jigsaw or Chula QR Quest",
+      "share": "Share your IG Story through Add Yours",
+      "announce": "Stay tuned for the winner listings!"
+    },
+    "reelstiktok": {
+      "description": "Create a video (under 1 minute) sharing your RPKM experience, while incorporating at least 1 SDG goal.",
+      "activity": "Participate in at least one activity",
+      "rules": {
+        "title": "Rules",
+        "length": "Video must be under 1 minute",
+        "public": "Video must be public",
+        "hastag": "Video must be tagged"
+      }
+    }
   }
 }
