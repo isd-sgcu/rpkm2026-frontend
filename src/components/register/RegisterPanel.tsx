@@ -1,26 +1,34 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useStore } from "@nanostores/react";
 
 import rpkmLogo from "@assets/images/rpkm_logo.png";
 import { Button } from "@components/ui/button";
+import { $locale } from "@lib/i18n/locale";
+import { useT } from "@lib/i18n/useT";
 import { RegisterStepper } from "./RegisterStepper";
 import { StepPersonalInfo } from "./StepPersonalInfo";
 import { StepHealthInfo } from "./StepHealthInfo";
 import { StepOtherInfo } from "./StepOtherInfo";
 import { StepTravelInfo } from "./StepTravelInfo";
 import { StepPdpa } from "./StepPdpa";
-import { registerSchema } from "./schema";
+import { makeRegisterSchema } from "./schema";
 import { CHULA_DISTRICT_ID, CHULA_PROVINCE_ID } from "@lib/thai-geo";
 import { STEP_FIELDS, TOTAL_STEPS, type RegisterFormValues } from "./types";
 
 export function RegisterPanel() {
+  const t = useT();
+  const locale = useStore($locale);
   const [step, setStep] = useState(1);
   const [showPdpa, setShowPdpa] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const schema = useMemo(() => makeRegisterSchema(t), [locale]);
+
   const methods = useForm<RegisterFormValues>({
     mode: "onTouched",
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       // Step 1
       prefix: "",
@@ -98,12 +106,11 @@ export function RegisterPanel() {
         <div className="mt-6 shrink-0 px-6">
           <img
             src={rpkmLogo.src}
-            alt="รับเพื่อนก้าวใหม่"
+            alt={t("register.logoAlt")}
             className="mx-auto h-auto w-36"
           />
-          {/* TODO: i18n */}
           <h1 className="mt-2 text-center text-2xl font-bold text-foreground">
-            ลงทะเบียน
+            {t("register.title")}
           </h1>
           <div className="mt-6">
             <RegisterStepper current={step} total={TOTAL_STEPS} />
@@ -121,7 +128,6 @@ export function RegisterPanel() {
           {step === 4 && <StepTravelInfo />}
         </form>
 
-        {/* TODO: i18n */}
         <div className="flex shrink-0 gap-3 px-6 pt-4 pb-10">
           {step > 1 && (
             <Button
@@ -131,7 +137,7 @@ export function RegisterPanel() {
               className="h-14 flex-2 rounded-full bg-background text-lg"
               onClick={goBack}
             >
-              ย้อนกลับ
+              {t("register.back")}
             </Button>
           )}
           <Button
@@ -140,7 +146,7 @@ export function RegisterPanel() {
             className="h-14 flex-2 rounded-full text-lg"
             onClick={goNext}
           >
-            {step < TOTAL_STEPS ? "ถัดไป" : "ยืนยันข้อมูล"}
+            {step < TOTAL_STEPS ? t("register.next") : t("register.confirm")}
           </Button>
         </div>
       </div>

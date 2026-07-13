@@ -8,6 +8,7 @@ import { Combobox } from "@base-ui/react/combobox";
 import { ChevronDownIcon } from "lucide-react";
 
 import { cn } from "@lib/utils";
+import { useT } from "@lib/i18n/useT";
 import { Input } from "@components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@components/ui/radio-group";
 import {
@@ -200,6 +201,7 @@ export function ComboboxField({
   disabled?: boolean;
   onAfterChange?: () => void;
 }) {
+  const t = useT();
   const {
     control,
     formState: { errors },
@@ -242,7 +244,7 @@ export function ComboboxField({
               <Combobox.Positioner sideOffset={4} className="isolate z-50">
                 <Combobox.Popup className="max-h-(--available-height) w-(--anchor-width) overflow-y-auto rounded-lg border bg-popover p-1 text-popover-foreground shadow-xl ring-1 ring-foreground/10">
                   <Combobox.Empty className="px-2 py-2 text-sm text-muted-foreground">
-                    ไม่พบผลลัพธ์
+                    {t("register.combobox.empty")}
                   </Combobox.Empty>
                   <Combobox.List>
                     {(item: string) => (
@@ -272,6 +274,7 @@ export function YesNoToggle({
   value: boolean;
   onChange: (value: boolean) => void;
 }) {
+  const t = useT();
   const segment = (active: boolean) =>
     cn(
       "rounded-full px-4 py-2 text-sm leading-none transition-colors",
@@ -280,21 +283,19 @@ export function YesNoToggle({
 
   return (
     <div className="inline-flex shrink-0 items-center rounded-full border border-rpkm-red">
-      {/* TODO: i18n */}
       <button
         type="button"
         onClick={() => onChange(false)}
         className={segment(!value)}
       >
-        ไม่มี
+        {t("register.health.no")}
       </button>
-      {/* TODO: i18n */}
       <button
         type="button"
         onClick={() => onChange(true)}
         className={segment(value)}
       >
-        มี
+        {t("register.health.yes")}
       </button>
     </div>
   );
@@ -305,10 +306,12 @@ export function RadioGroupField<TName extends FieldName>({
   name,
   question,
   options,
+  getLabel = (value) => value,
 }: {
   name: TName;
   question: string;
   options: readonly string[];
+  getLabel?: (value: string) => string;
 }) {
   const {
     control,
@@ -341,7 +344,7 @@ export function RadioGroupField<TName extends FieldName>({
                 className="flex cursor-pointer items-center gap-3 select-none"
               >
                 <RadioGroupItem value={option} aria-invalid={!!error} />
-                <span className="text-sm">{option}</span>
+                <span className="text-sm">{getLabel(option)}</span>
               </label>
             ))}
           </RadioGroup>

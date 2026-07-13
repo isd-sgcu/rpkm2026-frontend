@@ -1,51 +1,64 @@
-import { DIETARY_OPTIONS, FOOD_ALLERGY_OPTIONS } from "@lib/register-options";
+import { useStore } from "@nanostores/react";
+
+import { $locale } from "@lib/i18n/locale";
+import { useT } from "@lib/i18n/useT";
+import {
+  DIETARY_OPTIONS,
+  FOOD_ALLERGY_OPTIONS,
+  localizeOption,
+} from "@lib/register-options";
 
 import { SectionHeading } from "./fields";
 import { ChecklistCard, DetailCard } from "./health-cards";
 
-// TODO: i18n — all copy in this step is hard-coded Thai.
 export function StepHealthInfo() {
+  const t = useT();
+  const locale = useStore($locale);
+  const getLabel = (value: string) => localizeOption(locale, value);
+
   return (
     <div className="flex flex-col pb-2">
-      <SectionHeading>ข้อมูลสุขภาพ</SectionHeading>
+      <SectionHeading>{t("register.sections.health")}</SectionHeading>
 
       <div className="mt-3 flex flex-col gap-4">
         <ChecklistCard
-          title="อาหารที่แพ้"
-          noneSubtitle="ไม่มีอาหารที่แพ้"
+          title={t("register.health.foodAllergy.title")}
+          noneSubtitle={t("register.health.foodAllergy.none")}
           options={FOOD_ALLERGY_OPTIONS}
+          getLabel={getLabel}
           hasName="foodAllergyHas"
           itemsName="foodAllergyItems"
           otherName="foodAllergyOther"
-          otherPlaceholder="กรอกอาหารที่แพ้..."
+          otherPlaceholder={t("register.health.foodAllergy.placeholder")}
         />
 
         <ChecklistCard
-          title="ข้อจำกัดด้านอาหาร"
-          noneSubtitle="ไม่มีข้อจำกัดด้านอาหาร"
+          title={t("register.health.dietary.title")}
+          noneSubtitle={t("register.health.dietary.none")}
           options={DIETARY_OPTIONS}
+          getLabel={getLabel}
           hasName="dietaryHas"
           itemsName="dietaryItems"
           otherName="dietaryOther"
-          otherPlaceholder="กรอกข้อจำกัดอาหารอื่นๆ..."
+          otherPlaceholder={t("register.health.dietary.placeholder")}
         />
 
         <DetailCard
-          title="ยาที่แพ้"
-          noneSubtitle="ไม่มียาที่แพ้"
-          yesSubtitle="มียาที่แพ้"
+          title={t("register.health.drugAllergy.title")}
+          noneSubtitle={t("register.health.drugAllergy.none")}
+          yesSubtitle={t("register.health.drugAllergy.yes")}
           hasName="drugAllergyHas"
           detailName="drugAllergyDetail"
-          placeholder="กรอกยาที่แพ้..."
+          placeholder={t("register.health.drugAllergy.placeholder")}
         />
 
         <DetailCard
-          title="โรคประจำตัว"
-          noneSubtitle="ไม่มีโรคประจำตัว"
-          yesSubtitle="มีโรคประจำตัว"
+          title={t("register.health.chronic.title")}
+          noneSubtitle={t("register.health.chronic.none")}
+          yesSubtitle={t("register.health.chronic.yes")}
           hasName="chronicDiseaseHas"
           detailName="chronicDiseaseDetail"
-          placeholder="กรอกโรคประจำตัว..."
+          placeholder={t("register.health.chronic.placeholder")}
         />
       </div>
     </div>

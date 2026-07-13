@@ -1,41 +1,53 @@
+import { useStore } from "@nanostores/react";
+
+import { $locale } from "@lib/i18n/locale";
+import { useT } from "@lib/i18n/useT";
 import {
   ATTEND_DAYS_OPTIONS,
   PR_CHANNEL_OPTIONS,
   SGCU_AWARENESS_OPTIONS,
   WATER_BOTTLE_OPTIONS,
+  localizeOption,
 } from "@lib/register-options";
 
 import { RadioGroupField, SectionHeading } from "./fields";
 
-// TODO: i18n — all copy in this step is hard-coded Thai.
 export function StepOtherInfo() {
+  const t = useT();
+  const locale = useStore($locale);
+  const getLabel = (value: string) => localizeOption(locale, value);
+
   return (
     <div className="flex flex-col pb-2">
-      <SectionHeading>ข้อมูลอื่น ๆ</SectionHeading>
+      <SectionHeading>{t("register.sections.other")}</SectionHeading>
 
       <div className="mt-3 flex flex-col gap-6">
         <RadioGroupField
           name="sgcuAwareness"
-          question="ท่านรู้จัก องค์การบริหารสโมสรนิสิตจุฬาฯ (อบจ.) หรือไม่"
+          question={t("register.questions.sgcu")}
           options={SGCU_AWARENESS_OPTIONS}
+          getLabel={getLabel}
         />
 
         <RadioGroupField
           name="prChannel"
-          question="ท่านเห็นการประชาสัมพันธ์โครงการจากช่องทางไหนมากที่สุด"
+          question={t("register.questions.pr")}
           options={PR_CHANNEL_OPTIONS}
+          getLabel={getLabel}
         />
 
         <RadioGroupField
           name="attendDays"
-          question="ท่านตั้งใจจะเข้าร่วมกิจกรรมรับเพื่อนก้าวใหม่ เป็นเวลากี่วัน"
+          question={t("register.questions.attendDays")}
           options={ATTEND_DAYS_OPTIONS}
+          getLabel={getLabel}
         />
 
         <RadioGroupField
           name="waterBottle"
-          question="เตรียมกระบอกน้ำมามั้ย"
+          question={t("register.questions.water")}
           options={WATER_BOTTLE_OPTIONS}
+          getLabel={getLabel}
         />
       </div>
     </div>

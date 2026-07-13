@@ -1,6 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 
 import { cn } from "@lib/utils";
+import { useT } from "@lib/i18n/useT";
 import { Checkbox } from "@components/ui/checkbox";
 import { Input } from "@components/ui/input";
 import { OTHER_OPTION } from "@lib/register-options";
@@ -56,6 +57,7 @@ export function ChecklistCard({
   title,
   noneSubtitle,
   options,
+  getLabel = (value) => value,
   hasName,
   itemsName,
   otherName,
@@ -64,11 +66,13 @@ export function ChecklistCard({
   title: string;
   noneSubtitle: string;
   options: readonly string[];
+  getLabel?: (value: string) => string;
   hasName: BoolName;
   itemsName: ArrayName;
   otherName: StringName;
   otherPlaceholder: string;
 }) {
+  const t = useT();
   const {
     control,
     register,
@@ -80,7 +84,9 @@ export function ChecklistCard({
   const has = watch(hasName);
   const items = watch(itemsName) ?? [];
   const showOther = items.includes(OTHER_OPTION);
-  const subtitle = has ? `เลือกแล้ว ${items.length} รายการ` : noneSubtitle;
+  const subtitle = has
+    ? t("register.health.selected", { count: String(items.length) })
+    : noneSubtitle;
   const otherError = errors[otherName]?.message;
 
   return (
@@ -119,7 +125,7 @@ export function ChecklistCard({
                       toggle(option, checked === true)
                     }
                   />
-                  {option}
+                  {getLabel(option)}
                 </label>
               ))}
             </div>

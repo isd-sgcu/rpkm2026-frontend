@@ -190,3 +190,75 @@ export const VEHICLE_OPTIONS = [
 
 /** Max number of travel legs (ต่อ). */
 export const MAX_TRAVEL_LEGS = 4;
+
+// TODO: i18n — English labels for the Thai option *values*. The stored form
+// value stays Thai (backend contract); only the visible label is localized.
+export const OPTION_EN: Record<string, string> = {
+  // prefixes
+  นาย: "Mr.",
+  นาง: "Mrs.",
+  นางสาว: "Ms.",
+  อื่นๆ: "Other",
+  // relations & the "other" checkbox
+  "อื่น ๆ": "Other",
+  บิดา: "Father",
+  มารดา: "Mother",
+  พี่น้อง: "Sibling",
+  ญาติ: "Relative",
+  // food allergy
+  อาหารทะเล: "Seafood",
+  "นม/แลกโตส": "Milk / Lactose",
+  แป้งสาลี: "Wheat flour",
+  ไข่: "Egg",
+  ถั่ว: "Nuts",
+  ผงชูรส: "MSG",
+  // dietary
+  ฮาลาล: "Halal",
+  มังสวิรัติ: "Vegetarian",
+  ไม่ทานเนื้อสัตว์: "No meat",
+  ไม่ทานเนื้อวัว: "No beef",
+  ไม่ทานเนื้อหมู: "No pork",
+  ไม่ทานไก่: "No chicken",
+  ไม่ทานเผ็ด: "No spicy food",
+  ไม่ทานผัก: "No vegetables",
+  // sgcu awareness
+  "รู้จักและเข้าใจบทบาทหน้าที่ของอบจ.เป็นอย่างดี":
+    "I know and understand the SGCU's role well",
+  "รู้จัก แต่ยังไม่แน่ใจว่าอบจ.มีบทบาทหน้าที่อย่างไร":
+    "I know it but am unsure of the SGCU's role",
+  ไม่รู้จัก: "I don't know it",
+  // pr channel
+  "ฟีดใน instagram ของ rubpuenkaomai2026":
+    "Feed on rubpuenkaomai2026's Instagram",
+  "สตอรี่ใน instagram ของ rubpuenkaomai2026":
+    "Story on rubpuenkaomai2026's Instagram",
+  "ฟีดใน instagram ของ อบจ. (sgcu.chula)":
+    "Feed on the SGCU's Instagram (sgcu.chula)",
+  "สตอรี่ใน instagram ของ อบจ. (sgcu.chula)":
+    "Story on the SGCU's Instagram (sgcu.chula)",
+  "ฟีดใน instagram ของคณะ": "Feed on your faculty's Instagram",
+  "สตอรี่ใน instagram ของคณะ": "Story on your faculty's Instagram",
+  "ข้อความใน line รุ่นของคณะ": "Message in your faculty class LINE",
+  "ข้อความใน line openchat CU110": "Message in LINE OpenChat CU110",
+  เพื่อนหรือคนรู้จักส่งให้ดู: "A friend or acquaintance shared it",
+  // vehicle
+  "รถยนต์ส่วนบุคคล (Private Car)": "Private Car",
+  "รถยนต์ไฟฟ้าส่วนบุคคล (Private Electric Vehicle)": "Private Electric Vehicle",
+  "BTS/MRT/Airport Rail Link": "BTS / MRT / Airport Rail Link",
+  "รถโดยสารประจำทาง / รถโดยสารไม่ประจำทาง": "Bus / Coach",
+  "แท็กซี่ (Taxi)": "Taxi",
+  "รถจักรยานยนต์ (Motorcycle)": "Motorcycle",
+  "รถจักรยาน/เดิน (Bicycle or Walking)": "Bicycle or Walking",
+  // attend days
+  "1 วัน": "1 day",
+  "2 วัน": "2 days",
+  "3 วัน": "3 days",
+  // water bottle
+  เตรียม: "Brought one",
+  ไม่ได้เตรียม: "Didn't bring one",
+};
+
+/** Localize a Thai option value; falls back to the Thai value itself. */
+export function localizeOption(locale: "th" | "en", value: string): string {
+  return locale === "en" ? (OPTION_EN[value] ?? value) : value;
+}
