@@ -1,0 +1,26 @@
+---
+import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
+import MyFreshyStoryLayout from "@layouts/MyFreshyStoryLayout.astro";
+import { CalendarDaysIcon, CircleAlert } from "lucide-react";
+---
+
+<MyFreshyStoryLayout navigateBack="/" title="My Freshy Story">
+  <!-- Header Section -->
+  <header class="w-full px-6">
+    <h1 class="w-2/3 text-4xl font-bold">My Freshy Story</h1>
+    <p class="font-bold text-lg mt-4 mb-2">
+      บันทึกโมเมนต์ดี ๆ จากกิจกรรมรับเพื่อนใหม่ผ่าน Reels หรือ TikTok
+      พร้อมติดแฮชแท็กกิจกรรมเพื่อลุ้นรับของรางวัล
+    </p>
+    <section class="">
+      <p><CalendarDaysIcon className="inline mr-1" />20 กรกฎาคม - 3 สิงหาคม</p>
+      <p>
+        <CircleAlert className="inline mr-1" />เฉพาะนิสิตจุฬาฯ ชั้นปีที่ 1 (รหัส
+        110) เท่านั้น
+      </p>
+    </section>
+  </header>
+  <MonotoneNoiseContainer
+    className="grow bg-rpkm-red border rounded-t-4xl flex flex-col p-6 gap-4 mt-6"
+  />
+</MyFreshyStoryLayout>
