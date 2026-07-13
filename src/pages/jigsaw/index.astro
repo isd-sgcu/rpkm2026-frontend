@@ -3,6 +3,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import "../../styles/global.css";
 import { appConfig } from "@lib/env";
 import { ScanLine, CalendarDays, CircleAlert } from "lucide-react";
+import { JigsawPanel } from "@components/jigsaw/JigsawPanel";
 ---
 
 <BaseLayout title={appConfig.appName}>
@@ -30,25 +31,7 @@ import { ScanLine, CalendarDays, CircleAlert } from "lucide-react";
       </div>
     </header>
 
-    <div class="grid w-full grid-cols-5 grid-rows-2 gap-3">
-      {
-        Array.from({ length: 10 }).map((_, i) => (
-          <div
-            class="aspect-[3/2] border-2 border-dashed border-gray-400"
-            data-piece={i + 1}
-          />
-        ))
-      }
-    </div>
-
-    <div
-      class="flex w-full items-center gap-2 rounded-full border-2 border-dashed border-gray-400 px-4 py-2 text-sm"
-    >
-      <div class="h-2 flex-1 overflow-hidden rounded-full bg-gray-200">
-        <div class="h-full w-[10%] bg-gray-400"></div>
-      </div>
-      <span class="text-base font-normal">1/10 ชิ้น</span>
-    </div>
+    <JigsawPanel client:load />
 
     <a
       href="/jigsaw/scan"
