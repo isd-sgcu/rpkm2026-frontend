@@ -18,6 +18,26 @@
     "home": "Home",
     "logout": "Log out"
   },
+  "home": {
+    "calendar": {
+      "title": "Calendar",
+      "empty": "No activities on this day"
+    },
+    "information": {
+      "registerTitle": "Register",
+      "gameTitle": "Games",
+      "informationTitle": "Event Information",
+      "register": {
+        "friendHouse": "Welcome House",
+        "activity": "Activities"
+      },
+      "games": {
+        "jigsaw": "Collect Jigsaw",
+        "stamp": "Collect Stamps",
+        "myFreshyStory": "My Freshy Story"
+      }
+    }
+  },
   "walkrally": {
     "home": {
       "title": "Walk Rally",

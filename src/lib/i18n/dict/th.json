@@ -18,6 +18,26 @@
     "home": "หน้าหลัก",
     "logout": "ออกจากระบบ"
   },
+  "home": {
+    "calendar": {
+      "title": "ปฏิทิน",
+      "empty": "ไม่มีกิจกรรมในวันนี้"
+    },
+    "information": {
+      "registerTitle": "ลงทะเบียน",
+      "gameTitle": "เกม",
+      "informationTitle": "ข้อมูลภายในงาน",
+      "register": {
+        "friendHouse": "บ้านรับเพื่อน",
+        "activity": "กิจกรรม"
+      },
+      "games": {
+        "jigsaw": "เก็บจิ๊กซอว์",
+        "stamp": "สะสมแสตมป์",
+        "myFreshyStory": "My Freshy Story"
+      }
+    }
+  },
   "walkrally": {
     "home": {
       "title": "Walk Rally",

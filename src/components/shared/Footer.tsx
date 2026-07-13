@@ -1,7 +1,6 @@
 import isdLogo from "@assets/images/isd_logo.png";
 import อบจLogo from "@assets/images/อบจ.png";
 import instagramIcon from "@assets/images/instagram_icon.svg";
-import houseImage from "@assets/images/artboard_10.svg";
 import pot1Image from "@assets/images/artboard_15.svg";
 import pot2Image from "@assets/images/artboard_16.svg";
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
@@ -10,11 +9,6 @@ export function Footer() {
   return (
     <footer className="w-full overflow-x-clip relative z-0">
       <div className="w-full sm:max-w-140 mx-auto overflow-x-clip sm:overflow-x-visible relative flex justify-center">
-        <img
-          src={houseImage.src}
-          alt="decoration"
-          className="min-w-[40vw] w-132 max-w-[103vw] absolute bottom-0 translate-y-[15%] z-1"
-        />
         <img
           src={pot2Image.src}
           alt="decoration"

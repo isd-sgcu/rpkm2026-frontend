@@ -2,10 +2,9 @@
 import HomePanel from "@components/home/HomePanel.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import PanelFrameLayout from "@layouts/PanelFrameLayout.astro";
-import { appConfig } from "@lib/env";
 ---
 
-<BaseLayout title={appConfig.appName} showFooter>
+<BaseLayout title="RPKM Home Page">
   <PanelFrameLayout>
     <HomePanel />
   </PanelFrameLayout>
