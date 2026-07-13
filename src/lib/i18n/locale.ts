@@ -13,7 +13,14 @@ function readStoredLocale(): LocaleType {
   return stored === "th" || stored === "en" ? stored : DEFAULT_LOCALE;
 }
 
-export const $locale = atom<LocaleType>(readStoredLocale());
+export const $locale = atom<LocaleType>(DEFAULT_LOCALE);
+
+export function syncStoredLocale() {
+  const stored = readStoredLocale();
+  if (stored !== $locale.get()) {
+    $locale.set(stored);
+  }
+}
 
 export function setLocale(locale: LocaleType) {
   if (typeof window !== "undefined") {

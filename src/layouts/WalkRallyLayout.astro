@@ -1,0 +1,217 @@
+---
+import { NavigationMenu } from "@components/shared/NavigationMenu";
+import { MonotoneNoise } from "@components/shared/MonotoneNoise";
+import Image from "astro/components/Image.astro";
+import leafCluster from "../assets/images/artboard_34.svg";
+import vineGold from "../assets/images/artboard_35.svg";
+import vineGreen from "../assets/images/artboard_36.svg";
+import flowerPink from "../assets/images/artboard_31.svg";
+import flowerYellow from "../assets/images/artboard_39.svg";
+import flowerBlue from "../assets/images/artboard_40.svg";
+import potVase from "../assets/images/artboard_16.svg";
+import { ChevronLeft } from "lucide-react";
+import "@styles/global.css";
+import type { HTMLAttributes } from "astro/types";
+
+type BgColor = "green" | "lightgreen" | "lightpink" | "beige";
+
+const bgColorClass: Record<BgColor, string> = {
+  green: "bg-rpkm-green",
+  lightgreen: "bg-rpkm-light-green",
+  lightpink: "bg-rpkm-light-pink",
+  beige: "bg-rpkm-beige",
+};
+
+interface Props extends HTMLAttributes<"div"> {
+  title: string;
+  description?: string;
+  navigateBack?: string;
+  showMenu?: boolean;
+  haveNoise?: boolean;
+  bgColor?: BgColor;
+}
+
+const {
+  title,
+  description = "RPKM 2026 frontend application",
+  navigateBack = "",
+  showMenu = true,
+  haveNoise = true,
+  bgColor = "green",
+  ...rest
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-black text-foreground font-sans">
+    <main
+      class:list={[
+        "relative w-full min-h-screen overflow-hidden sm:max-w-md sm:mx-auto",
+        bgColorClass[bgColor],
+      ]}
+      {...rest}
+    >
+      {
+        haveNoise && (
+          <MonotoneNoise
+            className="absolute inset-0 z-0 pointer-events-none"
+            client:load
+          />
+        )
+      }
+
+      {
+        navigateBack && (
+          <div class="absolute left-4 top-[4.5cqw] sm:top-4.5 h-10 flex items-center z-10">
+            <a
+              href={navigateBack}
+              class="size-10 rounded-full bg-white border border-black grid place-items-center"
+            >
+              <ChevronLeft className="size-6.5 text-foreground" />
+            </a>
+          </div>
+        )
+      }
+
+      {
+        showMenu && (
+          <div class="absolute right-4 top-[4.5cqw] sm:top-4.5 h-10 flex items-center z-10">
+            <NavigationMenu client:load />
+          </div>
+        )
+      }
+
+      <div class="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
+        <Image
+          src={flowerPink}
+          alt=""
+          class="absolute top-[5%] left-[10%] w-[13%] rotate-12 opacity-30"
+        />
+        <Image
+          src={flowerYellow}
+          alt=""
+          class="absolute top-[3%] right-[16%] w-[15%] -rotate-6 opacity-30"
+        />
+        <Image
+          src={flowerPink}
+          alt=""
+          class="absolute top-[15%] left-[44%] w-[9%] rotate-45 opacity-25"
+        />
+        <Image
+          src={flowerBlue}
+          alt=""
+          class="absolute top-[38%] left-[6%] w-[13%] rotate-12 opacity-70"
+        />
+        <Image
+          src={flowerPink}
+          alt=""
+          class="absolute top-[46%] right-[10%] w-[11%] rotate-[-20deg] opacity-80"
+        />
+        <Image
+          src={flowerYellow}
+          alt=""
+          class="absolute top-[42%] left-[46%] w-[17%] rotate-6 opacity-90"
+        />
+        <Image
+          src={flowerPink}
+          alt=""
+          class="absolute top-[55%] left-[20%] w-[9%] -rotate-12 opacity-60"
+        />
+      </div>
+
+      <div
+        class="absolute bottom-0 left-0 w-[62cqw] sm:w-72 pointer-events-none z-0"
+        aria-hidden="true"
+      >
+        <Image
+          src={leafCluster}
+          alt=""
+          class="absolute bottom-0 left-0 w-[45%] -scale-x-100"
+        />
+        <Image
+          src={vineGold}
+          alt=""
+          class="absolute bottom-[6%] left-[14%] w-[22%] rotate-6"
+        />
+
+        <div
+          class="absolute bottom-0 left-0 w-[78%] aspect-square translate-x-[-40%] translate-y-[40%] rotate-45 -scale-x-100"
+        >
+          <Image src={potVase} alt="" class="absolute inset-0 w-full" />
+          <Image
+            src={flowerYellow}
+            alt=""
+            class="absolute top-[3%] left-[54%] w-[24%] rotate-6"
+          />
+          <Image
+            src={flowerPink}
+            alt=""
+            class="absolute top-[26%] left-[36%] w-[20%] rotate-45"
+          />
+        </div>
+      </div>
+
+      <div
+        class="absolute bottom-0 right-0 w-[62cqw] sm:w-72 pointer-events-none z-0"
+        aria-hidden="true"
+      >
+        <Image
+          src={leafCluster}
+          alt=""
+          class="absolute bottom-0 right-0 w-[45%]"
+        />
+        <Image
+          src={vineGreen}
+          alt=""
+          class="absolute bottom-[6%] right-[14%] w-[22%] -rotate-6"
+        />
+        <div
+          class="absolute bottom-0 right-0 w-[78%] aspect-square translate-x-[40%] translate-y-[40%] -rotate-45 -scale-x-100"
+        >
+          <Image src={potVase} alt="" class="absolute inset-0 w-full" />
+          <Image
+            src={flowerPink}
+            alt=""
+            class="absolute top-[26%] left-[36%] w-[20%] rotate-45"
+          />
+        </div>
+      </div>
+
+      <div
+        class="absolute inset-x-0 bottom-10 h-16 pointer-events-none z-0"
+        aria-hidden="true"
+      >
+        <Image
+          src={flowerBlue}
+          alt=""
+          class="absolute left-[28%] bottom-12 size-16 -rotate-12"
+        />
+        <Image
+          src={flowerPink}
+          alt=""
+          class="absolute left-[48%] bottom-0 size-16 rotate-45"
+        />
+        <Image
+          src={flowerYellow}
+          alt=""
+          class="absolute left-[66%] bottom-6 size-16 rotate-6"
+        />
+      </div>
+
+      <div
+        class="relative flex flex-col pt-[28cqw] sm:pt-24 z-10 pointer-events-none mb-12"
+      >
+        <div class="contents pointer-events-auto">
+          <slot />
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

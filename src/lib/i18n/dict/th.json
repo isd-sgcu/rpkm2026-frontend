@@ -17,5 +17,51 @@
   "nav": {
     "home": "หน้าหลัก",
     "logout": "ออกจากระบบ"
+  },
+  "walkrally": {
+    "home": {
+      "title": "Walk Rally",
+      "pointsLabel": "เก็บแต้มได้",
+      "pointsUnit": "แต้ม",
+      "registeredTitle": "กิจกรรมที่ลงทะเบียนไว้",
+      "emptyState": "ยังไม่มีกิจกรรมที่ลงทะเบียนไว้",
+      "addActivity": "เพิ่มกิจกรรม",
+      "cancelTitle": "ยกเลิกกิจกรรม",
+      "cancelMessage": "คุณต้องการยกเลิกกิจกรรม {name} รอบที่ {index} ใช่หรือไม่ ?",
+      "cancelConfirm": "ยืนยัน",
+      "cancelDismiss": "ยกเลิก",
+      "cancelSuccessTitle": "ยกเลิกกิจกรรมสำเร็จ",
+      "cancelSuccessMessage": "ยกเลิกกิจกรรม {name} รอบที่ {index} เรียบร้อยแล้ว",
+      "cancelFailTitle": "ยกเลิกไม่สำเร็จ",
+      "cancelFailMessage": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+    },
+    "events": {
+      "title": "กิจกรรม",
+      "back": "กลับ",
+      "eventDetailPrefix": "รายละเอียดกิจกรรม",
+      "tabs": {
+        "workshop": "Workshop",
+        "walkingTour": "Walking Tour",
+        "minigame": "Mini Game"
+      },
+      "minigameSummary": "ร่วมสนุกกับ 1 ใน 6 บอร์ดเกม \nพร้อมสร้างมิตรภาพผ่านทุกการเล่น",
+      "rounds": "รอบการทำกิจกรรม",
+      "roundsNote": "ทุกที่เวลาเพื่อเลือก บางรายการอาจเลือกไม่ได้เนื่องจากติดเงื่อนไข",
+      "roundLabel": "รอบที่ {index}",
+      "full": "เต็ม",
+      "alreadySelected": "รอบที่เลือกไว้",
+      "conflictMessage": "คุณลงเวลานี้ไม่ได้เพราะติดกิจกรรมอื่นที่เลือกไว้แล้ว",
+      "roundLockedMessage": "คุณเลือกรอบนี้ไม่ได้ เนื่องจากลงทะเบียนรอบอื่นของกิจกรรมนี้ไปแล้ว",
+      "confirmTitle": "ยืนยันการเลือก",
+      "confirmMessage": "คุณต้องการเพิ่มกิจกรรม {name} รอบที่ {index} ใช่หรือไม่ ?",
+      "confirm": "ยืนยัน",
+      "cancel": "ยกเลิก",
+      "successTitle": "บันทึกข้อมูลสำเร็จ",
+      "successMessage": "ลงทะเบียนกิจกรรม {name} รอบที่ {index} เรียบร้อยแล้ว",
+      "failTitle": "ลงทะเบียนไม่สำเร็จ",
+      "failMessage": "เลขนิสิตไม่ถูกต้องหรือนิสิตยังไม่ได้ลงทะเบียนในระบบ",
+      "ok": "ตกลง",
+      "retry": "ลองอีกครั้ง"
+    }
   }
 }

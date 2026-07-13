@@ -49,8 +49,11 @@
 
   --color-rpkm-red: var(--rpkm-red);
   --color-rpkm-green: var(--rpkm-green);
+  --color-rpkm-light-green: var(--rpkm-light-green);
   --color-rpkm-pink: var(--rpkm-pink);
+  --color-rpkm-light-pink: var(--rpkm-light-pink);
   --color-rpkm-blue: var(--rpkm-blue);
+  --color-rpkm-beige: var(--rpkm-beige);
   --color-rpkm-yellow: var(--rpkm-yellow);
   --color-rpkm-grey: var(--rpkm-grey);
 }
@@ -59,7 +62,10 @@
   /* color from figma is a bit of (like ±2) compared to ci guideline. so i choose those from ci guideline */
   --rpkm-red: #e75225;
   --rpkm-green: #6abf73;
+  --rpkm-light-green: #e3ffe7;
   --rpkm-pink: #e87e8c;
+  --rpkm-light-pink: #fcdcf0;
+  --rpkm-beige: #fffac9;
   --rpkm-blue: #80cae8;
   --rpkm-yellow: #fbe200;
   --rpkm-grey: #a4a3a3;

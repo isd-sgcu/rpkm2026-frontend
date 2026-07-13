@@ -1,0 +1,12 @@
+---
+import WalkRallyLayout from "@layouts/WalkRallyLayout.astro";
+import { MinigameListPanel } from "@components/walkrally/events/MinigameListPanel";
+---
+
+<WalkRallyLayout
+  title={"Mini Games"}
+  navigateBack={"/walkrally/events"}
+  bgColor="lightgreen"
+>
+  <MinigameListPanel client:load />
+</WalkRallyLayout>

@@ -1,0 +1,112 @@
+{
+  "workshop": [
+    {
+      "id": "lookchoop",
+      "nameTh": "ปั้นลูกชุบ",
+      "nameEn": "Lookchoop",
+      "descriptionTh": "ปั้นความสนุก แต่งแต้มสีสันกับ Workshop ลูกชุบ ที่จะเปลี่ยนถั่วกวนธรรมดา ให้กลายเป็นผลงานชิ้นเล็กแสนพิเศษ",
+      "descriptionEn": "Mold some fun and add a splash of color at the Lookchoop Workshop, turning ordinary mashed mung bean paste into a small, extra-special creation.",
+      "imageName": "lookchoop.png"
+    },
+    {
+      "id": "pimsennam",
+      "nameTh": "ทำพิมเสนน้ำ",
+      "nameEn": "Pimsen Nam",
+      "descriptionTh": "สร้างสรรค์ความสดชื่นกับ Workshop พิมเสนน้ำ ที่จะเปลี่ยนส่วนผสมจากสมุนไพรไทย ให้กลายเป็นพิมเสนน้ำขวดพิเศษของคุณ",
+      "descriptionEn": "Create your own refreshment at the Pimsen Nam Workshop, turning traditional Thai herbal ingredients into your own special bottle of cooling tonic.",
+      "imageName": "pimsennam.png"
+    },
+    {
+      "id": "painttungpa",
+      "nameTh": "เพ้นท์ถุงผ้า",
+      "nameEn": "Tote Bag Painting",
+      "descriptionTh": "ปล่อยจินตนาการ ถ่ายทอดความเป็นตัวเองกับ Workshop เพ้นท์ถุงผ้า ให้ทุกลวดลายสะท้อนเอกลักษณ์ที่เป็นคุณ",
+      "descriptionEn": "Let your imagination run free and express yourself at the Tote Bag Painting Workshop, where every design reflects who you are.",
+      "imageName": "painttungpa.png"
+    }
+  ],
+  "walkingTour": [
+    {
+      "id": "cu-museum",
+      "nameTh": "พิพิธภัณฑ์จุฬาฯ",
+      "nameEn": "CU Museum",
+      "descriptionTh": "\"จุฬาฯ ในฐานะปัญญาแห่งแผ่นดิน\" แหล่งรวมองค์ความรู้ ที่สร้างคุณค่าเพื่อสังคม จากอดีต...สู่ปัจจุบัน ร่วมสร้างอนาคตไปด้วยกัน",
+      "descriptionEn": "\"Chula as the Wisdom of the Land\" — a hub of knowledge that creates value for society. From the past... to the present, let's build the future together.",
+      "imageName": "cumuseum.png"
+    },
+    {
+      "id": "cu-history",
+      "nameTh": "หอประวัติจุฬาฯ",
+      "nameEn": "CU Heritage Hall",
+      "descriptionTh": "ทุกภาพ ทุกบันทึก คือหน้าหนึ่งของประวัติศาสตร์ ร่วมย้อนรอยเรื่องราว ของจุฬาฯ ตลอดกว่าศตวรรษ",
+      "descriptionEn": "Every photo, every record is a page of history. Join us in retracing the story of Chula across more than a century.",
+      "imageName": "cuhistory.png"
+    },
+    {
+      "id": "natural-history-museum",
+      "nameTh": "พิพิธภัณฑสถานธรรมชาติวิทยา",
+      "nameEn": "Natural History Museum",
+      "descriptionTh": "เรื่องราวของธรรมชาติ ที่ถูกบันทึกผ่านกาลเวลา ร่วมค้นพบความหลากหลายของสิ่งมีชีวิต",
+      "descriptionEn": "The story of nature, recorded through time. Discover the diversity of living things.",
+      "imageName": "naturalmuseum.png"
+    },
+    {
+      "id": "living-plant-museum",
+      "nameTh": "พิพิธภัณฑ์พืชมีชีวิต",
+      "nameEn": "Living Plant Museum",
+      "descriptionTh": "เรื่องราวของพรรณไม้ จากหลากหลายระบบนิเวศ สู่การเรียนรู้เพื่อธรรมชาติที่ยั่งยืน",
+      "descriptionEn": "The story of plants from diverse ecosystems, leading to learning for a more sustainable nature.",
+      "imageName": "plantmuseum.png"
+    }
+  ],
+  "minigame": [
+    {
+      "id": "dixit",
+      "nameTh": "Dixit",
+      "nameEn": "Dixit",
+      "descriptionTh": "บอร์ดเกมแนวเล่าเรื่องที่เน้นการใช้จินตนาการ ผู้เล่นคนหนึ่งเป็น \"นักเล่าเรื่อง\" ให้คำใบ้จากภาพวาดสุดแฟนตาซี ส่วนคนอื่นต้องทายว่าภาพไหนตรงกับคำใบ้",
+      "descriptionEn": "A storytelling card game full of imagination — one player becomes the \"storyteller\" and gives a clue from a dreamlike illustration, while everyone else guesses which card matches.",
+      "imageName": "dixit.png"
+    },
+    {
+      "id": "sheriff-of-nottingham",
+      "nameTh": "Sheriff of Nottingham",
+      "nameEn": "Sheriff of Nottingham",
+      "descriptionTh": "เกมการ์ดที่ให้ผู้เล่นสวมบทเป็น \"พ่อค้า\" ลักลอบนำสินค้าเข้าเมือง โดยหลีกเลี่ยงการตรวจของ \"นายอากร\" ผู้คอยจับผิดสินค้าปลอม",
+      "descriptionEn": "Play as a merchant trying to smuggle goods into the city while dodging the Sheriff's inspection — bluff, negotiate, and outwit each other.",
+      "imageName": "sheriff.png"
+    },
+    {
+      "id": "the-mind",
+      "nameTh": "The Mind",
+      "nameEn": "The Mind",
+      "descriptionTh": "เกมความร่วมมือที่ต้องเล่นการ์ดตัวเลขเรียงลำดับโดยห้ามพูดคุยกันเลย อาศัยจังหวะและสัญชาตญาณร่วมของทั้งทีม",
+      "descriptionEn": "A cooperative game where players must play numbered cards in ascending order without communicating at all — pure teamwork and intuition.",
+      "imageName": "themind.png"
+    },
+    {
+      "id": "insider",
+      "nameTh": "Insider",
+      "nameEn": "Insider",
+      "descriptionTh": "เกมทายคำและจับผิดคนโกหก มีผู้เล่นลับคนหนึ่งที่รู้คำตอบอยู่แล้ว คอยชักจูงทุกคนโดยไม่ให้ถูกจับได้",
+      "descriptionEn": "A social deduction game — one secret \"insider\" already knows the answer and must guide the group there without getting caught.",
+      "imageName": "insider.png"
+    },
+    {
+      "id": "muffin-time",
+      "nameTh": "Muffin Time",
+      "nameEn": "Muffin Time",
+      "descriptionTh": "เกมการ์ดสุดฮาจังหวะไว ใครถือไพ่ \"มัฟฟินไหม้\" ติดมือตอนจบเกมจะเป็นฝ่ายแพ้ทันที",
+      "descriptionEn": "A fast, silly party card game — whoever is left holding the \"burnt muffin\" card when time's up loses instantly.",
+      "imageName": "muffintime.png"
+    },
+    {
+      "id": "exploding-kittens",
+      "nameTh": "Exploding Kittens",
+      "nameEn": "Exploding Kittens",
+      "descriptionTh": "เกมการ์ดสุ่มไพ่ที่ต้องคอยหลบไพ่ \"แมวระเบิด\" ใช้ไพ่พิเศษป้องกันตัวและหลอกล่อคู่แข่งให้จับไพ่นั้นแทน",
+      "descriptionEn": "Draw cards and avoid the exploding kitten — use special cards to defuse it or trick your opponents into drawing it instead.",
+      "imageName": "explodingkitten.png"
+    }
+  ]
+}
