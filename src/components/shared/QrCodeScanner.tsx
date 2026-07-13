@@ -49,6 +49,10 @@ export function QrScanner({
         }}
         components={{ finder: false }}
         sound={false}
+        // Re-emit the same code on later scans — without this, a scan rejected
+        // by the consumer (e.g. validation toast) can never be retried.
+        allowMultiple
+        scanDelay={1500}
         styles={{
           container: { width: "100%", height: "100%" },
           video: { width: "100%", height: "100%", objectFit: "cover" },

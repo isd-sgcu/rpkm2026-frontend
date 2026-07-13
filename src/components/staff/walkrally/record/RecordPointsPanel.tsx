@@ -74,7 +74,10 @@ function RecordPointsPanelContent() {
 
   function canSubmit() {
     if (activityId && roundIndex) return true;
-    toast.error(t("staff.walkrally.record.selectActivityFirst"));
+    // Fixed id — repeated scans re-use the same toast instead of stacking
+    toast.error(t("staff.walkrally.record.selectActivityFirst"), {
+      id: "select-activity-first",
+    });
     return false;
   }
 
