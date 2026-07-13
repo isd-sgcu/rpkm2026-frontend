@@ -1,7 +1,8 @@
 ---
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
+import SocialCardContainer from "@components/my-freshy-story/SocialCardContainer.astro";
 import MyFreshyStoryLayout from "@layouts/MyFreshyStoryLayout.astro";
-import { CalendarDaysIcon, CircleAlert } from "lucide-react";
+import { CalendarDaysIcon, CircleAlert, GiftIcon } from "lucide-react";
 ---
 
 <MyFreshyStoryLayout navigateBack="/" title="My Freshy Story">
@@ -13,7 +14,9 @@ import { CalendarDaysIcon, CircleAlert } from "lucide-react";
       พร้อมติดแฮชแท็กกิจกรรมเพื่อลุ้นรับของรางวัล
     </p>
     <section class="">
-      <p><CalendarDaysIcon className="inline mr-1" />20 กรกฎาคม - 3 สิงหาคม</p>
+      <p>
+        <CalendarDaysIcon className="inline mr-1" />20 กรกฎาคม - 3 สิงหาคม
+      </p>
       <p>
         <CircleAlert className="inline mr-1" />เฉพาะนิสิตจุฬาฯ ชั้นปีที่ 1 (รหัส
         110) เท่านั้น
@@ -21,6 +24,72 @@ import { CalendarDaysIcon, CircleAlert } from "lucide-react";
     </section>
   </header>
   <MonotoneNoiseContainer
-    className="grow bg-rpkm-red border rounded-t-4xl flex flex-col p-6 gap-4 mt-6"
-  />
+    className="grow bg-rpkm-red border rounded-t-4xl flex flex-col p-4 gap-4 mt-6"
+  >
+    <SocialCardContainer>
+      <h2 class="text-xl font-bold">IG Story – Add Yours</h2>
+      <p class="mt-2">
+        แชร์โมเมนต์การตามล่า Chula Jigsaw หรือ Chula QR Quest ผ่าน Add Yours บน
+        Instagram Story
+      </p>
+      <div class="flex items-center gap-1 my-4">
+        <GiftIcon className="inline" /> 50 คนแรก รับของรางวัลฟรี!
+      </div>
+      <div>
+        <p class="font-bold">วิธีการเข้าร่วม</p>
+        <div
+          class="flex flex-col gap-2 pt-3 w-full text-center *:bg-rpkm-blue *:py-1 *:border *:rounded-4xl"
+        >
+          <MonotoneNoiseContainer>
+            ทำกิจกรรม Chula Jigsaw หรือ Chula QR Quest
+          </MonotoneNoiseContainer>
+          <MonotoneNoiseContainer>
+            แชร์ผ่าน Add Yours บน IG Story
+          </MonotoneNoiseContainer>
+          <MonotoneNoiseContainer>
+            รอประกาศผู้ได้รับรางวัล
+          </MonotoneNoiseContainer>
+        </div>
+      </div>
+    </SocialCardContainer>
+    <SocialCardContainer>
+      <h2 class="text-xl font-bold">Reels / TikTok</h2>
+      <p class="mt-2">
+        สร้างคลิปความยาว ไม่เกิน 1 นาที
+        ถ่ายทอดประสบการณ์การเข้าร่วมกิจกรรมรับเพื่อนใหม่ พร้อมสอดแทรกแนวคิด SDGs
+        อย่างน้อย 1 เป้าหมาย
+      </p>
+      <div class="flex flex-wrap gap-4 my-4">
+        <div>
+          <p class="font-bold">เข้าร่วมอย่างน้อย 1 กิจกรรม</p>
+          <ul class="pl-4 list-disc">
+            <li>Chula Jigsaw Journey</li>
+            <li>Chula QR Quest</li>
+            <li>Field Trip</li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-bold">กติกา</p>
+          <ul class="pl-4 list-disc">
+            <li>ความยาวไม่เกิน 1 นาที</li>
+            <li>โพสต์แบบ Public</li>
+            <li>ติดแฮชแท็ก</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div
+          class="flex flex-wrap justify-center gap-2 w-full text-sm text-center *:bg-rpkm-blue *:px-2 *:py-1 *:border *:rounded-4xl"
+        >
+          <MonotoneNoiseContainer>
+            #jigsawjourneyxrubpuenkaomai2026
+          </MonotoneNoiseContainer>
+          <MonotoneNoiseContainer>
+            #CSRxrubpuenkaomai2026
+          </MonotoneNoiseContainer>
+          <MonotoneNoiseContainer> #CSRxmyfreshystory </MonotoneNoiseContainer>
+        </div>
+      </div>
+    </SocialCardContainer>
+  </MonotoneNoiseContainer>
 </MyFreshyStoryLayout>
