@@ -16,7 +16,20 @@
   },
   "nav": {
     "home": "Home",
+    "scanRegister": "Scan Register",
+    "qrCode": "QR Code",
+    "chooseHouse": "Choose Welcome House",
+    "groupPairing": "Group Pairing",
+    "editInfo": "Edit Info",
+    "map": "Map",
+    "calendar": "Activity Calendar",
     "logout": "Log out"
+  },
+  "map": {
+    "title": "Map"
+  },
+  "emergency": {
+    "title": "Emergency Contact"
   },
   "home": {
     "calendar": {

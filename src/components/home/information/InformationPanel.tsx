@@ -64,71 +64,76 @@ function ShapeButton({
 
 const InformationPanel = () => {
   const t = useT();
+  const isStaff = false;
 
   return (
     <div className="flex w-full flex-col gap-6">
-      <div className="flex flex-col gap-4">
-        <h2 className="text-2xl font-bold text-foreground">
-          {t("home.information.registerTitle")}
-        </h2>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="min-w-0">
-            <ShapeButton
-              href="/house"
-              imageUrl={houseButtonUrl}
-              capRatio="100 / 33"
-              fill="#FFF27C"
-              roundedBottom
-              label={t("home.information.register.friendHouse")}
-            />
+      {!isStaff && (
+        <>
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl font-bold text-foreground">
+              {t("home.information.registerTitle")}
+            </h2>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="min-w-0">
+                <ShapeButton
+                  href="/house"
+                  imageUrl={houseButtonUrl}
+                  capRatio="100 / 33"
+                  fill="#FFF27C"
+                  roundedBottom
+                  label={t("home.information.register.friendHouse")}
+                />
+              </div>
+              <div className="min-w-0">
+                <ShapeButton
+                  href="/activity"
+                  imageUrl={houseButtonUrl}
+                  capRatio="100 / 33"
+                  fill="#FFF27C"
+                  roundedBottom
+                  label={t("home.information.register.activity")}
+                />
+              </div>
+            </div>
           </div>
-          <div className="min-w-0">
-            <ShapeButton
-              href="/activity"
-              imageUrl={houseButtonUrl}
-              capRatio="100 / 33"
-              fill="#FFF27C"
-              roundedBottom
-              label={t("home.information.register.activity")}
-            />
-          </div>
-        </div>
-      </div>
 
-      <div className="flex flex-col gap-4">
-        <h2 className="text-2xl font-bold text-foreground">
-          {t("home.information.gameTitle")}
-        </h2>
-        <div className="grid grid-cols-3 items-start gap-3">
-          <div className="min-w-0">
-            <ShapeButton
-              href="/jigsaw"
-              imageUrl={jigsawButtonUrl}
-              capRatio="4/3"
-              fill="#6ABF73"
-              label={t("home.information.games.jigsaw")}
-            />
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl font-bold text-foreground">
+              {t("home.information.gameTitle")}
+            </h2>
+            <div className="grid grid-cols-3 items-start gap-3">
+              <div className="min-w-0">
+                <ShapeButton
+                  href="/jigsaw"
+                  imageUrl={jigsawButtonUrl}
+                  capRatio="4/3"
+                  fill="#6ABF73"
+                  label={t("home.information.games.jigsaw")}
+                />
+              </div>
+              <div className="min-w-0">
+                <ShapeButton
+                  href="/stamp"
+                  imageUrl={stampButtonUrl}
+                  capRatio="4/3"
+                  fill="#6ABF73"
+                  label={t("home.information.games.stamp")}
+                />
+              </div>
+              <div className="min-w-0">
+                <ShapeButton
+                  href="/freshy-story"
+                  imageUrl={freshyButtonUrl}
+                  capRatio="4/3"
+                  fill="#6ABF73"
+                  label={t("home.information.games.myFreshyStory")}
+                />
+              </div>
+            </div>
           </div>
-          <div className="min-w-0">
-            <ShapeButton
-              href="/stamp"
-              imageUrl={stampButtonUrl}
-              capRatio="4/3"
-              fill="#6ABF73"
-              label={t("home.information.games.stamp")}
-            />
-          </div>
-          <div className="min-w-0">
-            <ShapeButton
-              href="/freshy-story"
-              imageUrl={freshyButtonUrl}
-              capRatio="4/3"
-              fill="#6ABF73"
-              label={t("home.information.games.myFreshyStory")}
-            />
-          </div>
-        </div>
-      </div>
+        </>
+      )}
 
       <div className="flex flex-col gap-4">
         <h2 className="text-2xl font-bold text-foreground">

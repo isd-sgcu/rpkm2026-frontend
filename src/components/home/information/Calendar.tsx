@@ -120,7 +120,7 @@ const Calendar = () => {
     : `${weekdayFormatter.format(selectedDate)}, ${monthFormatter.format(selectedDate)} ${selectedDate.getDate()}`;
 
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="flex w-full flex-col gap-4" id="rpkm-calendar">
       <h2 className="text-xl text-foreground">{t("home.calendar.title")}</h2>
 
       <div className="flex items-center gap-1">
