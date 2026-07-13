@@ -102,7 +102,7 @@ export function RegisterPanel() {
 
   return (
     <FormProvider {...methods}>
-      <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col">
         <div className="mt-6 shrink-0 px-6">
           <img
             src={rpkmLogo.src}
@@ -120,7 +120,7 @@ export function RegisterPanel() {
         <form
           onSubmit={(event) => event.preventDefault()}
           noValidate
-          className="no-scrollbar mt-6 min-h-0 flex-1 overflow-y-auto px-6"
+          className="no-scrollbar mt-6 min-h-0 w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-6"
         >
           {step === 1 && <StepPersonalInfo />}
           {step === 2 && <StepHealthInfo />}
