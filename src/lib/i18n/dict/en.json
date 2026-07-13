@@ -62,32 +62,32 @@
       "failMessage": "Invalid student ID, or you are not registered in the system.",
       "ok": "OK",
       "retry": "Try Again"
-    },
-    "record": {
-      "title": "Record Activity Points",
-      "subtitle": "Walk Rally",
-      "modeQr": "Scan QR Code",
-      "modeStudentId": "Student ID",
-      "studentIdLabel": "Enter the 10-digit student ID",
-      "studentIdPlaceholder": "Student ID",
-      "activityLabel": "Activity",
-      "activityPlaceholder": "Select an activity",
-      "roundLabel": "Activity Round",
-      "roundPlaceholder": "Select a round",
-      "roundOption": "Round {index}",
-      "save": "Save",
-      "selectActivityFirst": "Please select an activity and round first.",
-      "invalidStudentId": "Please enter a valid 10-digit student ID.",
-      "confirmTitle": "Confirm Recording",
-      "confirmMessage": "Record points for student ID {studentId}, {activity}, Round {index}?",
-      "confirm": "Confirm",
-      "cancel": "Cancel",
-      "successTitle": "Points Recorded",
-      "successMessage": "Activity points recorded successfully.",
-      "failTitle": "Recording Failed",
-      "failMessage": "Something went wrong. Please try again.",
-      "ok": "OK",
-      "retry": "Try Again"
+    }
+  },
+  "staff": {
+    "walkrally": {
+      "record": {
+        "title": "Record Activity Points",
+        "subtitle": "Walk Rally",
+        "modeQr": "Scan QR Code",
+        "modeStudentId": "Student ID",
+        "studentIdLabel": "Enter the 10-digit student ID",
+        "studentIdPlaceholder": "Student ID",
+        "activityLabel": "Activity",
+        "activityPlaceholder": "Select an activity",
+        "roundLabel": "Activity Round",
+        "roundPlaceholder": "Select a round",
+        "roundOption": "Round {index}",
+        "save": "Save",
+        "selectActivityFirst": "Please select an activity and round first.",
+        "invalidStudentId": "Please enter a valid 10-digit student ID.",
+        "successTitle": "Points Recorded",
+        "successMessage": "Activity points recorded successfully.",
+        "failTitle": "Recording Failed",
+        "failMessage": "Something went wrong. Please try again.",
+        "ok": "OK",
+        "retry": "Try Again"
+      }
     },
     "checkin": {
       "title": "Event Check-in",

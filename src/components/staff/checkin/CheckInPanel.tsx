@@ -22,20 +22,20 @@ function CheckInPanelContent() {
   return (
     <ScanEntryForm
       labels={{
-        title: t("walkrally.checkin.title"),
-        subtitle: t("walkrally.checkin.subtitle"),
-        modeQr: t("walkrally.checkin.modeQr"),
-        modeStudentId: t("walkrally.checkin.modeStudentId"),
-        studentIdLabel: t("walkrally.checkin.studentIdLabel"),
-        studentIdPlaceholder: t("walkrally.checkin.studentIdPlaceholder"),
-        invalidStudentId: t("walkrally.checkin.invalidStudentId"),
-        save: t("walkrally.checkin.save"),
-        successTitle: t("walkrally.checkin.successTitle"),
-        successMessage: t("walkrally.checkin.successMessage"),
-        failTitle: t("walkrally.checkin.failTitle"),
-        failMessage: t("walkrally.checkin.failMessage"),
-        ok: t("walkrally.checkin.ok"),
-        retry: t("walkrally.checkin.retry"),
+        title: t("staff.checkin.title"),
+        subtitle: t("staff.checkin.subtitle"),
+        modeQr: t("staff.checkin.modeQr"),
+        modeStudentId: t("staff.checkin.modeStudentId"),
+        studentIdLabel: t("staff.checkin.studentIdLabel"),
+        studentIdPlaceholder: t("staff.checkin.studentIdPlaceholder"),
+        invalidStudentId: t("staff.checkin.invalidStudentId"),
+        save: t("staff.checkin.save"),
+        successTitle: t("staff.checkin.successTitle"),
+        successMessage: t("staff.checkin.successMessage"),
+        failTitle: t("staff.checkin.failTitle"),
+        failMessage: t("staff.checkin.failMessage"),
+        ok: t("staff.checkin.ok"),
+        retry: t("staff.checkin.retry"),
       }}
       titleClassName="text-foreground"
       labelClassName="text-foreground"

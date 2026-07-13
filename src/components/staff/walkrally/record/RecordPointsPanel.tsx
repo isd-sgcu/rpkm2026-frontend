@@ -65,7 +65,7 @@ function RecordPointsPanelContent() {
     () =>
       rounds.map((round) => ({
         value: String(round.index),
-        label: `${t("walkrally.record.roundOption", {
+        label: `${t("staff.walkrally.record.roundOption", {
           index: String(round.index),
         })}  ${round.start}-${round.end}`,
       })),
@@ -74,27 +74,27 @@ function RecordPointsPanelContent() {
 
   function canSubmit() {
     if (activityId && roundIndex) return true;
-    toast.error(t("walkrally.record.selectActivityFirst"));
+    toast.error(t("staff.walkrally.record.selectActivityFirst"));
     return false;
   }
 
   return (
     <ScanEntryForm
       labels={{
-        title: t("walkrally.record.title"),
-        subtitle: t("walkrally.record.subtitle"),
-        modeQr: t("walkrally.record.modeQr"),
-        modeStudentId: t("walkrally.record.modeStudentId"),
-        studentIdLabel: t("walkrally.record.studentIdLabel"),
-        studentIdPlaceholder: t("walkrally.record.studentIdPlaceholder"),
-        invalidStudentId: t("walkrally.record.invalidStudentId"),
-        save: t("walkrally.record.save"),
-        successTitle: t("walkrally.record.successTitle"),
-        successMessage: t("walkrally.record.successMessage"),
-        failTitle: t("walkrally.record.failTitle"),
-        failMessage: t("walkrally.record.failMessage"),
-        ok: t("walkrally.record.ok"),
-        retry: t("walkrally.record.retry"),
+        title: t("staff.walkrally.record.title"),
+        subtitle: t("staff.walkrally.record.subtitle"),
+        modeQr: t("staff.walkrally.record.modeQr"),
+        modeStudentId: t("staff.walkrally.record.modeStudentId"),
+        studentIdLabel: t("staff.walkrally.record.studentIdLabel"),
+        studentIdPlaceholder: t("staff.walkrally.record.studentIdPlaceholder"),
+        invalidStudentId: t("staff.walkrally.record.invalidStudentId"),
+        save: t("staff.walkrally.record.save"),
+        successTitle: t("staff.walkrally.record.successTitle"),
+        successMessage: t("staff.walkrally.record.successMessage"),
+        failTitle: t("staff.walkrally.record.failTitle"),
+        failMessage: t("staff.walkrally.record.failMessage"),
+        ok: t("staff.walkrally.record.ok"),
+        retry: t("staff.walkrally.record.retry"),
       }}
       canSubmit={canSubmit}
       onSubmit={(studentId) =>
@@ -103,7 +103,7 @@ function RecordPointsPanelContent() {
     >
       <div className="flex flex-col gap-2">
         <span className="px-1 font-bold text-background">
-          {t("walkrally.record.activityLabel")}
+          {t("staff.walkrally.record.activityLabel")}
         </span>
         <Select
           items={activityItems}
@@ -112,7 +112,7 @@ function RecordPointsPanelContent() {
         >
           <SelectTrigger className="h-11! w-full rounded-2xl border-black bg-background px-2.5 text-base font-bold text-foreground">
             <SelectValue
-              placeholder={t("walkrally.record.activityPlaceholder")}
+              placeholder={t("staff.walkrally.record.activityPlaceholder")}
             />
           </SelectTrigger>
           <SelectContent>
@@ -131,7 +131,7 @@ function RecordPointsPanelContent() {
 
       <div className="flex flex-col gap-2">
         <span className="px-1 font-bold text-background">
-          {t("walkrally.record.roundLabel")}
+          {t("staff.walkrally.record.roundLabel")}
         </span>
         <Select
           items={roundItems}
@@ -139,7 +139,9 @@ function RecordPointsPanelContent() {
           onValueChange={(value) => setRoundIndex(value ?? "")}
         >
           <SelectTrigger className="h-11! w-full rounded-2xl border-black bg-background px-2.5 text-base font-bold text-foreground">
-            <SelectValue placeholder={t("walkrally.record.roundPlaceholder")} />
+            <SelectValue
+              placeholder={t("staff.walkrally.record.roundPlaceholder")}
+            />
           </SelectTrigger>
           <SelectContent>
             {rounds.map((round) => (
@@ -149,7 +151,7 @@ function RecordPointsPanelContent() {
                 value={String(round.index)}
               >
                 <span className="font-bold">
-                  {t("walkrally.record.roundOption", {
+                  {t("staff.walkrally.record.roundOption", {
                     index: String(round.index),
                   })}
                 </span>
