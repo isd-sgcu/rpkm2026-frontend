@@ -167,5 +167,20 @@
       "drugDetail": "Please enter your drug allergy",
       "chronicDetail": "Please enter your chronic condition"
     }
+  },
+  "qrcode": {
+    "refresh": "Refresh",
+    "scannerError": {
+      "permissionDenied": "We need permission to use the camera. Please allow camera access, then try again.",
+      "noCamera": "We couldn't find a camera on this device. Try another device.",
+      "inUse": "The camera is being used by another app or tab. Close it and try again.",
+      "overconstrained": "We couldn't start the camera on this device. Please try another one.",
+      "insecureContext": "The camera only works on a secure (https) connection. Please open this page over https.",
+      "unsupported": "This browser doesn't support the camera. Try a different browser.",
+      "aborted": "Starting the camera was interrupted. Please try again.",
+      "security": "Your browser blocked camera access. Check your browser settings and try again.",
+      "typeError": "Something went wrong while starting the camera. Please try again.",
+      "unknown": "Something went wrong. Please try again."
+    }
   }
 }
