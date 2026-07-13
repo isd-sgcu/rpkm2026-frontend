@@ -47,7 +47,10 @@ const {
   }
 
   <div
-    class="absolute inset-0 flex flex-col px-[1.25em] pt-[40cqw] sm:pt-45 pointer-events-none"
+    class:list={[
+      "absolute inset-0 flex flex-col px-[1.25em] pointer-events-none",
+      showLogo ? "pt-[40cqw] sm:pt-45" : "pt-16 sm:pt-20",
+    ]}
   >
     <div class="contents pointer-events-auto">
       <slot />

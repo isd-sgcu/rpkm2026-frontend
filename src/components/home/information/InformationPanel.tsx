@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import { getImageUrl } from "@lib/function";
 import { useT } from "@lib/i18n/useT";
-import { Button } from "@components/ui/button";
+import { Button, buttonVariants } from "@components/ui/button";
 import { cn } from "@lib/utils";
 import Calendar from "./Calendar";
 import rpkmLogo from "@assets/images/artboard_1.svg";
@@ -64,71 +64,76 @@ function ShapeButton({
 
 const InformationPanel = () => {
   const t = useT();
+  const isStaff = false;
 
   return (
-    <div className="flex w-full flex-col gap-6">
-      <div className="flex flex-col gap-4">
-        <h2 className="text-2xl font-bold text-foreground">
-          {t("home.information.registerTitle")}
-        </h2>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="min-w-0">
-            <ShapeButton
-              href="/house"
-              imageUrl={houseButtonUrl}
-              capRatio="100 / 33"
-              fill="#FFF27C"
-              roundedBottom
-              label={t("home.information.register.friendHouse")}
-            />
+    <div className="flex w-full flex-col gap-12">
+      {!isStaff && (
+        <>
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl font-bold text-foreground">
+              {t("home.information.registerTitle")}
+            </h2>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="min-w-0">
+                <ShapeButton
+                  href="/house"
+                  imageUrl={houseButtonUrl}
+                  capRatio="100 / 33"
+                  fill="#FFF27C"
+                  roundedBottom
+                  label={t("home.information.register.friendHouse")}
+                />
+              </div>
+              <div className="min-w-0">
+                <ShapeButton
+                  href="/activity"
+                  imageUrl={houseButtonUrl}
+                  capRatio="100 / 33"
+                  fill="#FFF27C"
+                  roundedBottom
+                  label={t("home.information.register.activity")}
+                />
+              </div>
+            </div>
           </div>
-          <div className="min-w-0">
-            <ShapeButton
-              href="/activity"
-              imageUrl={houseButtonUrl}
-              capRatio="100 / 33"
-              fill="#FFF27C"
-              roundedBottom
-              label={t("home.information.register.activity")}
-            />
-          </div>
-        </div>
-      </div>
 
-      <div className="flex flex-col gap-4">
-        <h2 className="text-2xl font-bold text-foreground">
-          {t("home.information.gameTitle")}
-        </h2>
-        <div className="grid grid-cols-3 items-start gap-3">
-          <div className="min-w-0">
-            <ShapeButton
-              href="/jigsaw"
-              imageUrl={jigsawButtonUrl}
-              capRatio="4/3"
-              fill="#6ABF73"
-              label={t("home.information.games.jigsaw")}
-            />
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl font-bold text-foreground">
+              {t("home.information.gameTitle")}
+            </h2>
+            <div className="grid grid-cols-3 items-start gap-3">
+              <div className="min-w-0">
+                <ShapeButton
+                  href="/jigsaw"
+                  imageUrl={jigsawButtonUrl}
+                  capRatio="4/3"
+                  fill="#6ABF73"
+                  label={t("home.information.games.jigsaw")}
+                />
+              </div>
+              <div className="min-w-0">
+                <ShapeButton
+                  href="/stamp"
+                  imageUrl={stampButtonUrl}
+                  capRatio="4/3"
+                  fill="#6ABF73"
+                  label={t("home.information.games.stamp")}
+                />
+              </div>
+              <div className="min-w-0">
+                <ShapeButton
+                  href="/freshy-story"
+                  imageUrl={freshyButtonUrl}
+                  capRatio="4/3"
+                  fill="#6ABF73"
+                  label={t("home.information.games.myFreshyStory")}
+                />
+              </div>
+            </div>
           </div>
-          <div className="min-w-0">
-            <ShapeButton
-              href="/stamp"
-              imageUrl={stampButtonUrl}
-              capRatio="4/3"
-              fill="#6ABF73"
-              label={t("home.information.games.stamp")}
-            />
-          </div>
-          <div className="min-w-0">
-            <ShapeButton
-              href="/freshy-story"
-              imageUrl={freshyButtonUrl}
-              capRatio="4/3"
-              fill="#6ABF73"
-              label={t("home.information.games.myFreshyStory")}
-            />
-          </div>
-        </div>
-      </div>
+        </>
+      )}
 
       <div className="flex flex-col gap-4">
         <h2 className="text-2xl font-bold text-foreground">
@@ -136,6 +141,16 @@ const InformationPanel = () => {
         </h2>
         <Calendar />
       </div>
+
+      <a
+        href="/emergency"
+        className={cn(
+          buttonVariants({ variant: "outline", size: "lg" }),
+          "w-fit self-center px-6 py-4",
+        )}
+      >
+        {t("emergency.title")}
+      </a>
 
       <div className="mt-16 flex justify-center sm:mt-24">
         <img

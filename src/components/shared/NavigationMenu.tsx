@@ -10,11 +10,23 @@ import {
 } from "@components/ui/drawer";
 import { $locale, setLocale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
-import { HomeIcon, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import rpkmLogo from "@assets/images/rpkm_logo.png";
+import homeIcon from "@assets/images/home.svg";
+import scanIcon from "@assets/images/scan.svg";
+import qrCodeIcon from "@assets/images/qr-code.svg";
+import houseIcon from "@assets/images/family-home.svg";
+import peopleIcon from "@assets/images/people.svg";
+import editIcon from "@assets/images/edit.svg";
+import calendarIcon from "@assets/images/calendar-month.svg";
+import emergencyIcon from "@assets/images/call.svg";
+
+const navItemClassName =
+  "flex w-full items-center py-3.5 rounded px-4 gap-2 active:bg-accent";
 
 // not shadcn sidebar. actually a drawer
 export function NavigationMenu() {
+  const isStaff = false;
   const locale = useStore($locale);
   const t = useT();
 
@@ -49,23 +61,89 @@ export function NavigationMenu() {
           </DrawerHeader>
 
           <section className="mt-6 text-base font-bold px-4">
-            <a
-              href="/"
-              className="flex w-full items-center py-3.5 rounded px-4 gap-2 active:bg-accent"
-            >
-              <HomeIcon size={24} />
-              <span className="pt-1">{t("nav.home")}</span>
-            </a>
+            <DrawerClose
+              render={
+                <a href="/" className={navItemClassName}>
+                  <img src={homeIcon.src} alt="" className="size-6" />
+                  <span className="pt-1">{t("nav.home")}</span>
+                </a>
+              }
+            />
 
             {/* TODO: link? */}
+            {isStaff ? (
+              <DrawerClose
+                render={
+                  <a href="/staff/register" className={navItemClassName}>
+                    <img src={scanIcon.src} alt="" className="size-6" />
+                    <span className="pt-1">{t("nav.scanRegister")}</span>
+                  </a>
+                }
+              />
+            ) : (
+              <>
+                {/* TODO: open QR code dialog instead of a plain link */}
+                <DrawerClose
+                  render={
+                    <a href="/" className={navItemClassName}>
+                      <img src={qrCodeIcon.src} alt="" className="size-6" />
+                      <span className="pt-1">{t("nav.qrCode")}</span>
+                    </a>
+                  }
+                />
+
+                {/* TODO: link? */}
+                <DrawerClose
+                  render={
+                    <a href="/house" className={navItemClassName}>
+                      <img src={houseIcon.src} alt="" className="size-6" />
+                      <span className="pt-1">{t("nav.chooseHouse")}</span>
+                    </a>
+                  }
+                />
+
+                {/* TODO: link? */}
+                <DrawerClose
+                  render={
+                    <a href="/house" className={navItemClassName}>
+                      <img src={peopleIcon.src} alt="" className="size-6" />
+                      <span className="pt-1">{t("nav.groupPairing")}</span>
+                    </a>
+                  }
+                />
+
+                <DrawerClose
+                  render={
+                    <a href="/house" className={navItemClassName}>
+                      <img src={editIcon.src} alt="" className="size-6" />
+                      <span className="pt-1">{t("nav.editInfo")}</span>
+                    </a>
+                  }
+                />
+              </>
+            )}
+
+            <DrawerClose
+              render={
+                <a href="/#rpkm-calendar" className={navItemClassName}>
+                  <img src={calendarIcon.src} alt="" className="size-6" />
+                  <span className="pt-1">{t("nav.calendar")}</span>
+                </a>
+              }
+            />
+
+            <DrawerClose
+              render={
+                <a href="/emergency" className={navItemClassName}>
+                  <img src={emergencyIcon.src} alt="" className="size-6" />
+                  <span className="pt-1">{t("emergency.title")}</span>
+                </a>
+              }
+            />
           </section>
 
           <div className="flex items-center justify-center w-full pt-6 pb-8">
-            <Button
-              size="lg"
-              variant={"destructive"}
-              className="text-lg px-6 py-3"
-            >
+            <Button size="lg" className="text-lg px-6 py-3">
               {t("nav.logout")}
             </Button>
           </div>
