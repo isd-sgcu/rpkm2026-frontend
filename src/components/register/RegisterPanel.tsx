@@ -102,7 +102,7 @@ export function RegisterPanel() {
             className="mx-auto h-auto w-36"
           />
           {/* TODO: i18n */}
-          <h1 className="mt-2 text-center text-3xl font-bold text-foreground">
+          <h1 className="mt-2 text-center text-2xl font-bold text-foreground">
             ลงทะเบียน
           </h1>
           <div className="mt-6">

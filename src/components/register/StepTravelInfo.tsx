@@ -141,7 +141,7 @@ export function StepTravelInfo() {
                 type="button"
                 variant="outline"
                 size="lg"
-                className="h-11 w-full rounded-full border-rpkm-blue bg-background text-rpkm-blue"
+                className="h-11 w-full rounded-full border-rpkm-blue bg-background text-rpkm-red"
                 onClick={addLeg}
               >
                 {/* TODO: i18n */}
