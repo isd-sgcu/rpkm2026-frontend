@@ -2,23 +2,35 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import "../../styles/global.css";
 import { appConfig } from "@lib/env";
-import { Clock, ScanLine } from "lucide-react";
+import { ScanLine, CalendarDays, CircleAlert } from "lucide-react";
 ---
 
 <BaseLayout title={appConfig.appName}>
   <div class="flex w-full max-w-sm flex-col items-center gap-6 p-4">
-    <header class="flex flex-col items-center gap-2 text-center">
-      <h1 class="text-3xl font-bold">สะสมจิกซอร์</h1>
-      <div class="flex flex-col items-center gap-0.1">
-        <p class="text-base font-normal">เก็บจิกซอร์ 10 จุดทั่วมหาลัย</p>
+    <header class="flex flex-col items-center text-center">
+      <div class="flex flex-col items-center">
+        <h1 class="text-3xl font-bold">กิจกรรมสะสมจิกซอร์</h1>
+        <h1 class="text-3xl font-bold">Chula Jigsaw Journey</h1>
+      </div>
+      <div class="flex flex-col items-center">
+        <h2 class="text-base font-bold">สะสมชิ้นส่วน Digital Jigsaw</h2>
+        <h2 class="text-base font-bold">
+          จากสถานที่สำคัญรอบจุฬาฯ พร้อมรับรางวัลเมื่อสะสมครบ
+        </h2>
+      </div>
+      <div class="flex flex-col items-center">
         <p class="flex items-start gap-1 text-base font-normal">
-          <Clock className="mt-0.5 size-4 shrink-0 text-black" />
-          20 กรกฎาคม - 3 สิงหาคม เวลา 00:00 - 23.59
+          <CalendarDays className="mt-0.5 size-[18px] shrink-0 text-black" />
+          20 กรกฎาคม - 3 สิงหาคม
+        </p>
+        <p class="flex items-start gap-1 text-base font-normal">
+          <CircleAlert className="mt-0.5 size-[18px] shrink-0 text-black" />
+          เข้าร่วมเฉพาะนิสิตชั้นปี 1 หรือรหัส CU110
         </p>
       </div>
     </header>
 
-    <div class="grid w-full grid-cols-2 grid-rows-5 gap-3">
+    <div class="grid w-full grid-cols-5 grid-rows-2 gap-3">
       {
         Array.from({ length: 10 }).map((_, i) => (
           <div
