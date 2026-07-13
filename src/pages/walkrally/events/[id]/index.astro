@@ -1,0 +1,22 @@
+---
+import WalkRallyLayout from "@layouts/WalkRallyLayout.astro";
+import { ActivityDetailPanel } from "@components/walkrally/events/ActivityDetailPanel";
+import walkrally from "@components/walkrally/events/events.json";
+
+export function getStaticPaths() {
+  return [...walkrally.workshop, ...walkrally.walkingTour].map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+
+<WalkRallyLayout
+  title={entry.nameTh}
+  bgColor="beige"
+  navigateBack={"/walkrally/events"}
+>
+  <ActivityDetailPanel entry={entry} client:load />
+</WalkRallyLayout>
