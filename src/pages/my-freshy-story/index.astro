@@ -2,7 +2,10 @@
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 import SocialCardContainer from "@components/my-freshy-story/SocialCardContainer.astro";
 import MyFreshyStoryLayout from "@layouts/MyFreshyStoryLayout.astro";
+import InstagramIcon from "@assets/images/Instagram.svg";
+import TikTokIcon from "@assets/images/TikTok.svg";
 import { CalendarDaysIcon, CircleAlert, GiftIcon } from "lucide-react";
+import { Image } from "astro:assets";
 ---
 
 <MyFreshyStoryLayout navigateBack="/" title="My Freshy Story">
@@ -27,18 +30,24 @@ import { CalendarDaysIcon, CircleAlert, GiftIcon } from "lucide-react";
     className="grow bg-rpkm-red border rounded-t-4xl flex flex-col p-4 gap-4 mt-6"
   >
     <SocialCardContainer>
-      <h2 class="text-xl font-bold">IG Story – Add Yours</h2>
+      <h2 class="text-xl font-bold flex items-baseline gap-2">
+        IG Story – Add Yours <Image
+          class:list={""}
+          alt=""
+          src={InstagramIcon}
+        />
+      </h2>
       <p class="mt-2">
         แชร์โมเมนต์การตามล่า Chula Jigsaw หรือ Chula QR Quest ผ่าน Add Yours บน
         Instagram Story
       </p>
       <div class="flex items-center gap-1 my-4">
-        <GiftIcon className="inline" /> 50 คนแรก รับของรางวัลฟรี!
+        <GiftIcon color="#E65325" className="inline" /> 50 คนแรก รับของรางวัลฟรี!
       </div>
       <div>
         <p class="font-bold">วิธีการเข้าร่วม</p>
         <div
-          class="flex flex-col gap-2 pt-3 w-full text-center *:bg-rpkm-blue *:py-1 *:border *:rounded-4xl"
+          class="flex flex-col gap-2 pt-3 w-full text-center *:bg-[#D7F4FF] *:py-1 *:border *:rounded-4xl"
         >
           <MonotoneNoiseContainer>
             ทำกิจกรรม Chula Jigsaw หรือ Chula QR Quest
@@ -53,7 +62,9 @@ import { CalendarDaysIcon, CircleAlert, GiftIcon } from "lucide-react";
       </div>
     </SocialCardContainer>
     <SocialCardContainer>
-      <h2 class="text-xl font-bold">Reels / TikTok</h2>
+      <h2 class="text-xl font-bold flex items-baseline gap-2">
+        Reels / TikTok <Image alt="" src={TikTokIcon} />
+      </h2>
       <p class="mt-2">
         สร้างคลิปความยาว ไม่เกิน 1 นาที
         ถ่ายทอดประสบการณ์การเข้าร่วมกิจกรรมรับเพื่อนใหม่ พร้อมสอดแทรกแนวคิด SDGs
@@ -79,7 +90,7 @@ import { CalendarDaysIcon, CircleAlert, GiftIcon } from "lucide-react";
       </div>
       <div>
         <div
-          class="flex flex-wrap justify-center gap-2 w-full text-sm text-center *:bg-rpkm-blue *:px-2 *:py-1 *:border *:rounded-4xl"
+          class="flex flex-wrap justify-center gap-2 w-full text-sm text-center *:bg-[#D7F4FF] *:px-2 *:py-1 *:border *:rounded-4xl"
         >
           <MonotoneNoiseContainer>
             #jigsawjourneyxrubpuenkaomai2026

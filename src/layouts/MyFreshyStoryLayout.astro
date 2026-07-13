@@ -2,6 +2,8 @@
 import { NavigationMenu } from "@components/shared/NavigationMenu";
 import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 import { ChevronLeft } from "lucide-react";
+import flowerPot from "@assets/images/artboard_16.svg";
+import { Image } from "astro:assets";
 import "@styles/global.css";
 
 const {
@@ -22,7 +24,7 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen bg-rpkm-green/50 text-foreground font-sans">
+  <body class="min-h-screen bg-[#A3E4A9] text-foreground font-sans">
     <main
       class:list={[
         "relative w-full min-h-screen overflow-hidden sm:max-w-md sm:mx-auto",
@@ -50,6 +52,19 @@ const {
           </div>
         )
       }
+
+      <div class="absolute inset-0 pointer-events-none z-50" aria-hidden="true">
+        <Image
+          src={flowerPot}
+          alt=""
+          class="absolute top-[-11%] right-[20%] -rotate-174 w-[48%]"
+        />
+        <Image
+          src={flowerPot}
+          alt=""
+          class="absolute top-[23%] right-[-29%] -rotate-45 w-[48%]"
+        />
+      </div>
 
       {
         showMenu && (
