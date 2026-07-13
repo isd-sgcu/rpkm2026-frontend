@@ -18,7 +18,6 @@ import qrCodeIcon from "@assets/images/qr-code.svg";
 import houseIcon from "@assets/images/family-home.svg";
 import peopleIcon from "@assets/images/people.svg";
 import editIcon from "@assets/images/edit.svg";
-import mapIcon from "@assets/images/map.svg";
 import calendarIcon from "@assets/images/calendar-month.svg";
 import emergencyIcon from "@assets/images/call.svg";
 
@@ -123,16 +122,6 @@ export function NavigationMenu() {
                 />
               </>
             )}
-
-            {/* TODO: link? */}
-            <DrawerClose
-              render={
-                <a href="/map" className={navItemClassName}>
-                  <img src={mapIcon.src} alt="" className="size-6" />
-                  <span className="pt-1">{t("nav.map")}</span>
-                </a>
-              }
-            />
 
             {/* TODO: link? */}
             <DrawerClose
