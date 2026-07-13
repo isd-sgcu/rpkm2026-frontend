@@ -50,6 +50,33 @@
       }
     }
   },
+  "chulaQrQuest": {
+    "rule": {
+      "title": "How to Play Chula QR Quest",
+      "step1": {
+        "title": "Get Your Passport",
+        "text": "Use the Passport included in your new student handbook"
+      },
+      "step2": {
+        "title": "View the Map",
+        "text": "Open the map to see the locations of all stamp collection points",
+        "button": "Open Map"
+      },
+      "step3": {
+        "title": "Explore",
+        "text": "Walk to each location. When you arrive, you'll find a stamp for your Passport"
+      },
+      "step4": {
+        "title": "Collect Them All",
+        "text": "Collect stamps from every designated point"
+      },
+      "step5": {
+        "title": "Redeem Your Reward",
+        "text": "Bring your completed Passport to redeem your reward at the specified date, time, and location",
+        "button": "View Reward Details"
+      }
+    }
+  },
   "walkrally": {
     "home": {
       "title": "Walk Rally",

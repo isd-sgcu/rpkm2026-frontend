@@ -53,6 +53,7 @@
   --color-rpkm-pink: var(--rpkm-pink);
   --color-rpkm-light-pink: var(--rpkm-light-pink);
   --color-rpkm-blue: var(--rpkm-blue);
+  --color-rpkm-light-blue: var(--rpkm-light-blue);
   --color-rpkm-beige: var(--rpkm-beige);
   --color-rpkm-yellow: var(--rpkm-yellow);
   --color-rpkm-grey: var(--rpkm-grey);
@@ -67,6 +68,7 @@
   --rpkm-light-pink: #fcdcf0;
   --rpkm-beige: #fffac9;
   --rpkm-blue: #80cae8;
+  --rpkm-light-blue: #d6f3ff;
   --rpkm-yellow: #fbe200;
   --rpkm-grey: #a4a3a3;
 

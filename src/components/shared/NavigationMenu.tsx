@@ -72,6 +72,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
 
           <section className="mt-6 text-base font-bold px-4">
             <DrawerClose
+              nativeButton={false}
               render={
                 <a href="/" className={navItemClassName}>
                   <img src={homeIcon.src} alt="" className="size-6" />
@@ -83,6 +84,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
             {/* TODO: link? */}
             {isStaff ? (
               <DrawerClose
+                nativeButton={false}
                 render={
                   <a href="/staff/register" className={navItemClassName}>
                     <img src={scanIcon.src} alt="" className="size-6" />
@@ -94,6 +96,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
               <>
                 {/* TODO: open QR code dialog instead of a plain link */}
                 <DrawerClose
+                  nativeButton={false}
                   render={
                     <a href="/" className={navItemClassName}>
                       <img src={qrCodeIcon.src} alt="" className="size-6" />
@@ -104,6 +107,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
 
                 {/* TODO: link? */}
                 <DrawerClose
+                  nativeButton={false}
                   render={
                     <a href="/house" className={navItemClassName}>
                       <img src={houseIcon.src} alt="" className="size-6" />
@@ -114,6 +118,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
 
                 {/* TODO: link? */}
                 <DrawerClose
+                  nativeButton={false}
                   render={
                     <a href="/house" className={navItemClassName}>
                       <img src={peopleIcon.src} alt="" className="size-6" />
@@ -123,6 +128,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
                 />
 
                 <DrawerClose
+                  nativeButton={false}
                   render={
                     <a href="/house" className={navItemClassName}>
                       <img src={editIcon.src} alt="" className="size-6" />
@@ -134,6 +140,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
             )}
 
             <DrawerClose
+              nativeButton={false}
               render={
                 <a href="/#rpkm-calendar" className={navItemClassName}>
                   <img src={calendarIcon.src} alt="" className="size-6" />
@@ -143,6 +150,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
             />
 
             <DrawerClose
+              nativeButton={false}
               render={
                 <a href="/emergency" className={navItemClassName}>
                   <img src={emergencyIcon.src} alt="" className="size-6" />
