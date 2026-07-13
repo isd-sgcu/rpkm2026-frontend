@@ -1,0 +1,57 @@
+---
+import { NavigationMenu } from "@components/shared/NavigationMenu";
+import Image from "astro/components/Image.astro";
+import header from "../assets/images/chula_qr_quest_header.svg";
+import { ChevronLeft } from "lucide-react";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  navigateBack?: string;
+  showMenu?: boolean;
+  showMenuBorder?: boolean;
+}
+
+const {
+  navigateBack = "",
+  showMenu = true,
+  showMenuBorder = false,
+  ...rest
+} = Astro.props;
+---
+
+<div class:list={["relative w-full min-w-0 min-h-200"]} {...rest}>
+  <div class="absolute left-0 right-0 top-0 grid place-items-center">
+    <Image src={header} alt="rpkm chula qr quest header" class="w-full" />
+  </div>
+
+  {
+    navigateBack && (
+      <div class="absolute left-4 top-[4.5cqw] sm:top-4.5 h-10 flex items-center z-10">
+        <a
+          href={navigateBack}
+          class="size-10 rounded-full bg-white border border-black grid place-items-center"
+        >
+          <ChevronLeft className="size-6.5 text-foreground" />
+        </a>
+      </div>
+    )
+  }
+
+  {
+    showMenu && (
+      <div class="absolute right-4 top-[2.5cqw] sm:top-2.5 flex items-center">
+        <NavigationMenu showBorder={showMenuBorder} client:load />
+      </div>
+    )
+  }
+
+  <div
+    class:list={[
+      "absolute inset-0 flex flex-col px-[1.25em] pointer-events-none pt-[20cqw] sm:pt-20",
+    ]}
+  >
+    <div class="contents pointer-events-auto">
+      <slot />
+    </div>
+  </div>
+</div>

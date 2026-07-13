@@ -1,6 +1,7 @@
 import { useStore } from "@nanostores/react";
 
 import { Button } from "@components/ui/button";
+import { cn } from "@lib/utils";
 import {
   Drawer,
   DrawerClose,
@@ -24,8 +25,12 @@ import emergencyIcon from "@assets/images/call.svg";
 const navItemClassName =
   "flex w-full items-center py-3.5 rounded px-4 gap-2 active:bg-accent";
 
+interface NavigationMenuProps {
+  showBorder?: boolean;
+}
+
 // not shadcn sidebar. actually a drawer
-export function NavigationMenu() {
+export function NavigationMenu({ showBorder }: NavigationMenuProps) {
   const isStaff = false;
   const locale = useStore($locale);
   const t = useT();
@@ -34,7 +39,12 @@ export function NavigationMenu() {
     <Drawer swipeDirection="up">
       <DrawerTrigger
         render={
-          <DrawerClose className="p-2 rounded active:bg-accent">
+          <DrawerClose
+            className={cn(
+              "p-2 rounded active:bg-accent",
+              showBorder && "border border-black bg-white rounded-full",
+            )}
+          >
             <Menu className="size-6.5 text-foreground" />
           </DrawerClose>
         }
