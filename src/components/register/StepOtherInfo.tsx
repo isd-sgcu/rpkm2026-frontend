@@ -1,6 +1,8 @@
 import {
+  ATTEND_DAYS_OPTIONS,
   PR_CHANNEL_OPTIONS,
   SGCU_AWARENESS_OPTIONS,
+  WATER_BOTTLE_OPTIONS,
 } from "@lib/register-options";
 
 import { RadioGroupField, SectionHeading } from "./fields";
@@ -22,6 +24,18 @@ export function StepOtherInfo() {
           name="prChannel"
           question="ท่านเห็นการประชาสัมพันธ์โครงการจากช่องทางไหนมากที่สุด"
           options={PR_CHANNEL_OPTIONS}
+        />
+
+        <RadioGroupField
+          name="attendDays"
+          question="ท่านตั้งใจจะเข้าร่วมกิจกรรมรับเพื่อนก้าวใหม่ เป็นเวลากี่วัน"
+          options={ATTEND_DAYS_OPTIONS}
+        />
+
+        <RadioGroupField
+          name="waterBottle"
+          question="เตรียมกระบอกน้ำมามั้ย"
+          options={WATER_BOTTLE_OPTIONS}
         />
       </div>
     </div>

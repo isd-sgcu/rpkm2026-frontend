@@ -42,7 +42,7 @@ export function RegisterStepper({ current, total }: RegisterStepperProps) {
                 src={wateringCan.src}
                 alt=""
                 aria-hidden
-                className="absolute -top-7 left-1/2 h-7 w-auto -translate-x-1/4"
+                className="absolute -top-7 left-1/2 h-7 w-auto -translate-x-3/4"
               />
             )}
             <img src={src} alt="" aria-hidden className="h-9 w-auto" />

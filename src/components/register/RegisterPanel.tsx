@@ -45,6 +45,8 @@ export function RegisterPanel() {
       // Step 3
       sgcuAwareness: "",
       prChannel: "",
+      attendDays: "",
+      waterBottle: "",
       // Step 4 — first leg ends at จุฬาฯ by default
       residenceProvince: "",
       residenceDistrict: "",
@@ -97,7 +99,7 @@ export function RegisterPanel() {
           <img
             src={rpkmLogo.src}
             alt="รับเพื่อนก้าวใหม่"
-            className="mx-auto h-24 w-auto"
+            className="mx-auto h-auto w-36"
           />
           {/* TODO: i18n */}
           <h1 className="mt-2 text-center text-3xl font-bold text-foreground">

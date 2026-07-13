@@ -157,8 +157,8 @@ export const SGCU_AWARENESS_OPTIONS = [
 // TODO: i18n — Thai-only; used as both the value and the label.
 /** ท่านเห็นการประชาสัมพันธ์จากช่องทางไหนมากที่สุด (Step 3) */
 export const PR_CHANNEL_OPTIONS = [
-  "ฟีดใน instagram ของ cu.firstdate2026",
-  "สตอรี่ใน instagram ของ cu.firstdate2026",
+  "ฟีดใน instagram ของ rubpuenkaomai2026",
+  "สตอรี่ใน instagram ของ rubpuenkaomai2026",
   "ฟีดใน instagram ของ อบจ. (sgcu.chula)",
   "สตอรี่ใน instagram ของ อบจ. (sgcu.chula)",
   "ฟีดใน instagram ของคณะ",
@@ -167,6 +167,14 @@ export const PR_CHANNEL_OPTIONS = [
   "ข้อความใน line openchat CU110",
   "เพื่อนหรือคนรู้จักส่งให้ดู",
 ] as const;
+
+// TODO: i18n — Thai-only; used as both the value and the label.
+/** ท่านตั้งใจจะเข้าร่วมกิจกรรมกี่วัน (Step 3) */
+export const ATTEND_DAYS_OPTIONS = ["1 วัน", "2 วัน", "3 วัน"] as const;
+
+// TODO: i18n — Thai-only; used as both the value and the label.
+/** เตรียมกระบอกน้ำมามั้ย (Step 3) */
+export const WATER_BOTTLE_OPTIONS = ["เตรียม", "ไม่ได้เตรียม"] as const;
 
 // TODO: i18n — Thai + English labels; used as both the value and the label.
 /** ประเภทยานพาหนะ (Step 4) */

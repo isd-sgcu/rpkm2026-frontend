@@ -38,6 +38,8 @@ export const registerSchema = z
     // Step 3 — ข้อมูลอื่น ๆ
     sgcuAwareness: required("กรุณาเลือกคำตอบ"),
     prChannel: required("กรุณาเลือกคำตอบ"),
+    attendDays: required("กรุณาเลือกคำตอบ"),
+    waterBottle: required("กรุณาเลือกคำตอบ"),
 
     // Step 4 — ข้อมูลการเดินทาง
     residenceProvince: required("กรุณาเลือกจังหวัด"),

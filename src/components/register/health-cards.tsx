@@ -38,7 +38,7 @@ function HealthCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-rpkm-pink/40 p-4">
+    <div className="rounded-2xl border border-rpkm-red/50 p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           {/* TODO: i18n */}
@@ -113,6 +113,7 @@ export function ChecklistCard({
                   className="flex cursor-pointer items-center gap-2 text-base select-none"
                 >
                   <Checkbox
+                    className="size-5 rounded-md border-rpkm-red data-checked:border-rpkm-red data-checked:bg-rpkm-red data-checked:text-background"
                     checked={value.includes(option)}
                     onCheckedChange={(checked) =>
                       toggle(option, checked === true)

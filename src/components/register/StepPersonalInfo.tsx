@@ -38,18 +38,18 @@ export function StepPersonalInfo() {
   return (
     <div className="flex flex-col pb-2">
       {/* TODO: i18n */}
-      <div className="relative mb-8 rounded-3xl bg-primary px-6 py-4 text-center">
+      <div className="relative mt-2 mb-8 rounded-3xl bg-primary px-6 py-4 text-center">
         <img
           src={sparkle.src}
           alt=""
           aria-hidden
-          className="absolute -top-4 -right-2 h-10 w-auto"
+          className="absolute -top-2 -right-3 h-10 w-auto"
         />
         <img
           src={sparkle.src}
           alt=""
           aria-hidden
-          className="absolute -bottom-4 -left-2 h-10 w-auto"
+          className="absolute -bottom-3 -left-3 h-10 w-auto"
         />
         <p className="text-sm leading-relaxed text-foreground">
           ข้อมูลต่อไปนี้เป็นข้อมูลจากการลงทะเบียน FirstDate หากถูกต้องแล้วกด{" "}

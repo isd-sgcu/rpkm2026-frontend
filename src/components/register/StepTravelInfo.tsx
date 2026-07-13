@@ -141,7 +141,7 @@ export function StepTravelInfo() {
                 type="button"
                 variant="outline"
                 size="lg"
-                className="h-11 w-full rounded-full bg-primary-foreground"
+                className="h-11 w-full rounded-full border-rpkm-blue bg-background text-rpkm-blue"
                 onClick={addLeg}
               >
                 {/* TODO: i18n */}
@@ -172,7 +172,7 @@ function TravelLegCard({
     <div className="relative pl-6">
       {lineToNext != null && (
         <span
-          className="absolute top-2.75 left-1 w-0.5 bg-primary"
+          className="absolute top-2.75 left-1 w-0.5 bg-rpkm-blue"
           style={{ bottom: -lineToNext }}
         />
       )}
@@ -180,7 +180,7 @@ function TravelLegCard({
 
       <div className="flex items-center justify-between gap-2">
         {/* TODO: i18n */}
-        <span className="font-bold text-primary">ต่อที่ {index + 1}</span>
+        <span className="font-bold text-rpkm-red">ต่อที่ {index + 1}</span>
         {index > 0 && (
           <button
             type="button"

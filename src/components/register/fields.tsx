@@ -29,7 +29,7 @@ export type Path = FieldPath<RegisterFormValues>;
 export type SelectOption = { value: string; label: string };
 
 export const controlClass =
-  "h-11 w-full rounded-md border border-border bg-transparent px-5 text-base " +
+  "h-11 w-full rounded-xl border border-border bg-transparent px-5 text-base data-[size=default]:h-11 " +
   "disabled:cursor-not-allowed disabled:border-border/60 disabled:bg-border/20 data-disabled:cursor-not-allowed data-disabled:border-border/60 data-disabled:bg-border/20";
 
 export const popupClass = "min-w-0";
@@ -275,11 +275,11 @@ export function YesNoToggle({
   const segment = (active: boolean) =>
     cn(
       "rounded-full px-4 py-2 text-sm leading-none transition-colors",
-      active ? "bg-primary font-bold text-primary-foreground" : "text-primary",
+      active ? "bg-rpkm-red font-bold text-background" : "text-rpkm-red",
     );
 
   return (
-    <div className="inline-flex shrink-0 items-center rounded-full border border-primary">
+    <div className="inline-flex shrink-0 items-center rounded-full border border-rpkm-red">
       {/* TODO: i18n */}
       <button
         type="button"

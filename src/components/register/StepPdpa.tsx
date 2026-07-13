@@ -79,7 +79,7 @@ export function StepPdpa({ onConsent }: { onConsent: () => void }) {
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="mt-6 shrink-0 px-6 text-center">
-        <h1 className="text-3xl leading-tight text-primary">
+        <h1 className="text-3xl leading-tight text-secondary">
           {content.title.map((line) => (
             <span key={line} className="block">
               {line}
@@ -112,7 +112,7 @@ export function StepPdpa({ onConsent }: { onConsent: () => void }) {
         <button
           type="button"
           onClick={jump}
-          className="mx-auto mb-3 flex items-center gap-1.5 text-sm text-rpkm-red"
+          className="mx-auto mb-3 flex items-center gap-1.5 text-sm text-secondary"
         >
           {atBottom ? (
             <DoubleArrowUpIcon className="size-5" />
@@ -127,7 +127,7 @@ export function StepPdpa({ onConsent }: { onConsent: () => void }) {
             checked={consented}
             disabled={!hasReadToEnd}
             onCheckedChange={(checked) => setConsented(checked === true)}
-            className="mt-0.5"
+            className="mt-0.5 border-rpkm-pink data-checked:border-rpkm-pink data-checked:bg-rpkm-pink data-checked:text-background"
           />
           {content.consentLabel}
         </label>
