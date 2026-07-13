@@ -92,6 +92,14 @@
       "unlocked": "ได้รับรางวัลแล้ว!",
       "footerNote": "ติดตามวิธีการแลกรางวัลได้ที่",
       "collectedProgress": "คุณเก็บได้แล้ว {collected}/{total} ชิ้น"
+    },
+    "scan": {
+      "title": "สแกน QR Code",
+      "successTitle": "คุณได้รับสแตมป์ร้าน\n {name}",
+      "collectedAt": "ได้รับเมื่อวันที่ {datetime}",
+      "failTitle": "สแกนไม่สำเร็จ",
+      "failMessage": "กรุณาลองใหม่อีกครั้ง",
+      "ok": "ตกลง"
     }
   },
   "walkrally": {
