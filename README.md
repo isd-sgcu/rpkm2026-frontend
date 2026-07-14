@@ -80,4 +80,21 @@ bun run format:check
 bun run build
 ```
 
-Docker and deploy workflows are intentionally not included yet.
+## CI/CD pipeline
+
+This repo uses GitHub Actions and Bun to automate testing and deployments to Cloudflare. Both pipelines run code quality checks (linting, formatting, type checking).
+
+> [!CAUTION]
+> `lint`, `typecheck`, and `format:check` are currently bypassed on `dev` to prevent blocking deployments due to existing, unrelated type errors.
+
+1. Main & Dev Deployment (Deploy to Cloudflare)
+
+- Trigger: Pushes to main or dev branches, or manual run.
+- Dev Branch: Uploads the build to Cloudflare and outputs a development preview link ([Click here](https://dev-preview-rpkm2026-frontend.isd-chula.workers.dev)).
+- Main Branch: Promotes the build to the live production environment.
+
+2. Pull Request Previews (Deploy PR Preview)
+
+- Trigger: Opening or updating any Pull Request.
+- Function: Builds a staging version of the site, uploads it to an isolated Cloudflare preview URL, and posts/updates a sticky comment directly on the PR with the live link.
+  `https://<hash>-rpkm2026-frontend.isd-chula.workers.dev`
