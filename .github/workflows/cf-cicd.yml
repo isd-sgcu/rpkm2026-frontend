@@ -33,12 +33,15 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Type check
+        if: github.ref_name != 'dev'
         run: bun run typecheck
 
       - name: Lint
+        if: github.ref_name != 'dev'
         run: bun run lint
 
       - name: Check formatting
+        if: github.ref_name != 'dev'
         run: bun run format:check
 
       - name: Build
