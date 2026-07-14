@@ -1,11 +1,11 @@
 ---
-import { NotEligibleContent } from "@components/landing/NotEligibleContent";
+import { NotEligiblePanel } from "@components/landing/NotEligiblePanel";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import PanelFrameLayout from "@layouts/PanelFrameLayout.astro";
 ---
 
 <BaseLayout title="Not Eligible">
   <PanelFrameLayout showMenu={false} showLogo={false}>
-    <NotEligibleContent client:load />
+    <NotEligiblePanel client:load />
   </PanelFrameLayout>
 </BaseLayout>
