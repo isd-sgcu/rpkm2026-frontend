@@ -5,6 +5,7 @@ import { cn } from "@lib/utils";
 import { Button } from "@components/ui/button";
 import { Input } from "@components/ui/input";
 import { Toaster } from "@components/ui/sonner";
+import { CameraTroubleshoot } from "@components/shared/CameraTroubleshootDialog";
 import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 import { QrScanner } from "@components/shared/QrCodeScanner";
 import { ResultDialog } from "@components/staff/ResultDialog";
@@ -116,7 +117,7 @@ export function ScanEntryForm({
           {labels.subtitle && <span>{labels.subtitle}</span>}
         </div>
 
-        <div className="relative isolate mx-auto flex w-full max-w-[19rem] items-center gap-1 overflow-hidden rounded-full border border-black bg-background p-1">
+        <div className="relative isolate mx-auto flex w-full max-w-76 items-center gap-1 overflow-hidden rounded-full border border-black bg-background p-1">
           <MonotoneNoise className="pointer-events-none absolute inset-0 -z-1" />
           {MODES.map((option) => (
             <button
@@ -144,19 +145,22 @@ export function ScanEntryForm({
         </div>
 
         {mode === "qr" ? (
-          <div className="relative isolate overflow-hidden rounded-[1.8rem] border border-black bg-rpkm-light-green p-4">
-            <MonotoneNoise
-              noiseSize={4}
-              noiseDensity={12}
-              className="pointer-events-none absolute inset-0 -z-1"
-            />
-            <QrScanner
-              className="rounded-2xl"
-              paused={status !== "idle"}
-              loading={showLoading}
-              onScan={handleScan}
-            />
-          </div>
+          <>
+            <div className="relative isolate overflow-hidden rounded-[1.8rem] border border-black bg-rpkm-light-green p-4">
+              <MonotoneNoise
+                noiseSize={4}
+                noiseDensity={12}
+                className="pointer-events-none absolute inset-0 -z-1"
+              />
+              <QrScanner
+                className="rounded-2xl"
+                paused={status !== "idle"}
+                loading={showLoading}
+                onScan={handleScan}
+              />
+            </div>
+            <CameraTroubleshoot className={cn("-mt-1", labelClassName)} />
+          </>
         ) : (
           <div className="flex flex-col gap-2">
             <span className={cn("px-1 font-bold", labelClassName)}>

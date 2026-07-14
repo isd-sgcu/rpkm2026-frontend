@@ -212,6 +212,17 @@
   },
   "qrcode": {
     "refresh": "Refresh",
+    "troubleshoot": {
+      "link": "Camera not working?",
+      "title": "Camera Troubleshooting",
+      "intro": "If the camera doesn't start or the screen stays black, follow the steps for your browser.",
+      "chromeTitle": "Chrome / Edge (Android)",
+      "chromeSteps": "1. Tap the lock or settings icon next to the address bar\n2. Open Permissions\n3. Allow Camera\n4. Refresh this page",
+      "safariTitle": "Safari (iPhone / iPad)",
+      "safariSteps": "1. Tap the \"AA\" or settings button in the address bar\n2. Open Website Settings\n3. Set Camera to Allow\n4. Reload this page\n\nOr go to Settings > Safari > Camera and choose Allow.",
+      "genericTitle": "Other tips",
+      "genericSteps": "• Close other apps or tabs using the camera, then retry\n• Refresh this page\n• If it still fails, try another browser or device"
+    },
     "scannerError": {
       "permissionDenied": "We need permission to use the camera. Please allow camera access, then try again.",
       "noCamera": "We couldn't find a camera on this device. Try another device.",
