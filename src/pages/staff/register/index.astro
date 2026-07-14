@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PanelFrameLayout from "@layouts/PanelFrameLayout.astro";
+import { StaffRegisterPanel } from "@components/staff/register/StaffRegisterPanel";
+---
+
+<BaseLayout title="Staff Register">
+  <PanelFrameLayout navigateBack={"/"} showMenu={true}>
+    <StaffRegisterPanel client:load />
+  </PanelFrameLayout>
+</BaseLayout>

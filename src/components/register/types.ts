@@ -9,6 +9,7 @@ export const STEP_FIELDS: Record<number, (keyof RegisterFormValues)[]> = {
     "prefix",
     "firstName",
     "lastName",
+    "nickname",
     "faculty",
     "studentId",
     "phone",
