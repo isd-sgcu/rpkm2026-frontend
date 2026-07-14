@@ -63,7 +63,7 @@ jobs:
       # Both branches upload code to the exact same 'firstdate2026-frontend' registry
       - name: Upload Version to Cloudflare
         id: upload
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -86,7 +86,7 @@ jobs:
       # Only the main branch executes the full production deployment sequence to the custom domain
       - name: Promote to Production (Main Branch Only)
         if: github.ref_name == 'main'
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
