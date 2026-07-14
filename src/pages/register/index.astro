@@ -1,0 +1,10 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { RegisterPanel } from "@components/register/RegisterPanel";
+---
+
+<BaseLayout title="ลงทะเบียน">
+  <div class="flex h-[100dvh] w-full flex-col">
+    <RegisterPanel client:load />
+  </div>
+</BaseLayout>
