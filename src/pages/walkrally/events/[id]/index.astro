@@ -1,4 +1,5 @@
 ---
+import BaseLayout from "@layouts/BaseLayout.astro";
 import WalkRallyLayout from "@layouts/WalkRallyLayout.astro";
 import { ActivityDetailPanel } from "@components/walkrally/events/ActivityDetailPanel";
 import walkrally from "@components/walkrally/events/events.json";
@@ -13,10 +14,8 @@ export function getStaticPaths() {
 const { entry } = Astro.props;
 ---
 
-<WalkRallyLayout
-  title={entry.nameTh}
-  bgColor="beige"
-  navigateBack={"/walkrally/events"}
->
-  <ActivityDetailPanel entry={entry} client:load />
-</WalkRallyLayout>
+<BaseLayout title={entry.nameTh}>
+  <WalkRallyLayout bgColor="beige" navigateBack={"/walkrally/events"}>
+    <ActivityDetailPanel entry={entry} client:load />
+  </WalkRallyLayout>
+</BaseLayout>

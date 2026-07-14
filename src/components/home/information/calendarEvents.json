@@ -1,0 +1,146 @@
+[
+  {
+    "startDate": "2026-07-20",
+    "endDate": "2026-08-03",
+    "nameTh": "Chula Jigsaw",
+    "nameEn": "Chula Jigsaw",
+    "color": "#80CAE8",
+    "statusTh": "เปิด Chula Jigsaw",
+    "statusEn": "Chula Jigsaw open"
+  },
+  {
+    "startDate": "2026-07-20",
+    "endDate": "2026-08-07",
+    "nameTh": "Chula QR Quest",
+    "nameEn": "Chula QR Quest",
+    "color": "#E87E8C",
+    "statusTh": "เปิด Chula QR Quest",
+    "statusEn": "Chula QR Quest open"
+  },
+  {
+    "startDate": "2026-07-22",
+    "endDate": "2026-07-29",
+    "nameTh": "ลงทะเบียน Walk Rally",
+    "nameEn": "Walk Rally Registration",
+    "color": "#6ABF73",
+    "statusTh": "เปิดลงทะเบียน Walk Rally",
+    "statusEn": "Walk Rally Registration open"
+  },
+  {
+    "startDate": "2026-07-29",
+    "endDate": "2026-07-29",
+    "nameTh": "Walk Rally D-Day",
+    "nameEn": "Walk Rally D-Day",
+    "color": "#6ABF73",
+    "statusTh": "Walk Rally D-Day เปิด",
+    "statusEn": "Walk Rally D-Day open"
+  },
+  {
+    "startDate": "2026-07-18",
+    "endDate": "2026-07-21",
+    "nameTh": "บ้านรับเพื่อน",
+    "nameEn": "RPKM",
+    "color": "#FBE200",
+    "statusTh": "เปิดเลือกบ้าน",
+    "statusEn": "RPKM House registration open"
+  },
+  {
+    "startDate": "2026-07-23",
+    "endDate": "2026-07-23",
+    "nameTh": "บ้านรับเพื่อน",
+    "nameEn": "RPKM",
+    "color": "#FBE200",
+    "statusTh": "ประกาศบ้าน",
+    "statusEn": "RPKM House Announcement"
+  },
+  {
+    "startDate": "2026-07-22",
+    "endDate": "2026-08-03",
+    "nameTh": "My Freshy Story",
+    "nameEn": "My Freshy Story",
+    "color": "#FCDCF0",
+    "statusTh": "เปิด My Freshy Story",
+    "statusEn": "My Freshy Story open"
+  },
+  {
+    "startDate": "2026-07-18",
+    "endDate": "2026-07-20",
+    "nameTh": "Field Trip",
+    "nameEn": "Field Trip",
+    "color": "#E75225",
+    "statusTh": "เปิดลงทะเบียน",
+    "statusEn": "Registration open"
+  },
+  {
+    "startDate": "2026-07-22",
+    "endDate": "2026-07-25",
+    "nameTh": "เส้นทางชุมชนสามย่าน",
+    "nameEn": "Samyan Community Route",
+    "color": "#80CAE8",
+    "statusTh": "เปิดเส้นทางชุมชนสามย่าน",
+    "statusEn": "Samyan Community Route open"
+  },
+  {
+    "startDate": "2026-07-22",
+    "endDate": "2026-07-23",
+    "nameTh": "เส้นทางรักโลก: Plant Walk",
+    "nameEn": "Love the Earth Route: Plant Walk",
+    "color": "#E3FFE7",
+    "statusTh": "เปิดเส้นทางรักโลก: Plant Walk",
+    "statusEn": "Love the Earth Route: Plant Walk open"
+  },
+  {
+    "startDate": "2026-07-24",
+    "endDate": "2026-07-24",
+    "nameTh": "เส้นทางรักโลก: Trashvenger",
+    "nameEn": "Love the Earth Route: Trashvenger",
+    "color": "#E75225",
+    "statusTh": "เส้นทางรักโลก: Trashvenger เปิด",
+    "statusEn": "Love the Earth Route: Trashvenger open"
+  },
+  {
+    "startDate": "2026-07-27",
+    "endDate": "2026-07-27",
+    "nameTh": "เส้นทางรักโลก: Trashvenger",
+    "nameEn": "Love the Earth Route: Trashvenger",
+    "color": "#E75225",
+    "statusTh": "เส้นทางรักโลก: Trashvenger เปิด",
+    "statusEn": "Love the Earth Route: Trashvenger open"
+  },
+  {
+    "startDate": "2026-07-25",
+    "endDate": "2026-07-26",
+    "nameTh": "เส้นทางจุฬาฯ",
+    "nameEn": "Chula Route",
+    "color": "#E87E8C",
+    "statusTh": "เส้นทางจุฬาฯ เปิด",
+    "statusEn": "Chula Route open"
+  },
+  {
+    "startDate": "2026-07-28",
+    "endDate": "2026-07-29",
+    "nameTh": "เส้นทางจุฬาฯ",
+    "nameEn": "Chula Route",
+    "color": "#E87E8C",
+    "statusTh": "เส้นทางจุฬาฯ เปิด",
+    "statusEn": "Chula Route open"
+  },
+  {
+    "startDate": "2026-08-01",
+    "endDate": "2026-08-02",
+    "nameTh": "บ้านรับเพื่อน",
+    "nameEn": "RPKM",
+    "color": "#FBE200",
+    "statusTh": "เปิด กิจกรรมบ้าน",
+    "statusEn": "RPKM House Activity open"
+  },
+  {
+    "startDate": "2026-08-02",
+    "endDate": "2026-08-02",
+    "nameTh": "Freshmen Night",
+    "nameEn": "Freshmen Night",
+    "color": "#6ABF73",
+    "statusTh": "Freshmen Night เปิด",
+    "statusEn": "Freshmen Night open"
+  }
+]

@@ -14,9 +14,104 @@
     "date": "18 กรกฎาคม 2569",
     "cta": "เข้าสู่ระบบ"
   },
+  "login": {
+    "error": "เข้าสู่ระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้ง",
+    "retry": "ลองใหม่อีกครั้ง"
+  },
+  "notEligible": {
+    "title": "อนุญาตให้ใช้งานเฉพาะนิสิตปี 1 และ staff งานเท่านั้น",
+    "button": "กลับหน้าแรก"
+  },
   "nav": {
     "home": "หน้าหลัก",
+    "scanRegister": "สแกนลงทะเบียน",
+    "qrCode": "QR Code",
+    "chooseHouse": "เลือกบ้านรับเพื่อน",
+    "groupPairing": "จับกลุ่มคู่หู",
+    "editInfo": "แก้ไขข้อมูล",
+    "calendar": "ปฏิทินกิจกรรม",
     "logout": "ออกจากระบบ"
+  },
+  "map": {
+    "title": "แผนที่"
+  },
+  "emergency": {
+    "title": "ติดต่อฉุกเฉิน"
+  },
+  "home": {
+    "calendar": {
+      "title": "ปฏิทิน",
+      "empty": "ไม่มีกิจกรรมในวันนี้"
+    },
+    "information": {
+      "registerTitle": "ลงทะเบียน",
+      "gameTitle": "เกม",
+      "informationTitle": "ข้อมูลภายในงาน",
+      "register": {
+        "friendHouse": "บ้านรับเพื่อน",
+        "activity": "กิจกรรม"
+      },
+      "games": {
+        "jigsaw": "เก็บจิ๊กซอว์",
+        "stamp": "สะสมแสตมป์",
+        "myFreshyStory": "My Freshy Story"
+      }
+    }
+  },
+  "chulaQrQuest": {
+    "home": {
+      "title1": "กิจกรรมล่าตราประทับ",
+      "title2": "Chula QR Quest",
+      "subtitle": "สะสมตราประทับจากสถานที่สำคัญรอบจุฬาฯ ให้ครบ แล้วนำไปแลกรางวัล!",
+      "dateRange": "20 กรกฎาคม - 7 สิงหาคม",
+      "playButton": "วิธีการเล่น",
+      "scanButton": "สแกนเพื่อสะสมแสตมป์",
+      "openInMaps": "เปิดใน Google Maps"
+    },
+    "rule": {
+      "title1": "วิธีเล่น",
+      "title2": "Chula QR Quest",
+      "step1": {
+        "title": "เข้าใช้งาน",
+        "text": "เข้าใช้งานระบบเพื่อรับ Scanner"
+      },
+      "step2": {
+        "title": "ดูแผนที่",
+        "text": "เปิดแผนที่ เพื่อดูตำแหน่งของ QR Code",
+        "button": "เปิดแผนที่"
+      },
+      "step3": {
+        "title": "ออกสำรวจ",
+        "text": "สแกน QR Code ประจำสถานที่ต่าง ๆ เพื่อรับ Stamp"
+      },
+      "step4": {
+        "title": "สะสม Stamp",
+        "text": "สะสม Stamp ให้ครบตามที่กำหนด"
+      },
+      "step5": {
+        "title": "แลกรางวัล",
+        "text": "ติดตามการแลกรางวัลได้ที่ IG: rubpuenkaomai2026",
+        "button": "ดูรายละเอียดการแลกรางวัล"
+      }
+    },
+    "reward": {
+      "title": "การแลกรางวัล",
+      "pointsRequirement": "สะสม {points} แต้ม",
+      "locked": "ยังไม่ถึงเป้าหมาย",
+      "unlocked": "ได้รับรางวัลแล้ว!",
+      "footerNote": "ติดตามวิธีการแลกรางวัลได้ที่",
+      "collectedProgress": "คุณเก็บได้แล้ว {collected}/{total} ชิ้น"
+    },
+    "scan": {
+      "title": "สแกน QR Code",
+      "successTitle": "คุณได้รับสแตมป์แล้ว!",
+      "collectedAt": "ได้รับเมื่อวันที่ {datetime}",
+      "failTitle": "สแกนไม่สำเร็จ",
+      "failMessage": "กรุณาลองใหม่อีกครั้ง",
+      "ok": "ตกลง",
+      "loginRequiredTitle": "โปรดล็อกอิน/ลงทะเบียน\nเพื่อเก็บสแตมป์ปีนี้...",
+      "loginRequiredButton": "เข้าสู่ระบบ / ลงทะเบียน"
+    }
   },
   "walkrally": {
     "home": {
@@ -70,6 +165,12 @@
     "next": "ถัดไป",
     "back": "ย้อนกลับ",
     "confirm": "ยืนยันข้อมูล",
+    "error": {
+      "badRequest": "ข้อมูลไม่ถูกต้อง กรุณาตรวจสอบแล้วลองใหม่อีกครั้ง",
+      "forbidden": "บัญชีนี้ไม่สามารถลงทะเบียนได้",
+      "alreadyRegistered": "บัญชีนี้ลงทะเบียนไปแล้ว",
+      "generic": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+    },
     "banner": {
       "pre": "ข้อมูลต่อไปนี้เป็นข้อมูลจากการลงทะเบียน FirstDate หากถูกต้องแล้วกด ",
       "action": "ถัดไป",
@@ -88,6 +189,8 @@
       "prefixPlaceholder": "คำนำหน้า",
       "lastName": "นามสกุล",
       "lastNamePlaceholder": "กรอกนามสกุล...",
+      "nickname": "ชื่อเล่น",
+      "nicknamePlaceholder": "กรอกชื่อเล่น...",
       "faculty": "คณะ",
       "facultyPlaceholder": "ค้นหาคณะ...",
       "studentId": "เลขประจำตัวนิสิต",
@@ -154,6 +257,7 @@
       "prefix": "กรุณาเลือกคำนำหน้า",
       "firstName": "กรุณากรอกชื่อจริง",
       "lastName": "กรุณากรอกนามสกุล",
+      "nickname": "กรุณากรอกชื่อเล่น",
       "faculty": "กรุณาเลือกคณะ",
       "studentId": "เลขประจำตัวนิสิตต้องขึ้นต้นด้วย 69 และมี 10 หลัก",
       "phone": "เบอร์โทรศัพท์ต้องเป็นตัวเลข 10 หลัก และขึ้นต้นด้วย 0",

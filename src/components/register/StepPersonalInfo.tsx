@@ -79,6 +79,12 @@ export function StepPersonalInfo() {
           placeholder={t("register.fields.lastNamePlaceholder")}
         />
 
+        <TextField
+          name="nickname"
+          label={t("register.fields.nickname")}
+          placeholder={t("register.fields.nicknamePlaceholder")}
+        />
+
         <ComboboxField
           name="faculty"
           label={t("register.fields.faculty")}

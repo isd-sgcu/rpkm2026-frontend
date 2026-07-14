@@ -1,11 +1,11 @@
 ---
-import { WelcomePanel } from "@components/WelcomePanel";
-import { SamplePanel } from "@components/SamplePanel";
+import HomePanel from "@components/home/HomePanel.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { appConfig } from "@lib/env";
+import PanelFrameLayout from "@layouts/PanelFrameLayout.astro";
 ---
 
-<BaseLayout title={appConfig.appName} showFooter>
-  <WelcomePanel appName={appConfig.appName} client:load />
-  <SamplePanel client:load />
+<BaseLayout title="RPKM Home Page">
+  <PanelFrameLayout>
+    <HomePanel />
+  </PanelFrameLayout>
 </BaseLayout>

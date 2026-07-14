@@ -1,0 +1,11 @@
+---
+import EmergencyPage from "@components/emergency/EmergencyPage.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PanelFrameLayout from "@layouts/PanelFrameLayout.astro";
+---
+
+<BaseLayout title="Emergency Page">
+  <PanelFrameLayout navigateBack="/" showLogo={false}>
+    <EmergencyPage />
+  </PanelFrameLayout>
+</BaseLayout>

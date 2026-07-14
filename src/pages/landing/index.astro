@@ -1,11 +1,11 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
 import { LandingPanel } from "@components/landing/LandingPanel";
-
-// TODO: staff check
-const staff = false;
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PanelFrameLayout from "@layouts/PanelFrameLayout.astro";
 ---
 
-<BaseLayout title="RPKM 2026" showFooter footerVariant="landing">
-  <LandingPanel staff={staff} client:load />
+<BaseLayout title="Landing">
+  <PanelFrameLayout showMenu={false} showLogo={false}>
+    <LandingPanel client:load />
+  </PanelFrameLayout>
 </BaseLayout>
