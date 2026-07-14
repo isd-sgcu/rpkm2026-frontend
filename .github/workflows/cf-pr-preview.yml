@@ -1,0 +1,82 @@
+name: Deploy PR Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write # Required so the runner can comment on the PR
+
+concurrency:
+  group: preview-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    name: Build & Preview
+    environment:
+      name: "development"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build Astro Static Page
+        env:
+          PUBLIC_API_BASE_URL: ${{ secrets.PUBLIC_API_BASE_URL }}
+        run: bun run build
+
+      # --- UPLOAD TO CLOUDFLARE ---
+      # Uploads your built files from /dist to Cloudflare[cite: 2]
+      - name: Upload Version to Cloudflare
+        id: cloudflare_upload
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: >
+            versions upload
+            --message "PR #${{ github.event.pull_request.number }} Preview Deployment"
+            --tag "pr-${{ github.actor }}-${{ github.sha }}"
+          packageManager: bun
+
+      # --- PARSE PREVIEW URL FROM TERMINAL OUTPUT ---
+      # Scans the terminal readout to safely extract the auto-generated version URL
+      - name: Extract Preview Link
+        id: get_url
+        run: |
+          OUTPUT="${{ steps.cloudflare_upload.outputs.command-output }}"
+          # Regex matches the unique workers.dev string produced by Cloudflare
+          URL=$(echo "$OUTPUT" | grep -oE "https://[a-zA-Z0-9.-]+\.workers\.dev" | head -n 1)
+
+          if [ -z "$URL" ]; then
+            echo "URL could not be parsed automatically. Check action logs."
+            exit 1
+          fi
+
+          echo "PREVIEW_URL=$URL" >> $GITHUB_OUTPUT
+
+      # --- POST OR UPDATE PREVIEW LINK ON THE PR ---
+      # Reuses the exact same comment slot every time the PR is updated so the thread stays clean
+      - name: Post Comment to Pull Request
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: cloudflare-deploy-preview
+          message: |
+            ### 🚀 Cloudflare Deploy Preview Ready!
+
+            | Deployment | Status | Preview Link |
+            | :--- | :--- | :--- |
+            | **Latest Commit** | Success ✅ | [Visit Preview Site](${{ steps.get_url.outputs.PREVIEW_URL }}) |

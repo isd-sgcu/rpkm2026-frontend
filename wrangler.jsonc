@@ -1,0 +1,32 @@
+{
+  "name": "rpkm2026-frontend",
+  "compatibility_date": "2026-07-01",
+  "preview_urls": true,
+
+  "assets": {
+    "directory": "./dist",
+  },
+
+  "routes": [
+    {
+      "pattern": "www.rpkm2026.com",
+      "zone_name": "rpkm2026.com",
+    },
+  ],
+
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true,
+    },
+    "traces": {
+      "enabled": false,
+      "persist": true,
+      "head_sampling_rate": 1,
+    },
+  },
+}
