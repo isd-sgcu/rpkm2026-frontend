@@ -7,6 +7,7 @@ import {
   ChulaQrQuestScanResultDialog,
   type ScanResult,
 } from "@components/chula-qr-quest/scan/ChulaQrQuestScanResultDialog";
+import { ChulaQrQuestLoginRequiredDialog } from "@components/chula-qr-quest/scan/ChulaQrQuestLoginRequiredDialog";
 
 interface StampPosition {
   id: string;
@@ -21,6 +22,7 @@ const stampPositions = positions as StampPosition[];
 const ChulaQrQuestScanPanel = () => {
   const t = useT();
   const [result, setResult] = useState<ScanResult | null>(null);
+  const [loginRequiredOpen, setLoginRequiredOpen] = useState(false);
 
   // TODO: replace with a real camera/QR scanning integration that calls the API
   function simulateScanSuccess() {
@@ -40,6 +42,13 @@ const ChulaQrQuestScanPanel = () => {
     setResult({ status: "fail" });
   }
 
+  // TODO: replace with a real check for whether the scan came from outside
+  // the app's own scanner (e.g. a QR code opened via the phone's camera app)
+  // while the user has no active session
+  function simulateScanFromExternalScanner() {
+    setLoginRequiredOpen(true);
+  }
+
   return (
     <div className="w-full flex flex-col items-center gap-6">
       <h1 className="text-2xl font-bold text-center">
@@ -50,12 +59,19 @@ const ChulaQrQuestScanPanel = () => {
         <ScanLine className="size-16 text-muted-foreground" />
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap justify-center gap-2">
         <Button type="button" variant="green" onClick={simulateScanSuccess}>
           Simulate success
         </Button>
         <Button type="button" variant="destructive" onClick={simulateScanFail}>
           Simulate fail
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={simulateScanFromExternalScanner}
+        >
+          Simulate external scan
         </Button>
       </div>
 
@@ -63,6 +79,11 @@ const ChulaQrQuestScanPanel = () => {
         open={result !== null}
         onOpenChange={(open) => !open && setResult(null)}
         result={result}
+      />
+
+      <ChulaQrQuestLoginRequiredDialog
+        open={loginRequiredOpen}
+        onOpenChange={setLoginRequiredOpen}
       />
     </div>
   );

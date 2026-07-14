@@ -100,7 +100,9 @@
       "collectedAt": "Received on {datetime}",
       "failTitle": "Scan Failed",
       "failMessage": "Please try again",
-      "ok": "OK"
+      "ok": "OK",
+      "loginRequiredTitle": "Please log in / register\nto collect this year's stamps...",
+      "loginRequiredButton": "Log in / Register"
     }
   },
   "walkrally": {

@@ -100,7 +100,9 @@
       "collectedAt": "ได้รับเมื่อวันที่ {datetime}",
       "failTitle": "สแกนไม่สำเร็จ",
       "failMessage": "กรุณาลองใหม่อีกครั้ง",
-      "ok": "ตกลง"
+      "ok": "ตกลง",
+      "loginRequiredTitle": "โปรดล็อกอิน/ลงทะเบียน\nเพื่อเก็บสแตมป์ปีนี้...",
+      "loginRequiredButton": "เข้าสู่ระบบ / ลงทะเบียน"
     }
   },
   "walkrally": {
