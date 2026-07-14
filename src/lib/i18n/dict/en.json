@@ -159,6 +159,48 @@
       "retry": "Try Again"
     }
   },
+  "staff": {
+    "walkrally": {
+      "record": {
+        "title": "Record Activity Points",
+        "subtitle": "Walk Rally",
+        "modeQr": "Scan QR Code",
+        "modeStudentId": "Student ID",
+        "studentIdLabel": "Enter the 10-digit student ID",
+        "studentIdPlaceholder": "Student ID",
+        "activityLabel": "Activity",
+        "activityPlaceholder": "Select an activity",
+        "roundLabel": "Activity Round",
+        "roundPlaceholder": "Select a round",
+        "roundOption": "Round {index}",
+        "save": "Save",
+        "selectActivityFirst": "Please select an activity and round first.",
+        "invalidStudentId": "Please enter a valid 10-digit student ID.",
+        "successTitle": "Points Recorded",
+        "successMessage": "Activity points recorded successfully.",
+        "failTitle": "Recording Failed",
+        "failMessage": "Something went wrong. Please try again.",
+        "ok": "OK",
+        "retry": "Try Again"
+      }
+    },
+    "checkin": {
+      "title": "Event Check-in",
+      "subtitle": "Welcoming New Students",
+      "modeQr": "Scan QR Code",
+      "modeStudentId": "Student ID",
+      "studentIdLabel": "Enter the 10-digit student ID",
+      "studentIdPlaceholder": "Student ID",
+      "invalidStudentId": "Please enter a valid 10-digit student ID.",
+      "save": "Save",
+      "successTitle": "Check-in Successful",
+      "successMessage": "Checked in to the event successfully.",
+      "failTitle": "Check-in Failed",
+      "failMessage": "Something went wrong. Please try again.",
+      "ok": "OK",
+      "retry": "Try Again"
+    }
+  },
   "register": {
     "title": "Registration",
     "logoAlt": "Rub Puen Kao Mai",
@@ -270,6 +312,32 @@
       "specifyOther": "Please specify",
       "drugDetail": "Please enter your drug allergy",
       "chronicDetail": "Please enter your chronic condition"
+    }
+  },
+  "qrcode": {
+    "refresh": "Refresh",
+    "troubleshoot": {
+      "link": "Camera not working?",
+      "title": "Camera Troubleshooting",
+      "intro": "If the camera doesn't start or the screen stays black, follow the steps for your browser.",
+      "chromeTitle": "Chrome / Edge (Android)",
+      "chromeSteps": "1. Tap the lock or settings icon next to the address bar\n2. Open Permissions\n3. Allow Camera\n4. Refresh this page",
+      "safariTitle": "Safari (iPhone / iPad)",
+      "safariSteps": "1. Tap the \"AA\" or settings button in the address bar\n2. Open Website Settings\n3. Set Camera to Allow\n4. Reload this page\n\nOr go to Settings > Safari > Camera and choose Allow.",
+      "genericTitle": "Other tips",
+      "genericSteps": "• Close other apps or tabs using the camera, then retry\n• Refresh this page\n• If it still fails, try another browser or device"
+    },
+    "scannerError": {
+      "permissionDenied": "We need permission to use the camera. Please allow camera access, then try again.",
+      "noCamera": "We couldn't find a camera on this device. Try another device.",
+      "inUse": "The camera is being used by another app or tab. Close it and try again.",
+      "overconstrained": "We couldn't start the camera on this device. Please try another one.",
+      "insecureContext": "The camera only works on a secure (https) connection. Please open this page over https.",
+      "unsupported": "This browser doesn't support the camera. Try a different browser.",
+      "aborted": "Starting the camera was interrupted. Please try again.",
+      "security": "Your browser blocked camera access. Check your browser settings and try again.",
+      "typeError": "Something went wrong while starting the camera. Please try again.",
+      "unknown": "Something went wrong. Please try again."
     }
   }
 }

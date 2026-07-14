@@ -1,0 +1,8 @@
+---
+import WalkRallyLayout from "@layouts/WalkRallyLayout.astro";
+import { RecordPointsPanel } from "@components/staff/walkrally/record/RecordPointsPanel";
+---
+
+<WalkRallyLayout title={"Record Points"} navigateBack={"/walkrally"}>
+  <RecordPointsPanel client:load />
+</WalkRallyLayout>
