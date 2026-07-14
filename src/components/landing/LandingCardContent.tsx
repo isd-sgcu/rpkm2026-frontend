@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
 
 import { Button } from "@components/ui/button";
 import { signInWithGoogle } from "@lib/api/auth";
@@ -79,7 +80,11 @@ function LandingCta() {
       disabled={isResolving}
       onClick={handleGoogleSignIn}
     >
-      {isResolving ? t("login.loading") : t("landing.cta")}
+      {isResolving ? (
+        <Loader2 className="size-5 animate-spin" />
+      ) : (
+        t("landing.cta")
+      )}
     </Button>
   );
 }
