@@ -31,12 +31,6 @@ function DefaultDecoration() {
   );
 }
 
-// The planters sit over the hill but under the info band, so only their top half shows.
-// The band is translucent and would let them ghost through, so the box ends at the seam
-// and clips them instead. It is drawn 200 tall and pulled up 68 to occupy 132 in the
-// flow: 200 keeps the clip's top edge clear of the flowers, while the 132 pairs with
-// LandingPanel's bottom padding to place the band at y=875 of the design. Percentage
-// margins resolve against width, so the zone stays proportional.
 function LandingDecoration() {
   return (
     <div className="relative -mt-[16.92%] aspect-402/200 w-full overflow-hidden">

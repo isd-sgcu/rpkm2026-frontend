@@ -30,11 +30,6 @@ const {
     <main
       class={cn(
         "grid place-items-center relative z-1",
-        // The landing runs edge to edge so its corner decorations sit against the
-        // screen like the footer's do; it caps its own content instead. It also
-        // composes to an exact height against its footer, so stretching main to the
-        // viewport would open a gap above the footer. Other pages keep both the
-        // width cap and the fill, so their footer still lands at the bottom of the fold.
         footerVariant === "landing"
           ? ""
           : cn(
