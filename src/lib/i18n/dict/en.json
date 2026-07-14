@@ -14,9 +14,104 @@
     "date": "July 18, 2026",
     "cta": "Log in"
   },
+  "login": {
+    "error": "Sign-in failed. Please try again.",
+    "retry": "Try again"
+  },
+  "notEligible": {
+    "title": "Only 1st-year students and event staff are allowed to use this.",
+    "button": "Back to landing"
+  },
   "nav": {
     "home": "Home",
+    "scanRegister": "Scan Register",
+    "qrCode": "QR Code",
+    "chooseHouse": "Choose Welcome House",
+    "groupPairing": "Group Pairing",
+    "editInfo": "Edit Info",
+    "calendar": "Activity Calendar",
     "logout": "Log out"
+  },
+  "map": {
+    "title": "Map"
+  },
+  "emergency": {
+    "title": "Emergency Contact"
+  },
+  "home": {
+    "calendar": {
+      "title": "Calendar",
+      "empty": "No activities on this day"
+    },
+    "information": {
+      "registerTitle": "Register",
+      "gameTitle": "Games",
+      "informationTitle": "Event Information",
+      "register": {
+        "friendHouse": "Welcome House",
+        "activity": "Activities"
+      },
+      "games": {
+        "jigsaw": "Collect Jigsaw",
+        "stamp": "Collect Stamps",
+        "myFreshyStory": "My Freshy Story"
+      }
+    }
+  },
+  "chulaQrQuest": {
+    "home": {
+      "title1": "Stamp Hunting Activity",
+      "title2": "Chula QR Quest",
+      "subtitle": "Collect stamps from important locations around Chula, then redeem them for a reward!",
+      "dateRange": "July 20 - August 7",
+      "playButton": "How to Play",
+      "scanButton": "Scan to Collect Stamps",
+      "openInMaps": "Open in Google Maps"
+    },
+    "rule": {
+      "title1": "How to Play",
+      "title2": "Chula QR Quest",
+      "step1": {
+        "title": "Log In",
+        "text": "Log in to the system to receive your Scanner"
+      },
+      "step2": {
+        "title": "View the Map",
+        "text": "Open the map to see the locations of the QR codes",
+        "button": "Open Map"
+      },
+      "step3": {
+        "title": "Explore",
+        "text": "Scan the QR code at each location to collect a stamp"
+      },
+      "step4": {
+        "title": "Collect Them All",
+        "text": "Collect all the required stamps"
+      },
+      "step5": {
+        "title": "Claim Your Reward",
+        "text": "Follow reward redemption details on IG: rubpuenkaomai2026",
+        "button": "View Reward Details"
+      }
+    },
+    "reward": {
+      "title": "Claim Reward",
+      "pointsRequirement": "Collect {points} points",
+      "locked": "Not yet reached",
+      "unlocked": "Reward received!",
+      "footerNote": "Follow reward redemption instructions at",
+      "collectedProgress": "You've collected {collected}/{total} pieces"
+    },
+    "scan": {
+      "title": "Scan QR Code",
+      "successTitle": "You received a stamp!",
+      "collectedAt": "Received on {datetime}",
+      "failTitle": "Scan Failed",
+      "failMessage": "Please try again",
+      "ok": "OK",
+      "loginRequiredTitle": "Please log in / register\nto collect this year's stamps...",
+      "loginRequiredButton": "Log in / Register"
+    }
   },
   "walkrally": {
     "home": {
@@ -112,6 +207,12 @@
     "next": "Next",
     "back": "Back",
     "confirm": "Confirm",
+    "error": {
+      "badRequest": "Invalid information. Please check and try again.",
+      "forbidden": "This account can't register.",
+      "alreadyRegistered": "This account has already registered.",
+      "generic": "Something went wrong. Please try again."
+    },
     "banner": {
       "pre": "The information below is from your FirstDate registration. If it is correct, press ",
       "action": "Next",
@@ -130,6 +231,8 @@
       "prefixPlaceholder": "Title",
       "lastName": "Last name",
       "lastNamePlaceholder": "Enter your last name...",
+      "nickname": "Nickname",
+      "nicknamePlaceholder": "Enter your nickname...",
       "faculty": "Faculty",
       "facultyPlaceholder": "Search faculty...",
       "studentId": "Student ID",
@@ -196,6 +299,7 @@
       "prefix": "Please select a title",
       "firstName": "Please enter your first name",
       "lastName": "Please enter your last name",
+      "nickname": "Please enter your nickname",
       "faculty": "Please select a faculty",
       "studentId": "Student ID must start with 69 and be 10 digits",
       "phone": "Phone number must be 10 digits and start with 0",

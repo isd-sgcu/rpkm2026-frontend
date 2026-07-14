@@ -1,12 +1,11 @@
 ---
+import BaseLayout from "@layouts/BaseLayout.astro";
 import WalkRallyLayout from "@layouts/WalkRallyLayout.astro";
 import { MinigameListPanel } from "@components/walkrally/events/MinigameListPanel";
 ---
 
-<WalkRallyLayout
-  title={"Mini Games"}
-  navigateBack={"/walkrally/events"}
-  bgColor="lightgreen"
->
-  <MinigameListPanel client:load />
-</WalkRallyLayout>
+<BaseLayout title="Mini Games">
+  <WalkRallyLayout navigateBack={"/walkrally/events"} bgColor="lightgreen">
+    <MinigameListPanel client:load />
+  </WalkRallyLayout>
+</BaseLayout>

@@ -16,6 +16,7 @@ export function makeRegisterSchema(t: TFn) {
       prefix: required(t("register.validation.prefix")),
       firstName: required(t("register.validation.firstName")),
       lastName: required(t("register.validation.lastName")),
+      nickname: required(t("register.validation.nickname")),
       faculty: required(t("register.validation.faculty")),
       studentId: z
         .string()

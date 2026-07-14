@@ -1,5 +1,6 @@
 ---
 import { Footer, type FooterVariant } from "@components/shared/Footer";
+import { AuthGuard } from "@components/shared/AuthGuard";
 import { cn } from "@lib/utils";
 import "@styles/global.css";
 
@@ -27,6 +28,7 @@ const {
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-background text-foreground font-sans">
+    <AuthGuard client:load pathname={Astro.url.pathname} />
     <main
       class={cn(
         "grid place-items-center relative z-1",
