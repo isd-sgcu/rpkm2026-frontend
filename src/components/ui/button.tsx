@@ -18,6 +18,8 @@ const buttonVariants = cva(
           "bg-rpkm-green font-bold text-background hover:bg-rpkm-green/85 focus-visible:border-rpkm-green/40 focus-visible:ring-rpkm-green/20 dark:bg-rpkm-green/20 dark:hover:bg-rpkm-green/30 dark:focus-visible:ring-rpkm-green/40",
         destructive:
           "bg-destructive font-bold text-background hover:bg-destructive/85 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+        ghost:
+          "border-transparent hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

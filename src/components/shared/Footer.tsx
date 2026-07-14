@@ -4,6 +4,7 @@ import instagramIcon from "@assets/images/instagram_icon.svg";
 import pot1Image from "@assets/images/artboard_15.svg";
 import pot2Image from "@assets/images/artboard_16.svg";
 import hillImage from "@assets/images/bottom_landing.svg";
+import houseImage from "@assets/images/house_blank.svg";
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 
 export type FooterVariant = "default" | "landing";
