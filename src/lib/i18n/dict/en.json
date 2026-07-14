@@ -166,6 +166,12 @@
     "next": "Next",
     "back": "Back",
     "confirm": "Confirm",
+    "error": {
+      "badRequest": "Invalid information. Please check and try again.",
+      "forbidden": "This account can't register.",
+      "alreadyRegistered": "This account has already registered.",
+      "generic": "Something went wrong. Please try again."
+    },
     "banner": {
       "pre": "The information below is from your FirstDate registration. If it is correct, press ",
       "action": "Next",
@@ -184,6 +190,8 @@
       "prefixPlaceholder": "Title",
       "lastName": "Last name",
       "lastNamePlaceholder": "Enter your last name...",
+      "nickname": "Nickname",
+      "nicknamePlaceholder": "Enter your nickname...",
       "faculty": "Faculty",
       "facultyPlaceholder": "Search faculty...",
       "studentId": "Student ID",
@@ -250,6 +258,7 @@
       "prefix": "Please select a title",
       "firstName": "Please enter your first name",
       "lastName": "Please enter your last name",
+      "nickname": "Please enter your nickname",
       "faculty": "Please select a faculty",
       "studentId": "Student ID must start with 69 and be 10 digits",
       "phone": "Phone number must be 10 digits and start with 0",

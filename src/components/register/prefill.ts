@@ -1,6 +1,6 @@
-import { FACULTIES } from "@lib/register-options";
+import { FACULTIES, PREFIX_ENUM_MAP } from "@lib/register-options";
 import { PROVINCES, DISTRICTS } from "@lib/thai-geo";
-import type { MeUser, Prefix } from "@lib/api/rpkm";
+import type { MeUser } from "@lib/api/rpkm";
 
 import type { RegisterFormValues } from "./types";
 
@@ -12,14 +12,6 @@ import type { RegisterFormValues } from "./types";
  * server-side with no reliable way to split them back into items, so those
  * stay blank and the student re-enters them.
  */
-
-const PREFIX_TO_TH: Record<Prefix, string | undefined> = {
-  mr: "นาย",
-  mrs: "นาง",
-  ms: "นางสาว",
-  other: "อื่นๆ",
-  not_specified: undefined,
-};
 
 function facultyCodeOf(name: string | null): string | undefined {
   if (!name) return undefined;
@@ -46,10 +38,11 @@ function districtIdOf(
 export function prefillFromMeUser(user: MeUser): Partial<RegisterFormValues> {
   const values: Partial<RegisterFormValues> = {};
 
-  const prefix = user.prefix ? PREFIX_TO_TH[user.prefix] : undefined;
+  const prefix = PREFIX_ENUM_MAP.find((o) => o.value === user.prefix)?.th;
   if (prefix) values.prefix = prefix;
   if (user.firstName) values.firstName = user.firstName;
   if (user.lastName) values.lastName = user.lastName;
+  if (user.nickname) values.nickname = user.nickname;
   if (user.phone) values.phone = user.phone;
   if (user.emergencyContactPhone)
     values.guardianPhone = user.emergencyContactPhone;

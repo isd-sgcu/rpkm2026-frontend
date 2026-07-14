@@ -7,9 +7,10 @@ import rpkmLogo from "@assets/images/rpkm_logo.png";
 import { Button } from "@components/ui/button";
 import { $locale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
-import { getProfile } from "@lib/api/rpkm";
+import { getProfile, registerRpkm } from "@lib/api/rpkm";
 import { useSession } from "@lib/auth/useSession";
 import { useProfile } from "@lib/auth/useProfile";
+import { APIError } from "@lib/client";
 import { RegisterStepper } from "./RegisterStepper";
 import { StepPersonalInfo } from "./StepPersonalInfo";
 import { StepHealthInfo } from "./StepHealthInfo";
@@ -18,6 +19,7 @@ import { StepTravelInfo } from "./StepTravelInfo";
 import { StepPdpa } from "./StepPdpa";
 import { makeRegisterSchema } from "./schema";
 import { prefillFromMeUser } from "./prefill";
+import { toRegistrationBody } from "./toRegistrationBody";
 import { CHULA_DISTRICT_ID, CHULA_PROVINCE_ID } from "@lib/thai-geo";
 import { STEP_FIELDS, TOTAL_STEPS, type RegisterFormValues } from "./types";
 
@@ -26,11 +28,26 @@ import { STEP_FIELDS, TOTAL_STEPS, type RegisterFormValues } from "./types";
 const deriveStudentId = (email: string) =>
   (email.split("@")[0] || email).toLowerCase();
 
+function submitErrorKey(status: number) {
+  switch (status) {
+    case 400:
+      return "register.error.badRequest" as const;
+    case 403:
+      return "register.error.forbidden" as const;
+    case 409:
+      return "register.error.alreadyRegistered" as const;
+    default:
+      return "register.error.generic" as const;
+  }
+}
+
 export function RegisterPanel() {
   const t = useT();
   const locale = useStore($locale);
   const [step, setStep] = useState(1);
   const [showPdpa, setShowPdpa] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const schema = useMemo(() => makeRegisterSchema(t), [locale]);
@@ -43,6 +60,7 @@ export function RegisterPanel() {
       prefix: "",
       firstName: "",
       lastName: "",
+      nickname: "",
       faculty: "",
       studentId: "",
       phone: "",
@@ -124,15 +142,30 @@ export function RegisterPanel() {
   const goBack = () => setStep((prev) => Math.max(1, prev - 1));
 
   const submitAll = () =>
-    handleSubmit((data) => {
-      // TODO: send to backend once the register endpoint is ready.
-      console.log(JSON.stringify(data, null, 2));
+    handleSubmit(async (data) => {
+      setIsSubmitting(true);
+      setSubmitError(null);
+      try {
+        await registerRpkm(toRegistrationBody(data));
+        window.location.href = "/";
+      } catch (err) {
+        const key =
+          err instanceof APIError
+            ? submitErrorKey(err.status)
+            : "register.error.generic";
+        setSubmitError(t(key));
+        setIsSubmitting(false);
+      }
     })();
 
   if (showPdpa) {
     return (
       <FormProvider {...methods}>
-        <StepPdpa onConsent={submitAll} />
+        <StepPdpa
+          onConsent={submitAll}
+          isSubmitting={isSubmitting}
+          errorMessage={submitError}
+        />
       </FormProvider>
     );
   }
