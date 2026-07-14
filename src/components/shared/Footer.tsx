@@ -33,7 +33,7 @@ function DefaultDecoration() {
 
 function LandingDecoration() {
   return (
-    <div className="relative -mt-[16.92%] aspect-402/200 w-full overflow-hidden">
+    <div className="relative mt-[-16.92%] aspect-402/200 w-full overflow-hidden">
       <img
         src={hillImage.src}
         alt=""
