@@ -1,0 +1,10 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { LandingPanel } from "@components/landing/LandingPanel";
+
+const staff = Astro.url.searchParams.has("staff");
+---
+
+<BaseLayout title="RPKM 2026" showFooter footerVariant="landing">
+  <LandingPanel staff={staff} client:load />
+</BaseLayout>
