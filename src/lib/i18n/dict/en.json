@@ -150,5 +150,109 @@
       "ok": "OK",
       "retry": "Try Again"
     }
+  },
+  "register": {
+    "title": "Registration",
+    "logoAlt": "Rub Puen Kao Mai",
+    "next": "Next",
+    "back": "Back",
+    "confirm": "Confirm",
+    "banner": {
+      "pre": "The information below is from your FirstDate registration. If it is correct, press ",
+      "action": "Next",
+      "post": " to continue."
+    },
+    "sections": {
+      "personal": "Personal Information",
+      "guardian": "Guardian Information",
+      "health": "Health Information",
+      "other": "Other Information",
+      "travel": "Travel Information"
+    },
+    "fields": {
+      "firstName": "First name",
+      "firstNamePlaceholder": "Enter your first name...",
+      "prefixPlaceholder": "Title",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Enter your last name...",
+      "faculty": "Faculty",
+      "facultyPlaceholder": "Search faculty...",
+      "studentId": "Student ID",
+      "studentIdPlaceholder": "Enter your student ID...",
+      "phone": "Phone number",
+      "phonePlaceholder": "Enter your phone number...",
+      "guardianPhone": "Guardian's phone number",
+      "guardianPhonePlaceholder": "Enter guardian's phone number...",
+      "relation": "Relationship",
+      "relationPlaceholder": "Relationship"
+    },
+    "health": {
+      "yes": "Yes",
+      "no": "No",
+      "selected": "{count} selected",
+      "foodAllergy": {
+        "title": "Food allergies",
+        "none": "No food allergies",
+        "placeholder": "Enter your food allergies..."
+      },
+      "dietary": {
+        "title": "Dietary restrictions",
+        "none": "No dietary restrictions",
+        "placeholder": "Enter other dietary restrictions..."
+      },
+      "drugAllergy": {
+        "title": "Drug allergies",
+        "none": "No drug allergies",
+        "yes": "Has drug allergies",
+        "placeholder": "Enter your drug allergies..."
+      },
+      "chronic": {
+        "title": "Chronic conditions",
+        "none": "No chronic conditions",
+        "yes": "Has chronic conditions",
+        "placeholder": "Enter your chronic conditions..."
+      }
+    },
+    "questions": {
+      "sgcu": "Do you know the Student Government of Chulalongkorn University (SGCU)?",
+      "pr": "Which channel did you see the project's promotion on the most?",
+      "attendDays": "How many days do you intend to join Rub Puen Kao Mai?",
+      "water": "Did you bring a water bottle?"
+    },
+    "travel": {
+      "residenceQuestion": "The district and province where you normally live",
+      "province": "Province",
+      "district": "District",
+      "provincePlaceholder": "Select a province",
+      "districtPlaceholder": "Select a district",
+      "pattern": "How you will travel to the activity",
+      "leg": "Leg {index}",
+      "removeLeg": "Remove this route",
+      "addLeg": "Add a travel leg",
+      "vehicle": "Vehicle type",
+      "vehiclePlaceholder": "Select a vehicle",
+      "origin": "Origin",
+      "dest": "Destination"
+    },
+    "combobox": {
+      "empty": "No results found"
+    },
+    "validation": {
+      "prefix": "Please select a title",
+      "firstName": "Please enter your first name",
+      "lastName": "Please enter your last name",
+      "faculty": "Please select a faculty",
+      "studentId": "Student ID must start with 69 and be 10 digits",
+      "phone": "Phone number must be 10 digits and start with 0",
+      "relation": "Please select a relationship",
+      "answer": "Please select an answer",
+      "province": "Please select a province",
+      "district": "Please select a district",
+      "vehicle": "Please select a vehicle",
+      "atLeastOne": "Please select at least one item",
+      "specifyOther": "Please specify",
+      "drugDetail": "Please enter your drug allergy",
+      "chronicDetail": "Please enter your chronic condition"
+    }
   }
 }
