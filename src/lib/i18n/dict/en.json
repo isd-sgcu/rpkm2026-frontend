@@ -67,8 +67,7 @@
   "myfreshystory": {
     "header": {
       "description": "Record your best moments from RPKM via Reels or TikTok, and win prizes by using our hashtags.",
-      "date": "20 July - 3 August",
-      "caution": "Only for first-year Chulalongkorn students."
+      "date": "20 July - 3 August"
     },
     "igstory": {
       "description": "Share your Chula Jigsaw or Chula QR Quest hunt moments using the 'Add Yours' sticker on Instagram Stories.",
@@ -83,9 +82,7 @@
       "activity": "Participate in at least one activity",
       "rules": {
         "title": "Rules",
-        "length": "Video must be under 1 minute",
-        "public": "Video must be public",
-        "hastag": "Video must be tagged"
+        "description": "Post a public video less than 1 minute long, with these hashtags."
       }
     }
   }
