@@ -6,6 +6,8 @@
  * https://cas.reg.chula.ac.th/cu/general/PersonalInformation/Faculty/IndexDisplayFaculty.html
  */
 
+import type { Prefix, Vehicle } from "./api/rpkm";
+
 export type Faculty = {
   code: string;
   name: string;
@@ -105,8 +107,18 @@ export const FACULTIES: Faculty[] = [
   },
 ];
 
+// `value` is the backend's Postgres enum token for `students.prefix` — unlike
+// the other option lists below, prefix is a real enum column, not free text,
+// so the exact token must be sent on submit (see toRegistrationBody.ts).
+export const PREFIX_ENUM_MAP: { value: Prefix; th: string }[] = [
+  { value: "mr", th: "นาย" },
+  { value: "mrs", th: "นาง" },
+  { value: "ms", th: "นางสาว" },
+  { value: "other", th: "อื่นๆ" },
+];
+
 // TODO: i18n — Thai-only; these are used as both the value and the label.
-export const PREFIX_OPTIONS = ["นาย", "นาง", "นางสาว", "อื่นๆ"] as const;
+export const PREFIX_OPTIONS = PREFIX_ENUM_MAP.map((o) => o.th);
 
 // TODO: i18n — Thai-only; these are used as both the value and the label.
 export const RELATION_OPTIONS = [
@@ -176,17 +188,25 @@ export const ATTEND_DAYS_OPTIONS = ["1 วัน", "2 วัน", "3 วัน"]
 /** เตรียมกระบอกน้ำมามั้ย (Step 3) */
 export const WATER_BOTTLE_OPTIONS = ["เตรียม", "ไม่ได้เตรียม"] as const;
 
-// TODO: i18n — Thai + English labels; used as both the value and the label.
+// `value` is the backend's Postgres enum token for `travel_legs.vehicle` —
+// a real enum column, so the exact token must be sent on submit (see
+// toRegistrationBody.ts). `th` doubles as the label since it already carries
+// the English name in parentheses.
+export const VEHICLE_ENUM_MAP: { value: Vehicle; th: string }[] = [
+  { value: "private_car", th: "รถยนต์ส่วนบุคคล (Private Car)" },
+  {
+    value: "private_ev",
+    th: "รถยนต์ไฟฟ้าส่วนบุคคล (Private Electric Vehicle)",
+  },
+  { value: "transit", th: "BTS/MRT/Airport Rail Link" },
+  { value: "bus", th: "รถโดยสารประจำทาง / รถโดยสารไม่ประจำทาง" },
+  { value: "taxi", th: "แท็กซี่ (Taxi)" },
+  { value: "motorcycle", th: "รถจักรยานยนต์ (Motorcycle)" },
+  { value: "bike_walk", th: "รถจักรยาน/เดิน (Bicycle or Walking)" },
+];
+
 /** ประเภทยานพาหนะ (Step 4) */
-export const VEHICLE_OPTIONS = [
-  "รถยนต์ส่วนบุคคล (Private Car)",
-  "รถยนต์ไฟฟ้าส่วนบุคคล (Private Electric Vehicle)",
-  "BTS/MRT/Airport Rail Link",
-  "รถโดยสารประจำทาง / รถโดยสารไม่ประจำทาง",
-  "แท็กซี่ (Taxi)",
-  "รถจักรยานยนต์ (Motorcycle)",
-  "รถจักรยาน/เดิน (Bicycle or Walking)",
-] as const;
+export const VEHICLE_OPTIONS = VEHICLE_ENUM_MAP.map((o) => o.th);
 
 /** Max number of travel legs (ต่อ). */
 export const MAX_TRAVEL_LEGS = 4;

@@ -1,6 +1,6 @@
 import { useState, useSyncExternalStore } from "react";
-import { Check, ChevronRight, Users } from "lucide-react";
 import { useStore } from "@nanostores/react";
+import { Check, ChevronRight, Users } from "lucide-react";
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
 import { $locale } from "@lib/i18n/locale";

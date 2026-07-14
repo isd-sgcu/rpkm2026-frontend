@@ -1,6 +1,7 @@
 import { useStore } from "@nanostores/react";
 
 import { Button } from "@components/ui/button";
+import { cn } from "@lib/utils";
 import {
   Drawer,
   DrawerClose,
@@ -10,6 +11,8 @@ import {
 } from "@components/ui/drawer";
 import { $locale, setLocale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
+import { logout } from "@lib/auth/session";
+import { useProfile } from "@lib/auth/useProfile";
 import { Menu } from "lucide-react";
 import rpkmLogo from "@assets/images/rpkm_logo.png";
 import homeIcon from "@assets/images/home.svg";
@@ -24,9 +27,14 @@ import emergencyIcon from "@assets/images/call.svg";
 const navItemClassName =
   "flex w-full items-center py-3.5 rounded px-4 gap-2 active:bg-accent";
 
+interface NavigationMenuProps {
+  showBorder?: boolean;
+}
+
 // not shadcn sidebar. actually a drawer
-export function NavigationMenu() {
-  const isStaff = false;
+export function NavigationMenu({ showBorder }: NavigationMenuProps) {
+  const profile = useProfile();
+  const isStaff = profile.status === "ready" && profile.me.role === "staff";
   const locale = useStore($locale);
   const t = useT();
 
@@ -34,7 +42,12 @@ export function NavigationMenu() {
     <Drawer swipeDirection="up">
       <DrawerTrigger
         render={
-          <DrawerClose className="p-2 rounded active:bg-accent">
+          <DrawerClose
+            className={cn(
+              "p-2 rounded active:bg-accent",
+              showBorder && "border border-black bg-white rounded-full",
+            )}
+          >
             <Menu className="size-6.5 text-foreground" />
           </DrawerClose>
         }
@@ -62,6 +75,7 @@ export function NavigationMenu() {
 
           <section className="mt-6 text-base font-bold px-4">
             <DrawerClose
+              nativeButton={false}
               render={
                 <a href="/" className={navItemClassName}>
                   <img src={homeIcon.src} alt="" className="size-6" />
@@ -73,6 +87,7 @@ export function NavigationMenu() {
             {/* TODO: link? */}
             {isStaff ? (
               <DrawerClose
+                nativeButton={false}
                 render={
                   <a href="/staff/register" className={navItemClassName}>
                     <img src={scanIcon.src} alt="" className="size-6" />
@@ -84,6 +99,7 @@ export function NavigationMenu() {
               <>
                 {/* TODO: open QR code dialog instead of a plain link */}
                 <DrawerClose
+                  nativeButton={false}
                   render={
                     <a href="/" className={navItemClassName}>
                       <img src={qrCodeIcon.src} alt="" className="size-6" />
@@ -94,6 +110,7 @@ export function NavigationMenu() {
 
                 {/* TODO: link? */}
                 <DrawerClose
+                  nativeButton={false}
                   render={
                     <a href="/house" className={navItemClassName}>
                       <img src={houseIcon.src} alt="" className="size-6" />
@@ -104,6 +121,7 @@ export function NavigationMenu() {
 
                 {/* TODO: link? */}
                 <DrawerClose
+                  nativeButton={false}
                   render={
                     <a href="/house" className={navItemClassName}>
                       <img src={peopleIcon.src} alt="" className="size-6" />
@@ -113,6 +131,7 @@ export function NavigationMenu() {
                 />
 
                 <DrawerClose
+                  nativeButton={false}
                   render={
                     <a href="/house" className={navItemClassName}>
                       <img src={editIcon.src} alt="" className="size-6" />
@@ -124,6 +143,7 @@ export function NavigationMenu() {
             )}
 
             <DrawerClose
+              nativeButton={false}
               render={
                 <a href="/#rpkm-calendar" className={navItemClassName}>
                   <img src={calendarIcon.src} alt="" className="size-6" />
@@ -133,6 +153,7 @@ export function NavigationMenu() {
             />
 
             <DrawerClose
+              nativeButton={false}
               render={
                 <a href="/emergency" className={navItemClassName}>
                   <img src={emergencyIcon.src} alt="" className="size-6" />
@@ -143,7 +164,15 @@ export function NavigationMenu() {
           </section>
 
           <div className="flex items-center justify-center w-full pt-6 pb-8">
-            <Button size="lg" className="text-lg px-6 py-3">
+            <Button
+              size="lg"
+              className="text-lg px-6 py-3"
+              onClick={() =>
+                logout().then(() => {
+                  window.location.href = "/landing";
+                })
+              }
+            >
               {t("nav.logout")}
             </Button>
           </div>

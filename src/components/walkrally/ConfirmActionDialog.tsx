@@ -66,7 +66,7 @@ export function ConfirmActionDialog({
       }}
     >
       <DialogContent
-        className="overflow-hidden border-2 border-black p-0"
+        className="overflow-hidden border border-black p-0 rounded-2xl"
         showCloseButton={false}
       >
         {step === "confirm" && (
@@ -136,7 +136,7 @@ export function ConfirmActionDialog({
               </div>
               <Button
                 variant="outline"
-                className="border-[#d33d3d] text-[#d33d3d]"
+                className="border border-black bg-rpkm-red text-white"
                 onClick={() => setStep("confirm")}
               >
                 {retryLabel}

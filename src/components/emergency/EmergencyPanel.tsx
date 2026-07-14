@@ -1,8 +1,8 @@
+import { useStore } from "@nanostores/react";
 import { buttonVariants } from "@components/ui/button";
 import { $locale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
 import { cn } from "@lib/utils";
-import { useStore } from "@nanostores/react";
 import { PhoneCall } from "lucide-react";
 import emergencies from "./emergency.json";
 
