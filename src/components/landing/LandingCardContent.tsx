@@ -24,6 +24,19 @@ function LandingCta() {
     }
   }, [profile.status]);
 
+  // `window.location.href = url` navigates away to Google; if the user hits
+  // back (or Google rejects the request, e.g. redirect_uri_mismatch) and the
+  // browser restores this page from the bfcache, React state is exactly as
+  // it was mid-redirect — isSigningIn would otherwise stay stuck at `true`
+  // forever with no way to retry short of a hard refresh.
+  useEffect(() => {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) setIsSigningIn(false);
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, []);
+
   const handleGoogleSignIn = async () => {
     setIsSigningIn(true);
     setSignInError(false);
