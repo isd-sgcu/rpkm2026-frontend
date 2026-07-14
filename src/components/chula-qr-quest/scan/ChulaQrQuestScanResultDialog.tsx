@@ -75,10 +75,8 @@ export function ChulaQrQuestScanResultDialog({
         {result?.status === "success" && (
           <div className="flex flex-col items-center gap-4 pb-6 text-center">
             <div className="flex w-full flex-col items-center gap-3 px-6 pt-6">
-              <DialogTitle className="text-xl font-bold whitespace-pre-line">
-                {t("chulaQrQuest.scan.successTitle", {
-                  name: result.shopName,
-                })}
+              <DialogTitle className="text-xl font-bold">
+                {t("chulaQrQuest.scan.successTitle")}
               </DialogTitle>
               <span className="rounded-full border border-foreground bg-rpkm-yellow px-4 py-1 text-sm font-bold">
                 {t("chulaQrQuest.reward.collectedProgress", {
@@ -88,11 +86,14 @@ export function ChulaQrQuestScanResultDialog({
               </span>
             </div>
 
-            <div className="relative flex w-full items-center justify-center overflow-hidden bg-rpkm-green py-8">
+            <div className="relative flex w-full flex-col items-center justify-center gap-3 overflow-hidden bg-rpkm-green px-6 py-8">
               <MonotoneNoise className="pointer-events-none absolute inset-0" />
               <div className="relative flex size-28 items-center justify-center rounded-2xl border-2 border-foreground bg-background shadow-lg">
                 <img src={stampIcon.src} alt="" className="size-16" />
               </div>
+              <p className="relative text-2xl font-bold text-foreground text-wrap whitespace-normal">
+                {result.shopName}
+              </p>
             </div>
 
             <DialogDescription className="rounded-full border border-foreground bg-background px-4 py-1.5 text-xs font-bold text-foreground">

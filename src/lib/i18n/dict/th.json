@@ -96,7 +96,7 @@
     },
     "scan": {
       "title": "สแกน QR Code",
-      "successTitle": "คุณได้รับสแตมป์ร้าน\n {name}",
+      "successTitle": "คุณได้รับสแตมป์แล้ว!",
       "collectedAt": "ได้รับเมื่อวันที่ {datetime}",
       "failTitle": "สแกนไม่สำเร็จ",
       "failMessage": "กรุณาลองใหม่อีกครั้ง",
