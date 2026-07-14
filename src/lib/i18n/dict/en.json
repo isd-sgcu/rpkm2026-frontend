@@ -14,6 +14,15 @@
     "date": "July 18, 2026",
     "cta": "Log in"
   },
+  "login": {
+    "loading": "Signing in...",
+    "error": "Sign-in failed. Please try again.",
+    "retry": "Try again"
+  },
+  "notEligible": {
+    "title": "Only 1st-year students and event staff are allowed to use this.",
+    "button": "Back to landing"
+  },
   "nav": {
     "home": "Home",
     "scanRegister": "Scan Register",

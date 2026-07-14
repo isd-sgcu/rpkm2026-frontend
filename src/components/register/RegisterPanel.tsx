@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStore } from "@nanostores/react";
@@ -7,6 +7,9 @@ import rpkmLogo from "@assets/images/rpkm_logo.png";
 import { Button } from "@components/ui/button";
 import { $locale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
+import { getProfile } from "@lib/api/rpkm";
+import { useSession } from "@lib/auth/useSession";
+import { useProfile } from "@lib/auth/useProfile";
 import { RegisterStepper } from "./RegisterStepper";
 import { StepPersonalInfo } from "./StepPersonalInfo";
 import { StepHealthInfo } from "./StepHealthInfo";
@@ -14,8 +17,14 @@ import { StepOtherInfo } from "./StepOtherInfo";
 import { StepTravelInfo } from "./StepTravelInfo";
 import { StepPdpa } from "./StepPdpa";
 import { makeRegisterSchema } from "./schema";
+import { prefillFromMeUser } from "./prefill";
 import { CHULA_DISTRICT_ID, CHULA_PROVINCE_ID } from "@lib/thai-geo";
 import { STEP_FIELDS, TOTAL_STEPS, type RegisterFormValues } from "./types";
+
+// Mirrors the backend's deriveStudentId (src/utils/student.ts) so the field
+// shown here always matches the studentId the server actually derives itself.
+const deriveStudentId = (email: string) =>
+  (email.split("@")[0] || email).toLowerCase();
 
 export function RegisterPanel() {
   const t = useT();
@@ -70,7 +79,35 @@ export function RegisterPanel() {
     },
   });
 
-  const { trigger, handleSubmit } = methods;
+  const { trigger, handleSubmit, setValue } = methods;
+
+  const session = useSession();
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      setValue("studentId", deriveStudentId(session.user.email));
+    }
+  }, [session.status, setValue]);
+
+  const profile = useProfile();
+  const prefilled = useRef(false);
+  useEffect(() => {
+    if (prefilled.current) return;
+    if (profile.status !== "ready" || profile.me.registered) return;
+    prefilled.current = true;
+
+    getProfile()
+      .then(({ user }) => {
+        const values = prefillFromMeUser(user);
+        for (const [key, value] of Object.entries(values)) {
+          setValue(key as keyof RegisterFormValues, value as never, {
+            shouldDirty: false,
+          });
+        }
+      })
+      .catch(() => {
+        // Prefill is a convenience — leave the form blank on failure.
+      });
+  }, [profile.status, setValue]);
 
   const goNext = async () => {
     const valid = await trigger(STEP_FIELDS[step]);

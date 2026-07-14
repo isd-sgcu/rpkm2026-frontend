@@ -1,0 +1,11 @@
+---
+import { LandingCardContent } from "@components/landing/LandingCardContent";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PanelFrameLayout from "@layouts/PanelFrameLayout.astro";
+---
+
+<BaseLayout title="Landing">
+  <PanelFrameLayout showMenu={false} showLogo={false}>
+    <LandingCardContent client:load />
+  </PanelFrameLayout>
+</BaseLayout>
