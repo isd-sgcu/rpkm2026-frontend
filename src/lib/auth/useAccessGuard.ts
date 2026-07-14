@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useProfile } from "./useProfile";
 import type { ProfileState } from "./profile";
 
-const STAFF_ALLOWED_PATHS = ["/", "/staff/register"];
+const STAFF_ALLOWED_PATHS = ["/", "/staff/register", "/emergency"];
 const PUBLIC_PATHS = ["/landing"];
 
 function normalizePath(pathname: string): string {
@@ -18,6 +18,8 @@ function resolveRedirect(profile: ProfileState, path: string): string | null {
     const isStaff = profile.me.role === "staff";
     if (isStaff && !STAFF_ALLOWED_PATHS.includes(path)) return "/";
     if (!isStaff && path === "/staff/register") return "/";
+    if (!isStaff && !profile.me.registered && path !== "/register")
+      return "/register";
     if (!isStaff && profile.me.registered && path === "/register") return "/";
     return null;
   }
