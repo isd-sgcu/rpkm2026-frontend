@@ -395,6 +395,16 @@
       "unknown": "Something went wrong. Please try again."
     }
   },
+  "house": {
+    "ranking": {
+      "title": "House Ranking",
+      "noHouses": "You haven't selected\nany houses yet.",
+      "selectHouse": "Select House"
+    },
+    "group": {
+      "title": "Group Pairing"
+    }
+  },
   "editProfile": {
     "heading": "Edit",
     "edit": "Edit",
