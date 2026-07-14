@@ -1,4 +1,5 @@
 import { Calendar, MapPin } from "lucide-react";
+import type MapLibreGL from "maplibre-gl";
 import { buttonVariants } from "@components/ui/button";
 import {
   Map,
@@ -11,6 +12,7 @@ import { useT } from "@lib/i18n/useT";
 import { cn } from "@lib/utils";
 import scanIcon from "@assets/images/scan.svg";
 import positions from "@components/chula-qr-quest/position.json";
+import rpkmMapStyle from "@components/chula-qr-quest/map-style.json";
 
 interface StampPosition {
   id: string;
@@ -21,6 +23,7 @@ interface StampPosition {
 }
 
 const stampPositions = positions as StampPosition[];
+const mapStyle = rpkmMapStyle as MapLibreGL.StyleSpecification;
 
 // Center of the Chulalongkorn University area
 const MAP_CENTER: [number, number] = [100.5296, 13.7367];
@@ -55,7 +58,11 @@ const ChulaQrQuestHomePanel = () => {
       </a>
 
       <div className="relative aspect-9/16 w-full overflow-hidden rounded-3xl border border-foreground">
-        <Map center={MAP_CENTER} zoom={15}>
+        <Map
+          center={MAP_CENTER}
+          zoom={15}
+          styles={{ light: mapStyle, dark: mapStyle }}
+        >
           <MapControls showZoom />
 
           {stampPositions.map((position) => (
