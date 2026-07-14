@@ -61,7 +61,8 @@
       "openInMaps": "Open in Google Maps"
     },
     "rule": {
-      "title": "How to Play Chula QR Quest",
+      "title1": "How to Play",
+      "title2": "Chula QR Quest",
       "step1": {
         "title": "Log In",
         "text": "Log in to the system to receive your Scanner"

@@ -8,9 +8,10 @@ const ChulaQrQuestRulePanel = () => {
 
   return (
     <div className="w-full flex flex-col gap-4">
-      <h1 className="text-3xl font-bold pb-4 text-wrap whitespace-normal text-center">
-        {t("chulaQrQuest.rule.title")}
-      </h1>
+      <div className="flex flex-col items-center gap-1 text-center text-rpkm-red">
+        <h1 className="text-xl font-bold">{t("chulaQrQuest.rule.title1")}</h1>
+        <h1 className="text-3xl font-bold">{t("chulaQrQuest.rule.title2")}</h1>
+      </div>
 
       {/* Step1 */}
       <div className="relative flex flex-col items-center gap-3 rounded-[1.15rem] border border-foreground bg-rpkm-green p-2 sm:gap-4 sm:p-3 min-[360px]:flex-row">
