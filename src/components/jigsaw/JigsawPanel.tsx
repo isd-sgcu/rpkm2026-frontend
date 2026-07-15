@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "@nanostores/react";
 import { RotateCcw } from "lucide-react";
 
 import { JigsawBoard } from "./JigsawBoard";
 import { JigsawProgress } from "./JigsawProgress";
+import { JigsawRewardDialog } from "./JigsawRewardDialog";
 import {
   $foundPieces,
   resetPieces,
   syncStoredPieces,
+  takePendingReward,
   // TOTAL_PIECES,
 } from "./jigsawState";
 
@@ -20,9 +22,16 @@ import {
 export function JigsawPanel() {
   const found = useStore($foundPieces);
   // const isComplete = found.length >= TOTAL_PIECES;
+  const [rewardAt, setRewardAt] = useState<Date | null>(null);
 
   useEffect(() => {
     syncStoredPieces();
+    // If we just arrived from a successful scan, show the reward pop-up. This
+    // reads client-only navigation state, so it must happen after mount (not in
+    // a render-time initializer) to keep the SSR'd markup and hydration in sync.
+    const pending = takePendingReward();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-mount read of a client-only reward handoff
+    if (pending) setRewardAt(new Date(pending.receivedAt));
   }, []);
 
   return (
@@ -40,6 +49,14 @@ export function JigsawPanel() {
           รีเซ็ต
         </button>
       )}
+
+      <JigsawRewardDialog
+        open={rewardAt !== null}
+        onOpenChange={(open) => {
+          if (!open) setRewardAt(null);
+        }}
+        receivedAt={rewardAt}
+      />
     </div>
   );
 }

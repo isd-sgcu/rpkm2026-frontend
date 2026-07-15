@@ -64,3 +64,44 @@ export function resetPieces() {
   $foundPieces.set([]);
   persist([]);
 }
+
+const PENDING_REWARD_KEY = "jigsaw-pending-reward";
+
+export interface PendingReward {
+  pieceId: PieceId;
+  /** ISO timestamp of when the piece was collected. */
+  receivedAt: string;
+}
+
+/**
+ * Remember a freshly-scanned piece so the jigsaw page can show its reward
+ * pop-up once the scan flow navigates there. Uses sessionStorage so it survives
+ * the redirect but not a fresh visit.
+ */
+export function setPendingReward(reward: PendingReward) {
+  if (typeof window === "undefined") return;
+  sessionStorage.setItem(PENDING_REWARD_KEY, JSON.stringify(reward));
+}
+
+/**
+ * Read and clear the pending reward. Returns null when there is none or the
+ * stored value is malformed.
+ */
+export function takePendingReward(): PendingReward | null {
+  if (typeof window === "undefined") return null;
+  const raw = sessionStorage.getItem(PENDING_REWARD_KEY);
+  if (!raw) return null;
+  sessionStorage.removeItem(PENDING_REWARD_KEY);
+  try {
+    const parsed = JSON.parse(raw) as Partial<PendingReward>;
+    if (
+      typeof parsed?.pieceId === "number" &&
+      typeof parsed?.receivedAt === "string"
+    ) {
+      return { pieceId: parsed.pieceId, receivedAt: parsed.receivedAt };
+    }
+  } catch {
+    // fall through to null
+  }
+  return null;
+}

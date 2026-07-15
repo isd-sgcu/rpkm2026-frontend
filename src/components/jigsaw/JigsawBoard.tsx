@@ -18,12 +18,18 @@ const COLS = 5;
 const ROWS = 2;
 
 /**
- * How wide each piece image is drawn, as a fraction of the whole board width.
- * Each PNG is a single piece centred on its own transparent canvas, so it must
- * be scaled up past one cell (1/5 of the board) to let the knobs reach into the
- * neighbouring slots and interlock. Tune this if the seams look too loose/tight.
+ * Native size of one puzzle cell (a piece body, without its interlocking knobs)
+ * in the source artwork, in px. Each piece PNG is tightly cropped to its own
+ * content, so its intrinsic width/height already includes whatever knobs stick
+ * out past this cell; we position it by mapping those native pixels onto the
+ * board via the reference board size below.
  */
-const PIECE_SCALE = 0.56;
+const CELL_WIDTH = 2250;
+const CELL_HEIGHT = 3750;
+
+/** Full board in source px: COLS x ROWS cells. Both piece dimensions map through this. */
+const BOARD_WIDTH = COLS * CELL_WIDTH; // 11250
+const BOARD_HEIGHT = ROWS * CELL_HEIGHT; // 7500
 
 /** Piece id (1..10) -> artwork, laid out row-major: 1..5 top row, 6..10 bottom. */
 const PIECE_IMAGES: Record<number, ImageMetadata> = {
@@ -39,17 +45,26 @@ const PIECE_IMAGES: Record<number, ImageMetadata> = {
   10: jigsaw10,
 };
 
-/** Absolute position that centres a piece image on its grid slot. */
+/**
+ * Absolute position that centres a piece image on its grid cell. The image is
+ * tightly cropped to the piece, so its own width/height (mapped through the
+ * reference board size) determine how far its knobs reach into neighbouring
+ * cells. Centring the crop on the cell centre lands each piece body on its cell
+ * and lets the knobs overlap the neighbours' sockets.
+ */
 function pieceStyle(pieceId: number): CSSProperties {
+  const img = PIECE_IMAGES[pieceId];
   const idx = pieceId - 1;
   const col = idx % COLS;
   const row = Math.floor(idx / COLS);
   const centerX = (col + 0.5) / COLS;
   const centerY = (row + 0.5) / ROWS;
+  const widthFrac = img.width / BOARD_WIDTH;
+  const heightFrac = img.height / BOARD_HEIGHT;
   return {
-    width: `${PIECE_SCALE * 100}%`,
-    left: `${(centerX - PIECE_SCALE / 2) * 100}%`,
-    top: `${(centerY - PIECE_SCALE / 2) * 100}%`,
+    width: `${widthFrac * 100}%`,
+    left: `${(centerX - widthFrac / 2) * 100}%`,
+    top: `${(centerY - heightFrac / 2) * 100}%`,
   };
 }
 
@@ -68,7 +83,7 @@ export function JigsawBoard() {
   const foundSet = new Set(found);
 
   return (
-    <div className="relative w-full aspect-[3/2]">
+    <div className="relative w-full aspect-[3/2] overflow-hidden">
       {/* Empty-slot grid (bottom layer) */}
       <div className="absolute inset-0 grid grid-cols-5 grid-rows-2">
         {Array.from({ length: TOTAL_PIECES }).map((_, i) => {
