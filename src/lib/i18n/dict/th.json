@@ -401,7 +401,16 @@
       "noHouses": "คุณยังไม่ได้\nเลือกบ้านรับเพื่อน",
       "selectHouse": "เลือกบ้าน",
       "save": "บันทึก",
-      "houseAnnouncement": "ประกาศผลบ้านที่เลือก\n26 กรกฎาคม 2569 เวลา 19:00 น."
+      "houseAnnouncement": "ประกาศผลบ้านที่เลือก\n26 กรกฎาคม 2569 เวลา 19:00 น.",
+      "houseClear": "ล้างทั้งหมด",
+      "houseClearTitle": "ยืนยันการล้างข้อมูล",
+      "houseClearDescription": "ข้อมูลลำดับทั้งหมดจะถูกลบออก",
+      "houseRemove": "ยืนยันการลบ",
+      "houseRemoveDesc": "คุณต้องการลบ{House}\nออกจากการจัดอันดับใช่หรือไม่ ?",
+      "saveIncompleteTitle": "เกิดข้อผิดพลาด",
+      "saveIncompleteDescription": "กรุณาเลือกบ้านให้ครบ 5 อันดับ",
+      "saveSuccessTitle": "บันทึกข้อมูลสำเร็จ",
+      "saveSuccessDescription": "ประกาศผล 23 ก.ค. 2569 19:00 น."
     },
     "group": {
       "title": "จับกลุ่มคู่หู"
