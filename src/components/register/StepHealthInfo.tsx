@@ -1,31 +1,25 @@
-import { useStore } from "@nanostores/react";
-
-import { $locale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
-import {
-  DIETARY_OPTIONS,
-  FOOD_ALLERGY_OPTIONS,
-  localizeOption,
-} from "@lib/register-options";
+import { DIETARY_OPTIONS, FOOD_ALLERGY_OPTIONS } from "@lib/register-options";
 
 import { SectionHeading } from "./fields";
 import { ChecklistCard, DetailCard } from "./health-cards";
 
-export function StepHealthInfo() {
+export function StepHealthInfo({
+  showHeading = true,
+}: { showHeading?: boolean } = {}) {
   const t = useT();
-  const locale = useStore($locale);
-  const getLabel = (value: string) => localizeOption(locale, value);
 
   return (
     <div className="flex flex-col pb-2">
-      <SectionHeading>{t("register.sections.health")}</SectionHeading>
+      {showHeading && (
+        <SectionHeading>{t("register.sections.health")}</SectionHeading>
+      )}
 
       <div className="mt-3 flex flex-col gap-4">
         <ChecklistCard
           title={t("register.health.foodAllergy.title")}
           noneSubtitle={t("register.health.foodAllergy.none")}
           options={FOOD_ALLERGY_OPTIONS}
-          getLabel={getLabel}
           hasName="foodAllergyHas"
           itemsName="foodAllergyItems"
           otherName="foodAllergyOther"
@@ -36,7 +30,6 @@ export function StepHealthInfo() {
           title={t("register.health.dietary.title")}
           noneSubtitle={t("register.health.dietary.none")}
           options={DIETARY_OPTIONS}
-          getLabel={getLabel}
           hasName="dietaryHas"
           itemsName="dietaryItems"
           otherName="dietaryOther"

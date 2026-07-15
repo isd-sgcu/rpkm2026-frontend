@@ -4,8 +4,8 @@ import {
   FACULTIES,
   FOOD_ALLERGY_OPTIONS,
   OTHER_OPTION,
-  PREFIX_ENUM_MAP,
-  VEHICLE_ENUM_MAP,
+  RELATION_OPTIONS,
+  type LabeledOption,
 } from "@lib/register-options";
 import type { RegistrationBody, TravelLegInput } from "@lib/api/rpkm";
 
@@ -18,28 +18,23 @@ const districtName = (id: string) =>
 const facultyName = (code: string) =>
   FACULTIES.find((f) => f.code === code)?.name ?? code;
 
-// prefix/vehicle are real Postgres enum columns on the backend — unlike the
-// other free-text option lists, the exact enum token must be sent, not the
-// Thai label the form stores as its value.
-const prefixEnumOf = (th: string): RegistrationBody["prefix"] =>
-  PREFIX_ENUM_MAP.find((o) => o.th === th)?.value ?? "not_specified";
-const vehicleEnumOf = (th: string): TravelLegInput["vehicle"] =>
-  VEHICLE_ENUM_MAP.find((o) => o.th === th)?.value ?? "other";
-
-const ATTEND_DAYS_TO_NUMBER: Record<string, number> = {
-  "1 วัน": 1,
-  "2 วัน": 2,
-  "3 วัน": 3,
-};
+// Free-text backend fields (allergies/dietary/emergencyContactName) store the
+// Thai label regardless of UI locale, so the stored data stays consistent no
+// matter which language the form was filled in — labelOf() is only for what's
+// shown on screen. prefix/vehicle and the two P&O survey fields are the
+// exception: the form already holds the token/code the backend wants, so they
+// pass straight through. FirstDate's copy of this file does the same.
+const thLabel = (options: LabeledOption[], value: string) =>
+  options.find((o) => o.value === value)?.th ?? value;
 
 function combineChecklist(
-  options: readonly string[],
+  options: LabeledOption[],
   items: string[],
   other: string,
 ): string {
-  const chosen = items.filter(
-    (item) => item !== OTHER_OPTION && options.includes(item),
-  );
+  const chosen = items
+    .filter((item) => item !== OTHER_OPTION)
+    .map((item) => thLabel(options, item));
   if (items.includes(OTHER_OPTION) && other.trim()) {
     chosen.push(other.trim());
   }
@@ -48,7 +43,7 @@ function combineChecklist(
 
 function mapLeg(leg: RegisterFormValues["travelLegs"][number]): TravelLegInput {
   return {
-    vehicle: vehicleEnumOf(leg.vehicle),
+    vehicle: leg.vehicle as TravelLegInput["vehicle"],
     vehicleOther: null,
     originProvince: provinceName(leg.originProvince),
     originDistrict: districtName(leg.originDistrict),
@@ -75,13 +70,13 @@ export function toRegistrationBody(data: RegisterFormValues): RegistrationBody {
 
   return {
     pdpaConsent: true,
-    prefix: prefixEnumOf(data.prefix),
+    prefix: data.prefix,
     firstName: data.firstName,
     lastName: data.lastName,
     nickname: data.nickname,
     faculty: facultyName(data.faculty),
     phone: data.phone,
-    emergencyContactName: data.guardianRelation,
+    emergencyContactName: thLabel(RELATION_OPTIONS, data.guardianRelation),
     emergencyContactPhone: data.guardianPhone,
     allergies: allergyParts.length > 0 ? allergyParts.join(" / ") : null,
     dietary: dietary || null,
@@ -93,7 +88,7 @@ export function toRegistrationBody(data: RegisterFormValues): RegistrationBody {
     csoDistrict: districtName(data.residenceDistrict),
     csoProvince: provinceName(data.residenceProvince),
     travelLegs: data.travelLegs.map(mapLeg),
-    attendedDays: ATTEND_DAYS_TO_NUMBER[data.attendDays] ?? 1,
-    bottle: data.waterBottle === "เตรียม",
+    attendedDays: Number(data.attendDays) || 1,
+    bottle: data.waterBottle === "yes",
   };
 }

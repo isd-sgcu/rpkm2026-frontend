@@ -1,5 +1,3 @@
-import { useStore } from "@nanostores/react";
-
 import { Button } from "@components/ui/button";
 import { cn } from "@lib/utils";
 import {
@@ -9,7 +7,6 @@ import {
   DrawerHeader,
   DrawerTrigger,
 } from "@components/ui/drawer";
-import { $locale, setLocale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
 import { logout } from "@lib/auth/session";
 import { useProfile } from "@lib/auth/useProfile";
@@ -23,6 +20,7 @@ import peopleIcon from "@assets/images/people.svg";
 import editIcon from "@assets/images/edit.svg";
 import calendarIcon from "@assets/images/calendar-month.svg";
 import emergencyIcon from "@assets/images/call.svg";
+import { LocaleToggle } from "./LocaleToggle";
 
 const navItemClassName =
   "flex w-full items-center py-3.5 rounded px-4 gap-2 active:bg-accent";
@@ -35,7 +33,6 @@ interface NavigationMenuProps {
 export function NavigationMenu({ showBorder }: NavigationMenuProps) {
   const profile = useProfile();
   const isStaff = profile.status === "ready" && profile.me.role === "staff";
-  const locale = useStore($locale);
   const t = useT();
 
   return (
@@ -58,14 +55,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
           <DrawerHeader className="flex flex-row items-start justify-between pt-8 px-8 pr-5">
             <img src={rpkmLogo.src} alt="rpkm logo" className="size-20" />
             <div className="flex items-center gap-0.5">
-              <Button
-                type="button"
-                variant="outline"
-                className="border-none text-lg active:bg-accent p-2 size-10.5 rounded"
-                onClick={() => setLocale(locale === "th" ? "en" : "th")}
-              >
-                {locale === "th" ? "TH" : "EN"}
-              </Button>
+              <LocaleToggle />
 
               <DrawerClose className="p-2 rounded active:bg-accent">
                 <Menu className="size-6.5 text-foreground" />
@@ -133,7 +123,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
                 <DrawerClose
                   nativeButton={false}
                   render={
-                    <a href="/house" className={navItemClassName}>
+                    <a href="/edit-profile" className={navItemClassName}>
                       <img src={editIcon.src} alt="" className="size-6" />
                       <span className="pt-1">{t("nav.editInfo")}</span>
                     </a>

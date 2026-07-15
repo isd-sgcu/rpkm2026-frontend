@@ -1,10 +1,16 @@
 import { Controller, useFormContext } from "react-hook-form";
+import { useStore } from "@nanostores/react";
 
 import { cn } from "@lib/utils";
+import { $locale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
 import { Checkbox } from "@components/ui/checkbox";
 import { Input } from "@components/ui/input";
-import { OTHER_OPTION } from "@lib/register-options";
+import {
+  OTHER_OPTION,
+  labelOf,
+  type LabeledOption,
+} from "@lib/register-options";
 
 import { controlClass, FieldError, YesNoToggle } from "./fields";
 import type { RegisterFormValues } from "./types";
@@ -57,7 +63,6 @@ export function ChecklistCard({
   title,
   noneSubtitle,
   options,
-  getLabel = (value) => value,
   hasName,
   itemsName,
   otherName,
@@ -65,14 +70,14 @@ export function ChecklistCard({
 }: {
   title: string;
   noneSubtitle: string;
-  options: readonly string[];
-  getLabel?: (value: string) => string;
+  options: readonly LabeledOption[];
   hasName: BoolName;
   itemsName: ArrayName;
   otherName: StringName;
   otherPlaceholder: string;
 }) {
   const t = useT();
+  const locale = useStore($locale);
   const {
     control,
     register,
@@ -113,19 +118,18 @@ export function ChecklistCard({
           return (
             <div className="flex flex-wrap gap-x-4 gap-y-3">
               {options.map((option) => (
-                // TODO: i18n
                 <label
-                  key={option}
+                  key={option.value}
                   className="flex cursor-pointer items-center gap-2 text-base select-none"
                 >
                   <Checkbox
                     className="size-5 rounded-md border-rpkm-red data-checked:border-rpkm-red data-checked:bg-rpkm-red data-checked:text-background"
-                    checked={value.includes(option)}
+                    checked={value.includes(option.value)}
                     onCheckedChange={(checked) =>
-                      toggle(option, checked === true)
+                      toggle(option.value, checked === true)
                     }
                   />
-                  {getLabel(option)}
+                  {labelOf(locale, option)}
                 </label>
               ))}
             </div>

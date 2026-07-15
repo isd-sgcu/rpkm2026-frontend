@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useStore } from "@nanostores/react";
 
 import rpkmLogo from "@assets/images/rpkm_logo.png";
 import { Button } from "@components/ui/button";
-import { $locale } from "@lib/i18n/locale";
+import { LocaleToggle } from "@components/shared/LocaleToggle";
 import { useT } from "@lib/i18n/useT";
 import { getProfile, registerRpkm } from "@lib/api/rpkm";
 import { useSession } from "@lib/auth/useSession";
@@ -43,21 +42,20 @@ function submitErrorKey(status: number) {
 
 export function RegisterPanel() {
   const t = useT();
-  const locale = useStore($locale);
   const [step, setStep] = useState(1);
   const [showPdpa, setShowPdpa] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [carriedOver, setCarriedOver] = useState(false);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const schema = useMemo(() => makeRegisterSchema(t), [locale]);
+  const schema = useMemo(() => makeRegisterSchema(t), [t]);
 
   const methods = useForm<RegisterFormValues>({
     mode: "onTouched",
     resolver: zodResolver(schema),
     defaultValues: {
       // Step 1
-      prefix: "",
+      prefix: undefined,
       firstName: "",
       lastName: "",
       nickname: "",
@@ -100,32 +98,39 @@ export function RegisterPanel() {
   const { trigger, handleSubmit, setValue } = methods;
 
   const session = useSession();
+  const email = session.status === "authenticated" ? session.user.email : null;
   useEffect(() => {
-    if (session.status === "authenticated") {
-      setValue("studentId", deriveStudentId(session.user.email));
-    }
-  }, [session.status, setValue]);
+    if (email) setValue("studentId", deriveStudentId(email));
+  }, [email, setValue]);
 
   const profile = useProfile();
+  const needsPrefill = profile.status === "ready" && !profile.me.registered;
   const prefilled = useRef(false);
   useEffect(() => {
-    if (prefilled.current) return;
-    if (profile.status !== "ready" || profile.me.registered) return;
+    if (prefilled.current || !needsPrefill) return;
     prefilled.current = true;
 
     getProfile()
       .then(({ user }) => {
+        // A null id means there's no `students` row yet, so nothing has been
+        // registered before. getProfile still answers 200 in that case, filling
+        // firstName/lastName by splitting the Google display name — that is not
+        // FirstDate data, so it must not be poured into the form under a banner
+        // claiming it is.
+        if (!user.id) return;
+
         const values = prefillFromMeUser(user);
         for (const [key, value] of Object.entries(values)) {
           setValue(key as keyof RegisterFormValues, value as never, {
             shouldDirty: false,
           });
         }
+        setCarriedOver(true);
       })
       .catch(() => {
         // Prefill is a convenience — leave the form blank on failure.
       });
-  }, [profile.status, setValue]);
+  }, [needsPrefill, setValue]);
 
   const goNext = async () => {
     const valid = await trigger(STEP_FIELDS[step]);
@@ -173,7 +178,12 @@ export function RegisterPanel() {
   return (
     <FormProvider {...methods}>
       <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col">
-        <div className="mt-6 shrink-0 px-6">
+        <div className="relative mt-6 shrink-0 px-6">
+          {/* Absolute so the logo stays centred on the panel, not on the space
+              left over beside the switch. */}
+          <div className="absolute top-0 right-4">
+            <LocaleToggle />
+          </div>
           <img
             src={rpkmLogo.src}
             alt={t("register.logoAlt")}
@@ -192,7 +202,7 @@ export function RegisterPanel() {
           noValidate
           className="no-scrollbar mt-6 min-h-0 w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-6"
         >
-          {step === 1 && <StepPersonalInfo />}
+          {step === 1 && <StepPersonalInfo showBanner={carriedOver} />}
           {step === 2 && <StepHealthInfo />}
           {step === 3 && <StepOtherInfo />}
           {step === 4 && <StepTravelInfo />}
