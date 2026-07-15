@@ -399,7 +399,9 @@
     "ranking": {
       "title": "House Ranking",
       "noHouses": "You haven't selected\nany houses yet.",
-      "selectHouse": "Select House"
+      "selectHouse": "Select House",
+      "save": "Save",
+      "houseAnnouncement": "House selection results\nJuly 26, 2026 at 19:00"
     },
     "group": {
       "title": "Group Pairing"
