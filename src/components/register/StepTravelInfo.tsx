@@ -1,30 +1,19 @@
 import { useEffect } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-import { useStore } from "@nanostores/react";
 import { Trash2 } from "lucide-react";
 
 import { Button } from "@components/ui/button";
 import { CHULA_DISTRICT_ID, CHULA_PROVINCE_ID } from "@lib/thai-geo";
-import {
-  MAX_TRAVEL_LEGS,
-  VEHICLE_OPTIONS,
-  localizeOption,
-} from "@lib/register-options";
-import { $locale } from "@lib/i18n/locale";
+import { MAX_TRAVEL_LEGS, VEHICLE_OPTIONS } from "@lib/register-options";
 import { useT } from "@lib/i18n/useT";
 
-import {
-  ComboboxField,
-  SectionHeading,
-  SelectField,
-  type SelectOption,
-} from "./fields";
+import { ComboboxField, SectionHeading, SelectField } from "./fields";
 import { CarIcon, HomeIcon, PinIcon } from "./icons";
 import {
   districtsOf,
   GeoPair,
   LabelRow,
-  provinceOptions,
+  PROVINCE_OPTIONS,
   SubLabel,
 } from "./travel-fields";
 import type { RegisterFormValues } from "./types";
@@ -36,9 +25,10 @@ const CHULA = {
   district: String(CHULA_DISTRICT_ID),
 };
 
-export function StepTravelInfo() {
+export function StepTravelInfo({
+  showHeading = true,
+}: { showHeading?: boolean } = {}) {
   const t = useT();
-  const locale = useStore($locale);
   const { control, setValue } = useFormContext<RegisterFormValues>();
   const residenceProvince =
     (useWatch({ name: "residenceProvince" }) as string) || "";
@@ -94,7 +84,9 @@ export function StepTravelInfo() {
 
   return (
     <div className="flex flex-col gap-6 pb-2">
-      <SectionHeading>{t("register.sections.travel")}</SectionHeading>
+      {showHeading && (
+        <SectionHeading>{t("register.sections.travel")}</SectionHeading>
+      )}
 
       {/* residence — labels sit left, but stack above the select on narrow screens */}
       <div className="@container flex flex-col gap-3">
@@ -104,7 +96,7 @@ export function StepTravelInfo() {
         <LabelRow label={t("register.travel.province")}>
           <ComboboxField
             name="residenceProvince"
-            options={provinceOptions(locale)}
+            options={PROVINCE_OPTIONS}
             placeholder={t("register.travel.provincePlaceholder")}
             onAfterChange={() => setValue("residenceDistrict", "")}
           />
@@ -112,7 +104,7 @@ export function StepTravelInfo() {
         <LabelRow label={t("register.travel.district")}>
           <ComboboxField
             name="residenceDistrict"
-            options={districtsOf(residenceProvince, locale)}
+            options={districtsOf(residenceProvince)}
             placeholder={t("register.travel.districtPlaceholder")}
             disabled={!residenceProvince}
           />
@@ -168,11 +160,6 @@ function TravelLegCard({
   onRemove: () => void;
 }) {
   const t = useT();
-  const locale = useStore($locale);
-  const vehicleOptions: SelectOption[] = VEHICLE_OPTIONS.map((v) => ({
-    value: v,
-    label: localizeOption(locale, v),
-  }));
   const lineToNext = isLast && !canAdd ? null : isLast ? 46 : 35;
 
   return (
@@ -205,7 +192,7 @@ function TravelLegCard({
         <SubLabel icon={<CarIcon />}>{t("register.travel.vehicle")}</SubLabel>
         <SelectField
           name={`travelLegs.${index}.vehicle`}
-          options={vehicleOptions}
+          options={VEHICLE_OPTIONS}
           placeholder={t("register.travel.vehiclePlaceholder")}
         />
       </div>

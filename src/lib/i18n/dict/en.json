@@ -339,5 +339,38 @@
       "typeError": "Something went wrong while starting the camera. Please try again.",
       "unknown": "Something went wrong. Please try again."
     }
+  },
+  "editProfile": {
+    "heading": "Edit",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "saved": "Saved successfully",
+    "loading": "Loading...",
+    "loadError": "Unable to load your data",
+    "personal": {
+      "title": "Personal Information",
+      "realName": "Full name",
+      "studentId": "Student ID",
+      "faculty": "Faculty",
+      "phone": "Phone number",
+      "guardianPhone": "Guardian phone number",
+      "relation": "Relationship"
+    },
+    "health": {
+      "title": "Health Information",
+      "foodAllergy": "Food allergies",
+      "dietary": "Dietary restrictions",
+      "drugAllergy": "Drug allergies",
+      "chronicDisease": "Chronic conditions"
+    },
+    "travel": {
+      "title": "Travel Information",
+      "residence": "Residence",
+      "legsIntro": "Travel to the event",
+      "legLabel": "Leg {index}",
+      "vehicle": "Vehicle",
+      "origin": "Origin",
+      "destination": "Destination"
+    }
   }
 }

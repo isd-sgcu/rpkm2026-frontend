@@ -1,25 +1,25 @@
 import { useFormContext, useWatch } from "react-hook-form";
-import { useStore } from "@nanostores/react";
 
 import { DISTRICTS, PROVINCES } from "@lib/thai-geo";
-import { $locale, type LocaleType } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
+import type { LabeledOption } from "@lib/register-options";
 
-import { ComboboxField, type Path, type SelectOption } from "./fields";
+import { ComboboxField, type Path } from "./fields";
 import type { RegisterFormValues } from "./types";
 
-export type Option = SelectOption;
+export type Option = LabeledOption;
 
-export const provinceOptions = (locale: LocaleType): Option[] =>
-  PROVINCES.map((p) => ({
-    value: String(p.id),
-    label: locale === "en" ? p.nameEn : p.name,
-  }));
+export const PROVINCE_OPTIONS: Option[] = PROVINCES.map((p) => ({
+  value: String(p.id),
+  th: p.name,
+  en: p.nameEn,
+}));
 
-export const districtsOf = (provinceId: string, locale: LocaleType): Option[] =>
+export const districtsOf = (provinceId: string): Option[] =>
   DISTRICTS.filter((d) => String(d.provinceId) === provinceId).map((d) => ({
     value: String(d.id),
-    label: locale === "en" ? d.nameEn : d.name,
+    th: d.name,
+    en: d.nameEn,
   }));
 
 export function GeoPair({
@@ -32,7 +32,6 @@ export function GeoPair({
   disabled?: boolean;
 }) {
   const t = useT();
-  const locale = useStore($locale);
   const { setValue } = useFormContext<RegisterFormValues>();
   const provinceId = (useWatch({ name: provinceName }) as string) || "";
 
@@ -40,14 +39,14 @@ export function GeoPair({
     <div className="flex flex-col gap-3">
       <ComboboxField
         name={provinceName}
-        options={provinceOptions(locale)}
+        options={PROVINCE_OPTIONS}
         placeholder={t("register.travel.provincePlaceholder")}
         disabled={disabled}
         onAfterChange={() => setValue(districtName, "")}
       />
       <ComboboxField
         name={districtName}
-        options={districtsOf(provinceId, locale)}
+        options={districtsOf(provinceId)}
         placeholder={t("register.travel.districtPlaceholder")}
         disabled={disabled || !provinceId}
       />

@@ -1,0 +1,10 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { EditProfilePanel } from "@components/edit-profile/EditProfilePanel";
+---
+
+<BaseLayout title="แก้ไขข้อมูล">
+  <div class="flex h-[100dvh] w-full flex-col">
+    <EditProfilePanel client:load />
+  </div>
+</BaseLayout>

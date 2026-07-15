@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { OTHER_OPTION } from "@lib/register-options";
+import { OTHER_OPTION, PREFIX_VALUES } from "@lib/register-options";
 import type { useT } from "@lib/i18n/useT";
 
 type TFn = ReturnType<typeof useT>;
@@ -13,7 +13,7 @@ export function makeRegisterSchema(t: TFn) {
   return z
     .object({
       // Step 1 — ข้อมูลส่วนตัว
-      prefix: required(t("register.validation.prefix")),
+      prefix: z.enum(PREFIX_VALUES, t("register.validation.prefix")),
       firstName: required(t("register.validation.firstName")),
       lastName: required(t("register.validation.lastName")),
       nickname: required(t("register.validation.nickname")),

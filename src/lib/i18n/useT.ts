@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useStore } from "@nanostores/react";
 
 import { $locale, syncStoredLocale } from "./locale";
@@ -33,12 +33,20 @@ export function useT() {
     syncStoredLocale();
   }, []);
 
-  return function t(key: DictKey<Dict>, vars?: Record<string, string>) {
-    const template = resolve(dict[locale], key);
-    if (!vars) return template;
-    return Object.entries(vars).reduce(
-      (result, [name, value]) => result.replaceAll(`{${name}}`, value),
-      template,
-    );
-  };
+  // Memoised per locale so callers can put `t` straight in a dependency array —
+  // an identity that changed every render would re-run their effects and
+  // rebuild their memos on every keystroke.
+  return useCallback(
+    function t(key: DictKey<Dict>, vars?: Record<string, string>) {
+      const template = resolve(dict[locale], key);
+      if (!vars) return template;
+      return Object.entries(vars).reduce(
+        (result, [name, value]) => result.replaceAll(`{${name}}`, value),
+        template,
+      );
+    },
+    [locale],
+  );
 }
+
+export type Translator = ReturnType<typeof useT>;
