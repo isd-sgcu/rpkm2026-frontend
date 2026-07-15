@@ -79,7 +79,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
               <DrawerClose
                 nativeButton={false}
                 render={
-                  <a href="/staff/register" className={navItemClassName}>
+                  <a href="/staff/checkin" className={navItemClassName}>
                     <img src={scanIcon.src} alt="" className="size-6" />
                     <span className="pt-1">{t("nav.scanRegister")}</span>
                   </a>

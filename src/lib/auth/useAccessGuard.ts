@@ -4,7 +4,7 @@ import { useProfile } from "./useProfile";
 import type { ProfileState } from "./profile";
 import { toast } from "sonner";
 
-const STAFF_ALLOWED_PATHS = ["/", "/staff/register"];
+const STAFF_ALLOWED_PATHS = ["/"];
 const PUBLIC_PATHS = ["/landing"];
 
 function normalizePath(pathname: string): string {
