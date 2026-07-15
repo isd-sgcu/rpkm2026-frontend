@@ -91,7 +91,7 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
                 <DrawerClose
                   nativeButton={false}
                   render={
-                    <a href="/" className={navItemClassName}>
+                    <a href="/#qrcode" className={navItemClassName}>
                       <img src={qrCodeIcon.src} alt="" className="size-6" />
                       <span className="pt-1">{t("nav.qrCode")}</span>
                     </a>
