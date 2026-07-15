@@ -46,7 +46,7 @@ export function ResultDialog({
                 <DialogTitle className="text-2xl font-bold">
                   {successTitle}
                 </DialogTitle>
-                <DialogDescription className="text-foreground">
+                <DialogDescription className="whitespace-pre-line text-foreground">
                   {successMessage}
                 </DialogDescription>
               </div>
@@ -65,7 +65,7 @@ export function ResultDialog({
                 <DialogTitle className="text-2xl font-bold">
                   {failTitle}
                 </DialogTitle>
-                <DialogDescription className="text-foreground">
+                <DialogDescription className="whitespace-pre-line text-foreground">
                   {failMessage}
                 </DialogDescription>
               </div>

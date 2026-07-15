@@ -1,12 +1,12 @@
 import { useT } from "@lib/i18n/useT";
+import { checkinRegistration } from "@lib/api/checkin";
+import { APIError } from "@lib/client";
 import { QueryProvider } from "@components/shared/QueryProvider";
-import { ScanEntryForm } from "@components/staff/ScanEntryForm";
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function checkIn(_studentId: string) {
-  // TODO: call the check-in API (e.g. via a TanStack Query mutation).
-  // Throw on a non-2xx response to surface the error popup.
-}
+import {
+  ScanEntryForm,
+  ScanEntryError,
+  type ScanEntryResult,
+} from "@components/staff/ScanEntryForm";
 
 export function CheckInPanel() {
   return (
@@ -18,6 +18,35 @@ export function CheckInPanel() {
 
 function CheckInPanelContent() {
   const t = useT();
+
+  async function checkIn(studentId: string): Promise<ScanEntryResult> {
+    try {
+      await checkinRegistration(studentId);
+      return { title: t("staff.checkin.successTitle"), message: studentId };
+    } catch (error) {
+      if (error instanceof APIError) {
+        switch (error.code) {
+          // Student is registered either way — show the success popup.
+          case "ALREADY_CHECKED_IN":
+            return {
+              title: t("staff.checkin.alreadyCheckedInTitle"),
+              message: studentId,
+            };
+          case "STUDENT_NOT_FOUND":
+            throw new ScanEntryError(
+              t("staff.checkin.failTitle"),
+              t("staff.checkin.studentNotFound"),
+            );
+          case "FORBIDDEN_NOT_STAFF":
+            throw new ScanEntryError(
+              t("staff.checkin.failTitle"),
+              t("staff.checkin.notStaff"),
+            );
+        }
+      }
+      throw error;
+    }
+  }
 
   return (
     <ScanEntryForm
