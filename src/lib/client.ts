@@ -48,21 +48,6 @@ async function request<T>(
   return response.json() as Promise<T>;
 }
 
-export const eden = treaty<App>(appConfig.apiBaseUrl, {
-  fetch: {
-    credentials: "include",
-  },
-  onResponse: async (response) => {
-    if (response.status === 401) {
-      if (typeof window !== "undefined") {
-        window.location.href = "/landing";
-      }
-      throw new APIError(401, "Unauthorized");
-    }
-    return response;
-  },
-});
-
 export const API = {
   get: <T>(path: string, init?: RequestOptions) =>
     request<T>("GET", path, init),
