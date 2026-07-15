@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import { useProfile } from "./useProfile";
 import type { ProfileState } from "./profile";
+import { toast } from "sonner";
 
 const STAFF_ALLOWED_PATHS = ["/", "/staff/register"];
 const PUBLIC_PATHS = ["/landing"];
@@ -43,12 +44,22 @@ export function useAccessGuard(pathname: string): { ready: boolean } {
 
   useEffect(() => {
     if (redirectTo) {
+      if (import.meta.env.DEV) {
+        toast.info("[dev] ยกเลิกการ redirect ของ AccessGaurd", {
+          description: `จริงๆ ควรโดน redirect ไป ${redirectTo} แต่ยกเลิกเพราะอยู่ใน dev`,
+        });
+        return;
+      }
       window.location.href = redirectTo;
     }
   }, [redirectTo]);
 
   if (path === "/landing") {
     return { ready: true };
+  }
+
+  if (import.meta.env.DEV) {
+    return { ready: profile.status !== "loading" };
   }
 
   return { ready: profile.status !== "loading" && redirectTo === null };
