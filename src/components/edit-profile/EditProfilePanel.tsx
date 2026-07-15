@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import rpkmLogo from "@assets/images/rpkm_logo.png";
 import { LocaleToggle } from "@components/shared/LocaleToggle";
+import { NavigationMenu } from "@components/shared/NavigationMenu";
 import { QueryProvider } from "@components/shared/QueryProvider";
 import { getProfile } from "@lib/api/rpkm";
 import { useT } from "@lib/i18n/useT";
@@ -35,8 +36,9 @@ function Overview() {
   return (
     <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col">
       <div className="relative mt-6 shrink-0 px-6">
-        <div className="absolute top-0 right-4">
+        <div className="absolute top-0 right-4 flex items-center gap-1">
           <LocaleToggle />
+          <NavigationMenu />
         </div>
         <img
           src={rpkmLogo.src}
