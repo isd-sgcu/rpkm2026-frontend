@@ -1,13 +1,11 @@
 ---
 import WalkRallyLayout from "@layouts/WalkRallyLayout.astro";
 import { WalkRallyHomePanel } from "@components/walkrally/WalkRallyHomePanel";
+import BaseLayout from "@layouts/BaseLayout.astro";
 ---
 
-<WalkRallyLayout
-  title={"Walk Rally"}
-  bgColor="lightpink"
-  navigateBack={"/"}
-  haveNoise={false}
->
-  <WalkRallyHomePanel client:load />
-</WalkRallyLayout>
+<BaseLayout title="Walk Rally">
+  <WalkRallyLayout bgColor="lightpink" navigateBack={"/"} haveNoise={false}>
+    <WalkRallyHomePanel client:load />
+  </WalkRallyLayout>
+</BaseLayout>

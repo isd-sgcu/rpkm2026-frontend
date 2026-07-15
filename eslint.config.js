@@ -7,7 +7,7 @@ import tseslint from "typescript-eslint";
 
 export default [
   {
-    ignores: ["dist/", ".astro/", "node_modules/"],
+    ignores: ["dist/", ".astro/", "node_modules/", "src/components/ui/"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

@@ -1,5 +1,6 @@
 ---
-import { Footer } from "@components/shared/Footer";
+import { Footer, type FooterVariant } from "@components/shared/Footer";
+import { AuthGuard } from "@components/shared/AuthGuard";
 import { cn } from "@lib/utils";
 import "@styles/global.css";
 
@@ -7,12 +8,14 @@ type Props = {
   title: string;
   description?: string;
   showFooter?: boolean;
+  footerVariant?: FooterVariant;
 };
 
 const {
   title,
   description = "RPKM 2026 frontend application",
   showFooter = false,
+  footerVariant = "default",
 } = Astro.props;
 ---
 
@@ -25,14 +28,20 @@ const {
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-background text-foreground font-sans">
+    <AuthGuard client:load pathname={Astro.url.pathname} />
     <main
       class={cn(
-        "sm:max-w-md sm:mx-auto grid place-items-center relative z-1",
-        showFooter ? "min-h-[calc(100vh-1rem)]" : "min-h-screen",
+        "grid place-items-center relative z-1",
+        footerVariant === "landing"
+          ? ""
+          : cn(
+              "sm:max-w-md sm:mx-auto",
+              showFooter ? "min-h-[calc(100vh-1rem)]" : "min-h-screen",
+            ),
       )}
     >
       <slot />
     </main>
-    {showFooter && <Footer client:load />}
+    {showFooter && <Footer variant={footerVariant} client:load />}
   </body>
 </html>

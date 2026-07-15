@@ -1,0 +1,11 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ChulaQrQuestLayout from "@layouts/ChulaQrQuestLayout.astro";
+import ChulaQrQuestHomePanel from "@components/chula-qr-quest/ChulaQrQuestHomePanel";
+---
+
+<BaseLayout title="RPKM Chula QR Scan Home Page">
+  <ChulaQrQuestLayout showMenuBorder={true}>
+    <ChulaQrQuestHomePanel client:load />
+  </ChulaQrQuestLayout>
+</BaseLayout>

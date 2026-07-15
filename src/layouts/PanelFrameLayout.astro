@@ -19,7 +19,7 @@ const {
 } = Astro.props;
 ---
 
-<div class:list={["relative w-full min-h-200"]} {...rest}>
+<div class:list={["relative w-full min-w-0 min-h-screen"]} {...rest}>
   {
     showLogo && (
       <div class="absolute left-0 right-0 top-[4.5cqw] sm:top-5 grid place-items-center">
@@ -30,8 +30,11 @@ const {
 
   {
     navigateBack && (
-      <div class="absolute left-4 top-[4.5cqw] sm:top-4.5 flex items-center">
-        <a href={navigateBack}>
+      <div class="absolute left-4 top-[4.5cqw] sm:top-4.5 h-10 flex items-center z-10">
+        <a
+          href={navigateBack}
+          class="size-10 rounded-full bg-white border border-black grid place-items-center"
+        >
           <ChevronLeft className="size-6.5 text-foreground" />
         </a>
       </div>
@@ -47,7 +50,10 @@ const {
   }
 
   <div
-    class="absolute inset-0 flex flex-col px-[1.25em] pt-[40cqw] sm:pt-45 pointer-events-none"
+    class:list={[
+      "inset-0 flex flex-col px-[1.25em] pointer-events-none",
+      showLogo ? "absolute pt-[40cqw] sm:pt-45" : "relative pt-16 sm:pt-20",
+    ]}
   >
     <div class="contents pointer-events-auto">
       <slot />

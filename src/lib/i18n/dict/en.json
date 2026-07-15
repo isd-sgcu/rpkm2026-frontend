@@ -14,9 +14,104 @@
     "date": "July 18, 2026",
     "cta": "Log in"
   },
+  "login": {
+    "error": "Sign-in failed. Please try again.",
+    "retry": "Try again"
+  },
+  "notEligible": {
+    "title": "Only 1st-year students and event staff are allowed to use this.",
+    "button": "Back to landing"
+  },
   "nav": {
     "home": "Home",
+    "scanRegister": "Scan Register",
+    "qrCode": "QR Code",
+    "chooseHouse": "Choose Welcome House",
+    "groupPairing": "Group Pairing",
+    "editInfo": "Edit Info",
+    "calendar": "Activity Calendar",
     "logout": "Log out"
+  },
+  "map": {
+    "title": "Map"
+  },
+  "emergency": {
+    "title": "Emergency Contact"
+  },
+  "home": {
+    "calendar": {
+      "title": "Calendar",
+      "empty": "No activities on this day"
+    },
+    "information": {
+      "registerTitle": "Register",
+      "gameTitle": "Games",
+      "informationTitle": "Event Information",
+      "register": {
+        "friendHouse": "Welcome House",
+        "activity": "Activities"
+      },
+      "games": {
+        "jigsaw": "Collect Jigsaw",
+        "stamp": "Collect Stamps",
+        "myFreshyStory": "My Freshy Story"
+      }
+    }
+  },
+  "chulaQrQuest": {
+    "home": {
+      "title1": "Stamp Hunting Activity",
+      "title2": "Chula QR Quest",
+      "subtitle": "Collect stamps from important locations around Chula, then redeem them for a reward!",
+      "dateRange": "July 20 - August 7",
+      "playButton": "How to Play",
+      "scanButton": "Scan to Collect Stamps",
+      "openInMaps": "Open in Google Maps"
+    },
+    "rule": {
+      "title1": "How to Play",
+      "title2": "Chula QR Quest",
+      "step1": {
+        "title": "Log In",
+        "text": "Log in to the system to receive your Scanner"
+      },
+      "step2": {
+        "title": "View the Map",
+        "text": "Open the map to see the locations of the QR codes",
+        "button": "Open Map"
+      },
+      "step3": {
+        "title": "Explore",
+        "text": "Scan the QR code at each location to collect a stamp"
+      },
+      "step4": {
+        "title": "Collect Them All",
+        "text": "Collect all the required stamps"
+      },
+      "step5": {
+        "title": "Claim Your Reward",
+        "text": "Follow reward redemption details on IG: rubpuenkaomai2026",
+        "button": "View Reward Details"
+      }
+    },
+    "reward": {
+      "title": "Claim Reward",
+      "pointsRequirement": "Collect {points} points",
+      "locked": "Not yet reached",
+      "unlocked": "Reward received!",
+      "footerNote": "Follow reward redemption instructions at",
+      "collectedProgress": "You've collected {collected}/{total} pieces"
+    },
+    "scan": {
+      "title": "Scan QR Code",
+      "successTitle": "You received a stamp!",
+      "collectedAt": "Received on {datetime}",
+      "failTitle": "Scan Failed",
+      "failMessage": "Please try again",
+      "ok": "OK",
+      "loginRequiredTitle": "Please log in / register\nto collect this year's stamps...",
+      "loginRequiredButton": "Log in / Register"
+    }
   },
   "walkrally": {
     "home": {
@@ -83,6 +178,187 @@
       "rules": {
         "title": "Rules",
         "description": "Post a public video less than 1 minute long, with these hashtags."
+      }
+    },
+    "staff": {
+      "walkrally": {
+        "record": {
+          "title": "Record Activity Points",
+          "subtitle": "Walk Rally",
+          "modeQr": "Scan QR Code",
+          "modeStudentId": "Student ID",
+          "studentIdLabel": "Enter the 10-digit student ID",
+          "studentIdPlaceholder": "Student ID",
+          "activityLabel": "Activity",
+          "activityPlaceholder": "Select an activity",
+          "roundLabel": "Activity Round",
+          "roundPlaceholder": "Select a round",
+          "roundOption": "Round {index}",
+          "save": "Save",
+          "selectActivityFirst": "Please select an activity and round first.",
+          "invalidStudentId": "Please enter a valid 10-digit student ID.",
+          "successTitle": "Points Recorded",
+          "successMessage": "Activity points recorded successfully.",
+          "failTitle": "Recording Failed",
+          "failMessage": "Something went wrong. Please try again.",
+          "ok": "OK",
+          "retry": "Try Again"
+        }
+      },
+      "checkin": {
+        "title": "Event Check-in",
+        "subtitle": "Welcoming New Students",
+        "modeQr": "Scan QR Code",
+        "modeStudentId": "Student ID",
+        "studentIdLabel": "Enter the 10-digit student ID",
+        "studentIdPlaceholder": "Student ID",
+        "invalidStudentId": "Please enter a valid 10-digit student ID.",
+        "save": "Save",
+        "successTitle": "Check-in Successful",
+        "successMessage": "Checked in to the event successfully.",
+        "failTitle": "Check-in Failed",
+        "failMessage": "Something went wrong. Please try again.",
+        "ok": "OK",
+        "retry": "Try Again"
+      }
+    },
+    "register": {
+      "title": "Registration",
+      "logoAlt": "Rub Puen Kao Mai",
+      "next": "Next",
+      "back": "Back",
+      "confirm": "Confirm",
+      "error": {
+        "badRequest": "Invalid information. Please check and try again.",
+        "forbidden": "This account can't register.",
+        "alreadyRegistered": "This account has already registered.",
+        "generic": "Something went wrong. Please try again."
+      },
+      "banner": {
+        "pre": "The information below is from your FirstDate registration. If it is correct, press ",
+        "action": "Next",
+        "post": " to continue."
+      },
+      "sections": {
+        "personal": "Personal Information",
+        "guardian": "Guardian Information",
+        "health": "Health Information",
+        "other": "Other Information",
+        "travel": "Travel Information"
+      },
+      "fields": {
+        "firstName": "First name",
+        "firstNamePlaceholder": "Enter your first name...",
+        "prefixPlaceholder": "Title",
+        "lastName": "Last name",
+        "lastNamePlaceholder": "Enter your last name...",
+        "nickname": "Nickname",
+        "nicknamePlaceholder": "Enter your nickname...",
+        "faculty": "Faculty",
+        "facultyPlaceholder": "Search faculty...",
+        "studentId": "Student ID",
+        "studentIdPlaceholder": "Enter your student ID...",
+        "phone": "Phone number",
+        "phonePlaceholder": "Enter your phone number...",
+        "guardianPhone": "Guardian's phone number",
+        "guardianPhonePlaceholder": "Enter guardian's phone number...",
+        "relation": "Relationship",
+        "relationPlaceholder": "Relationship"
+      },
+      "health": {
+        "yes": "Yes",
+        "no": "No",
+        "selected": "{count} selected",
+        "foodAllergy": {
+          "title": "Food allergies",
+          "none": "No food allergies",
+          "placeholder": "Enter your food allergies..."
+        },
+        "dietary": {
+          "title": "Dietary restrictions",
+          "none": "No dietary restrictions",
+          "placeholder": "Enter other dietary restrictions..."
+        },
+        "drugAllergy": {
+          "title": "Drug allergies",
+          "none": "No drug allergies",
+          "yes": "Has drug allergies",
+          "placeholder": "Enter your drug allergies..."
+        },
+        "chronic": {
+          "title": "Chronic conditions",
+          "none": "No chronic conditions",
+          "yes": "Has chronic conditions",
+          "placeholder": "Enter your chronic conditions..."
+        }
+      },
+      "questions": {
+        "sgcu": "Do you know the Student Government of Chulalongkorn University (SGCU)?",
+        "pr": "Which channel did you see the project's promotion on the most?",
+        "attendDays": "How many days do you intend to join Rub Puen Kao Mai?",
+        "water": "Did you bring a water bottle?"
+      },
+      "travel": {
+        "residenceQuestion": "The district and province where you normally live",
+        "province": "Province",
+        "district": "District",
+        "provincePlaceholder": "Select a province",
+        "districtPlaceholder": "Select a district",
+        "pattern": "How you will travel to the activity",
+        "leg": "Leg {index}",
+        "removeLeg": "Remove this route",
+        "addLeg": "Add a travel leg",
+        "vehicle": "Vehicle type",
+        "vehiclePlaceholder": "Select a vehicle",
+        "origin": "Origin",
+        "dest": "Destination"
+      },
+      "combobox": {
+        "empty": "No results found"
+      },
+      "validation": {
+        "prefix": "Please select a title",
+        "firstName": "Please enter your first name",
+        "lastName": "Please enter your last name",
+        "nickname": "Please enter your nickname",
+        "faculty": "Please select a faculty",
+        "studentId": "Student ID must start with 69 and be 10 digits",
+        "phone": "Phone number must be 10 digits and start with 0",
+        "relation": "Please select a relationship",
+        "answer": "Please select an answer",
+        "province": "Please select a province",
+        "district": "Please select a district",
+        "vehicle": "Please select a vehicle",
+        "atLeastOne": "Please select at least one item",
+        "specifyOther": "Please specify",
+        "drugDetail": "Please enter your drug allergy",
+        "chronicDetail": "Please enter your chronic condition"
+      }
+    },
+    "qrcode": {
+      "refresh": "Refresh",
+      "troubleshoot": {
+        "link": "Camera not working?",
+        "title": "Camera Troubleshooting",
+        "intro": "If the camera doesn't start or the screen stays black, follow the steps for your browser.",
+        "chromeTitle": "Chrome / Edge (Android)",
+        "chromeSteps": "1. Tap the lock or settings icon next to the address bar\n2. Open Permissions\n3. Allow Camera\n4. Refresh this page",
+        "safariTitle": "Safari (iPhone / iPad)",
+        "safariSteps": "1. Tap the \"AA\" or settings button in the address bar\n2. Open Website Settings\n3. Set Camera to Allow\n4. Reload this page\n\nOr go to Settings > Safari > Camera and choose Allow.",
+        "genericTitle": "Other tips",
+        "genericSteps": "• Close other apps or tabs using the camera, then retry\n• Refresh this page\n• If it still fails, try another browser or device"
+      },
+      "scannerError": {
+        "permissionDenied": "We need permission to use the camera. Please allow camera access, then try again.",
+        "noCamera": "We couldn't find a camera on this device. Try another device.",
+        "inUse": "The camera is being used by another app or tab. Close it and try again.",
+        "overconstrained": "We couldn't start the camera on this device. Please try another one.",
+        "insecureContext": "The camera only works on a secure (https) connection. Please open this page over https.",
+        "unsupported": "This browser doesn't support the camera. Try a different browser.",
+        "aborted": "Starting the camera was interrupted. Please try again.",
+        "security": "Your browser blocked camera access. Check your browser settings and try again.",
+        "typeError": "Something went wrong while starting the camera. Please try again.",
+        "unknown": "Something went wrong. Please try again."
       }
     }
   }
