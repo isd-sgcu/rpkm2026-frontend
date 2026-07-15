@@ -8,17 +8,6 @@ import {
   TOTAL_PIECES,
 } from "./jigsawState";
 
-import jigsaw1 from "@assets/images/jigsaw_1.png";
-import jigsaw2 from "@assets/images/jigsaw_2.png";
-import jigsaw3 from "@assets/images/jigsaw_3.png";
-import jigsaw4 from "@assets/images/jigsaw_4.png";
-import jigsaw5 from "@assets/images/jigsaw_5.png";
-import jigsaw6 from "@assets/images/jigsaw_6.png";
-import jigsaw7 from "@assets/images/jigsaw_7.png";
-import jigsaw8 from "@assets/images/jigsaw_8.png";
-import jigsaw9 from "@assets/images/jigsaw_9.png";
-import jigsaw10 from "@assets/images/jigsaw_10.png";
-
 const COLS = 5;
 const ROWS = 2;
 
@@ -36,19 +25,49 @@ const CELL_HEIGHT = 3750;
 const BOARD_WIDTH = COLS * CELL_WIDTH; // 11250
 const BOARD_HEIGHT = ROWS * CELL_HEIGHT; // 7500
 
-/** Piece id (1..10) -> artwork, laid out row-major: 1..5 top row, 6..10 bottom. */
-const PIECE_IMAGES: Record<number, ImageMetadata> = {
-  1: jigsaw1,
-  2: jigsaw2,
-  3: jigsaw3,
-  4: jigsaw4,
-  5: jigsaw5,
-  6: jigsaw6,
-  7: jigsaw7,
-  8: jigsaw8,
-  9: jigsaw9,
-  10: jigsaw10,
-};
+/**
+ * All piece artwork PNGs, eagerly imported and keyed by the number in their
+ * filename (jigsaw_<n>.png). `import.meta.glob` needs a literal relative
+ * pattern, so the "@assets" alias can't be used here.
+ */
+const pieceImageModules = import.meta.glob<{ default: ImageMetadata }>(
+  "../../assets/images/jigsaw_*.png",
+  { eager: true },
+);
+
+const imageByNumber: Record<number, ImageMetadata> = {};
+for (const [path, module] of Object.entries(pieceImageModules)) {
+  const pieceNumber = Number(path.match(/jigsaw_(\d+)\.png$/)?.[1]);
+  if (pieceNumber) imageByNumber[pieceNumber] = module.default;
+}
+
+/**
+ * Piece point ids, in board order (1..5 top row, 6..10 bottom). Kept here
+ * rather than imported from jigsaw.json so no sensitive fields from that file
+ * (e.g. pointCode, qrCodePayload) get bundled into the client.
+ */
+const PIECE_POINT_IDS = [
+  "jigsaw01",
+  "jigsaw02",
+  "jigsaw03",
+  "jigsaw04",
+  "jigsaw05",
+  "jigsaw06",
+  "jigsaw07",
+  "jigsaw08",
+  "jigsaw09",
+  "jigsaw10",
+];
+
+/**
+ * Piece id (1..10) -> artwork: each pointId (e.g. "jigsaw01") selects the
+ * matching jigsaw_<n>.png. Row-major: 1..5 top row, 6..10 bottom.
+ */
+const PIECE_IMAGES: Record<number, ImageMetadata> = {};
+for (const pointId of PIECE_POINT_IDS) {
+  const pieceNumber = Number(pointId.replace(/\D/g, ""));
+  PIECE_IMAGES[pieceNumber] = imageByNumber[pieceNumber];
+}
 
 /**
  * Absolute position that centres a piece image on its grid cell. The image is
