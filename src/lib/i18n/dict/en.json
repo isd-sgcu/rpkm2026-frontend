@@ -39,6 +39,11 @@
     "title": "Emergency Contact"
   },
   "home": {
+    "idCard": {
+      "welcome": "Welcome",
+      "loading": "Loading...",
+      "edit": "Edit Info"
+    },
     "calendar": {
       "title": "Calendar",
       "empty": "No activities on this day"
@@ -325,6 +330,8 @@
   },
   "qrcode": {
     "refresh": "Refresh",
+    "close": "Close",
+    "myQrTitle": "My QR Code",
     "troubleshoot": {
       "link": "Camera not working?",
       "title": "Camera Troubleshooting",

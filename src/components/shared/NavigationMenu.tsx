@@ -10,7 +10,9 @@ import {
 import { useT } from "@lib/i18n/useT";
 import { logout } from "@lib/auth/session";
 import { useProfile } from "@lib/auth/useProfile";
+import { QrCodeDialog } from "@components/shared/QrCode";
 import { Menu } from "lucide-react";
+import { useState } from "react";
 import rpkmLogo from "@assets/images/rpkm_logo.png";
 import homeIcon from "@assets/images/home.svg";
 import scanIcon from "@assets/images/scan.svg";
@@ -33,141 +35,157 @@ interface NavigationMenuProps {
 export function NavigationMenu({ showBorder }: NavigationMenuProps) {
   const profile = useProfile();
   const isStaff = profile.status === "ready" && profile.me.role === "staff";
+  const studentId = profile.status === "ready" ? profile.me.studentId : "";
   const t = useT();
+  // QR dialog is controlled here so it can survive the drawer closing.
+  const [qrOpen, setQrOpen] = useState(false);
 
   return (
-    <Drawer swipeDirection="up">
-      <DrawerTrigger
-        render={
-          <DrawerClose
-            className={cn(
-              "p-2 rounded active:bg-accent",
-              showBorder && "border border-black bg-white rounded-full",
-            )}
-          >
-            <Menu className="size-6.5 text-foreground" />
-          </DrawerClose>
-        }
-      />
-
-      <DrawerContent className="select-none">
-        <div className="sm:w-md sm:mx-auto ">
-          <DrawerHeader className="flex flex-row items-start justify-between pt-8 px-8 pr-5">
-            <img src={rpkmLogo.src} alt="rpkm logo" className="size-20" />
-            <div className="flex items-center gap-0.5">
-              <LocaleToggle />
-
-              <DrawerClose className="p-2 rounded active:bg-accent">
-                <Menu className="size-6.5 text-foreground" />
-              </DrawerClose>
-            </div>
-          </DrawerHeader>
-
-          <section className="mt-6 text-base font-bold px-4">
+    <>
+      <Drawer swipeDirection="up">
+        <DrawerTrigger
+          render={
             <DrawerClose
-              nativeButton={false}
-              render={
-                <a href="/" className={navItemClassName}>
-                  <img src={homeIcon.src} alt="" className="size-6" />
-                  <span className="pt-1">{t("nav.home")}</span>
-                </a>
-              }
-            />
+              className={cn(
+                "p-2 rounded active:bg-accent",
+                showBorder && "border border-black bg-white rounded-full",
+              )}
+            >
+              <Menu className="size-6.5 text-foreground" />
+            </DrawerClose>
+          }
+        />
 
-            {/* TODO: link? */}
-            {isStaff ? (
+        <DrawerContent className="select-none">
+          <div className="sm:w-md sm:mx-auto ">
+            <DrawerHeader className="flex flex-row items-start justify-between pt-8 px-8 pr-5">
+              <img src={rpkmLogo.src} alt="rpkm logo" className="size-20" />
+              <div className="flex items-center gap-0.5">
+                <LocaleToggle />
+
+                <DrawerClose className="p-2 rounded active:bg-accent">
+                  <Menu className="size-6.5 text-foreground" />
+                </DrawerClose>
+              </div>
+            </DrawerHeader>
+
+            <section className="mt-6 text-base font-bold px-4">
               <DrawerClose
                 nativeButton={false}
                 render={
-                  <a href="/staff/checkin" className={navItemClassName}>
-                    <img src={scanIcon.src} alt="" className="size-6" />
-                    <span className="pt-1">{t("nav.scanRegister")}</span>
+                  <a href="/" className={navItemClassName}>
+                    <img src={homeIcon.src} alt="" className="size-6" />
+                    <span className="pt-1">{t("nav.home")}</span>
                   </a>
                 }
               />
-            ) : (
-              <>
-                {/* TODO: open QR code dialog instead of a plain link */}
+
+              {/* TODO: link? */}
+              {isStaff ? (
                 <DrawerClose
                   nativeButton={false}
                   render={
-                    <a href="/#qrcode" className={navItemClassName}>
-                      <img src={qrCodeIcon.src} alt="" className="size-6" />
-                      <span className="pt-1">{t("nav.qrCode")}</span>
+                    <a href="/staff/register" className={navItemClassName}>
+                      <img src={scanIcon.src} alt="" className="size-6" />
+                      <span className="pt-1">{t("nav.scanRegister")}</span>
                     </a>
                   }
                 />
+              ) : (
+                <>
+                  <DrawerClose
+                    nativeButton={false}
+                    render={
+                      <button
+                        type="button"
+                        className={navItemClassName}
+                        onClick={() => setQrOpen(true)}
+                      >
+                        <img src={qrCodeIcon.src} alt="" className="size-6" />
+                        <span className="pt-1">{t("nav.qrCode")}</span>
+                      </button>
+                    }
+                  />
 
-                {/* TODO: link? */}
-                <DrawerClose
-                  nativeButton={false}
-                  render={
-                    <a href="/house" className={navItemClassName}>
-                      <img src={houseIcon.src} alt="" className="size-6" />
-                      <span className="pt-1">{t("nav.chooseHouse")}</span>
-                    </a>
-                  }
-                />
+                  {/* TODO: link? */}
+                  <DrawerClose
+                    nativeButton={false}
+                    render={
+                      <a href="/house" className={navItemClassName}>
+                        <img src={houseIcon.src} alt="" className="size-6" />
+                        <span className="pt-1">{t("nav.chooseHouse")}</span>
+                      </a>
+                    }
+                  />
 
-                {/* TODO: link? */}
-                <DrawerClose
-                  nativeButton={false}
-                  render={
-                    <a href="/house" className={navItemClassName}>
-                      <img src={peopleIcon.src} alt="" className="size-6" />
-                      <span className="pt-1">{t("nav.groupPairing")}</span>
-                    </a>
-                  }
-                />
+                  {/* TODO: link? */}
+                  <DrawerClose
+                    nativeButton={false}
+                    render={
+                      <a href="/house" className={navItemClassName}>
+                        <img src={peopleIcon.src} alt="" className="size-6" />
+                        <span className="pt-1">{t("nav.groupPairing")}</span>
+                      </a>
+                    }
+                  />
 
-                <DrawerClose
-                  nativeButton={false}
-                  render={
-                    <a href="/edit-profile" className={navItemClassName}>
-                      <img src={editIcon.src} alt="" className="size-6" />
-                      <span className="pt-1">{t("nav.editInfo")}</span>
-                    </a>
-                  }
-                />
-              </>
-            )}
+                  <DrawerClose
+                    nativeButton={false}
+                    render={
+                      <a href="/edit-profile" className={navItemClassName}>
+                        <img src={editIcon.src} alt="" className="size-6" />
+                        <span className="pt-1">{t("nav.editInfo")}</span>
+                      </a>
+                    }
+                  />
+                </>
+              )}
 
-            <DrawerClose
-              nativeButton={false}
-              render={
-                <a href="/#rpkm-calendar" className={navItemClassName}>
-                  <img src={calendarIcon.src} alt="" className="size-6" />
-                  <span className="pt-1">{t("nav.calendar")}</span>
-                </a>
-              }
-            />
+              <DrawerClose
+                nativeButton={false}
+                render={
+                  <a href="/#rpkm-calendar" className={navItemClassName}>
+                    <img src={calendarIcon.src} alt="" className="size-6" />
+                    <span className="pt-1">{t("nav.calendar")}</span>
+                  </a>
+                }
+              />
 
-            <DrawerClose
-              nativeButton={false}
-              render={
-                <a href="/emergency" className={navItemClassName}>
-                  <img src={emergencyIcon.src} alt="" className="size-6" />
-                  <span className="pt-1">{t("emergency.title")}</span>
-                </a>
-              }
-            />
-          </section>
+              <DrawerClose
+                nativeButton={false}
+                render={
+                  <a href="/emergency" className={navItemClassName}>
+                    <img src={emergencyIcon.src} alt="" className="size-6" />
+                    <span className="pt-1">{t("emergency.title")}</span>
+                  </a>
+                }
+              />
+            </section>
 
-          <div className="flex items-center justify-center w-full pt-6 pb-8">
-            <Button
-              size="lg"
-              className="text-lg px-6 py-3"
-              onClick={() =>
-                logout().then(() => {
-                  window.location.href = "/landing";
-                })
-              }
-            >
-              {t("nav.logout")}
-            </Button>
+            <div className="flex items-center justify-center w-full pt-6 pb-8">
+              <Button
+                size="lg"
+                className="text-lg px-6 py-3"
+                onClick={() =>
+                  logout().then(() => {
+                    window.location.href = "/landing";
+                  })
+                }
+              >
+                {t("nav.logout")}
+              </Button>
+            </div>
           </div>
-        </div>
-      </DrawerContent>
-    </Drawer>
+        </DrawerContent>
+      </Drawer>
+
+      {studentId && (
+        <QrCodeDialog
+          contents={studentId}
+          open={qrOpen}
+          onOpenChange={setQrOpen}
+        />
+      )}
+    </>
   );
 }
