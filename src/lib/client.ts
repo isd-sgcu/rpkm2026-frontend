@@ -1,4 +1,13 @@
+import { treaty } from "@elysia/eden";
+
+import type { App } from "@lib/backend";
 import { appConfig } from "@lib/env";
+
+export const eden = treaty<App>(appConfig.apiBaseUrl, {
+  fetch: {
+    credentials: "include",
+  },
+});
 
 export class APIError extends Error {
   constructor(
