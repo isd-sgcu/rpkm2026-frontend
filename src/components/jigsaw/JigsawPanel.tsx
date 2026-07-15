@@ -5,11 +5,12 @@ import { RotateCcw } from "lucide-react";
 import { JigsawBoard } from "./JigsawBoard";
 import { JigsawProgress } from "./JigsawProgress";
 import { JigsawRewardDialog } from "./JigsawRewardDialog";
+import { JigsawScanFailedDialog } from "./JigsawScanFailedDialog";
 import {
   $foundPieces,
   resetPieces,
   syncStoredPieces,
-  takePendingReward,
+  takePendingScan,
   // TOTAL_PIECES,
 } from "./jigsawState";
 
@@ -23,15 +24,20 @@ export function JigsawPanel() {
   const found = useStore($foundPieces);
   // const isComplete = found.length >= TOTAL_PIECES;
   const [rewardAt, setRewardAt] = useState<Date | null>(null);
+  const [scanFailed, setScanFailed] = useState(false);
 
   useEffect(() => {
     syncStoredPieces();
-    // If we just arrived from a successful scan, show the reward pop-up. This
-    // reads client-only navigation state, so it must happen after mount (not in
-    // a render-time initializer) to keep the SSR'd markup and hydration in sync.
-    const pending = takePendingReward();
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-mount read of a client-only reward handoff
-    if (pending) setRewardAt(new Date(pending.receivedAt));
+    // If we just arrived from a scan, show the matching pop-up. This reads
+    // client-only navigation state, so it must happen after mount (not in a
+    // render-time initializer) to keep the SSR'd markup and hydration in sync.
+    const pending = takePendingScan();
+    if (pending?.status === "success") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-mount read of a client-only scan handoff
+      setRewardAt(new Date(pending.receivedAt));
+    } else if (pending?.status === "fail") {
+      setScanFailed(true);
+    }
   }, []);
 
   return (
@@ -57,6 +63,8 @@ export function JigsawPanel() {
         }}
         receivedAt={rewardAt}
       />
+
+      <JigsawScanFailedDialog open={scanFailed} onOpenChange={setScanFailed} />
     </div>
   );
 }

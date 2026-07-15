@@ -65,40 +65,53 @@ export function resetPieces() {
   persist([]);
 }
 
-const PENDING_REWARD_KEY = "jigsaw-pending-reward";
-
-export interface PendingReward {
-  pieceId: PieceId;
-  /** ISO timestamp of when the piece was collected. */
-  receivedAt: string;
-}
+const PENDING_SCAN_KEY = "jigsaw-pending-scan";
 
 /**
- * Remember a freshly-scanned piece so the jigsaw page can show its reward
- * pop-up once the scan flow navigates there. Uses sessionStorage so it survives
- * the redirect but not a fresh visit.
+ * Outcome of a scan, handed from the scan page to the jigsaw page so the latter
+ * can show the matching pop-up after the redirect.
  */
-export function setPendingReward(reward: PendingReward) {
+export type PendingScan =
+  | {
+      status: "success";
+      pieceId: PieceId;
+      /** ISO timestamp of when the piece was collected. */
+      receivedAt: string;
+    }
+  | { status: "fail" };
+
+/**
+ * Remember the result of a scan so the jigsaw page can show its pop-up once the
+ * scan flow navigates there. Uses sessionStorage so it survives the redirect
+ * but not a fresh visit.
+ */
+export function setPendingScan(scan: PendingScan) {
   if (typeof window === "undefined") return;
-  sessionStorage.setItem(PENDING_REWARD_KEY, JSON.stringify(reward));
+  sessionStorage.setItem(PENDING_SCAN_KEY, JSON.stringify(scan));
 }
 
 /**
- * Read and clear the pending reward. Returns null when there is none or the
- * stored value is malformed.
+ * Read and clear the pending scan result. Returns null when there is none or
+ * the stored value is malformed.
  */
-export function takePendingReward(): PendingReward | null {
+export function takePendingScan(): PendingScan | null {
   if (typeof window === "undefined") return null;
-  const raw = sessionStorage.getItem(PENDING_REWARD_KEY);
+  const raw = sessionStorage.getItem(PENDING_SCAN_KEY);
   if (!raw) return null;
-  sessionStorage.removeItem(PENDING_REWARD_KEY);
+  sessionStorage.removeItem(PENDING_SCAN_KEY);
   try {
-    const parsed = JSON.parse(raw) as Partial<PendingReward>;
+    const parsed = JSON.parse(raw) as PendingScan;
+    if (parsed?.status === "fail") return { status: "fail" };
     if (
-      typeof parsed?.pieceId === "number" &&
-      typeof parsed?.receivedAt === "string"
+      parsed?.status === "success" &&
+      typeof parsed.pieceId === "number" &&
+      typeof parsed.receivedAt === "string"
     ) {
-      return { pieceId: parsed.pieceId, receivedAt: parsed.receivedAt };
+      return {
+        status: "success",
+        pieceId: parsed.pieceId,
+        receivedAt: parsed.receivedAt,
+      };
     }
   } catch {
     // fall through to null
