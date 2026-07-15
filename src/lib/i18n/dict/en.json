@@ -162,7 +162,8 @@
   "myfreshystory": {
     "header": {
       "description": "Record your best moments from RPKM via Reels or TikTok, and win prizes by using our hashtags.",
-      "date": "20 July - 3 August"
+      "date": "22 July - 3 August",
+      "caution": "Exclusive to freshmen only (CU110)"
     },
     "igstory": {
       "description": "Share your Chula Jigsaw or Chula QR Quest hunt moments using the 'Add Yours' sticker on Instagram Stories.",
@@ -174,10 +175,12 @@
     },
     "reelstiktok": {
       "description": "Create a video (under 1 minute) sharing your RPKM experience, while incorporating at least 1 SDG goal.",
-      "activity": "Participate in at least one activity",
+      "activity": "Join at least one activity",
       "rules": {
         "title": "Rules",
-        "description": "Post a public video less than 1 minute long, with these hashtags."
+        "length": "Video must be under 1 minute",
+        "public": "Video must be public",
+        "hashtag": "Video must be tagged"
       }
     },
     "staff": {

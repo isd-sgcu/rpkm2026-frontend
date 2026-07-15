@@ -1,5 +1,5 @@
 import { useT } from "@lib/i18n/useT";
-import { CalendarDaysIcon } from "lucide-react";
+import { CalendarDaysIcon, CircleAlertIcon } from "lucide-react";
 
 export default function MyFreshyStory() {
   const t = useT();
@@ -10,10 +10,14 @@ export default function MyFreshyStory() {
       <p className="font-bold text-lg mt-4 mb-2">
         {t("myfreshystory.header.description")}
       </p>
-      <section>
-        <p className="font-bold flex items-center gap-1">
+      <section className="*:font-bold *:flex *:items-center *:gap-1">
+        <p>
           <CalendarDaysIcon />
           {t("myfreshystory.header.date")}
+        </p>
+        <p>
+          <CircleAlertIcon />
+          {t("myfreshystory.header.caution")}
         </p>
       </section>
     </header>

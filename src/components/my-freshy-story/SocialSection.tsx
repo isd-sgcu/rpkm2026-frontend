@@ -5,15 +5,29 @@ import { getImageUrl } from "@lib/function";
 import ListChip from "./ListChip";
 export default function SocialSection() {
   const t = useT();
-  const InstagramIconUrl = getImageUrl("@assets/images/Instagram.svg");
-  const TikTokIconUrl = getImageUrl("@assets/images/TikTok.svg");
+  const InstagramIconUrl = getImageUrl("Instagram.svg");
+  const TikTokIconUrl = getImageUrl("TikTok.svg");
 
   return (
     <MonotoneNoiseContainer className="grow bg-rpkm-red border rounded-t-4xl flex flex-col p-4 gap-4 mt-6">
       <MonotoneNoiseContainer className="bg-rpkm-beige border rounded-4xl flex flex-col p-4">
-        <h2 className="text-xl font-bold flex items-baseline gap-2">
-          IG Story – Add Yours <img alt="" src={InstagramIconUrl} />
-        </h2>
+        <div>
+          <a
+            href="https://www.instagram.com/rubpuenkaomai2026"
+            target="_blank"
+            rel="noreferrer"
+            className="text-xl font-bold flex items-center gap-2 w-fit"
+          >
+            IG Story – Add Yours{" "}
+            <img
+              className="-translate-0.5"
+              width={24}
+              alt=""
+              src={InstagramIconUrl}
+            />
+          </a>
+          <p className="text-sm">instagram : rubpuenkaomai2026</p>
+        </div>
         <p className="mt-2">{t("myfreshystory.header.description")}</p>
         <div className="flex items-center gap-1 my-4">
           <GiftIcon color="#E65325" className="inline" />{" "}
@@ -21,40 +35,50 @@ export default function SocialSection() {
         </div>
         <div>
           <p className="font-bold">{t("myfreshystory.igstory.howto")}</p>
-          <div className="flex flex-col gap-2 pt-3 w-full text-center">
-            <ListChip>{t("myfreshystory.igstory.finish")}</ListChip>
-            <ListChip>{t("myfreshystory.igstory.share")}</ListChip>
-            <ListChip>{t("myfreshystory.igstory.announce")}</ListChip>
-          </div>
+          <ul className="pl-4 pt-2 list-disc">
+            <li>{t("myfreshystory.igstory.finish")}</li>
+            <li>{t("myfreshystory.igstory.share")}</li>
+            <li>{t("myfreshystory.igstory.announce")}</li>
+          </ul>
         </div>
       </MonotoneNoiseContainer>
       <MonotoneNoiseContainer className="bg-rpkm-beige border rounded-4xl flex flex-col p-4">
-        <h2 className="text-xl font-bold flex items-baseline gap-2">
-          Reels / TikTok <img alt="" src={TikTokIconUrl} />
+        <h2 className="text-xl font-bold flex items-center gap-2">
+          Reels / TikTok{" "}
+          <img
+            className="-translate-y-1"
+            width={24}
+            alt=""
+            src={TikTokIconUrl}
+          />
         </h2>
         <p className="mt-2">{t("myfreshystory.reelstiktok.description")}</p>
-        <div className="my-2">
-          <p className="font-bold mb-1">
-            {t("myfreshystory.reelstiktok.activity")}
-          </p>
-          <div className="flex flex-wrap justify-center gap-1 text-sm">
-            <ListChip>Chula Jigsaw Journey</ListChip>
-            <ListChip>Chula QR Quest</ListChip>
-            <ListChip>Field Trip</ListChip>
+        <div className="flex flex-wrap gap-4 my-4 text-sm">
+          <div className="min-w-1/2">
+            <p className="font-bold">
+              {t("myfreshystory.reelstiktok.activity")}
+            </p>
+            <ul className="pl-4 list-disc">
+              <li>Chula Jigsaw Journey</li>
+              <li>Chula QR Quest</li>
+              <li>Field Trip</li>
+            </ul>
+          </div>
+          <div className="w-max">
+            <p className="font-bold">
+              {t("myfreshystory.reelstiktok.rules.title")}
+            </p>
+            <ul className="pl-4 list-disc">
+              <li>{t("myfreshystory.reelstiktok.rules.length")}</li>
+              <li>{t("myfreshystory.reelstiktok.rules.public")}</li>
+              <li>{t("myfreshystory.reelstiktok.rules.hashtag")}</li>
+            </ul>
           </div>
         </div>
-        <div className="mt-2">
-          <p className="font-bold">
-            {t("myfreshystory.reelstiktok.rules.title")}
-          </p>
-          <p className="mb-2">
-            {t("myfreshystory.reelstiktok.rules.description")}
-          </p>
-          <div className="flex flex-wrap gap-2 w-full text-sm text-center">
-            <ListChip>#jigsawjourneyxrubpuenkaomai2026</ListChip>
-            <ListChip>#CSRxrubpuenkaomai2026</ListChip>
-            <ListChip>#CSRxmyfreshystory</ListChip>
-          </div>
+        <div className="flex flex-wrap justify-center gap-2 w-full text-sm text-center">
+          <ListChip>#jigsawjourneyxrubpuenkaomai2026</ListChip>
+          <ListChip>#CSRxrubpuenkaomai2026</ListChip>
+          <ListChip>#CSRxmyfreshystory</ListChip>
         </div>
       </MonotoneNoiseContainer>
     </MonotoneNoiseContainer>
