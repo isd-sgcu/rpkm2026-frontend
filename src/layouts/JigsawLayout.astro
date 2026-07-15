@@ -1,0 +1,65 @@
+---
+import { NavigationMenu } from "@components/shared/NavigationMenu";
+import Image from "astro/components/Image.astro";
+import header1 from "../assets/images/jigsaw_header_1.svg";
+import header2 from "../assets/images/jigsaw_header_2.svg";
+import { ChevronLeft } from "lucide-react";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  navigateBack?: string;
+  showMenu?: boolean;
+  showMenuBorder?: boolean;
+}
+
+const {
+  navigateBack = "",
+  showMenu = true,
+  showMenuBorder = false,
+  ...rest
+} = Astro.props;
+---
+
+<div class:list={["relative w-full min-w-0 min-h-200"]} {...rest}>
+  {
+    /* Header: the ribbon banner (header 1) with the decorative flourishes
+      (header 2) layered in front, centred over it. */
+  }
+  <div class="absolute left-0 right-0 top-0 grid place-items-center">
+    <div class="relative w-full">
+      <Image src={header1} alt="rpkm jigsaw header" class="w-full" />
+      <Image
+        src={header2}
+        alt=""
+        class="absolute left-1/2 top-1/2 w-[90.33%] -translate-x-1/2 -translate-y-1/2"
+      />
+    </div>
+  </div>
+
+  {
+    navigateBack && (
+      <div class="absolute left-4 top-[4.5cqw] sm:top-4.5 h-10 flex items-center z-10">
+        <a
+          href={navigateBack}
+          class="size-10 rounded-full bg-white border border-black grid place-items-center"
+        >
+          <ChevronLeft className="size-6.5 text-foreground" />
+        </a>
+      </div>
+    )
+  }
+
+  {
+    showMenu && (
+      <div class="absolute right-4 top-[2.5cqw] sm:top-2.5 z-10 flex items-center">
+        <NavigationMenu showBorder={showMenuBorder} client:load />
+      </div>
+    )
+  }
+
+  <div
+    class:list={["relative flex flex-col px-[1.25em] pt-[24cqw] pb-8 sm:pt-24"]}
+  >
+    <slot />
+  </div>
+</div>
