@@ -3,6 +3,10 @@ import { useStore } from "@nanostores/react";
 import { ScanLine, CircleAlert, LogIn } from "lucide-react";
 
 import { Button } from "@components/ui/button";
+import { Toaster } from "@components/ui/sonner";
+import { CameraTroubleshoot } from "@components/shared/CameraTroubleshootDialog";
+import { MonotoneNoise } from "@components/shared/MonotoneNoise";
+import { QrScanner } from "@components/shared/QrCodeScanner";
 import {
   $foundPieces,
   markPieceFound,
@@ -12,12 +16,13 @@ import {
 } from "./jigsawState";
 
 /**
- * Scan page panel. Real QR scanning is not wired up yet, so these buttons are
- * placeholder tests for the scan outcomes: a success awards the next uncollected
- * piece; a login-required scan finds a piece but defers saving it until the user
- * logs in; a failure awards nothing. Each records the result and navigates to
- * the jigsaw page, which shows the matching pop-up on arrival.
- * TODO: replace the simulated scans with the result of a real QR scan.
+ * Scan page panel. Shows the live QR scanner; a successful scan just logs its
+ * contents for now (the collection flow isn't wired to it yet). The buttons
+ * below are placeholder tests for the scan outcomes: a success awards the next
+ * uncollected piece; a login-required scan finds a piece but defers saving it
+ * until the user logs in; a failure awards nothing. Each records the result and
+ * navigates to the jigsaw page, which shows the matching pop-up on arrival.
+ * TODO: route the real QR scan result into the collection flow.
  */
 export function JigsawScanPanel() {
   const found = useStore($foundPieces);
@@ -27,6 +32,11 @@ export function JigsawScanPanel() {
   }, []);
 
   const allFound = found.length >= TOTAL_PIECES;
+
+  function handleQrScan(code: string) {
+    // No collection flow yet — just surface the scanned contents.
+    console.log("Jigsaw QR scanned:", code);
+  }
 
   function handleScanSuccess() {
     const nextPiece = Array.from(
@@ -70,6 +80,17 @@ export function JigsawScanPanel() {
 
   return (
     <div className="flex w-full max-w-sm flex-col items-center gap-4">
+      {/* Live QR scanner (replicated from the staff ScanEntryForm). */}
+      <div className="relative isolate w-full overflow-hidden rounded-[1.8rem] border border-black bg-rpkm-light-green p-4">
+        <MonotoneNoise
+          noiseSize={4}
+          noiseDensity={12}
+          className="pointer-events-none absolute inset-0 -z-1"
+        />
+        <QrScanner className="rounded-2xl" onScan={handleQrScan} />
+      </div>
+      <CameraTroubleshoot className="-mt-1 text-foreground" />
+
       <Button
         variant="green"
         size="xl"
@@ -98,6 +119,8 @@ export function JigsawScanPanel() {
       >
         จำลองสแกนไม่สำเร็จ
       </Button>
+
+      <Toaster />
     </div>
   );
 }
