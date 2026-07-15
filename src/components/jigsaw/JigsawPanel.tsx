@@ -4,8 +4,10 @@ import { RotateCcw } from "lucide-react";
 
 import { JigsawBoard } from "./JigsawBoard";
 import { JigsawProgress } from "./JigsawProgress";
-import { JigsawRewardDialog } from "./JigsawRewardDialog";
-import { JigsawScanFailedDialog } from "./JigsawScanFailedDialog";
+import {
+  JigsawScanResultDialog,
+  type JigsawScanResult,
+} from "./JigsawScanResultDialog";
 import {
   $foundPieces,
   resetPieces,
@@ -23,8 +25,7 @@ import {
 export function JigsawPanel() {
   const found = useStore($foundPieces);
   // const isComplete = found.length >= TOTAL_PIECES;
-  const [rewardAt, setRewardAt] = useState<Date | null>(null);
-  const [scanFailed, setScanFailed] = useState(false);
+  const [scanResult, setScanResult] = useState<JigsawScanResult | null>(null);
 
   useEffect(() => {
     syncStoredPieces();
@@ -34,9 +35,12 @@ export function JigsawPanel() {
     const pending = takePendingScan();
     if (pending?.status === "success") {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-mount read of a client-only scan handoff
-      setRewardAt(new Date(pending.receivedAt));
+      setScanResult({
+        status: "success",
+        receivedAt: new Date(pending.receivedAt),
+      });
     } else if (pending?.status === "fail") {
-      setScanFailed(true);
+      setScanResult({ status: "fail" });
     }
   }, []);
 
@@ -56,15 +60,13 @@ export function JigsawPanel() {
         </button>
       )}
 
-      <JigsawRewardDialog
-        open={rewardAt !== null}
+      <JigsawScanResultDialog
+        open={scanResult !== null}
         onOpenChange={(open) => {
-          if (!open) setRewardAt(null);
+          if (!open) setScanResult(null);
         }}
-        receivedAt={rewardAt}
+        result={scanResult}
       />
-
-      <JigsawScanFailedDialog open={scanFailed} onOpenChange={setScanFailed} />
     </div>
   );
 }
