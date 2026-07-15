@@ -78,6 +78,12 @@ export type PendingScan =
       /** ISO timestamp of when the piece was collected. */
       receivedAt: string;
     }
+  | {
+      // The scan found a piece, but the user must log in before it can be saved.
+      status: "login-required";
+      pieceId: PieceId;
+      receivedAt: string;
+    }
   | { status: "fail" };
 
 /**
@@ -103,15 +109,53 @@ export function takePendingScan(): PendingScan | null {
     const parsed = JSON.parse(raw) as PendingScan;
     if (parsed?.status === "fail") return { status: "fail" };
     if (
-      parsed?.status === "success" &&
+      (parsed?.status === "success" || parsed?.status === "login-required") &&
       typeof parsed.pieceId === "number" &&
       typeof parsed.receivedAt === "string"
     ) {
       return {
-        status: "success",
+        status: parsed.status,
         pieceId: parsed.pieceId,
         receivedAt: parsed.receivedAt,
       };
+    }
+  } catch {
+    // fall through to null
+  }
+  return null;
+}
+
+const PENDING_CLAIM_KEY = "jigsaw-pending-claim";
+
+export interface PendingClaim {
+  pieceId: PieceId;
+  receivedAt: string;
+}
+
+/**
+ * Remember a piece the user found but could not yet save because they needed to
+ * log in. Uses localStorage (not sessionStorage) so it survives the round-trip
+ * out to the Google login page and back. The jigsaw page awards it once the
+ * user is authenticated.
+ */
+export function setPendingClaim(claim: PendingClaim) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(PENDING_CLAIM_KEY, JSON.stringify(claim));
+}
+
+/** Read and clear the pending claim. Returns null when there is none or it is malformed. */
+export function takePendingClaim(): PendingClaim | null {
+  if (typeof window === "undefined") return null;
+  const raw = localStorage.getItem(PENDING_CLAIM_KEY);
+  if (!raw) return null;
+  localStorage.removeItem(PENDING_CLAIM_KEY);
+  try {
+    const parsed = JSON.parse(raw) as Partial<PendingClaim>;
+    if (
+      typeof parsed?.pieceId === "number" &&
+      typeof parsed?.receivedAt === "string"
+    ) {
+      return { pieceId: parsed.pieceId, receivedAt: parsed.receivedAt };
     }
   } catch {
     // fall through to null

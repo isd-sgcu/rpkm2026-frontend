@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useStore } from "@nanostores/react";
 import { RotateCcw } from "lucide-react";
 
+import { useSession } from "@lib/auth/useSession";
 import { JigsawBoard } from "./JigsawBoard";
 import { JigsawProgress } from "./JigsawProgress";
 import {
@@ -10,8 +11,10 @@ import {
 } from "./JigsawScanResultDialog";
 import {
   $foundPieces,
+  markPieceFound,
   resetPieces,
   syncStoredPieces,
+  takePendingClaim,
   takePendingScan,
   // TOTAL_PIECES,
 } from "./jigsawState";
@@ -26,6 +29,7 @@ export function JigsawPanel() {
   const found = useStore($foundPieces);
   // const isComplete = found.length >= TOTAL_PIECES;
   const [scanResult, setScanResult] = useState<JigsawScanResult | null>(null);
+  const session = useSession();
 
   useEffect(() => {
     syncStoredPieces();
@@ -39,10 +43,31 @@ export function JigsawPanel() {
         status: "success",
         receivedAt: new Date(pending.receivedAt),
       });
+    } else if (pending?.status === "login-required") {
+      setScanResult({
+        status: "login-required",
+        pieceId: pending.pieceId,
+        receivedAt: new Date(pending.receivedAt),
+      });
     } else if (pending?.status === "fail") {
       setScanResult({ status: "fail" });
     }
   }, []);
+
+  // After returning from login, save the piece the user found beforehand and
+  // show its reward pop-up.
+  useEffect(() => {
+    if (session.status !== "authenticated") return;
+    const claim = takePendingClaim();
+    if (!claim) return;
+    markPieceFound(claim.pieceId);
+    // TODO: also persist the collected piece to the backend once a jigsaw API exists.
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-login award of a client-only claim
+    setScanResult({
+      status: "success",
+      receivedAt: new Date(claim.receivedAt),
+    });
+  }, [session.status]);
 
   return (
     <div className="flex w-full flex-col gap-6">

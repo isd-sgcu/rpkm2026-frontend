@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useStore } from "@nanostores/react";
-import { ScanLine, CircleAlert } from "lucide-react";
+import { ScanLine, CircleAlert, LogIn } from "lucide-react";
 
 import { Button } from "@components/ui/button";
 import {
@@ -13,9 +13,10 @@ import {
 
 /**
  * Scan page panel. Real QR scanning is not wired up yet, so these buttons are
- * placeholder tests for the two scan outcomes: a success awards the next
- * uncollected piece, a failure awards nothing. Either way we record the result
- * and navigate to the jigsaw page, which shows the matching pop-up on arrival.
+ * placeholder tests for the scan outcomes: a success awards the next uncollected
+ * piece; a login-required scan finds a piece but defers saving it until the user
+ * logs in; a failure awards nothing. Each records the result and navigates to
+ * the jigsaw page, which shows the matching pop-up on arrival.
  * TODO: replace the simulated scans with the result of a real QR scan.
  */
 export function JigsawScanPanel() {
@@ -44,6 +45,23 @@ export function JigsawScanPanel() {
     window.location.href = "/jigsaw";
   }
 
+  function handleScanLoginRequired() {
+    const nextPiece = Array.from(
+      { length: TOTAL_PIECES },
+      (_, i) => i + 1,
+    ).find((id) => !found.includes(id));
+    if (nextPiece === undefined) return;
+
+    // Do not award yet — the piece is saved only after the user logs in.
+    setPendingScan({
+      status: "login-required",
+      pieceId: nextPiece,
+      receivedAt: new Date().toISOString(),
+    });
+    // Redirect to the jigsaw page, which shows the login-required pop-up.
+    window.location.href = "/jigsaw";
+  }
+
   function handleScanFail() {
     setPendingScan({ status: "fail" });
     // Redirect to the jigsaw page, which shows the failure pop-up on arrival.
@@ -60,6 +78,16 @@ export function JigsawScanPanel() {
         iconStart={<ScanLine />}
       >
         {allFound ? "เก็บครบทุกชิ้นแล้ว" : "สแกนเพื่อรับชิ้นส่วน (จำลอง)"}
+      </Button>
+
+      <Button
+        variant="outline"
+        size="xl"
+        onClick={handleScanLoginRequired}
+        disabled={allFound}
+        iconStart={<LogIn />}
+      >
+        จำลองสแกน (ต้องเข้าสู่ระบบ)
       </Button>
 
       <Button

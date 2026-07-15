@@ -1,6 +1,8 @@
-import { CircleAlert } from "lucide-react";
+import { useEffect, useState } from "react";
+import { CircleAlert, Loader2 } from "lucide-react";
 
 import { cn } from "@lib/utils";
+import { signInWithGoogle } from "@lib/api/auth";
 import { Button } from "@components/ui/button";
 import {
   Dialog,
@@ -11,6 +13,7 @@ import {
 
 import { JigsawProgress } from "./JigsawProgress";
 import { JigsawPiecePlaceholder } from "./JigsawPiecePlaceholder";
+import { setPendingClaim, type PieceId } from "./jigsawState";
 
 /** Red used for the failure alert header and its confirm button. */
 const FAIL_RED = "#d64541";
@@ -70,9 +73,14 @@ function Flower({
   );
 }
 
-/** Outcome shown by the dialog: a collected piece, or a failed scan. */
+/**
+ * Outcome shown by the dialog: a collected piece, a piece that needs login
+ * before it can be saved, or a failed scan.
+ */
 export type JigsawScanResult =
-  { status: "success"; receivedAt: Date } | { status: "fail" };
+  | { status: "success"; receivedAt: Date }
+  | { status: "login-required"; pieceId: PieceId; receivedAt: Date }
+  | { status: "fail" };
 
 interface JigsawScanResultDialogProps {
   open: boolean;
@@ -91,14 +99,49 @@ export function JigsawScanResultDialog({
   onOpenChange,
   result,
 }: JigsawScanResultDialogProps) {
-  const isFail = result?.status === "fail";
+  const [isSigningIn, setIsSigningIn] = useState(false);
+
+  // Redirecting to Google navigates away; if the browser restores this page
+  // from the bfcache (e.g. the user hits back), reset so the button is usable.
+  useEffect(() => {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) setIsSigningIn(false);
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, []);
+
+  async function handleLogin() {
+    if (result?.status !== "login-required") return;
+    // Remember the found piece so the jigsaw page can save it after login.
+    setPendingClaim({
+      pieceId: result.pieceId,
+      receivedAt: result.receivedAt.toISOString(),
+    });
+    setIsSigningIn(true);
+    try {
+      const { url } = await signInWithGoogle(
+        `${window.location.origin}/jigsaw`,
+      );
+      window.location.href = url;
+    } catch {
+      setIsSigningIn(false);
+    }
+  }
+
+  const sizeClass =
+    result?.status === "fail"
+      ? "h-[222px] overflow-hidden p-0"
+      : result?.status === "login-required"
+        ? "h-[423px] overflow-hidden p-0"
+        : "h-[423px]";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={cn(
           "w-[330px] max-w-[330px] rounded-2xl border border-black",
-          isFail ? "h-[222px] overflow-hidden p-0" : "h-[423px]",
+          sizeClass,
         )}
         showCloseButton={false}
       >
@@ -137,6 +180,35 @@ export function JigsawScanResultDialog({
             >
               ตกลง
             </Button>
+          </div>
+        )}
+
+        {result?.status === "login-required" && (
+          <div className="relative h-full text-center">
+            <DialogTitle className="absolute inset-x-0 top-[85px] px-6 text-2xl leading-snug font-bold">
+              โปรดล็อกอิน / ลงทะเบียน
+              <br />
+              เพื่อเก็บสแตมป์นี้…
+            </DialogTitle>
+            <DialogDescription className="sr-only">
+              เข้าสู่ระบบเพื่อบันทึกชิ้นส่วนจิกซอร์ที่คุณเพิ่งพบ
+            </DialogDescription>
+
+            <Button
+              variant="default"
+              className="absolute top-[175px] left-1/2 -translate-x-1/2 rounded-r-lg px-[16px]"
+              disabled={isSigningIn}
+              onClick={handleLogin}
+              iconStart={
+                isSigningIn ? <Loader2 className="animate-spin" /> : undefined
+              }
+            >
+              เข้าสู่ระบบ / ลงทะเบียน
+            </Button>
+
+            {/* Green hill: an ellipse wider than the card so its top edge reads
+                as a gentle curve; the sides are clipped by the card. */}
+            <div className="pointer-events-none absolute top-[270px] left-1/2 h-[192px] w-[471px] -translate-x-1/2 rounded-[50%] bg-rpkm-green" />
           </div>
         )}
 
