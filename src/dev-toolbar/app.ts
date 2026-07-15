@@ -1,6 +1,16 @@
 import { defineToolbarApp } from "astro/toolbar";
+import events from "../components/walkrally/events/events.json";
 
 const API_BASE = import.meta.env.PUBLIC_API_BASE_URL || "http://localhost:3000";
+
+// Seed the walk-rally activities with the codes this frontend actually sends
+// (events.json ids) instead of the backend's placeholder defaults, so staff
+// attendance scans don't hit INVALID_ACTIVITY.
+const SEED_ACTIVITIES = [
+  ...events.workshop.map((entry) => ({ code: entry.id, kind: "workshop" })),
+  ...events.walkingTour.map((entry) => ({ code: entry.id, kind: "museum" })),
+  ...events.minigame.map((entry) => ({ code: entry.id, kind: "minigame" })),
+];
 
 type DevRegistration = {
   project: string;
@@ -411,7 +421,11 @@ export default defineToolbarApp({
       run(async () => {
         const result = await devFetch<{
           data: { houses: number; activities: number; checkpoints: number };
-        }>("/seed", { method: "POST", key: devKey, body: {} });
+        }>("/seed", {
+          method: "POST",
+          key: devKey,
+          body: { activities: SEED_ACTIVITIES },
+        });
         const { houses, activities, checkpoints } = result.data;
         status = `Seeded: ${houses} houses, ${activities} activities, ${checkpoints} checkpoints.`;
       });
