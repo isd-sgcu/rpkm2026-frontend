@@ -198,7 +198,7 @@ export function JigsawBoard() {
               <p className="text-[12px] leading-tight font-bold text-black">
                 {pieceName(pieceId)}
               </p>
-              <p className="text-[10px] leading-tight text-gray-600">
+              <p className="text-[12px] leading-tight text-gray-600">
                 {collected ?? "ได้รับแล้ว"}
               </p>
             </div>
