@@ -60,7 +60,7 @@ export function JigsawPanel() {
     if (session.status !== "authenticated") return;
     const claim = takePendingClaim();
     if (!claim) return;
-    markPieceFound(claim.pieceId);
+    markPieceFound(claim.pieceId, claim.receivedAt);
     // TODO: also persist the collected piece to the backend once a jigsaw API exists.
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-login award of a client-only claim
     setScanResult({

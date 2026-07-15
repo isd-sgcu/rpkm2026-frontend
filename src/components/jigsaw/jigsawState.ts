@@ -7,6 +7,7 @@ export const TOTAL_PIECES = 10;
 export type PieceId = number;
 
 const STORAGE_KEY = "jigsaw-found-pieces";
+const TIMES_KEY = "jigsaw-collected-at";
 
 function readStoredPieces(): PieceId[] {
   if (typeof window === "undefined") return [];
@@ -26,12 +27,47 @@ function readStoredPieces(): PieceId[] {
   }
 }
 
+function readStoredTimes(): Record<PieceId, string> {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = localStorage.getItem(TIMES_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as unknown;
+    if (!parsed || typeof parsed !== "object") return {};
+    const out: Record<PieceId, string> = {};
+    for (const [key, value] of Object.entries(
+      parsed as Record<string, unknown>,
+    )) {
+      const id = Number(key);
+      if (
+        Number.isInteger(id) &&
+        id >= 1 &&
+        id <= TOTAL_PIECES &&
+        typeof value === "string"
+      ) {
+        out[id] = value;
+      }
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
 /** Ids of the pieces the user has already found, sorted ascending. */
 export const $foundPieces = atom<PieceId[]>([]);
+
+/** ISO timestamp of when each found piece was collected, keyed by piece id. */
+export const $collectedAt = atom<Record<PieceId, string>>({});
 
 function persist(pieces: PieceId[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(pieces));
+}
+
+function persistTimes(times: Record<PieceId, string>) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(TIMES_KEY, JSON.stringify(times));
 }
 
 /** Load persisted progress into the store (call once on mount). */
@@ -44,25 +80,36 @@ export function syncStoredPieces() {
   ) {
     $foundPieces.set(stored);
   }
+  $collectedAt.set(readStoredTimes());
 }
 
 /**
  * Mark a piece as found. Called after the user successfully scans the QR code
  * for that specific piece. No-op if the id is out of range or already found.
+ * `collectedAt` (ISO string) records when it was obtained; defaults to now.
  */
-export function markPieceFound(id: PieceId) {
+export function markPieceFound(
+  id: PieceId,
+  collectedAt: string = new Date().toISOString(),
+) {
   if (id < 1 || id > TOTAL_PIECES) return;
   const current = $foundPieces.get();
   if (current.includes(id)) return;
   const next = [...current, id].sort((a, b) => a - b);
   $foundPieces.set(next);
   persist(next);
+
+  const times = { ...$collectedAt.get(), [id]: collectedAt };
+  $collectedAt.set(times);
+  persistTimes(times);
 }
 
 /** Clear all collected pieces (useful for testing the flow). */
 export function resetPieces() {
   $foundPieces.set([]);
   persist([]);
+  $collectedAt.set({});
+  persistTimes({});
 }
 
 const PENDING_SCAN_KEY = "jigsaw-pending-scan";
