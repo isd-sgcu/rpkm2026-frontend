@@ -1,5 +1,6 @@
 ---
 import { NavigationMenu } from "@components/shared/NavigationMenu";
+import { DevBanner } from "@components/dev/DevBanner";
 import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 import Image from "astro/components/Image.astro";
 import leafCluster from "../assets/images/artboard_34.svg";
@@ -195,4 +196,6 @@ const {
       <slot />
     </div>
   </div>
+
+  <DevBanner client:load />
 </div>
