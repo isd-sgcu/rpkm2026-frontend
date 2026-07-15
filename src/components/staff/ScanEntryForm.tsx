@@ -36,10 +36,31 @@ export interface ScanEntryLabels {
   retry: string;
 }
 
+// Dialog content for one submission. onSubmit may return it to override the
+// default success labels (e.g. show the scanned student id, or the
+// already-checked-in title).
+export interface ScanEntryResult {
+  title?: string;
+  message?: string;
+}
+
+// Throw from onSubmit to surface the error popup with specific content
+// (e.g. "student not found"). Any other thrown value falls back to the
+// default fail labels.
+export class ScanEntryError extends Error {
+  constructor(
+    public readonly title: string,
+    public readonly displayMessage: string,
+  ) {
+    super(displayMessage);
+    this.name = "ScanEntryError";
+  }
+}
+
 interface ScanEntryFormProps {
   labels: ScanEntryLabels;
   // Submit a scanned / entered student id. Throw to surface the error popup.
-  onSubmit: (studentId: string) => Promise<void>;
+  onSubmit: (studentId: string) => Promise<ScanEntryResult | void>;
   // Gate a submission — return false (after showing your own toast) to block it,
   // e.g. when required fields aren't filled yet.
   canSubmit?: () => boolean;
@@ -63,6 +84,11 @@ export function ScanEntryForm({
   const [studentId, setStudentId] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [showLoading, setShowLoading] = useState(false);
+  // Content for the currently open result dialog, set alongside status.
+  const [dialog, setDialog] = useState<{ title: string; message: string }>({
+    title: "",
+    message: "",
+  });
 
   const dialogOpen = status === "success" || status === "error";
 
@@ -73,9 +99,18 @@ export function ScanEntryForm({
       LOADING_DELAY_MS,
     );
     try {
-      await onSubmit(id);
+      const result = await onSubmit(id);
+      setDialog({
+        title: result?.title ?? labels.successTitle,
+        message: result?.message ?? labels.successMessage,
+      });
       setStatus("success");
-    } catch {
+    } catch (err) {
+      if (err instanceof ScanEntryError) {
+        setDialog({ title: err.title, message: err.displayMessage });
+      } else {
+        setDialog({ title: labels.failTitle, message: labels.failMessage });
+      }
       setStatus("error");
     } finally {
       window.clearTimeout(loadingTimer);
@@ -202,11 +237,11 @@ export function ScanEntryForm({
         open={dialogOpen}
         onOpenChange={(open) => !open && dismissDialog()}
         status={status === "error" ? "error" : "success"}
-        successTitle={labels.successTitle}
-        successMessage={labels.successMessage}
+        successTitle={dialog.title}
+        successMessage={dialog.message}
         okLabel={labels.ok}
-        failTitle={labels.failTitle}
-        failMessage={labels.failMessage}
+        failTitle={dialog.title}
+        failMessage={dialog.message}
         retryLabel={labels.retry}
       />
 
