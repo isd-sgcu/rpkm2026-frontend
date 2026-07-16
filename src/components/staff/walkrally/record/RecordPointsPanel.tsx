@@ -18,16 +18,24 @@ import {
   ScanEntryError,
   type ScanEntryResult,
 } from "@components/staff/ScanEntryForm";
-import { rounds } from "@components/walkrally/events/rounds";
+import { getRoundSchedule } from "@components/walkrally/events/rounds";
+import { MINIGAME_ACTIVITY_CODE } from "@components/walkrally/events/minigameActivity";
 import events from "@components/walkrally/events/events.json";
+import th from "@lib/i18n/dict/th.json";
+import en from "@lib/i18n/dict/en.json";
 
-const activityOptions = Object.values(events)
-  .flat()
-  .map((entry) => ({
+const activityOptions = [
+  ...[...events.workshop, ...events.walkingTour].map((entry) => ({
     id: entry.id,
     nameTh: entry.nameTh,
     nameEn: entry.nameEn,
-  }));
+  })),
+  {
+    id: MINIGAME_ACTIVITY_CODE,
+    nameTh: th.walkrally.events.tabs.minigame,
+    nameEn: en.walkrally.events.tabs.minigame,
+  },
+];
 
 export function RecordPointsPanel() {
   return (
@@ -43,6 +51,8 @@ function RecordPointsPanelContent() {
 
   const [activityId, setActivityId] = useState("");
   const [roundIndex, setRoundIndex] = useState("");
+
+  const rounds = useMemo(() => getRoundSchedule(activityId), [activityId]);
 
   // base-ui renders the raw value in the trigger unless Select.Root is given an
   // `items` map — supply value -> label so the trigger shows the label text.
@@ -63,7 +73,7 @@ function RecordPointsPanelContent() {
           index: String(round.index),
         })}  ${round.start}-${round.end}`,
       })),
-    [locale],
+    [locale, rounds],
   );
 
   function canSubmit() {

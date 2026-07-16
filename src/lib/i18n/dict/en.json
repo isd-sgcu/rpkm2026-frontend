@@ -26,7 +26,7 @@
     "home": "Home",
     "scanRegister": "Scan Register",
     "qrCode": "QR Code",
-    "chooseHouse": "Choose Welcome House",
+    "chooseHouse": "Choose House",
     "groupPairing": "Group Pairing",
     "editInfo": "Edit Info",
     "calendar": "Activity Calendar",
@@ -163,6 +163,32 @@
       "failMessage": "Invalid student ID, or you are not registered in the system.",
       "ok": "OK",
       "retry": "Try Again"
+    },
+    "minigames": {
+      "dixit": {
+        "name": "Dixit",
+        "description": "A storytelling card game full of imagination — one player becomes the \"storyteller\" and gives a clue from a dreamlike illustration, while everyone else guesses which card matches."
+      },
+      "sheriff-of-nottingham": {
+        "name": "Sheriff of Nottingham",
+        "description": "Play as a merchant trying to smuggle goods into the city while dodging the Sheriff's inspection — bluff, negotiate, and outwit each other."
+      },
+      "the-mind": {
+        "name": "The Mind",
+        "description": "A cooperative game where players must play numbered cards in ascending order without communicating at all — pure teamwork and intuition."
+      },
+      "insider": {
+        "name": "Insider",
+        "description": "A social deduction game — one secret \"insider\" already knows the answer and must guide the group there without getting caught."
+      },
+      "muffin-time": {
+        "name": "Muffin Time",
+        "description": "A fast, silly party card game — whoever is left holding the \"burnt muffin\" card when time's up loses instantly."
+      },
+      "exploding-kittens": {
+        "name": "Exploding Kittens",
+        "description": "Draw cards and avoid the exploding kitten — use special cards to defuse it or trick your opponents into drawing it instead."
+      }
     }
   },
   "myfreshystory": {
@@ -188,198 +214,198 @@
         "public": "Video must be public",
         "hashtag": "Video must be tagged"
       }
-    },
-    "staff": {
-      "walkrally": {
-        "record": {
-          "title": "Record Activity Points",
-          "subtitle": "Walk Rally",
-          "modeQr": "Scan QR Code",
-          "modeStudentId": "Student ID",
-          "studentIdLabel": "Enter the 10-digit student ID",
-          "studentIdPlaceholder": "Student ID",
-          "activityLabel": "Activity",
-          "activityPlaceholder": "Select an activity",
-          "roundLabel": "Activity Round",
-          "roundPlaceholder": "Select a round",
-          "roundOption": "Round {index}",
-          "save": "Save",
-          "selectActivityFirst": "Please select an activity and round first.",
-          "invalidStudentId": "Please enter a valid 10-digit student ID.",
-          "roundTime": "Round {start} - {end}",
-          "successTitle": "Points Recorded",
-          "successMessage": "Activity points recorded successfully.",
-          "alreadyCheckedInTitle": "Already Recorded",
-          "failTitle": "Recording Failed",
-          "failMessage": "Something went wrong. Please try again.",
-          "studentNotFound": "Student ID not found in the system.",
-          "notStaff": "This account doesn't have staff permission for this event.",
-          "invalidActivity": "Activity not found in the system.",
-          "pointsCapReached": "This student has already reached the maximum points.",
-          "ok": "OK",
-          "retry": "Try Again"
-        }
-      },
-      "checkin": {
-        "title": "Event Check-in",
-        "subtitle": "Welcoming New Students",
+    }
+  },
+  "staff": {
+    "walkrally": {
+      "record": {
+        "title": "Record Activity Points",
+        "subtitle": "Walk Rally",
         "modeQr": "Scan QR Code",
         "modeStudentId": "Student ID",
         "studentIdLabel": "Enter the 10-digit student ID",
         "studentIdPlaceholder": "Student ID",
-        "invalidStudentId": "Please enter a valid 10-digit student ID.",
+        "activityLabel": "Activity",
+        "activityPlaceholder": "Select an activity",
+        "roundLabel": "Activity Round",
+        "roundPlaceholder": "Select a round",
+        "roundOption": "Round {index}",
         "save": "Save",
-        "successTitle": "Check-in Successful",
-        "successMessage": "Checked in to the event successfully.",
-        "alreadyCheckedInTitle": "Already Checked In",
-        "failTitle": "Check-in Failed",
+        "selectActivityFirst": "Please select an activity and round first.",
+        "invalidStudentId": "Please enter a valid 10-digit student ID.",
+        "roundTime": "Round {start} - {end}",
+        "successTitle": "Points Recorded",
+        "successMessage": "Activity points recorded successfully.",
+        "alreadyCheckedInTitle": "Already Recorded",
+        "failTitle": "Recording Failed",
         "failMessage": "Something went wrong. Please try again.",
         "studentNotFound": "Student ID not found in the system.",
         "notStaff": "This account doesn't have staff permission for this event.",
+        "invalidActivity": "Activity not found in the system.",
+        "pointsCapReached": "This student has already reached the maximum points.",
         "ok": "OK",
         "retry": "Try Again"
       }
     },
-    "register": {
-      "title": "Registration",
-      "logoAlt": "Rub Puen Kao Mai",
-      "next": "Next",
-      "back": "Back",
-      "confirm": "Confirm",
-      "error": {
-        "badRequest": "Invalid information. Please check and try again.",
-        "forbidden": "This account can't register.",
-        "alreadyRegistered": "This account has already registered.",
-        "generic": "Something went wrong. Please try again."
+    "checkin": {
+      "title": "Event Check-in",
+      "subtitle": "Welcoming New Students",
+      "modeQr": "Scan QR Code",
+      "modeStudentId": "Student ID",
+      "studentIdLabel": "Enter the 10-digit student ID",
+      "studentIdPlaceholder": "Student ID",
+      "invalidStudentId": "Please enter a valid 10-digit student ID.",
+      "save": "Save",
+      "successTitle": "Check-in Successful",
+      "successMessage": "Checked in to the event successfully.",
+      "alreadyCheckedInTitle": "Already Checked In",
+      "failTitle": "Check-in Failed",
+      "failMessage": "Something went wrong. Please try again.",
+      "studentNotFound": "Student ID not found in the system.",
+      "notStaff": "This account doesn't have staff permission for this event.",
+      "ok": "OK",
+      "retry": "Try Again"
+    }
+  },
+  "register": {
+    "title": "Registration",
+    "logoAlt": "Rub Puen Kao Mai",
+    "next": "Next",
+    "back": "Back",
+    "confirm": "Confirm",
+    "error": {
+      "badRequest": "Invalid information. Please check and try again.",
+      "forbidden": "This account can't register.",
+      "alreadyRegistered": "This account has already registered.",
+      "generic": "Something went wrong. Please try again."
+    },
+    "banner": {
+      "pre": "The information below is from your FirstDate registration. If it is correct, press ",
+      "action": "Next",
+      "post": " to continue."
+    },
+    "sections": {
+      "personal": "Personal Information",
+      "guardian": "Guardian Information",
+      "health": "Health Information",
+      "other": "Other Information",
+      "travel": "Travel Information"
+    },
+    "fields": {
+      "firstName": "First name",
+      "firstNamePlaceholder": "Enter your first name...",
+      "prefixPlaceholder": "Title",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Enter your last name...",
+      "nickname": "Nickname",
+      "nicknamePlaceholder": "Enter your nickname...",
+      "faculty": "Faculty",
+      "facultyPlaceholder": "Search faculty...",
+      "studentId": "Student ID",
+      "studentIdPlaceholder": "Enter your student ID...",
+      "phone": "Phone number",
+      "phonePlaceholder": "Enter your phone number...",
+      "guardianPhone": "Guardian's phone number",
+      "guardianPhonePlaceholder": "Enter guardian's phone number...",
+      "relation": "Relationship",
+      "relationPlaceholder": "Relationship"
+    },
+    "health": {
+      "yes": "Yes",
+      "no": "No",
+      "selected": "{count} selected",
+      "foodAllergy": {
+        "title": "Food allergies",
+        "none": "No food allergies",
+        "placeholder": "Enter your food allergies..."
       },
-      "banner": {
-        "pre": "The information below is from your FirstDate registration. If it is correct, press ",
-        "action": "Next",
-        "post": " to continue."
+      "dietary": {
+        "title": "Dietary restrictions",
+        "none": "No dietary restrictions",
+        "placeholder": "Enter other dietary restrictions..."
       },
-      "sections": {
-        "personal": "Personal Information",
-        "guardian": "Guardian Information",
-        "health": "Health Information",
-        "other": "Other Information",
-        "travel": "Travel Information"
+      "drugAllergy": {
+        "title": "Drug allergies",
+        "none": "No drug allergies",
+        "yes": "Has drug allergies",
+        "placeholder": "Enter your drug allergies..."
       },
-      "fields": {
-        "firstName": "First name",
-        "firstNamePlaceholder": "Enter your first name...",
-        "prefixPlaceholder": "Title",
-        "lastName": "Last name",
-        "lastNamePlaceholder": "Enter your last name...",
-        "nickname": "Nickname",
-        "nicknamePlaceholder": "Enter your nickname...",
-        "faculty": "Faculty",
-        "facultyPlaceholder": "Search faculty...",
-        "studentId": "Student ID",
-        "studentIdPlaceholder": "Enter your student ID...",
-        "phone": "Phone number",
-        "phonePlaceholder": "Enter your phone number...",
-        "guardianPhone": "Guardian's phone number",
-        "guardianPhonePlaceholder": "Enter guardian's phone number...",
-        "relation": "Relationship",
-        "relationPlaceholder": "Relationship"
-      },
-      "health": {
-        "yes": "Yes",
-        "no": "No",
-        "selected": "{count} selected",
-        "foodAllergy": {
-          "title": "Food allergies",
-          "none": "No food allergies",
-          "placeholder": "Enter your food allergies..."
-        },
-        "dietary": {
-          "title": "Dietary restrictions",
-          "none": "No dietary restrictions",
-          "placeholder": "Enter other dietary restrictions..."
-        },
-        "drugAllergy": {
-          "title": "Drug allergies",
-          "none": "No drug allergies",
-          "yes": "Has drug allergies",
-          "placeholder": "Enter your drug allergies..."
-        },
-        "chronic": {
-          "title": "Chronic conditions",
-          "none": "No chronic conditions",
-          "yes": "Has chronic conditions",
-          "placeholder": "Enter your chronic conditions..."
-        }
-      },
-      "questions": {
-        "sgcu": "Do you know the Student Government of Chulalongkorn University (SGCU)?",
-        "pr": "Which channel did you see the project's promotion on the most?",
-        "attendDays": "How many days do you intend to join Rub Puen Kao Mai?",
-        "water": "Did you bring a water bottle?"
-      },
-      "travel": {
-        "residenceQuestion": "The district and province where you normally live",
-        "province": "Province",
-        "district": "District",
-        "provincePlaceholder": "Select a province",
-        "districtPlaceholder": "Select a district",
-        "pattern": "How you will travel to the activity",
-        "leg": "Leg {index}",
-        "removeLeg": "Remove this route",
-        "addLeg": "Add a travel leg",
-        "vehicle": "Vehicle type",
-        "vehiclePlaceholder": "Select a vehicle",
-        "origin": "Origin",
-        "dest": "Destination"
-      },
-      "combobox": {
-        "empty": "No results found"
-      },
-      "validation": {
-        "prefix": "Please select a title",
-        "firstName": "Please enter your first name",
-        "lastName": "Please enter your last name",
-        "nickname": "Please enter your nickname",
-        "faculty": "Please select a faculty",
-        "studentId": "Student ID must start with 69 and be 10 digits",
-        "phone": "Phone number must be 10 digits and start with 0",
-        "relation": "Please select a relationship",
-        "answer": "Please select an answer",
-        "province": "Please select a province",
-        "district": "Please select a district",
-        "vehicle": "Please select a vehicle",
-        "atLeastOne": "Please select at least one item",
-        "specifyOther": "Please specify",
-        "drugDetail": "Please enter your drug allergy",
-        "chronicDetail": "Please enter your chronic condition"
+      "chronic": {
+        "title": "Chronic conditions",
+        "none": "No chronic conditions",
+        "yes": "Has chronic conditions",
+        "placeholder": "Enter your chronic conditions..."
       }
     },
-    "qrcode": {
-      "refresh": "Refresh",
-      "close": "Close",
-      "myQrTitle": "My QR Code",
-      "troubleshoot": {
-        "link": "Camera not working?",
-        "title": "Camera Troubleshooting",
-        "intro": "If the camera doesn't start or the screen stays black, follow the steps for your browser.",
-        "chromeTitle": "Chrome / Edge (Android)",
-        "chromeSteps": "1. Tap the lock or settings icon next to the address bar\n2. Open Permissions\n3. Allow Camera\n4. Refresh this page",
-        "safariTitle": "Safari (iPhone / iPad)",
-        "safariSteps": "1. Tap the \"AA\" or settings button in the address bar\n2. Open Website Settings\n3. Set Camera to Allow\n4. Reload this page\n\nOr go to Settings > Safari > Camera and choose Allow.",
-        "genericTitle": "Other tips",
-        "genericSteps": "• Close other apps or tabs using the camera, then retry\n• Refresh this page\n• If it still fails, try another browser or device"
-      },
-      "scannerError": {
-        "permissionDenied": "We need permission to use the camera. Please allow camera access, then try again.",
-        "noCamera": "We couldn't find a camera on this device. Try another device.",
-        "inUse": "The camera is being used by another app or tab. Close it and try again.",
-        "overconstrained": "We couldn't start the camera on this device. Please try another one.",
-        "insecureContext": "The camera only works on a secure (https) connection. Please open this page over https.",
-        "unsupported": "This browser doesn't support the camera. Try a different browser.",
-        "aborted": "Starting the camera was interrupted. Please try again.",
-        "security": "Your browser blocked camera access. Check your browser settings and try again.",
-        "typeError": "Something went wrong while starting the camera. Please try again.",
-        "unknown": "Something went wrong. Please try again."
-      }
+    "questions": {
+      "sgcu": "Do you know the Student Government of Chulalongkorn University (SGCU)?",
+      "pr": "Which channel did you see the project's promotion on the most?",
+      "attendDays": "How many days do you intend to join Rub Puen Kao Mai?",
+      "water": "Did you bring a water bottle?"
+    },
+    "travel": {
+      "residenceQuestion": "The district and province where you normally live",
+      "province": "Province",
+      "district": "District",
+      "provincePlaceholder": "Select a province",
+      "districtPlaceholder": "Select a district",
+      "pattern": "How you will travel to the activity",
+      "leg": "Leg {index}",
+      "removeLeg": "Remove this route",
+      "addLeg": "Add a travel leg",
+      "vehicle": "Vehicle type",
+      "vehiclePlaceholder": "Select a vehicle",
+      "origin": "Origin",
+      "dest": "Destination"
+    },
+    "combobox": {
+      "empty": "No results found"
+    },
+    "validation": {
+      "prefix": "Please select a title",
+      "firstName": "Please enter your first name",
+      "lastName": "Please enter your last name",
+      "nickname": "Please enter your nickname",
+      "faculty": "Please select a faculty",
+      "studentId": "Student ID must start with 69 and be 10 digits",
+      "phone": "Phone number must be 10 digits and start with 0",
+      "relation": "Please select a relationship",
+      "answer": "Please select an answer",
+      "province": "Please select a province",
+      "district": "Please select a district",
+      "vehicle": "Please select a vehicle",
+      "atLeastOne": "Please select at least one item",
+      "specifyOther": "Please specify",
+      "drugDetail": "Please enter your drug allergy",
+      "chronicDetail": "Please enter your chronic condition"
+    }
+  },
+  "qrcode": {
+    "refresh": "Refresh",
+    "close": "Close",
+    "myQrTitle": "My QR Code",
+    "troubleshoot": {
+      "link": "Camera not working?",
+      "title": "Camera Troubleshooting",
+      "intro": "If the camera doesn't start or the screen stays black, follow the steps for your browser.",
+      "chromeTitle": "Chrome / Edge (Android)",
+      "chromeSteps": "1. Tap the lock or settings icon next to the address bar\n2. Open Permissions\n3. Allow Camera\n4. Refresh this page",
+      "safariTitle": "Safari (iPhone / iPad)",
+      "safariSteps": "1. Tap the \"AA\" or settings button in the address bar\n2. Open Website Settings\n3. Set Camera to Allow\n4. Reload this page\n\nOr go to Settings > Safari > Camera and choose Allow.",
+      "genericTitle": "Other tips",
+      "genericSteps": "• Close other apps or tabs using the camera, then retry\n• Refresh this page\n• If it still fails, try another browser or device"
+    },
+    "scannerError": {
+      "permissionDenied": "We need permission to use the camera. Please allow camera access, then try again.",
+      "noCamera": "We couldn't find a camera on this device. Try another device.",
+      "inUse": "The camera is being used by another app or tab. Close it and try again.",
+      "overconstrained": "We couldn't start the camera on this device. Please try another one.",
+      "insecureContext": "The camera only works on a secure (https) connection. Please open this page over https.",
+      "unsupported": "This browser doesn't support the camera. Try a different browser.",
+      "aborted": "Starting the camera was interrupted. Please try again.",
+      "security": "Your browser blocked camera access. Check your browser settings and try again.",
+      "typeError": "Something went wrong while starting the camera. Please try again.",
+      "unknown": "Something went wrong. Please try again."
     }
   },
   "editProfile": {

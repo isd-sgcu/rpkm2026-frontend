@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { useStore } from "@nanostores/react";
 import { Plus } from "lucide-react";
 import { useT } from "@lib/i18n/useT";
@@ -5,10 +6,11 @@ import { $locale } from "@lib/i18n/locale";
 import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 import { QueryProvider } from "@components/shared/QueryProvider";
 import { RegisteredActivityCard } from "@components/walkrally/RegisteredActivityCard";
+import { getMe } from "@lib/api/rpkm";
+import { getWalkRallyMe } from "@lib/api/walkrally";
+import { MINIGAME_ACTIVITY_CODE } from "@components/walkrally/events/minigameActivity";
 
 import events from "@components/walkrally/events/events.json";
-// TODO: fetch the user's registrations from API (e.g. via TanStack Query) instead of static JSON
-import registrations from "@components/walkrally/registrations.json";
 
 const ACCENT_ORANGE = "#e65325";
 
@@ -16,14 +18,6 @@ const tabAccentColor: Record<string, string> = {
   workshop: "#e65325",
   walkingTour: "#5fa667",
   minigame: "#8b688d",
-};
-
-// TODO: replace with real user/auth data (e.g. via TanStack Query)
-const mockProfile = {
-  studentId: "690282282",
-  name: "คิตตี้ คุกิมิยะ",
-  faculty: "คณะวิศวกรรมศาสตร์",
-  points: 0,
 };
 
 export function WalkRallyHomePanel() {
@@ -38,31 +32,63 @@ function WalkRallyHomePanelContent() {
   const t = useT();
   const locale = useStore($locale);
 
-  const registeredActivities = registrations.flatMap((reg) => {
-    for (const [group, list] of Object.entries(events)) {
-      const entry = list.find((e) => e.id === reg.activityId);
-      if (!entry) continue;
-      return [
-        {
-          id: entry.id,
-          name: locale === "th" ? entry.nameTh : entry.nameEn,
-          description: (locale === "th"
-            ? "descriptionTh" in entry
-              ? entry.descriptionTh
-              : undefined
-            : "descriptionEn" in entry
-              ? entry.descriptionEn
-              : undefined) as string | undefined,
-          imageName: ("imageName" in entry ? entry.imageName : undefined) as
-            string | undefined,
-          round: reg.round,
-          ticketNumber: reg.ticketNumber,
-          accentColor: tabAccentColor[group],
-        },
-      ];
-    }
-    return [];
+  const { data: profile } = useQuery({ queryKey: ["rpkm-me"], queryFn: getMe });
+  const { data: walkRally } = useQuery({
+    queryKey: ["walkrally-me"],
+    queryFn: getWalkRallyMe,
   });
+
+  const registeredActivities = (walkRally?.registrations ?? []).flatMap(
+    (reg) => {
+      if (reg.code === MINIGAME_ACTIVITY_CODE) {
+        return [
+          {
+            id: reg.code,
+            name: t("walkrally.events.tabs.minigame"),
+            description: t("walkrally.events.minigameSummary"),
+            imageName: "minigame.png" as string | undefined,
+            round: reg.round,
+            start: reg.start,
+            end: reg.end,
+            place: reg.place,
+            accentColor: tabAccentColor.minigame,
+          },
+        ];
+      }
+      const groups: [
+        string,
+        typeof events.workshop | typeof events.walkingTour,
+      ][] = [
+        ["workshop", events.workshop],
+        ["walkingTour", events.walkingTour],
+      ];
+      for (const [group, list] of groups) {
+        const entry = list.find((e) => e.id === reg.code);
+        if (!entry) continue;
+        return [
+          {
+            id: entry.id,
+            name: locale === "th" ? entry.nameTh : entry.nameEn,
+            description: (locale === "th"
+              ? "descriptionTh" in entry
+                ? entry.descriptionTh
+                : undefined
+              : "descriptionEn" in entry
+                ? entry.descriptionEn
+                : undefined) as string | undefined,
+            imageName: ("imageName" in entry ? entry.imageName : undefined) as
+              string | undefined,
+            round: reg.round,
+            start: reg.start,
+            end: reg.end,
+            place: reg.place,
+            accentColor: tabAccentColor[group],
+          },
+        ];
+      }
+      return [];
+    },
+  );
 
   return (
     <>
@@ -85,13 +111,15 @@ function WalkRallyHomePanelContent() {
 
             <div className="min-w-0 flex-1">
               <span className="inline-block text-sm rounded-full border border-black bg-rpkm-light-pink px-2 py-0.5 text-[0.65rem] font-bold text-foreground">
-                {mockProfile.studentId}
+                {profile?.studentId ?? ""}
               </span>
               <div className="mt-3 truncate text-xl font-bold text-foreground">
-                {mockProfile.name}
+                {profile
+                  ? `${profile.firstName} ${profile.lastName}`.trim()
+                  : ""}
               </div>
               <div className="truncate text-base text-muted-foreground">
-                {mockProfile.faculty}
+                {profile?.faculty ?? ""}
               </div>
             </div>
           </div>
@@ -106,7 +134,7 @@ function WalkRallyHomePanelContent() {
                 {t("walkrally.home.pointsLabel")}
               </span>
               <span className="text-2xl leading-none font-bold">
-                {mockProfile.points}
+                {walkRally?.points ?? 0}
               </span>
               <span className="text-[0.6rem] font-bold">
                 {t("walkrally.home.pointsUnit")}

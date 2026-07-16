@@ -1,7 +1,7 @@
 import { ChevronRight, Lock } from "lucide-react";
 import { getImageUrl } from "@lib/function";
 import { useProfile } from "@lib/auth/useProfile";
-import { isFreshyStoryUnlocked } from "@lib/guard";
+import { isUnlocked } from "@lib/guard";
 import { useT } from "@lib/i18n/useT";
 import { Button, buttonVariants } from "@components/ui/button";
 import { cn } from "@lib/utils";
@@ -91,7 +91,7 @@ const InformationPanel = () => {
   const t = useT();
   const profile = useProfile();
   const isStaff = profile.status === "ready" && profile.me.role === "staff";
-  const freshyStoryLocked = !isFreshyStoryUnlocked();
+  const freshyStoryLocked = !isUnlocked("freshyStory");
 
   return (
     <div className="flex w-full flex-col gap-12">

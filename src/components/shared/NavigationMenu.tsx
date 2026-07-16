@@ -36,6 +36,10 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
   const profile = useProfile();
   const isStaff = profile.status === "ready" && profile.me.role === "staff";
   const studentId = profile.status === "ready" ? profile.me.studentId : "";
+  const scanHref =
+    profile.status === "ready" && profile.me.staffRole === "walkrally"
+      ? "/staff/walkrally/record"
+      : "/staff/checkin";
   const t = useT();
   // QR dialog is controlled here so it can survive the drawer closing.
   const [qrOpen, setQrOpen] = useState(false);
@@ -80,12 +84,11 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
                 }
               />
 
-              {/* TODO: link? */}
               {isStaff ? (
                 <DrawerClose
                   nativeButton={false}
                   render={
-                    <a href="/staff/register" className={navItemClassName}>
+                    <a href={scanHref} className={navItemClassName}>
                       <img src={scanIcon.src} alt="" className="size-6" />
                       <span className="pt-1">{t("nav.scanRegister")}</span>
                     </a>

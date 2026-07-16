@@ -8,6 +8,7 @@ export type MeResult = {
   faculty: string | null;
   role: string;
   registered: boolean;
+  staffRole: string | null;
 };
 
 type SuccessResponse<T> = {

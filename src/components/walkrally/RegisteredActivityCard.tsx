@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { Trash2 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { getImageUrl } from "@lib/function";
 import { useT } from "@lib/i18n/useT";
 import { ConfirmActionDialog } from "@components/walkrally/ConfirmActionDialog";
-import rounds from "@components/walkrally/rounds.json";
+import { unregisterFromActivity } from "@lib/api/walkrally";
 
 export interface RegisteredActivity {
   id: string;
   name: string;
   description?: string;
   round: number;
-  ticketNumber: string;
+  start: string;
+  end: string;
+  place: number;
   imageName?: string;
   accentColor: string;
 }
@@ -23,21 +25,21 @@ export function RegisteredActivityCard({
   activity,
 }: RegisteredActivityCardProps) {
   const t = useT();
+  const queryClient = useQueryClient();
   const imageUrl = getImageUrl(activity.imageName ?? "");
+  const deleteIcon = getImageUrl("delete.svg");
   const frameStyle = { backgroundColor: activity.accentColor };
-  const round = rounds.find((r) => r.index === activity.round);
   const [open, setOpen] = useState(false);
 
   async function handleConfirmCancel() {
-    // TODO: call cancellation API (e.g. via a TanStack Query mutation)
+    await unregisterFromActivity(activity.id);
   }
 
   return (
     <>
-      <a
-        href={`/walkrally/events/${activity.id}`}
+      <div
         style={frameStyle}
-        className="relative isolate block overflow-hidden rounded-3xl border border-foreground p-1"
+        className="relative isolate overflow-hidden rounded-3xl border border-foreground p-1"
       >
         <div className="relative flex flex-col items-center gap-3 rounded-[1.15rem] border border-foreground bg-rpkm-beige p-3 pr-4 min-[360px]:flex-row min-[360px]:items-start">
           <div
@@ -55,7 +57,7 @@ export function RegisteredActivityCard({
             )}
           </div>
 
-          <div className="min-w-0 flex-1">
+          <div className="w-full min-w-0 flex-1">
             <div className="pr-6 text-lg font-bold text-foreground">
               {activity.name}
             </div>
@@ -72,35 +74,38 @@ export function RegisteredActivityCard({
                     index: String(activity.round),
                   })}
                 </div>
-                {round && (
-                  <div className="text-xs text-foreground">
-                    {round.start} - {round.end}
-                  </div>
-                )}
+                <div className="text-xs text-foreground">
+                  {activity.start} - {activity.end}
+                </div>
               </div>
               <span className="text-xs font-bold text-foreground">
-                #{activity.ticketNumber}
+                #{activity.place}
               </span>
             </div>
           </div>
 
           <button
             type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setOpen(true);
-            }}
+            onClick={() => setOpen(true)}
             className="absolute top-2 right-2 flex size-6 items-center justify-center"
           >
-            <Trash2 className="size-6 fill-destructive text-destructive" />
+            <img
+              src={deleteIcon}
+              alt="Delete"
+              className="size-6 fill-destructive text-destructive"
+            />
           </button>
         </div>
-      </a>
+      </div>
 
       <ConfirmActionDialog
         open={open}
-        onOpenChange={setOpen}
+        onOpenChange={(next) => {
+          setOpen(next);
+          if (!next) {
+            queryClient.invalidateQueries({ queryKey: ["walkrally-me"] });
+          }
+        }}
         onConfirm={handleConfirmCancel}
         confirmTitle={t("walkrally.home.cancelTitle")}
         confirmMessage={t("walkrally.home.cancelMessage", {

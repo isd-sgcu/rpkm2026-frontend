@@ -13,6 +13,10 @@ const ProfileCardOrScanButton = () => {
   const me = profile.status === "ready" ? profile.me : undefined;
 
   const isStaff = profile.status === "ready" && profile.me.role === "staff";
+  const scanHref =
+    profile.status === "ready" && profile.me.staffRole === "walkrally"
+      ? "/staff/walkrally/record"
+      : "/staff/checkin";
 
   const name = me
     ? `${me.firstName} ${me.lastName}`.trim()
@@ -24,7 +28,7 @@ const ProfileCardOrScanButton = () => {
   if (isStaff) {
     return (
       <a
-        href="/staff/checkin"
+        href={scanHref}
         className={cn(
           buttonVariants({ variant: "default" }),
           "h-auto w-full flex-col gap-2 py-2 mb-12",
@@ -41,7 +45,7 @@ const ProfileCardOrScanButton = () => {
       className="relative mx-auto w-full"
       style={{ containerType: "inline-size" }}
     >
-      <div className="relative aspect-[394/343] w-full mb-6">
+      <div className="relative aspect-394/343 w-full mb-6">
         <img
           src={houseSvg.src}
           className="w-full"
