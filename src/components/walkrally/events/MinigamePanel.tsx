@@ -1,53 +1,56 @@
 import { useState, useSyncExternalStore } from "react";
 import { useStore } from "@nanostores/react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, ChevronRight, Users } from "lucide-react";
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
 import { $locale } from "@lib/i18n/locale";
 import { getImageUrl } from "@lib/function";
 import { ConfirmActionDialog } from "@components/walkrally/ConfirmActionDialog";
-import { rounds, type Round } from "@components/walkrally/events/rounds";
-import events from "@components/walkrally/events/events.json";
-// TODO: fetch the user's registrations from API (e.g. via TanStack Query) instead of static JSON
-import registrationsData from "@components/walkrally/registrations.json";
 import {
-  clearStoredMinigameId,
-  getStoredMinigameId,
-} from "@components/walkrally/events/minigameSelection";
+  getActivityRounds,
+  registerForActivity,
+  type WalkRallyRound,
+} from "@lib/api/walkrally";
+import { MINIGAME_ACTIVITY_CODE } from "@components/walkrally/events/minigameActivity";
+import events from "@components/walkrally/events/events.json";
 
 const ACCENT_MINIGAME = "#8b688d";
-const MINIGAME_IDS = events.minigame.map((game) => game.id);
-
-interface Registration {
-  activityId: string;
-  round: number;
-  ticketNumber: string;
-}
-
-const registrations = registrationsData as Registration[];
+const ROUND_CAPACITY = 30;
 
 function subscribeNoop() {
   return () => {};
 }
 
-function getServerPendingGameId(): string | undefined {
+function getUrlGameSnapshot(): string | undefined {
+  return new URLSearchParams(window.location.search).get("game") ?? undefined;
+}
+
+function getServerGameSnapshot(): string | undefined {
   return undefined;
 }
 
 export function MinigamePanel() {
   const t = useT();
   const locale = useStore($locale);
-  const [selectedRound, setSelectedRound] = useState<Round | null>(null);
-  const pendingGameId = useSyncExternalStore(
+  const queryClient = useQueryClient();
+  const [selectedRound, setSelectedRound] = useState<WalkRallyRound | null>(
+    null,
+  );
+  const chosenGameId = useSyncExternalStore(
     subscribeNoop,
-    getStoredMinigameId,
-    getServerPendingGameId,
+    getUrlGameSnapshot,
+    getServerGameSnapshot,
   );
 
-  const registration = registrations.find((r) =>
-    MINIGAME_IDS.includes(r.activityId),
-  );
-  const chosenGameId = registration?.activityId ?? pendingGameId;
+  const roundsQueryKey = ["walkrally-activity-rounds", MINIGAME_ACTIVITY_CODE];
+  const { data } = useQuery({
+    queryKey: roundsQueryKey,
+    queryFn: () => getActivityRounds(MINIGAME_ACTIVITY_CODE),
+  });
+  const rounds = data?.rounds ?? [];
+  const registeredRound = data?.registeredRound ?? null;
+
   const chosenGame = chosenGameId
     ? events.minigame.find((game) => game.id === chosenGameId)
     : undefined;
@@ -72,9 +75,12 @@ export function MinigamePanel() {
 
   async function handleConfirm() {
     if (!selectedRound) return;
-    // TODO: call registration API (e.g. via a TanStack Query mutation)
-
-    clearStoredMinigameId();
+    await registerForActivity({
+      code: MINIGAME_ACTIVITY_CODE,
+      round: selectedRound.round,
+    });
+    await queryClient.invalidateQueries({ queryKey: roundsQueryKey });
+    await queryClient.invalidateQueries({ queryKey: ["walkrally-me"] });
   }
 
   return (
@@ -135,27 +141,27 @@ export function MinigamePanel() {
         </p>
         <div className="flex flex-col gap-4">
           {rounds.map((round) => {
-            const isSelected = registration?.round === round.index;
-            const sameActivityLocked = Boolean(registration) && !isSelected;
+            const isSelected = registeredRound === round.round;
+            const sameActivityLocked = registeredRound !== null && !isSelected;
+            const isFull = round.count >= ROUND_CAPACITY;
             const crossActivityConflict =
-              !registration &&
-              registrations.some((r) => r.round === round.index);
+              registeredRound === null && Boolean(round.conflict);
             return (
               <button
-                key={round.index}
+                key={round.round}
                 type="button"
                 disabled={
                   !chosenGameId ||
-                  Boolean(registration) ||
+                  registeredRound !== null ||
                   crossActivityConflict ||
-                  round.status !== "available"
+                  isFull
                 }
                 onClick={() => setSelectedRound(round)}
                 className={cn(
                   "flex flex-col rounded-xl border border-black p-2 text-left text-foreground disabled:cursor-not-allowed",
                   isSelected
                     ? "border-2 border-black bg-rpkm-yellow"
-                    : crossActivityConflict || round.status === "full"
+                    : crossActivityConflict || isFull
                       ? "bg-[#f4c3ab]"
                       : "bg-background",
                   sameActivityLocked && "opacity-50",
@@ -169,7 +175,7 @@ export function MinigamePanel() {
                     <span className="flex items-baseline gap-2">
                       <span className="font-bold whitespace-nowrap">
                         {t("walkrally.events.roundLabel", {
-                          index: String(round.index),
+                          index: String(round.round),
                         })}
                       </span>
                       <span className="text-sm whitespace-nowrap">
@@ -180,11 +186,11 @@ export function MinigamePanel() {
                   <span
                     className={cn(
                       "flex items-center gap-1 text-xs",
-                      round.status === "full" ? "text-rpkm-red" : "text-black",
+                      isFull ? "text-rpkm-red" : "text-black",
                     )}
                   >
                     <Users className="size-3.5" />
-                    {round.booked}/{round.capacity}
+                    {round.count}/{ROUND_CAPACITY}
                   </span>
                 </div>
                 {sameActivityLocked ? (
@@ -213,7 +219,7 @@ export function MinigamePanel() {
           selectedRound
             ? t("walkrally.events.confirmMessage", {
                 name: chosenGameName ?? t("walkrally.events.tabs.minigame"),
-                index: String(selectedRound.index),
+                index: String(selectedRound.round),
               })
             : ""
         }
@@ -224,7 +230,7 @@ export function MinigamePanel() {
           selectedRound
             ? t("walkrally.events.successMessage", {
                 name: chosenGameName ?? t("walkrally.events.tabs.minigame"),
-                index: String(selectedRound.index),
+                index: String(selectedRound.round),
               })
             : ""
         }

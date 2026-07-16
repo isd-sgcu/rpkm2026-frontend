@@ -1,12 +1,12 @@
 import { useStore } from "@nanostores/react";
+import { useQuery } from "@tanstack/react-query";
 import { $locale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
 import { getImageUrl } from "@lib/function";
 import { QueryProvider } from "@components/shared/QueryProvider";
+import { getWalkRallyMe } from "@lib/api/walkrally";
 import events from "@components/walkrally/events/events.json";
-// TODO: fetch the user's registrations from API (e.g. via TanStack Query) instead of static JSON
-import registrations from "@components/walkrally/registrations.json";
-import { setStoredMinigameId } from "@components/walkrally/events/minigameSelection";
+import { MINIGAME_ACTIVITY_CODE } from "@components/walkrally/events/minigameActivity";
 
 const ACCENT_MINIGAME = "#8b688d";
 
@@ -22,9 +22,13 @@ function MinigameListPanelContent() {
   const t = useT();
   const locale = useStore($locale);
   const games = events.minigame;
-  const minigameIds = games.map((game) => game.id);
-  const isRegistered = registrations.some((r) =>
-    minigameIds.includes(r.activityId),
+
+  const { data: walkRally } = useQuery({
+    queryKey: ["walkrally-me"],
+    queryFn: getWalkRallyMe,
+  });
+  const isRegistered = (walkRally?.registrations ?? []).some(
+    (r) => r.code === MINIGAME_ACTIVITY_CODE,
   );
 
   return (
@@ -45,9 +49,10 @@ function MinigameListPanelContent() {
           return (
             <CardTag
               key={game.id}
-              href={isRegistered ? undefined : "/walkrally/events?tab=minigame"}
-              onClick={
-                isRegistered ? undefined : () => setStoredMinigameId(game.id)
+              href={
+                isRegistered
+                  ? undefined
+                  : `/walkrally/events?tab=minigame&game=${game.id}`
               }
               style={{ backgroundColor: ACCENT_MINIGAME }}
               className="relative isolate overflow-hidden rounded-3xl border border-foreground p-1"

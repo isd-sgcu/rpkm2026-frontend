@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { getImageUrl } from "@lib/function";
 import { useT } from "@lib/i18n/useT";
 import { ConfirmActionDialog } from "@components/walkrally/ConfirmActionDialog";
-import rounds from "@components/walkrally/rounds.json";
+import { unregisterFromActivity } from "@lib/api/walkrally";
 
 export interface RegisteredActivity {
   id: string;
   name: string;
   description?: string;
   round: number;
-  ticketNumber: string;
+  start: string;
+  end: string;
+  place: number;
   imageName?: string;
   accentColor: string;
 }
@@ -23,13 +26,14 @@ export function RegisteredActivityCard({
   activity,
 }: RegisteredActivityCardProps) {
   const t = useT();
+  const queryClient = useQueryClient();
   const imageUrl = getImageUrl(activity.imageName ?? "");
   const frameStyle = { backgroundColor: activity.accentColor };
-  const round = rounds.find((r) => r.index === activity.round);
   const [open, setOpen] = useState(false);
 
   async function handleConfirmCancel() {
-    // TODO: call cancellation API (e.g. via a TanStack Query mutation)
+    await unregisterFromActivity(activity.id);
+    await queryClient.invalidateQueries({ queryKey: ["walkrally-me"] });
   }
 
   return (
@@ -72,14 +76,12 @@ export function RegisteredActivityCard({
                     index: String(activity.round),
                   })}
                 </div>
-                {round && (
-                  <div className="text-xs text-foreground">
-                    {round.start} - {round.end}
-                  </div>
-                )}
+                <div className="text-xs text-foreground">
+                  {activity.start} - {activity.end}
+                </div>
               </div>
               <span className="text-xs font-bold text-foreground">
-                #{activity.ticketNumber}
+                #{activity.place}
               </span>
             </div>
           </div>

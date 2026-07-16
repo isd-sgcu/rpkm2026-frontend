@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useStore } from "@nanostores/react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Users } from "lucide-react";
 import { cn } from "@lib/utils";
 import { getImageUrl } from "@lib/function";
@@ -7,9 +8,13 @@ import { useT } from "@lib/i18n/useT";
 import { $locale } from "@lib/i18n/locale";
 import { ConfirmActionDialog } from "@components/walkrally/ConfirmActionDialog";
 import { QueryProvider } from "@components/shared/QueryProvider";
-import { rounds, type Round } from "@components/walkrally/events/rounds";
-// TODO: fetch the user's registrations from API (e.g. via TanStack Query) instead of static JSON
-import registrations from "@components/walkrally/registrations.json";
+import {
+  getActivityRounds,
+  registerForActivity,
+  type WalkRallyRound,
+} from "@lib/api/walkrally";
+
+const ROUND_CAPACITY = 30;
 
 export interface WalkRallyEntry {
   id: string;
@@ -35,13 +40,23 @@ export function ActivityDetailPanel(props: ActivityDetailPanelProps) {
 function ActivityDetailPanelContent({ entry }: ActivityDetailPanelProps) {
   const t = useT();
   const locale = useStore($locale);
-  const [selectedRound, setSelectedRound] = useState<Round | null>(null);
+  const queryClient = useQueryClient();
+  const [selectedRound, setSelectedRound] = useState<WalkRallyRound | null>(
+    null,
+  );
 
   const name = locale === "th" ? entry.nameTh : entry.nameEn;
   const description =
     locale === "th" ? entry.descriptionTh : entry.descriptionEn;
   const imageUrl = getImageUrl(entry.imageName ?? "");
-  const registration = registrations.find((r) => r.activityId === entry.id);
+
+  const roundsQueryKey = ["walkrally-activity-rounds", entry.id];
+  const { data } = useQuery({
+    queryKey: roundsQueryKey,
+    queryFn: () => getActivityRounds(entry.id),
+  });
+  const rounds = data?.rounds ?? [];
+  const registeredRound = data?.registeredRound ?? null;
 
   useEffect(() => {
     document.title = name;
@@ -52,7 +67,10 @@ function ActivityDetailPanelContent({ entry }: ActivityDetailPanelProps) {
   }
 
   async function handleConfirm() {
-    // TODO: call registration API (e.g. via a TanStack Query mutation)
+    if (!selectedRound) return;
+    await registerForActivity({ code: entry.id, round: selectedRound.round });
+    await queryClient.invalidateQueries({ queryKey: roundsQueryKey });
+    await queryClient.invalidateQueries({ queryKey: ["walkrally-me"] });
   }
 
   return (
@@ -85,28 +103,24 @@ function ActivityDetailPanelContent({ entry }: ActivityDetailPanelProps) {
         </p>
         <div className="flex flex-col gap-4">
           {rounds.map((round) => {
-            const isSelected = registration?.round === round.index;
-            const sameActivityLocked = Boolean(registration) && !isSelected;
+            const isSelected = registeredRound === round.round;
+            const sameActivityLocked = registeredRound !== null && !isSelected;
+            const isFull = round.count >= ROUND_CAPACITY;
             const crossActivityConflict =
-              !registration &&
-              registrations.some(
-                (r) => r.activityId !== entry.id && r.round === round.index,
-              );
+              registeredRound === null && Boolean(round.conflict);
             return (
               <button
-                key={round.index}
+                key={round.round}
                 type="button"
                 disabled={
-                  Boolean(registration) ||
-                  crossActivityConflict ||
-                  round.status !== "available"
+                  registeredRound !== null || crossActivityConflict || isFull
                 }
                 onClick={() => setSelectedRound(round)}
                 className={cn(
                   "flex flex-col rounded-xl p-2 text-left text-foreground disabled:cursor-not-allowed border border-black",
                   isSelected
                     ? "border border-black bg-rpkm-yellow"
-                    : crossActivityConflict || round.status === "full"
+                    : crossActivityConflict || isFull
                       ? "bg-[#f4c3ab]"
                       : "bg-background",
                   sameActivityLocked && "opacity-50",
@@ -120,7 +134,7 @@ function ActivityDetailPanelContent({ entry }: ActivityDetailPanelProps) {
                     <span className="flex items-baseline gap-2">
                       <span className="font-bold whitespace-nowrap">
                         {t("walkrally.events.roundLabel", {
-                          index: String(round.index),
+                          index: String(round.round),
                         })}
                       </span>
                       <span className="text-sm whitespace-nowrap">
@@ -131,11 +145,11 @@ function ActivityDetailPanelContent({ entry }: ActivityDetailPanelProps) {
                   <span
                     className={cn(
                       "flex items-center gap-1 text-xs",
-                      round.status === "full" ? "text-rpkm-red" : "text-black",
+                      isFull ? "text-rpkm-red" : "text-black",
                     )}
                   >
                     <Users className="size-3.5" />
-                    {round.booked}/{round.capacity}
+                    {round.count}/{ROUND_CAPACITY}
                   </span>
                 </div>
                 {sameActivityLocked ? (
@@ -164,7 +178,7 @@ function ActivityDetailPanelContent({ entry }: ActivityDetailPanelProps) {
           selectedRound
             ? t("walkrally.events.confirmMessage", {
                 name,
-                index: String(selectedRound.index),
+                index: String(selectedRound.round),
               })
             : ""
         }
@@ -175,7 +189,7 @@ function ActivityDetailPanelContent({ entry }: ActivityDetailPanelProps) {
           selectedRound
             ? t("walkrally.events.successMessage", {
                 name,
-                index: String(selectedRound.index),
+                index: String(selectedRound.round),
               })
             : ""
         }
