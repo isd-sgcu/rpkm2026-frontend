@@ -16,7 +16,6 @@ export type FieldTripActivity = {
   formUrl: string;
   /** Optional activity-period text (e.g. "22-29 ก.ค. 69 …"); falls back to `time`. */
   activityPeriod?: string;
-  /** Optional link for the "รายละเอียด" (details) button. */
   detailsUrl?: string;
 };
 
@@ -98,7 +97,7 @@ export function FieldTripCard({
   return (
     <article
       className={cn(
-        "w-[301px] rounded-2xl border border-black bg-rpkm-blue p-3",
+        "w-[328px] rounded-2xl border border-black bg-rpkm-blue p-3",
         className,
       )}
     >

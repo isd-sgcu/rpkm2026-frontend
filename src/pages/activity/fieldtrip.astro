@@ -1,9 +1,132 @@
 ---
 import ActivityLayout from "@layouts/ActivityLayout.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import {
+  FieldTripCard,
+  type FieldTrip,
+} from "@components/activity/FieldTripCard";
 import { appConfig } from "@lib/env";
+import { CalendarDays } from "lucide-react";
+
+// One entry per card. `color` is the outer/behind layer colour — change it per
+// card. `data` is the card content. Swap the placeholder text + registerUrl.
+const fieldTrips: { color: string; data: FieldTrip }[] = [
+  {
+    color: "#6ABF73",
+    data: {
+      id: "eco",
+      title: "เส้นทางรักษ์โลก",
+      description:
+        "สำรวจพื้นที่สีเขียวของจุฬาฯ พร้อมเรียนรู้การจัดการขยะและการดูแลสิ่งแวดล้อมผ่าน 2 เส้นทางย่อย ได้แก่ Plantwalk (เดินสำรวจต้นไม้ในจุฬาฯ) และ Trashvenger (สำรวจการจัดการขยะภายในจุฬาฯ)",
+      routes: [
+        {
+          name: "Plant Walk",
+          date: "22-23 กรกฎาคม 69",
+          time: "8:30-11:00 น.",
+          location: "วันที่22: อาคารมหิตลาธิเบศร\nวันที่23: อาคารจามจุรี 5",
+        },
+        {
+          name: "Trashvenger",
+          date: "24-27 กรกฎาคม 69",
+          time: "8:30-11:00 น.",
+          location: "โรงอาหารสำนักงานมหาวิทยาลัย",
+        },
+      ],
+      registerUrl: "", // TODO: insert the real registration link
+    },
+  },
+  {
+    color: "#E87E8C",
+    data: {
+      id: "history",
+      title: "เส้นทางประวัติศาสตร์",
+      description:
+        "ตัวอย่างคำอธิบายกิจกรรม — เปลี่ยนข้อความ สี และลิงก์ลงทะเบียนได้ภายหลัง",
+      routes: [
+        {
+          name: "Route A",
+          date: "22-23 กรกฎาคม 69",
+          time: "8:30-11:00 น.",
+          location: "สถานที่ A",
+        },
+        {
+          name: "Route B",
+          date: "24-27 กรกฎาคม 69",
+          time: "8:30-11:00 น.",
+          location: "สถานที่ B",
+        },
+      ],
+      registerUrl: "",
+    },
+  },
+  {
+    color: "#80CAE8",
+    data: {
+      id: "community",
+      title: "เส้นทางชุมชน",
+      description:
+        "ตัวอย่างคำอธิบายกิจกรรม — เปลี่ยนข้อความ สี และลิงก์ลงทะเบียนได้ภายหลัง",
+      routes: [
+        {
+          name: "Route A",
+          date: "22-23 กรกฎาคม 69",
+          time: "8:30-11:00 น.",
+          location: "สถานที่ A",
+        },
+        {
+          name: "Route B",
+          date: "24-27 กรกฎาคม 69",
+          time: "8:30-11:00 น.",
+          location: "สถานที่ B",
+        },
+      ],
+      registerUrl: "",
+    },
+  },
+];
 ---
 
 <BaseLayout title={appConfig.appName}>
-  <ActivityLayout navigateBack="/" showMenuBorder={true} />
+  <ActivityLayout navigateBack="/" showMenuBorder={true}>
+    <div class="w-full flex items-left">
+      <header class="relative z-10 text-left">
+        <h1 class="text-2xl font-bold">Field Trip</h1>
+        <p class="text-xs font-normal my-1 leading-normal">
+          ออกสำรวจจุฬาฯ ผ่าน 3 เส้นทางที่ออกแบบมาให้คูณได้เรียนรู้
+          ทั้งประวัติศาสตร์
+          <br />
+          ชุมชน และสิ่งแวดล้อม
+        </p>
+        <div class="flex flex-col items-left">
+          <p class="flex items-start gap-1 text-xs font-normal leading-normal">
+            <CalendarDays className="size-[18px] shrink-0 text-black" />
+            เปิดลงทะเบียน 18-20 ก.ค. 69 หรือจนกว่าจะเต็ม
+          </p>
+          <p class="flex items-start gap-1 text-xs font-normal leading-normal">
+            <CalendarDays className="mt-1.5 size-[18px] shrink-0 text-black" />
+            กิจกรรมตั้งแต่วันที่ 22-29 ก.ค. 69 <br /> (เวลาเข้าร่วมขึ้นอยู่กับเส้นทางที่เลือก)
+          </p>
+        </div>
+      </header>
+    </div>
+    <div class="w-full flex items-left my-[15px]">
+      <header class="relative z-10 text-left">
+        <h1 class="text-xl font-bold">เลือกเส้นทางที่สนใจ</h1>
+        <p class="flex items-start gap-1 text-xs font-normal leading-normal">
+          หมายเหตุ: ใน 1 เส้นทางไม่สามารถเข้าร่วมมากกว่า 1 รอบได้
+          <br />
+          และทุกกิจกรรมมีวันละ 1 รอบ
+        </p>
+      </header>
+    </div>
+
+    {/* Three cards, each a different colour. */}
+    <div class="flex w-full flex-col items-center gap-6 pb-8">
+      {
+        fieldTrips.map(({ color, data }) => (
+          <FieldTripCard fieldTrip={data} color={color} client:load />
+        ))
+      }
+    </div>
+  </ActivityLayout>
 </BaseLayout>
