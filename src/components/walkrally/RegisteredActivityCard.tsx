@@ -33,7 +33,6 @@ export function RegisteredActivityCard({
 
   async function handleConfirmCancel() {
     await unregisterFromActivity(activity.id);
-    await queryClient.invalidateQueries({ queryKey: ["walkrally-me"] });
   }
 
   return (
@@ -101,7 +100,12 @@ export function RegisteredActivityCard({
 
       <ConfirmActionDialog
         open={open}
-        onOpenChange={setOpen}
+        onOpenChange={(next) => {
+          setOpen(next);
+          if (!next) {
+            queryClient.invalidateQueries({ queryKey: ["walkrally-me"] });
+          }
+        }}
         onConfirm={handleConfirmCancel}
         confirmTitle={t("walkrally.home.cancelTitle")}
         confirmMessage={t("walkrally.home.cancelMessage", {
