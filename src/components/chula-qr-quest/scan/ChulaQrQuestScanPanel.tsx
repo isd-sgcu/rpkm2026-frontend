@@ -1,13 +1,16 @@
-import { useState } from "react";
-import { ScanLine } from "lucide-react";
-import { Button } from "@components/ui/button";
+import { useRef, useState } from "react";
+import { CloudUpload } from "lucide-react";
+import { BarcodeDetector } from "barcode-detector/ponyfill";
+import { Button, buttonVariants } from "@components/ui/button";
+import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
+import { QrScanner } from "@components/shared/QrCodeScanner";
+import { CameraTroubleshoot } from "@components/shared/CameraTroubleshootDialog";
 import positions from "@components/chula-qr-quest/position.json";
 import {
   ChulaQrQuestScanResultDialog,
   type ScanResult,
 } from "@components/chula-qr-quest/scan/ChulaQrQuestScanResultDialog";
-import { ChulaQrQuestLoginRequiredDialog } from "@components/chula-qr-quest/scan/ChulaQrQuestLoginRequiredDialog";
 
 interface StampPosition {
   id: string;
@@ -22,10 +25,13 @@ const stampPositions = positions as StampPosition[];
 const ChulaQrQuestScanPanel = () => {
   const t = useT();
   const [result, setResult] = useState<ScanResult | null>(null);
-  const [loginRequiredOpen, setLoginRequiredOpen] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // TODO: replace with a real camera/QR scanning integration that calls the API
-  function simulateScanSuccess() {
+  // TODO: replace with a real API call that validates the scanned code and
+  // reports which stamp (if any) was collected.
+  function handleCode(_code: string) {
+    console.log(_code);
+    if (result) return;
     const target =
       stampPositions.find((p) => !p.collected) ?? stampPositions[0];
     const collectedCount = stampPositions.filter((p) => p.collected).length + 1;
@@ -38,15 +44,24 @@ const ChulaQrQuestScanPanel = () => {
     });
   }
 
-  function simulateScanFail() {
-    setResult({ status: "fail" });
+  async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+
+    const detector = new BarcodeDetector({ formats: ["qr_code"] });
+    const codes = await detector.detect(file).catch(() => []);
+    const code = codes[0]?.rawValue;
+
+    if (!code) {
+      setResult({ status: "fail" });
+      return;
+    }
+    handleCode(code);
   }
 
-  // TODO: replace with a real check for whether the scan came from outside
-  // the app's own scanner (e.g. a QR code opened via the phone's camera app)
-  // while the user has no active session
-  function simulateScanFromExternalScanner() {
-    setLoginRequiredOpen(true);
+  function closeResult() {
+    setResult(null);
   }
 
   return (
@@ -55,35 +70,46 @@ const ChulaQrQuestScanPanel = () => {
         {t("chulaQrQuest.scan.title")}
       </h1>
 
-      <div className="flex aspect-square w-full max-w-70 items-center justify-center rounded-3xl border border-foreground bg-muted">
-        <ScanLine className="size-16 text-muted-foreground" />
+      <div className="relative isolate w-full max-w-70 overflow-hidden rounded-3xl border border-foreground p-4 mb-8">
+        <QrScanner
+          className="rounded-2xl"
+          paused={result !== null}
+          onScan={handleCode}
+        />
       </div>
+      <CameraTroubleshoot />
 
-      <div className="flex flex-wrap justify-center gap-2">
-        <Button type="button" variant="green" onClick={simulateScanSuccess}>
-          Simulate success
-        </Button>
-        <Button type="button" variant="destructive" onClick={simulateScanFail}>
-          Simulate fail
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={simulateScanFromExternalScanner}
-        >
-          Simulate external scan
-        </Button>
-      </div>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleFileUpload}
+      />
+      <Button
+        type="button"
+        variant="default"
+        className="rounded-full"
+        onClick={() => fileInputRef.current?.click()}
+        iconStart={<CloudUpload className="size-4" />}
+      >
+        {t("chulaQrQuest.scan.uploadImage")}
+      </Button>
+
+      <a
+        href="/chula-qr-quest"
+        className={cn(
+          buttonVariants({ variant: "outline", size: "sm" }),
+          "rounded-full",
+        )}
+      >
+        {t("chulaQrQuest.scan.cancel")}
+      </a>
 
       <ChulaQrQuestScanResultDialog
         open={result !== null}
-        onOpenChange={(open) => !open && setResult(null)}
+        onOpenChange={(open) => !open && closeResult()}
         result={result}
-      />
-
-      <ChulaQrQuestLoginRequiredDialog
-        open={loginRequiredOpen}
-        onOpenChange={setLoginRequiredOpen}
       />
     </div>
   );
