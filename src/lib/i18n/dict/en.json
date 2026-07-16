@@ -433,6 +433,7 @@
       "enterRoom": "Enter room",
       "joinPlaceholder": "Enter room code",
       "joinAction": "Join room",
+      "joinSuccess": "Joined the room",
       "joinCodeLabel": "Room code",
       "inviteLinkLabel": "Invite with link",
       "copyCode": "Copy room code",

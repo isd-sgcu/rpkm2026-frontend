@@ -433,6 +433,7 @@
       "enterRoom": "เข้าห้อง",
       "joinPlaceholder": "โปรดกรอกรหัสห้อง",
       "joinAction": "เข้าร่วมห้อง",
+      "joinSuccess": "เข้าร่วมห้องแล้ว",
       "joinCodeLabel": "รหัสห้อง",
       "inviteLinkLabel": "เชิญด้วยลิงก์",
       "copyCode": "คัดลอกรหัสห้อง",
