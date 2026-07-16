@@ -1,5 +1,6 @@
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useT } from "@lib/i18n/useT";
 import { Button } from "@components/ui/button";
 import {
@@ -13,6 +14,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@components/ui/alert-dialog";
+import { QueryProvider } from "@components/shared/QueryProvider";
+import { Toaster } from "@components/ui/sonner";
 import stamp from "@assets/images/house/house_ranking_stamp.svg";
 import HouseSelector from "./HouseSelector";
 import HouseSelectPopup from "./HouseSelectPopup";
@@ -20,7 +23,15 @@ import HouseDetailView from "./HouseDetailView";
 import edit_icon from "@assets/icons/edit.svg";
 import danger_icon from "@assets/icons/danger.svg";
 import success_icon from "@assets/icons/success.svg";
-import { HOUSES, type House } from "../../consts/house";
+import { getHouseByCode, HOUSES, type House } from "../../consts/house";
+import { APIError } from "@lib/client";
+import { useProfile } from "@lib/auth/useProfile";
+import {
+  getMyGroup,
+  getHousePreferences,
+  setHousePreferences,
+} from "@lib/api/groups";
+import { getHouses } from "@lib/api/houses";
 import {
   DndContext,
   closestCenter,
@@ -43,36 +54,46 @@ export type RankingHouses = {
   house5: string | null;
 };
 
-export type RankingProps = {
-  houses: RankingHouses;
+const rankingKeys: (keyof RankingHouses)[] = [
+  "house1",
+  "house2",
+  "house3",
+  "house4",
+  "house5",
+];
+
+const emptyRanking: RankingHouses = {
+  house1: null,
+  house2: null,
+  house3: null,
+  house4: null,
+  house5: null,
 };
 
-export default function Ranking() {
-  const rankingKeys: (keyof RankingHouses)[] = [
-    "house1",
-    "house2",
-    "house3",
-    "house4",
-    "house5",
-  ];
+function saveErrorMessage(err: unknown, t: ReturnType<typeof useT>) {
+  if (err instanceof APIError && err.code === "HOUSE_PICK_CLOSED") {
+    return t("house.ranking.housePickClosed");
+  }
+  return t("house.ranking.saveErrorDescription");
+}
+
+function RankingPanel() {
   const [activeRank, setActiveRank] = useState<keyof RankingHouses | null>(
     null,
   );
-  const [haveSelectedHouse, setHaveSelectedHouse] = useState<boolean>(false);
-  const [selectedHouses, setSelectedHouses] = useState<RankingHouses>({
-    house1: null,
-    house2: null,
-    house3: null,
-    house4: null,
-    house5: null,
-  });
+  const [selectedHouses, setSelectedHouses] =
+    useState<RankingHouses>(emptyRanking);
   const [order, setOrder] = useState<(keyof RankingHouses)[]>(rankingKeys);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [showClearConfirm, setShowClearConfirm] = useState<boolean>(false);
+  const [haveSelectedHouse, setHaveSelectedHouse] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [showSaveAlert, setShowSaveAlert] = useState(false);
   const [saveAlertType, setSaveAlertType] = useState<"error" | "success">(
     "error",
   );
+  const [saveErrorDescription, setSaveErrorDescription] = useState<
+    string | null
+  >(null);
   const [detailHouse, setDetailHouse] = useState<House | null>(null);
 
   const sensors = useSensors(
@@ -80,10 +101,88 @@ export default function Ranking() {
   );
 
   const t = useT();
+  const queryClient = useQueryClient();
+  const profile = useProfile();
+
+  const { data: group } = useQuery({
+    queryKey: ["rpkm-group"],
+    queryFn: getMyGroup,
+  });
+  const { data: preferences } = useQuery({
+    queryKey: ["rpkm-house-preferences"],
+    queryFn: getHousePreferences,
+  });
+  const { data: houseRecords } = useQuery({
+    queryKey: ["rpkm-houses"],
+    queryFn: getHouses,
+  });
+  const [seededPreferences, setSeededPreferences] = useState(preferences);
+
+  const currentUserId = profile.status === "ready" ? profile.me.id : null;
+  const isEditable =
+    !!group && currentUserId !== null && group.leaderId === currentUserId;
+
+  // Maps a local house's Thai name (how selection state identifies a house)
+  // to the real backend houseId, so submits can send real uuids.
+  const realHouseIdByName = useMemo(() => {
+    const map: Record<string, string> = {};
+    for (const record of houseRecords ?? []) {
+      const local = getHouseByCode(record.code);
+      if (local) map[local.name.th] = record.id;
+    }
+    return map;
+  }, [houseRecords]);
+
+  // Reset local ranking state to match the real house-preferences whenever
+  // they change (first load, or after a save elsewhere) — but never while
+  // the user has an edit in progress, so we don't clobber unsaved changes.
+  // This runs during render (React's blessed pattern for "adjust state when
+  // a value changes") rather than in an effect, so it never needs a second
+  // render pass to take effect.
+  if (preferences !== seededPreferences && houseRecords && !isEditing) {
+    setSeededPreferences(preferences);
+
+    const recordById = new Map(houseRecords.map((r) => [r.id, r]));
+    const names = (preferences ?? [])
+      .slice()
+      .sort((a, b) => a.rank - b.rank)
+      .map((pref) => {
+        const record = recordById.get(pref.houseId);
+        const local = record ? getHouseByCode(record.code) : undefined;
+        return local?.name.th ?? null;
+      })
+      .filter((name): name is string => name !== null);
+
+    if (names.length > 0) {
+      const nextSelected: RankingHouses = { ...emptyRanking };
+      rankingKeys.forEach((key, index) => {
+        nextSelected[key] = names[index] ?? null;
+      });
+      setSelectedHouses(nextSelected);
+      setHaveSelectedHouse(true);
+    }
+  }
+
   const hasSelectedHouse = Object.values(selectedHouses).some(
     (house) => house !== null,
   );
-  const canEdit = hasSelectedHouse && isEditing;
+  const canEdit = hasSelectedHouse && isEditing && isEditable;
+
+  const saveMutation = useMutation({
+    mutationFn: setHousePreferences,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rpkm-house-preferences"] });
+      setSaveAlertType("success");
+      setSaveErrorDescription(null);
+      setShowSaveAlert(true);
+      setIsEditing(false);
+    },
+    onError: (err) => {
+      setSaveAlertType("error");
+      setSaveErrorDescription(saveErrorMessage(err, t));
+      setShowSaveAlert(true);
+    },
+  });
 
   const handleDeleteHouse = (rank: keyof RankingHouses) => {
     setSelectedHouses((prev) => ({
@@ -93,6 +192,7 @@ export default function Ranking() {
   };
 
   const handleOpenSelector = (rank: keyof RankingHouses) => {
+    if (!isEditable) return;
     setActiveRank(rank);
   };
 
@@ -128,32 +228,22 @@ export default function Ranking() {
   };
 
   const handleSubmit = () => {
-    const orderedHouses = order
+    const orderedNames = order
       .map((rank) => selectedHouses[rank])
       .filter((house): house is string => house !== null);
 
-    if (orderedHouses.length === 0) {
+    if (orderedNames.length === 0) {
       setSaveAlertType("error");
+      setSaveErrorDescription(null);
       setShowSaveAlert(true);
       return;
     }
 
-    const payload: RankingHouses = {
-      house1: orderedHouses[0] ?? null,
-      house2: orderedHouses[1] ?? null,
-      house3: orderedHouses[2] ?? null,
-      house4: orderedHouses[3] ?? null,
-      house5: orderedHouses[4] ?? null,
-    };
+    const houseIds = orderedNames
+      .map((name) => realHouseIdByName[name])
+      .filter((id): id is string => !!id);
 
-    // Mock API
-    console.log("Mock API payload:", payload);
-
-    setTimeout(() => {
-      setSaveAlertType("success");
-      setShowSaveAlert(true);
-      setIsEditing(false);
-    }, 500);
+    saveMutation.mutate(houseIds);
   };
 
   return (
@@ -170,6 +260,7 @@ export default function Ranking() {
           </h1>
 
           {hasSelectedHouse &&
+            isEditable &&
             (canEdit ? (
               <div className="absolute top-1 right-0 flex flex-col items-end gap-0.5">
                 <button
@@ -210,13 +301,7 @@ export default function Ranking() {
                       <AlertDialogAction
                         className="bg-red-500 text-white"
                         onClick={() => {
-                          setSelectedHouses({
-                            house1: null,
-                            house2: null,
-                            house3: null,
-                            house4: null,
-                            house5: null,
-                          });
+                          setSelectedHouses(emptyRanking);
                           setOrder(rankingKeys);
                           setIsEditing(false);
                           setShowClearConfirm(false);
@@ -245,7 +330,6 @@ export default function Ranking() {
 
         {haveSelectedHouse ? (
           <div className="flex flex-col items-center gap-5 mt-6">
-            {/* // map through the houses and display them */}
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
@@ -276,30 +360,38 @@ export default function Ranking() {
               <p className="text-rpkm-yellow text-sm font-normal whitespace-pre-line">
                 {t("house.ranking.houseAnnouncement")}
               </p>
-              <Button type="button" size="lg" onClick={() => handleSubmit()}>
-                {t("house.ranking.save")}
-              </Button>
+              {isEditable && (
+                <Button
+                  type="button"
+                  size="lg"
+                  onClick={() => handleSubmit()}
+                  disabled={saveMutation.isPending}
+                >
+                  {t("house.ranking.save")}
+                </Button>
+              )}
             </div>
           </div>
         ) : (
-          // if the user has not selected a house, show a message and a button to select a house
           <div className="flex flex-col items-center gap-4 mt-6">
             <p className="text-white text-2xl font-bold text-center whitespace-pre-line">
               {t("house.ranking.noHouses")}
             </p>
-            <Button
-              type="button"
-              size="xl"
-              className="w-[80%] py-7 text-xl"
-              onClick={() => setHaveSelectedHouse(true)}
-            >
-              {t("house.ranking.selectHouse")}
-            </Button>
+            {isEditable && (
+              <Button
+                type="button"
+                size="xl"
+                className="w-[80%] py-7 text-xl"
+                onClick={() => setHaveSelectedHouse(true)}
+              >
+                {t("house.ranking.selectHouse")}
+              </Button>
+            )}
           </div>
         )}
       </MonotoneNoiseContainer>
 
-      {activeRank && (
+      {activeRank && isEditable && (
         <HouseSelectPopup
           onClose={() => setActiveRank(null)}
           onSelect={handleSelectHouse}
@@ -314,6 +406,7 @@ export default function Ranking() {
           house={detailHouse}
           onBack={() => setDetailHouse(null)}
           onConfirm={() => setDetailHouse(null)}
+          showAddButton={isEditable}
         />
       )}
 
@@ -343,7 +436,8 @@ export default function Ranking() {
 
             <AlertDialogDescription className="text-lg text-black">
               {saveAlertType === "error"
-                ? t("house.ranking.saveIncompleteDescription")
+                ? (saveErrorDescription ??
+                  t("house.ranking.saveIncompleteDescription"))
                 : t("house.ranking.saveSuccessDescription")}
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -360,6 +454,16 @@ export default function Ranking() {
           </div>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Toaster />
     </div>
+  );
+}
+
+export default function Ranking() {
+  return (
+    <QueryProvider>
+      <RankingPanel />
+    </QueryProvider>
   );
 }

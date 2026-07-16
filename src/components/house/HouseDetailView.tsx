@@ -41,12 +41,14 @@ type HouseDetailViewProps = {
   house: House | null;
   onConfirm: () => void;
   onBack: () => void;
+  showAddButton?: boolean;
 };
 
 export default function HouseDetailView({
   house,
   onConfirm,
   onBack,
+  showAddButton = true,
 }: HouseDetailViewProps) {
   const t = useT();
 
@@ -163,59 +165,61 @@ export default function HouseDetailView({
       </div>
 
       {/* Add this house */}
-      <div className="flex justify-center py-8">
-        <AlertDialog>
-          <AlertDialogTrigger
-            render={
-              <button
-                type="button"
-                className="flex items-center gap-2 rounded-full border bg-rpkm-beige py-2 pl-4 pr-6"
-              />
-            }
-          >
-            <span className="rounded-full border bg-rpkm-red p-1">
-              <span className="flex items-center justify-center rounded-full border bg-rpkm-beige p-1.5">
-                <Plus className="size-5 text-black" />
+      {showAddButton && (
+        <div className="flex justify-center py-8">
+          <AlertDialog>
+            <AlertDialogTrigger
+              render={
+                <button
+                  type="button"
+                  className="flex items-center gap-2 rounded-full border bg-rpkm-beige py-2 pl-4 pr-6"
+                />
+              }
+            >
+              <span className="rounded-full border bg-rpkm-red p-1">
+                <span className="flex items-center justify-center rounded-full border bg-rpkm-beige p-1.5">
+                  <Plus className="size-5 text-black" />
+                </span>
               </span>
-            </span>
-            <span className="text-xl font-bold text-black">
-              {t("house.detail.addHouse")}
-            </span>
-          </AlertDialogTrigger>
+              <span className="text-xl font-bold text-black">
+                {t("house.detail.addHouse")}
+              </span>
+            </AlertDialogTrigger>
 
-          <AlertDialogContent className="pt-10">
-            <AlertDialogClose />
-            <AlertDialogHeader>
-              <AlertDialogMedia className="absolute top-0 h-fit w-full translate-y-[-50%] rounded-2xl border bg-red-500 py-2">
-                <img src={danger_icon.src} alt="danger" />
-              </AlertDialogMedia>
+            <AlertDialogContent className="pt-10">
+              <AlertDialogClose />
+              <AlertDialogHeader>
+                <AlertDialogMedia className="absolute top-0 h-fit w-full translate-y-[-50%] rounded-2xl border bg-red-500 py-2">
+                  <img src={danger_icon.src} alt="danger" />
+                </AlertDialogMedia>
 
-              <AlertDialogTitle className="text-xl font-bold text-black">
-                {t("house.ranking.selectHouseConfirmTitle")}
-              </AlertDialogTitle>
+                <AlertDialogTitle className="text-xl font-bold text-black">
+                  {t("house.ranking.selectHouseConfirmTitle")}
+                </AlertDialogTitle>
 
-              <AlertDialogDescription className="whitespace-break-spaces text-lg text-black">
-                {t("house.ranking.selectHouseConfirmDescription", {
-                  House: house.name.th,
-                })}
-              </AlertDialogDescription>
-            </AlertDialogHeader>
+                <AlertDialogDescription className="whitespace-break-spaces text-lg text-black">
+                  {t("house.ranking.selectHouseConfirmDescription", {
+                    House: house.name.th,
+                  })}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
 
-            <div className="flex justify-center gap-4">
-              <AlertDialogAction
-                className="bg-red-500 text-white"
-                onClick={onConfirm}
-              >
-                {t("walkrally.events.confirm")}
-              </AlertDialogAction>
+              <div className="flex justify-center gap-4">
+                <AlertDialogAction
+                  className="bg-red-500 text-white"
+                  onClick={onConfirm}
+                >
+                  {t("walkrally.events.confirm")}
+                </AlertDialogAction>
 
-              <AlertDialogCancel>
-                {t("walkrally.events.cancel")}
-              </AlertDialogCancel>
-            </div>
-          </AlertDialogContent>
-        </AlertDialog>
-      </div>
+                <AlertDialogCancel>
+                  {t("walkrally.events.cancel")}
+                </AlertDialogCancel>
+              </div>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
+      )}
     </MonotoneNoiseContainer>
   );
 }
