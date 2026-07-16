@@ -5,6 +5,7 @@ import { ChevronLeft } from "lucide-react";
 import flowerPot from "@assets/images/artboard_16.svg";
 import { Image } from "astro:assets";
 import { AuthGuard } from "@components/shared/AuthGuard";
+import { Toaster } from "@components/ui/sonner";
 import "@styles/global.css";
 
 const {
@@ -27,6 +28,7 @@ const {
   </head>
   <body class="min-h-screen bg-[#A3E4A9] text-foreground font-sans">
     <AuthGuard pathname={Astro.url.pathname} client:load />
+    <Toaster client:load />
     <main
       class:list={[
         "relative w-full min-h-screen overflow-hidden sm:max-w-md sm:mx-auto",
