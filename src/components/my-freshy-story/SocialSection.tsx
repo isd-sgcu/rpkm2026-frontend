@@ -5,8 +5,8 @@ import { getImageUrl } from "@lib/function";
 import ListChip from "./ListChip";
 export default function SocialSection() {
   const t = useT();
-  const InstagramIconUrl = getImageUrl("instagram.svg");
-  const TikTokIconUrl = getImageUrl("tiktok.svg");
+  const InstagramIconUrl = getImageUrl("instagram_orange.svg");
+  const TikTokIconUrl = getImageUrl("tiktok_orange.svg");
 
   return (
     <MonotoneNoiseContainer className="grow bg-rpkm-red border rounded-t-4xl flex flex-col p-4 gap-4 mt-6">
