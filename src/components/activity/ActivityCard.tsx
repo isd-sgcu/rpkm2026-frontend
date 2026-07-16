@@ -87,20 +87,22 @@ export function FieldTripCard({
   return (
     <article
       className={cn(
-        "w-[328px] rounded-2xl border border-black bg-rpkm-blue p-3",
+        "w-[328px] rounded-xl border border-rpkm-black bg-rpkm-blue p-[5px]",
         className,
       )}
     >
       {/* Title lives in the blue header. Placeholder blue — change later. */}
-      <h2 className="mb-2 px-1 text-2xl font-bold text-white">{title}</h2>
+      <h2 className="py-1 px-1 mx-3 text-2xl font-bold text-white">{title}</h2>
 
       {/* White info panel nested inside the blue card. */}
-      <div className="rounded-xl border border-black bg-white p-4">
+      <div className="rounded-xl border border-rpkm-black bg-white p-1">
         {/* Description. */}
-        <p className="text-xs leading-relaxed text-[#46545b]">{description}</p>
+        <p className="mt-2 mx-1 text-xs leading-relaxed text-[#46545b]">
+          {description}
+        </p>
 
         {/* Registration period + activity period. */}
-        <div className="mt-4 grid gap-2 text-xs text-[#46545b]">
+        <div className="mt-4 mx-1 grid gap-2 text-xs text-[#46545b]">
           <span className="flex items-start gap-2">
             <CalendarDays className="mt-0.5 size-4 shrink-0" aria-hidden />
             <span>{registrationText}</span>
@@ -112,7 +114,7 @@ export function FieldTripCard({
         </div>
 
         {/* Action — placeholder link; wire the real URL later. */}
-        <div className="mt-5 flex justify-center">
+        <div className="mt-5 mb-3 flex justify-center">
           <Button
             type="button"
             className="rounded-full px-6"

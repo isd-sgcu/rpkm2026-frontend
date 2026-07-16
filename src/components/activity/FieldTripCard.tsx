@@ -64,10 +64,10 @@ export function FieldTripCard({
       style={{ backgroundColor: color }}
     >
       {/* Title strip — the only part where the coloured layer shows. */}
-      <h2 className="px-4 pt-3 pb-2 text-xl font-bold text-white">{title}</h2>
+      <h2 className="px-3 pt-3 pb-2 text-xl font-bold text-white">{title}</h2>
 
       {/* White info panel — reaches both sides and the bottom of the card. */}
-      <div className="rounded-t-2xl border-t border-rpkm-black bg-white p-4">
+      <div className="rounded-t-2xl border-t border-rpkm-black bg-white p-3">
         {/* Description. `whitespace-pre-line` makes "\n" in the text break lines. */}
         <p className="text-xs leading-relaxed whitespace-pre-line text-[#46545b]">
           {description}
