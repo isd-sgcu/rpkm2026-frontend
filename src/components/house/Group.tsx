@@ -1,8 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Crown, UserRound } from "lucide-react";
-
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 import { QueryProvider } from "@components/shared/QueryProvider";
 import { Toaster } from "@components/ui/sonner";
@@ -20,6 +18,7 @@ import {
   type GroupWithMembers,
 } from "@lib/api/groups";
 import GroupDetailModal from "./GroupDetailModal";
+import { MemberWindow } from "./MemberWindow";
 
 function memberName(member: { nickname: string | null; firstName: string }) {
   return member.nickname || member.firstName;
@@ -117,19 +116,25 @@ function GroupSummary({
         })}
       </p>
 
-      <div className="flex w-full items-center justify-center gap-3">
-        {group.members.map((member) => (
+      <div className="flex w-full items-start justify-center gap-1">
+        {Array.from(
+          { length: GROUP_MAX_MEMBERS },
+          (_, index) => group.members[index] ?? null,
+        ).map((member, index) => (
           <div
-            key={member.userId}
-            className="relative flex flex-col items-center gap-1 rounded-2xl border border-foreground bg-background p-2"
+            key={member?.userId ?? `empty-${index}`}
+            className="h-20.25 w-17.25"
           >
-            {member.isLeader && (
-              <Crown className="absolute -top-2 -left-2 size-5 text-yellow-500" />
-            )}
-            <UserRound className="size-8 text-muted-foreground" />
-            <span className="max-w-14 truncate rounded-full bg-secondary px-2 text-xs font-medium">
-              {memberName(member)}
-            </span>
+            <div className="origin-top-left scale-[0.62]">
+              {member ? (
+                <MemberWindow
+                  variant={member.isLeader ? "leader" : "member"}
+                  name={memberName(member)}
+                />
+              ) : (
+                <MemberWindow variant="empty" />
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -146,14 +151,51 @@ function GroupSummary({
   );
 }
 
+/**
+ * Join code carried over from an invite link (/room#CODE redirects to
+ * /house?code=CODE). Read once on mount; consumed by the auto-join effect.
+ */
+function inviteCodeFromUrl(): string | null {
+  if (typeof window === "undefined") return null;
+  const code = new URLSearchParams(window.location.search).get("code");
+  return code ? code.trim().toUpperCase() : null;
+}
+
 function GroupPanel() {
   const t = useT();
   const profile = useProfile();
+  const queryClient = useQueryClient();
   const [modalOpen, setModalOpen] = useState(false);
+  // Ref, not state: the code is consumed exactly once by the effect below
+  // and never drives rendering.
+  const autoJoinCodeRef = useRef(inviteCodeFromUrl());
   const { data, isLoading, isError } = useQuery({
     queryKey: ["rpkm-group"],
     queryFn: getMyGroup,
   });
+
+  const autoJoinMutation = useMutation({
+    mutationFn: joinGroup,
+    onSuccess: () => {
+      toast.success(t("house.group.joinSuccess"));
+      queryClient.invalidateQueries({ queryKey: ["rpkm-group"] });
+    },
+    onError: (err) => toast.error(joinErrorMessage(err, t)),
+  });
+
+  useEffect(() => {
+    // Wait until the user's own group is known so we can skip joining a
+    // room they are already in, then consume the code exactly once.
+    const code = autoJoinCodeRef.current;
+    if (!code || !data) return;
+    autoJoinCodeRef.current = null;
+    const url = new URL(window.location.href);
+    url.searchParams.delete("code");
+    window.history.replaceState(null, "", url);
+    if (data.joinCode !== code) {
+      autoJoinMutation.mutate(code);
+    }
+  }, [data, autoJoinMutation]);
 
   const currentUserId = profile.status === "ready" ? profile.me.id : null;
   const isSolo = !!data && data.members.length === 1;

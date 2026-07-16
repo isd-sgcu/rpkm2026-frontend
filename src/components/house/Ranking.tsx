@@ -70,6 +70,19 @@ const emptyRanking: RankingHouses = {
   house5: null,
 };
 
+/**
+ * Collapses gaps in the ranking: the given houses (already in display order)
+ * are reassigned to ranks 1..n top-down, so an empty rank can never sit
+ * above a filled one.
+ */
+function compactRanking(names: string[]): RankingHouses {
+  const compacted: RankingHouses = { ...emptyRanking };
+  rankingKeys.forEach((key, index) => {
+    compacted[key] = names[index] ?? null;
+  });
+  return compacted;
+}
+
 function saveErrorMessage(err: unknown, t: ReturnType<typeof useT>) {
   if (err instanceof APIError && err.code === "HOUSE_PICK_CLOSED") {
     return t("house.ranking.housePickClosed");
@@ -185,10 +198,13 @@ function RankingPanel() {
   });
 
   const handleDeleteHouse = (rank: keyof RankingHouses) => {
-    setSelectedHouses((prev) => ({
-      ...prev,
-      [rank]: null,
-    }));
+    setSelectedHouses((prev) => {
+      const names = order
+        .map((key) => (key === rank ? null : prev[key]))
+        .filter((house): house is string => house !== null);
+      return compactRanking(names);
+    });
+    setOrder(rankingKeys);
   };
 
   const handleOpenSelector = (rank: keyof RankingHouses) => {
@@ -238,6 +254,12 @@ function RankingPanel() {
       setShowSaveAlert(true);
       return;
     }
+
+    // Re-rank before saving: collapse any gaps so picks always occupy
+    // ranks 1..n in display order (no empty rank above a filled one — you
+    // can't end up with only 4th/5th chosen while 1st-3rd are empty).
+    setSelectedHouses(compactRanking(orderedNames));
+    setOrder(rankingKeys);
 
     const houseIds = orderedNames
       .map((name) => realHouseIdByName[name])

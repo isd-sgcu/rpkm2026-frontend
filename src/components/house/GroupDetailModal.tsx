@@ -1,18 +1,9 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import {
-  ChevronLeft,
-  Copy,
-  Link2,
-  RefreshCw,
-  Star,
-  UserRound,
-  X,
-} from "lucide-react";
+import { Check, ChevronLeft, Copy, Link2, RefreshCw } from "lucide-react";
 
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
-import { Button } from "@components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,8 +15,14 @@ import {
   AlertDialogTitle,
 } from "@components/ui/alert-dialog";
 import danger_icon from "@assets/icons/danger.svg";
-import sparkle_pink from "@assets/icons/sparkle_pink.svg";
-import sparkle_cream from "@assets/icons/sparkle_cream.svg";
+import house_frame from "@assets/images/house/group_house_frame.svg";
+import ground from "@assets/images/house/group_ground.svg";
+import deco_left from "@assets/images/house/group_deco_left.png";
+import deco_right from "@assets/images/house/group_deco_right.png";
+import rank_back from "@assets/images/house/group_rank_back.svg";
+import rank_front from "@assets/images/house/group_rank_front.svg";
+import rank_podium from "@assets/images/house/group_rank_podium.svg";
+import artboard_27 from "@assets/images/artboard_27.svg";
 import { APIError } from "@lib/client";
 import { useT, type Translator } from "@lib/i18n/useT";
 import {
@@ -36,6 +33,7 @@ import {
   regenerateJoinCode,
   type GroupMember,
 } from "@lib/api/groups";
+import { MemberWindow } from "./MemberWindow";
 
 type DialogState =
   | { type: "none" }
@@ -60,95 +58,74 @@ function actionErrorMessage(
   };
 }
 
-function GroupHouseFrame({ children }: { children: React.ReactNode }) {
+/**
+ * The "การจัดอันดับ" button from the Figma group modal — a yellow pill with a
+ * layered house-and-podium badge on the left, rebuilt from the design's
+ * exported vector parts with the label kept as live (translatable) text.
+ */
+function RankingButton({
+  onClick,
+  label,
+}: {
+  onClick: () => void;
+  label: string;
+}) {
   return (
-    <div className="mx-auto w-full max-w-96">
-      <svg
-        viewBox="0 0 368 96"
-        preserveAspectRatio="none"
-        className="block h-24 w-full"
-        aria-hidden="true"
-      >
-        <rect
-          x="51.5"
-          y="0.5"
-          width="71"
-          height="9"
-          fill="#7fcbe8"
-          stroke="#372f32"
-        />
-        <rect
-          x="57"
-          y="4"
-          width="60"
-          height="31"
-          rx="3"
-          fill="#fae200"
-          stroke="#372f32"
-        />
-        <path
-          d="M33.4444 37.4865C34.3396 35.9471 35.9859 35 37.7667 35H338.487C340.473 35 342.271 36.1762 343.068 37.9964L364.937 87.9963C366.382 91.2997 363.961 95 360.356 95H8.69144C4.83552 95 2.43078 90.8199 4.36911 87.4865L33.4444 37.4865Z"
-          fill="#e75124"
-          stroke="#372f32"
-        />
-      </svg>
-
-      <MonotoneNoiseContainer
-        noise={{
-          noiseSize: 0.7,
-          noiseDensity: 20,
-          noiseColor: "rgba(0 0 0 / 0.59)",
-          noiseSeed: 2676,
-        }}
-        className="-mt-px rounded-b-[1px] border-x border-b border-[#372f32] bg-[#fefdf5] px-4 pb-6 pt-5"
-      >
-        {children}
-      </MonotoneNoiseContainer>
-    </div>
+    <button
+      type="button"
+      onClick={onClick}
+      className="relative block h-[54px] w-[159px]"
+    >
+      <img
+        src={rank_back.src}
+        alt=""
+        className="absolute top-0 left-0 h-full w-[52.89%]"
+      />
+      <div className="absolute inset-[39.82%_55.01%_50.99%_8.37%] rounded-[3px] bg-[#e9d106]" />
+      <div className="absolute inset-[31.3%_0_2.41%_27.04%] rounded-[11px] border border-[#373032] bg-[#e9d106]" />
+      <img
+        src={rank_front.src}
+        alt=""
+        className="absolute top-[9.36%] left-[3.2%] h-[85.96%] w-[45.46%]"
+      />
+      <div className="absolute inset-[43.59%_58.13%_48.51%_10.39%] rounded-[3px] bg-[#7fcbe8]" />
+      <img
+        src={rank_podium.src}
+        alt=""
+        className="absolute top-[19.84%] left-[15.72%] h-[64.38%] w-[20.58%]"
+      />
+      <span className="absolute inset-[47.87%_0.63%_18.99%_44.03%] flex items-center justify-center text-[13px] font-bold text-[#373032]">
+        {label}
+      </span>
+    </button>
   );
 }
 
 /**
- * Ground + ladder decoration matching the Figma background (mountain-green
- * ground swoosh, a hand-drawn ladder, and a couple of sparkle accents —
- * exported as real Figma SVGs where a clean asset exists, hand-assembled
- * elsewhere since the source ladder is a fragmented sketchy-line pattern
- * with no single exportable asset).
+ * Ground decoration matching the Figma background: green noise mound with
+ * flower/teacup art bottom-left and the yellow ladder with tulips
+ * bottom-right, all exported straight from the design.
  */
 function GroundDecoration() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-44 select-none overflow-hidden"
+      className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[265px] select-none"
     >
-      <svg
-        viewBox="0 0 393 220"
-        preserveAspectRatio="none"
-        className="absolute inset-0 h-full w-full"
-      >
-        <ellipse cx="196" cy="220" rx="320" ry="170" fill="#6abf73" />
-      </svg>
-
-      <svg viewBox="0 0 70 150" className="absolute right-6 bottom-0 h-36 w-16">
-        <g stroke="#372f32" strokeWidth="3" strokeLinecap="round">
-          <rect x="6" y="2" width="9" height="146" rx="3" fill="#fae200" />
-          <rect x="55" y="2" width="9" height="146" rx="3" fill="#fae200" />
-          <rect x="6" y="24" width="58" height="9" rx="2" fill="#fae200" />
-          <rect x="6" y="60" width="58" height="9" rx="2" fill="#fae200" />
-          <rect x="6" y="96" width="58" height="9" rx="2" fill="#fae200" />
-          <rect x="6" y="130" width="58" height="9" rx="2" fill="#fae200" />
-        </g>
-      </svg>
-
       <img
-        src={sparkle_pink.src}
+        src={ground.src}
         alt=""
-        className="absolute bottom-8 left-8 w-6"
+        className="absolute inset-0 h-full w-full object-cover object-top"
       />
       <img
-        src={sparkle_cream.src}
+        src={deco_left.src}
         alt=""
-        className="absolute bottom-20 left-20 w-5"
+        className="absolute bottom-0 -left-3 w-[120px]"
+      />
+      <img
+        src={deco_right.src}
+        alt=""
+        className="absolute right-0 bottom-0 h-[216px] w-[98px]"
       />
     </div>
   );
@@ -164,6 +141,7 @@ export default function GroupDetailModal({
   const t = useT();
   const queryClient = useQueryClient();
   const [dialog, setDialog] = useState<DialogState>({ type: "none" });
+  const [copied, setCopied] = useState<"code" | "link" | null>(null);
 
   const {
     data: group,
@@ -179,10 +157,11 @@ export default function GroupDetailModal({
   const hasOtherMembers = !!group && group.members.length > 1;
   const inviteLink =
     group && typeof window !== "undefined"
-      ? `${window.location.origin}/house?code=${group.joinCode}`
+      ? `${window.location.origin}/room#${group.joinCode}`
       : group
-        ? `/house?code=${group.joinCode}`
+        ? `/room#${group.joinCode}`
         : "";
+  const inviteLinkDisplay = inviteLink.replace(/^https?:\/\//, "");
 
   const invalidate = () =>
     queryClient.invalidateQueries({ queryKey: ["rpkm-group"] });
@@ -221,10 +200,19 @@ export default function GroupDetailModal({
     onError: () => toast.error(t("house.group.joinErrorGeneric")),
   });
 
-  const handleCopy = async (value: string, message: string) => {
+  const handleCopy = async (
+    value: string,
+    message: string,
+    target: "code" | "link",
+  ) => {
     try {
       await navigator.clipboard.writeText(value);
       toast.success(message);
+      setCopied(target);
+      window.setTimeout(
+        () => setCopied((current) => (current === target ? null : current)),
+        1500,
+      );
     } catch {
       toast.error(t("house.group.joinErrorGeneric"));
     }
@@ -239,175 +227,186 @@ export default function GroupDetailModal({
   };
 
   return (
-    <MonotoneNoiseContainer className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-[#6abf73]">
-      <div className="flex items-center p-4">
-        <Button
+    <MonotoneNoiseContainer
+      noise={{
+        noiseSize: 0.7,
+        noiseDensity: 20,
+        noiseColor: "rgba(0 0 0 / 0.59)",
+        noiseSeed: 2676,
+      }}
+      className="fixed inset-0 z-50 overflow-y-auto bg-[#fefdf5]"
+    >
+      <div className="relative flex min-h-full flex-col items-center overflow-hidden pb-16">
+        <GroundDecoration />
+        <img
+          src={artboard_27.src}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute top-[180px] right-0 w-[60px] opacity-25 select-none"
+        />
+
+        <button
           type="button"
-          variant="outline"
-          size="icon"
+          aria-label={t("walkrally.events.cancel")}
           onClick={onClose}
-          className="rounded-full bg-white text-black"
+          className="absolute top-4 left-4 z-10 flex size-12 items-center justify-center rounded-full border border-[#372f32] bg-[#fefdf5] text-[#373032]"
         >
-          <ChevronLeft className="size-6" />
-        </Button>
-      </div>
+          <ChevronLeft className="size-8" />
+        </button>
 
-      {isLoading ? (
-        <p className="py-6 text-center text-foreground">
-          {t("house.group.loading")}
-        </p>
-      ) : isError || !group ? (
-        <p className="py-6 text-center text-destructive">
-          {t("house.group.loadError")}
-        </p>
-      ) : (
-        <div className="relative flex-1 px-3 pb-8">
-          <GroundDecoration />
-
-          <h1 className="relative text-center text-3xl font-bold text-[#372f32]">
-            {t("house.group.title")}
-          </h1>
-          <p className="relative mb-4 text-center text-xl text-[#595959]">
-            {t("house.group.memberCount", {
-              count: String(group.members.length),
-              max: String(GROUP_MAX_MEMBERS),
-            })}
+        {isLoading ? (
+          <p className="relative py-20 text-center text-foreground">
+            {t("house.group.loading")}
           </p>
+        ) : isError || !group ? (
+          <p className="relative py-20 text-center text-destructive">
+            {t("house.group.loadError")}
+          </p>
+        ) : (
+          <>
+            <h1 className="relative mt-16 text-center text-[30px] font-bold text-[#373032]">
+              {t("house.group.title")}
+            </h1>
+            <p className="relative text-center text-[20px] font-bold text-[#595959]">
+              {t("house.group.memberCount", {
+                count: String(group.members.length),
+                max: String(GROUP_MAX_MEMBERS),
+              })}
+            </p>
 
-          <GroupHouseFrame>
-            <div className="relative flex flex-col items-center gap-5">
-              <Button
+            <div className="relative mt-3 w-[368px] max-w-full">
+              <img
+                src={house_frame.src}
+                alt=""
+                className="block w-full select-none"
+              />
+
+              <button
                 type="button"
-                size="sm"
-                variant="destructive"
-                className="absolute -top-1 right-0 rounded-full"
+                className="absolute top-[104px] right-[19px] h-[24px] rounded-[8px] border border-[#373032] bg-[#d9443e] px-2 text-[12px] font-bold text-white disabled:opacity-50"
                 onClick={handlePrimaryActionClick}
                 disabled={leaveMutation.isPending}
               >
                 {viewerIsLeader
                   ? t("house.group.deleteRoom")
                   : t("house.group.leaveRoom")}
-              </Button>
+              </button>
 
-              <div className="mt-8 grid w-full grid-cols-2 gap-3">
-                {Array.from(
-                  { length: GROUP_MAX_MEMBERS },
-                  (_, index) => group.members[index] ?? null,
-                ).map((member, index) =>
-                  member ? (
-                    <div
-                      key={member.userId}
-                      className="relative flex flex-col items-center gap-1 rounded-2xl border border-[#372f32] bg-white p-3"
-                    >
-                      <Star
-                        className={
-                          member.isLeader
-                            ? "absolute -top-2 -left-2 size-6 fill-yellow-400 text-[#372f32]"
-                            : "absolute -top-2 -left-2 size-6 fill-[#7fcbe8] text-[#372f32]"
+              <div className="absolute inset-x-0 top-[142px] flex flex-col items-center gap-5">
+                <div className="grid grid-cols-2 gap-x-8 gap-y-7">
+                  {Array.from(
+                    { length: GROUP_MAX_MEMBERS },
+                    (_, index) => group.members[index] ?? null,
+                  ).map((member, index) =>
+                    member ? (
+                      <MemberWindow
+                        key={member.userId}
+                        variant={member.isLeader ? "leader" : "member"}
+                        name={memberName(member)}
+                        onKick={
+                          viewerIsLeader && member.userId !== currentUserId
+                            ? () => setDialog({ type: "kick", member })
+                            : undefined
                         }
+                        kickLabel={t("house.group.removeMember", {
+                          name: memberName(member),
+                        })}
                       />
-                      {viewerIsLeader && member.userId !== currentUserId && (
-                        <button
-                          type="button"
-                          aria-label={t("house.group.removeMember", {
-                            name: memberName(member),
-                          })}
-                          className="absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full border border-[#372f32] bg-destructive text-background"
-                          onClick={() => setDialog({ type: "kick", member })}
-                        >
-                          <X className="size-3.5" />
-                        </button>
-                      )}
-                      <UserRound className="size-10 text-muted-foreground" />
-                      <span className="max-w-full truncate rounded-full bg-secondary px-2 text-sm font-medium">
-                        {memberName(member)}
-                      </span>
-                    </div>
-                  ) : (
-                    <div
-                      key={`empty-${index}`}
-                      className="relative flex flex-col items-center justify-center gap-1 rounded-2xl border border-dashed border-muted-foreground/50 p-3 text-muted-foreground"
-                    >
-                      <Star className="absolute -top-2 -left-2 size-6 fill-transparent text-muted-foreground/50" />
-                      <UserRound className="size-10" />
-                      <span className="text-sm">
-                        {t("house.group.emptySlot")}
-                      </span>
-                    </div>
-                  ),
-                )}
+                    ) : (
+                      <MemberWindow key={`empty-${index}`} variant="empty" />
+                    ),
+                  )}
+                </div>
+
+                <RankingButton
+                  onClick={onClose}
+                  label={t("house.ranking.title")}
+                />
               </div>
+            </div>
 
-              <Button
-                type="button"
-                size="sm"
-                className="rounded-full bg-rpkm-yellow text-black"
-                onClick={onClose}
-              >
-                {t("house.ranking.title")}
-              </Button>
-
-              {viewerIsLeader && (
-                <div className="flex w-full flex-col gap-2">
-                  <div className="flex items-center justify-between gap-2 rounded-full border border-[#372f32] bg-white px-4 py-2">
-                    <div className="flex min-w-0 flex-col">
-                      <span className="text-xs text-muted-foreground">
-                        {t("house.group.joinCodeLabel")}
-                      </span>
-                      <span className="text-lg font-bold tracking-[0.3em]">
-                        {group.joinCode}
-                      </span>
-                    </div>
-                    <div className="flex shrink-0 items-center gap-1">
-                      <button
-                        type="button"
-                        aria-label={t("house.group.regenerateCode")}
-                        className="flex size-8 items-center justify-center rounded-full hover:bg-muted disabled:opacity-50"
-                        onClick={() => regenerateMutation.mutate()}
-                        disabled={regenerateMutation.isPending}
-                      >
-                        <RefreshCw className="size-4" />
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={t("house.group.copyCode")}
-                        className="flex size-8 items-center justify-center rounded-full hover:bg-muted"
-                        onClick={() =>
-                          handleCopy(
-                            group.joinCode,
-                            t("house.group.copySuccess"),
-                          )
-                        }
-                      >
-                        <Copy className="size-4" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-2 rounded-full border border-[#372f32] bg-white px-4 py-2">
-                    <div className="flex min-w-0 flex-col">
-                      <span className="text-xs text-muted-foreground">
-                        {t("house.group.inviteLinkLabel")}
-                      </span>
-                      <span className="truncate text-sm">{inviteLink}</span>
-                    </div>
+            <div className="relative mt-3 flex flex-col gap-[10px]">
+              <div>
+                <div className="flex items-center justify-center gap-1.5">
+                  <span className="text-[16px] font-bold text-[#373032]">
+                    {t("house.group.joinCodeLabel")}
+                  </span>
+                  {viewerIsLeader && (
                     <button
                       type="button"
-                      aria-label={t("house.group.copyLink")}
-                      className="flex size-8 shrink-0 items-center justify-center rounded-full hover:bg-muted"
-                      onClick={() =>
-                        handleCopy(inviteLink, t("house.group.copySuccess"))
-                      }
+                      aria-label={t("house.group.regenerateCode")}
+                      className="text-[#0d0809] transition-transform active:rotate-90 disabled:opacity-50"
+                      onClick={() => regenerateMutation.mutate()}
+                      disabled={regenerateMutation.isPending}
                     >
-                      <Link2 className="size-4" />
+                      <RefreshCw
+                        className={`size-[18px] ${
+                          regenerateMutation.isPending ? "animate-spin" : ""
+                        }`}
+                      />
                     </button>
-                  </div>
+                  )}
                 </div>
-              )}
+                <div className="mt-0.5 flex h-[37px] items-center justify-center gap-3 rounded-[10px] border border-[#373032] bg-[#fffdf5]">
+                  <span
+                    key={group.joinCode}
+                    className="animate-in fade-in zoom-in-95 pl-[0.3em] text-[20px] font-bold tracking-[0.3em] text-[#373032] duration-300"
+                  >
+                    {group.joinCode}
+                  </span>
+                  <button
+                    type="button"
+                    aria-label={t("house.group.copyCode")}
+                    className="text-[#373032] transition-transform active:scale-90"
+                    onClick={() =>
+                      handleCopy(
+                        group.joinCode,
+                        t("house.group.copySuccess"),
+                        "code",
+                      )
+                    }
+                  >
+                    {copied === "code" ? (
+                      <Check className="size-[18px] animate-in zoom-in-50 text-[#2e7d32] duration-200" />
+                    ) : (
+                      <Copy className="size-[18px]" />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-center text-[16px] font-bold text-[#373032]">
+                  {t("house.group.inviteLinkLabel")}
+                </p>
+                <div className="mt-0.5 flex h-[37px] items-center justify-center gap-1.5 rounded-[10px] border border-[#373032] bg-[#fffdf5] px-3">
+                  <span className="truncate text-[15px] font-bold text-[#373032]">
+                    {inviteLinkDisplay}
+                  </span>
+                  <button
+                    type="button"
+                    aria-label={t("house.group.copyLink")}
+                    className="shrink-0 text-[#373032] transition-transform active:scale-90"
+                    onClick={() =>
+                      handleCopy(
+                        inviteLink,
+                        t("house.group.copySuccess"),
+                        "link",
+                      )
+                    }
+                  >
+                    {copied === "link" ? (
+                      <Check className="size-[18px] animate-in zoom-in-50 text-[#2e7d32] duration-200" />
+                    ) : (
+                      <Link2 className="size-[18px]" />
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
-          </GroupHouseFrame>
-        </div>
-      )}
+          </>
+        )}
+      </div>
 
       <AlertDialog
         open={dialog.type !== "none"}
