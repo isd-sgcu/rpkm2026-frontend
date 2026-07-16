@@ -15,9 +15,6 @@ import { JigsawProgress } from "./JigsawProgress";
 import { JigsawPiecePlaceholder } from "./JigsawPiecePlaceholder";
 import { setPendingClaim, type PieceId } from "./jigsawState";
 
-/** Red used for the failure alert header and its confirm button. */
-const FAIL_RED = "#d64541";
-
 const MONTH_SHORT_TH = [
   "ม.ค.",
   "ก.พ.",
@@ -147,7 +144,7 @@ export function JigsawScanResultDialog({
       >
         {result?.status === "success" && (
           <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
-            <DialogTitle className="text-xl font-bold">
+            <DialogTitle className="text-2xl font-bold">
               ได้รับจิกซอร์ชิ้นใหม่ !
             </DialogTitle>
 
@@ -169,13 +166,12 @@ export function JigsawScanResultDialog({
               <JigsawPiecePlaceholder className="relative mx-auto w-3/4" />
             </div>
 
-            <DialogDescription className="text-sm text-foreground">
+            <DialogDescription className="text-base text-[#372F32]">
               ได้รับเมื่อวันที่ {formatReceivedAt(result.receivedAt)}
             </DialogDescription>
 
             <Button
-              variant="green"
-              className="rounded-full px-8"
+              className="rounded-r-lg w-[72px] h-[32px] bg-[#6ABF73] text-[#FEFDF5] font-base border-1 top-22 shadow-none focus-visible:ring-0 border-foreground"
               onClick={() => onOpenChange(false)}
             >
               ตกลง
@@ -196,7 +192,7 @@ export function JigsawScanResultDialog({
 
             <Button
               variant="default"
-              className="absolute top-[175px] left-1/2 -translate-x-1/2 rounded-r-lg px-[16px]"
+              className="absolute top-[175px] left-1/2 -translate-x-1/2 rounded-r-lg px-[16px] shadow-none focus-visible:ring-0"
               disabled={isSigningIn}
               onClick={handleLogin}
               iconStart={
@@ -214,10 +210,7 @@ export function JigsawScanResultDialog({
 
         {result?.status === "fail" && (
           <>
-            <div
-              className="flex flex-col items-center rounded-b-2xl border-b border-b-black p-5 text-white"
-              style={{ backgroundColor: FAIL_RED }}
-            >
+            <div className="flex flex-col items-center justify-center rounded-b-2xl border-b border-b-black bg-[#D33D3D] p-1 text-white">
               <CircleAlert className="size-[44px]" />
             </div>
 
@@ -232,9 +225,7 @@ export function JigsawScanResultDialog({
               </div>
 
               <Button
-                variant="outline"
-                className="rounded-full border border-black text-white hover:text-white"
-                style={{ backgroundColor: FAIL_RED }}
+                className="rounded-r-lg w-[72px] h-[32px] border-1 border-foreground bg-[#D33D3D] text-white shadow-none focus-visible:ring-0"
                 onClick={() => onOpenChange(false)}
               >
                 ตกลง
