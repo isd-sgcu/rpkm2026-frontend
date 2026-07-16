@@ -46,7 +46,7 @@ function WalkRallyHomePanelContent() {
             id: reg.code,
             name: t("walkrally.events.tabs.minigame"),
             description: undefined as string | undefined,
-            imageName: undefined as string | undefined,
+            imageName: "minigame.png" as string | undefined,
             round: reg.round,
             start: reg.start,
             end: reg.end,
