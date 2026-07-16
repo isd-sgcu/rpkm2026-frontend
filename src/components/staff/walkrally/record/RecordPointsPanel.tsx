@@ -18,7 +18,7 @@ import {
   ScanEntryError,
   type ScanEntryResult,
 } from "@components/staff/ScanEntryForm";
-import { rounds } from "@components/walkrally/events/rounds";
+import { getRoundSchedule } from "@components/walkrally/events/rounds";
 import events from "@components/walkrally/events/events.json";
 
 const activityOptions = Object.values(events)
@@ -44,6 +44,8 @@ function RecordPointsPanelContent() {
   const [activityId, setActivityId] = useState("");
   const [roundIndex, setRoundIndex] = useState("");
 
+  const rounds = useMemo(() => getRoundSchedule(activityId), [activityId]);
+
   // base-ui renders the raw value in the trigger unless Select.Root is given an
   // `items` map — supply value -> label so the trigger shows the label text.
   const activityItems = useMemo(
@@ -63,7 +65,7 @@ function RecordPointsPanelContent() {
           index: String(round.index),
         })}  ${round.start}-${round.end}`,
       })),
-    [locale],
+    [locale, rounds],
   );
 
   function canSubmit() {

@@ -1,34 +1,30 @@
-import roundSchedule from "@components/walkrally/rounds.json";
-
-export type RoundStatus = "available" | "full";
-
 export interface Round {
   index: number;
   start: string;
   end: string;
-  capacity: number;
-  booked: number;
-  status: RoundStatus;
 }
 
-interface RoundState {
-  index: number;
-  capacity: number;
-  booked: number;
-  status: RoundStatus;
-}
-
-// TODO: Replace booked/status with real data from API (e.g. via TanStack Query)
-const roundStates: RoundState[] = [
-  { index: 1, capacity: 30, booked: 20, status: "available" },
-  { index: 2, capacity: 30, booked: 19, status: "available" },
-  { index: 3, capacity: 30, booked: 30, status: "full" },
-  { index: 4, capacity: 30, booked: 25, status: "available" },
-  { index: 5, capacity: 30, booked: 23, status: "available" },
-  { index: 6, capacity: 30, booked: 5, status: "available" },
+// Every activity runs on the default schedule except CU Museum, which runs on
+// its own times — mirrors WALK_RALLY.rounds in the backend
+// (fdrpkm2026-backend/src/constants.ts).
+const defaultSchedule: Round[] = [
+  { index: 1, start: "09:00", end: "09:30" },
+  { index: 2, start: "10:00", end: "10:30" },
+  { index: 3, start: "11:00", end: "11:30" },
+  { index: 4, start: "13:00", end: "13:30" },
+  { index: 5, start: "14:00", end: "14:30" },
+  { index: 6, start: "15:00", end: "15:30" },
 ];
 
-export const rounds: Round[] = roundStates.map((state) => {
-  const schedule = roundSchedule.find((r) => r.index === state.index)!;
-  return { ...schedule, ...state };
-});
+const cuMuseumSchedule: Round[] = [
+  { index: 1, start: "12:00", end: "12:30" },
+  { index: 2, start: "12:35", end: "13:05" },
+  { index: 3, start: "13:10", end: "13:40" },
+  { index: 4, start: "14:20", end: "14:50" },
+  { index: 5, start: "14:55", end: "15:25" },
+  { index: 6, start: "15:30", end: "16:00" },
+];
+
+export function getRoundSchedule(activityId?: string): Round[] {
+  return activityId === "cu-museum" ? cuMuseumSchedule : defaultSchedule;
+}
