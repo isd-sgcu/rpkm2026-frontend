@@ -4,17 +4,20 @@ import Image from "astro/components/Image.astro";
 import logo from "../assets/images/artboard_1.svg";
 import { ChevronLeft } from "lucide-react";
 import type { HTMLAttributes } from "astro/types";
+import { cn } from "@lib/utils";
 
 interface Props extends HTMLAttributes<"div"> {
   navigateBack?: string;
   showMenu?: boolean;
   showLogo?: boolean;
+  className?: string;
 }
 
 const {
   navigateBack = "",
   showMenu = true,
   showLogo = true,
+  className,
   ...rest
 } = Astro.props;
 ---
@@ -55,7 +58,7 @@ const {
       showLogo ? "absolute pt-[40cqw] sm:pt-45" : "relative",
     ]}
   >
-    <div class="contents pointer-events-auto">
+    <div class={cn("contents pointer-events-auto", className)}>
       <slot />
     </div>
   </div>
