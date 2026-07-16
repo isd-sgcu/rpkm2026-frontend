@@ -1,11 +1,18 @@
 /**
  * Select-option data for the registration form (faculties, name prefixes,
- * guardian relations).
+ * guardian relations, vehicles, health checklists, PR questions).
  *
  * Faculties source: the official registrar faculty list
  * https://cas.reg.chula.ac.th/cu/general/PersonalInformation/Faculty/IndexDisplayFaculty.html
+ *
+ * `value` is what's stored in form state / sent to the backend — for prefix
+ * and vehicle it's the exact backend enum token, and for the survey answers
+ * it's the code `students` documents itself as taking. `th`/`en` are
+ * display-only. FirstDate's copy of this file uses the same tokens, so a
+ * student's answers carry across the two projects' shared `students` row.
  */
 
+import type { LocaleType } from "./i18n/locale";
 import type { Prefix, Vehicle } from "./api/rpkm";
 
 export type Faculty = {
@@ -14,8 +21,16 @@ export type Faculty = {
   nameEn: string;
 };
 
-// TODO: i18n — `name` is Thai, `nameEn` is English; pick by locale when the app
-// becomes bilingual (the select currently shows `name`).
+export type LabeledOption<V extends string = string> = {
+  value: V;
+  th: string;
+  en: string;
+};
+
+export function labelOf(locale: LocaleType, option: LabeledOption): string {
+  return locale === "th" ? option.th : option.en;
+}
+
 export const FACULTIES: Faculty[] = [
   {
     code: "01",
@@ -107,178 +122,168 @@ export const FACULTIES: Faculty[] = [
   },
 ];
 
-// `value` is the backend's Postgres enum token for `students.prefix` — unlike
-// the other option lists below, prefix is a real enum column, not free text,
-// so the exact token must be sent on submit (see toRegistrationBody.ts).
-export const PREFIX_ENUM_MAP: { value: Prefix; th: string }[] = [
-  { value: "mr", th: "นาย" },
-  { value: "mrs", th: "นาง" },
-  { value: "ms", th: "นางสาว" },
-  { value: "other", th: "อื่นๆ" },
+/**
+ * The faculty a CUNET ID belongs to: its last two digits are the registrar's
+ * faculty code (the first two are the entry year).
+ *
+ * Returns "" when the code matches no known faculty — the caller must keep the
+ * field editable in that case rather than trapping the student with a blank
+ * required field.
+ */
+export const facultyCodeOf = (studentId: string): string => {
+  const code = studentId.trim().slice(-2);
+  return FACULTIES.some((faculty) => faculty.code === code) ? code : "";
+};
+
+export const PREFIX_OPTIONS: LabeledOption<Prefix>[] = [
+  { value: "mr", th: "นาย", en: "Mr." },
+  { value: "mrs", th: "นาง", en: "Mrs." },
+  { value: "ms", th: "นางสาว", en: "Ms." },
+  { value: "not_specified", th: "ไม่ระบุ", en: "Not specified" },
+  { value: "other", th: "อื่นๆ", en: "Other" },
 ];
 
-// TODO: i18n — Thai-only; these are used as both the value and the label.
-export const PREFIX_OPTIONS = PREFIX_ENUM_MAP.map((o) => o.th);
+/** The backend `prefix` enum's tokens, for validating the form field against
+ *  the same set the options are built from. */
+export const PREFIX_VALUES = PREFIX_OPTIONS.map((option) => option.value);
 
-// TODO: i18n — Thai-only; these are used as both the value and the label.
-export const RELATION_OPTIONS = [
-  "บิดา",
-  "มารดา",
-  "พี่น้อง",
-  "ญาติ",
-  "อื่น ๆ",
-] as const;
+export const RELATION_OPTIONS: LabeledOption[] = [
+  { value: "father", th: "บิดา", en: "Father" },
+  { value: "mother", th: "มารดา", en: "Mother" },
+  { value: "sibling", th: "พี่น้อง", en: "Sibling" },
+  { value: "relative", th: "ญาติ", en: "Relative" },
+  { value: "other", th: "อื่น ๆ", en: "Other" },
+];
 
 /** The "other" checkbox that reveals a free-text field. */
-export const OTHER_OPTION = "อื่น ๆ";
+export const OTHER_OPTION = "other";
 
-// TODO: i18n — Thai-only; used as both the value and the label.
 /** อาหารที่แพ้ (Step 2) */
-export const FOOD_ALLERGY_OPTIONS = [
-  "อาหารทะเล",
-  "นม/แลกโตส",
-  "แป้งสาลี",
-  "ไข่",
-  "ถั่ว",
-  "ผงชูรส",
-  OTHER_OPTION,
-] as const;
+export const FOOD_ALLERGY_OPTIONS: LabeledOption[] = [
+  { value: "seafood", th: "อาหารทะเล", en: "Seafood" },
+  { value: "dairy", th: "นม/แลกโตส", en: "Milk / Lactose" },
+  { value: "wheat", th: "แป้งสาลี", en: "Wheat flour" },
+  { value: "egg", th: "ไข่", en: "Egg" },
+  { value: "nuts", th: "ถั่ว", en: "Nuts" },
+  { value: "msg", th: "ผงชูรส", en: "MSG" },
+  { value: OTHER_OPTION, th: "อื่น ๆ", en: "Other" },
+];
 
-// TODO: i18n — Thai-only; used as both the value and the label.
 /** ข้อจำกัดด้านอาหาร (Step 2) */
-export const DIETARY_OPTIONS = [
-  "ฮาลาล",
-  "มังสวิรัติ",
-  "ไม่ทานเนื้อสัตว์",
-  "ไม่ทานเนื้อวัว",
-  "ไม่ทานเนื้อหมู",
-  "ไม่ทานไก่",
-  "ไม่ทานเผ็ด",
-  "ไม่ทานผัก",
-  OTHER_OPTION,
-] as const;
+export const DIETARY_OPTIONS: LabeledOption[] = [
+  { value: "halal", th: "ฮาลาล", en: "Halal" },
+  { value: "vegetarian", th: "มังสวิรัติ", en: "Vegetarian" },
+  { value: "no_meat", th: "ไม่ทานเนื้อสัตว์", en: "No meat" },
+  { value: "no_beef", th: "ไม่ทานเนื้อวัว", en: "No beef" },
+  { value: "no_pork", th: "ไม่ทานเนื้อหมู", en: "No pork" },
+  { value: "no_chicken", th: "ไม่ทานไก่", en: "No chicken" },
+  { value: "no_spicy", th: "ไม่ทานเผ็ด", en: "No spicy food" },
+  { value: "no_vegetable", th: "ไม่ทานผัก", en: "No vegetables" },
+  { value: OTHER_OPTION, th: "อื่น ๆ", en: "Other" },
+];
 
-// TODO: i18n — Thai-only; used as both the value and the label.
-/** ท่านรู้จัก อบจ. หรือไม่ (Step 3) */
-export const SGCU_AWARENESS_OPTIONS = [
-  "รู้จักและเข้าใจบทบาทหน้าที่ของอบจ.เป็นอย่างดี",
-  "รู้จัก แต่ยังไม่แน่ใจว่าอบจ.มีบทบาทหน้าที่อย่างไร",
-  "ไม่รู้จัก",
-] as const;
-
-// TODO: i18n — Thai-only; used as both the value and the label.
-/** ท่านเห็นการประชาสัมพันธ์จากช่องทางไหนมากที่สุด (Step 3) */
-export const PR_CHANNEL_OPTIONS = [
-  "ฟีดใน instagram ของ rubpuenkaomai2026",
-  "สตอรี่ใน instagram ของ rubpuenkaomai2026",
-  "ฟีดใน instagram ของ อบจ. (sgcu.chula)",
-  "สตอรี่ใน instagram ของ อบจ. (sgcu.chula)",
-  "ฟีดใน instagram ของคณะ",
-  "สตอรี่ใน instagram ของคณะ",
-  "ข้อความใน line รุ่นของคณะ",
-  "ข้อความใน line openchat CU110",
-  "เพื่อนหรือคนรู้จักส่งให้ดู",
-] as const;
-
-// TODO: i18n — Thai-only; used as both the value and the label.
-/** ท่านตั้งใจจะเข้าร่วมกิจกรรมกี่วัน (Step 3) */
-export const ATTEND_DAYS_OPTIONS = ["1 วัน", "2 วัน", "3 วัน"] as const;
-
-// TODO: i18n — Thai-only; used as both the value and the label.
-/** เตรียมกระบอกน้ำมามั้ย (Step 3) */
-export const WATER_BOTTLE_OPTIONS = ["เตรียม", "ไม่ได้เตรียม"] as const;
-
-// `value` is the backend's Postgres enum token for `travel_legs.vehicle` —
-// a real enum column, so the exact token must be sent on submit (see
-// toRegistrationBody.ts). `th` doubles as the label since it already carries
-// the English name in parentheses.
-export const VEHICLE_ENUM_MAP: { value: Vehicle; th: string }[] = [
-  { value: "private_car", th: "รถยนต์ส่วนบุคคล (Private Car)" },
+/** ท่านรู้จัก อบจ. หรือไม่ (Step 3) — same question and codes as FirstDate, so
+ *  the answer carries over both ways. */
+export const SGCU_AWARENESS_OPTIONS: LabeledOption[] = [
   {
-    value: "private_ev",
-    th: "รถยนต์ไฟฟ้าส่วนบุคคล (Private Electric Vehicle)",
+    value: "aware_and_understand",
+    th: "รู้จักและเข้าใจบทบาทหน้าที่ของอบจ.เป็นอย่างดี",
+    en: "I know and understand the SGCU's role well",
   },
-  { value: "transit", th: "BTS/MRT/Airport Rail Link" },
-  { value: "bus", th: "รถโดยสารประจำทาง / รถโดยสารไม่ประจำทาง" },
-  { value: "taxi", th: "แท็กซี่ (Taxi)" },
-  { value: "motorcycle", th: "รถจักรยานยนต์ (Motorcycle)" },
-  { value: "bike_walk", th: "รถจักรยาน/เดิน (Bicycle or Walking)" },
+  {
+    value: "aware_not_sure",
+    th: "รู้จัก แต่ยังไม่แน่ใจว่าอบจ.มีบทบาทหน้าที่อย่างไร",
+    en: "I know it but am unsure of the SGCU's role",
+  },
+  { value: "not_aware", th: "ไม่รู้จัก", en: "I don't know it" },
+];
+
+/** ท่านเห็นการประชาสัมพันธ์จากช่องทางไหนมากที่สุด (Step 3) — asked per project,
+ *  so the first two codes name RPKM's own account, not FirstDate's. */
+export const PR_CHANNEL_OPTIONS: LabeledOption[] = [
+  {
+    value: "ig_feed_rpkm",
+    th: "ฟีดใน instagram ของ rubpuenkaomai2026",
+    en: "Feed on rubpuenkaomai2026's Instagram",
+  },
+  {
+    value: "ig_story_rpkm",
+    th: "สตอรี่ใน instagram ของ rubpuenkaomai2026",
+    en: "Story on rubpuenkaomai2026's Instagram",
+  },
+  {
+    value: "ig_feed_sgcu",
+    th: "ฟีดใน instagram ของ อบจ. (sgcu.chula)",
+    en: "Feed on the SGCU's Instagram (sgcu.chula)",
+  },
+  {
+    value: "ig_story_sgcu",
+    th: "สตอรี่ใน instagram ของ อบจ. (sgcu.chula)",
+    en: "Story on the SGCU's Instagram (sgcu.chula)",
+  },
+  {
+    value: "ig_feed_faculty",
+    th: "ฟีดใน instagram ของคณะ",
+    en: "Feed on your faculty's Instagram",
+  },
+  {
+    value: "ig_story_faculty",
+    th: "สตอรี่ใน instagram ของคณะ",
+    en: "Story on your faculty's Instagram",
+  },
+  {
+    value: "line_faculty",
+    th: "ข้อความใน line รุ่นของคณะ",
+    en: "Message in your faculty class LINE",
+  },
+  {
+    value: "line_openchat",
+    th: "ข้อความใน line openchat CU110",
+    en: "Message in LINE OpenChat CU110",
+  },
+  {
+    value: "friend_referral",
+    th: "เพื่อนหรือคนรู้จักส่งให้ดู",
+    en: "A friend or acquaintance shared it",
+  },
+];
+
+/** ท่านตั้งใจจะเข้าร่วมกิจกรรมกี่วัน (Step 3) — the value is what
+ *  `registrations.attendedDays` stores, so it parses straight to an integer. */
+export const ATTEND_DAYS_OPTIONS: LabeledOption[] = [
+  { value: "1", th: "1 วัน", en: "1 day" },
+  { value: "2", th: "2 วัน", en: "2 days" },
+  { value: "3", th: "3 วัน", en: "3 days" },
+];
+
+/** เตรียมกระบอกน้ำมามั้ย (Step 3) — maps to the boolean `students.bottle`. */
+export const WATER_BOTTLE_OPTIONS: LabeledOption[] = [
+  { value: "yes", th: "เตรียม", en: "Brought one" },
+  { value: "no", th: "ไม่ได้เตรียม", en: "Didn't bring one" },
 ];
 
 /** ประเภทยานพาหนะ (Step 4) */
-export const VEHICLE_OPTIONS = VEHICLE_ENUM_MAP.map((o) => o.th);
+export const VEHICLE_OPTIONS: LabeledOption<Vehicle>[] = [
+  { value: "private_car", th: "รถยนต์ส่วนบุคคล", en: "Private Car" },
+  {
+    value: "private_ev",
+    th: "รถยนต์ไฟฟ้าส่วนบุคคล",
+    en: "Private Electric Vehicle",
+  },
+  {
+    value: "transit",
+    th: "BTS/MRT/Airport Rail Link",
+    en: "BTS / MRT / Airport Rail Link",
+  },
+  {
+    value: "bus",
+    th: "รถโดยสารประจำทาง / รถโดยสารไม่ประจำทาง",
+    en: "Bus / Coach",
+  },
+  { value: "taxi", th: "แท็กซี่", en: "Taxi" },
+  { value: "motorcycle", th: "รถจักรยานยนต์", en: "Motorcycle" },
+  { value: "bike_walk", th: "รถจักรยาน/เดิน", en: "Bicycle or Walking" },
+];
 
 /** Max number of travel legs (ต่อ). */
 export const MAX_TRAVEL_LEGS = 4;
-
-// TODO: i18n — English labels for the Thai option *values*. The stored form
-// value stays Thai (backend contract); only the visible label is localized.
-export const OPTION_EN: Record<string, string> = {
-  // prefixes
-  นาย: "Mr.",
-  นาง: "Mrs.",
-  นางสาว: "Ms.",
-  อื่นๆ: "Other",
-  // relations & the "other" checkbox
-  "อื่น ๆ": "Other",
-  บิดา: "Father",
-  มารดา: "Mother",
-  พี่น้อง: "Sibling",
-  ญาติ: "Relative",
-  // food allergy
-  อาหารทะเล: "Seafood",
-  "นม/แลกโตส": "Milk / Lactose",
-  แป้งสาลี: "Wheat flour",
-  ไข่: "Egg",
-  ถั่ว: "Nuts",
-  ผงชูรส: "MSG",
-  // dietary
-  ฮาลาล: "Halal",
-  มังสวิรัติ: "Vegetarian",
-  ไม่ทานเนื้อสัตว์: "No meat",
-  ไม่ทานเนื้อวัว: "No beef",
-  ไม่ทานเนื้อหมู: "No pork",
-  ไม่ทานไก่: "No chicken",
-  ไม่ทานเผ็ด: "No spicy food",
-  ไม่ทานผัก: "No vegetables",
-  // sgcu awareness
-  "รู้จักและเข้าใจบทบาทหน้าที่ของอบจ.เป็นอย่างดี":
-    "I know and understand the SGCU's role well",
-  "รู้จัก แต่ยังไม่แน่ใจว่าอบจ.มีบทบาทหน้าที่อย่างไร":
-    "I know it but am unsure of the SGCU's role",
-  ไม่รู้จัก: "I don't know it",
-  // pr channel
-  "ฟีดใน instagram ของ rubpuenkaomai2026":
-    "Feed on rubpuenkaomai2026's Instagram",
-  "สตอรี่ใน instagram ของ rubpuenkaomai2026":
-    "Story on rubpuenkaomai2026's Instagram",
-  "ฟีดใน instagram ของ อบจ. (sgcu.chula)":
-    "Feed on the SGCU's Instagram (sgcu.chula)",
-  "สตอรี่ใน instagram ของ อบจ. (sgcu.chula)":
-    "Story on the SGCU's Instagram (sgcu.chula)",
-  "ฟีดใน instagram ของคณะ": "Feed on your faculty's Instagram",
-  "สตอรี่ใน instagram ของคณะ": "Story on your faculty's Instagram",
-  "ข้อความใน line รุ่นของคณะ": "Message in your faculty class LINE",
-  "ข้อความใน line openchat CU110": "Message in LINE OpenChat CU110",
-  เพื่อนหรือคนรู้จักส่งให้ดู: "A friend or acquaintance shared it",
-  // vehicle
-  "รถยนต์ส่วนบุคคล (Private Car)": "Private Car",
-  "รถยนต์ไฟฟ้าส่วนบุคคล (Private Electric Vehicle)": "Private Electric Vehicle",
-  "BTS/MRT/Airport Rail Link": "BTS / MRT / Airport Rail Link",
-  "รถโดยสารประจำทาง / รถโดยสารไม่ประจำทาง": "Bus / Coach",
-  "แท็กซี่ (Taxi)": "Taxi",
-  "รถจักรยานยนต์ (Motorcycle)": "Motorcycle",
-  "รถจักรยาน/เดิน (Bicycle or Walking)": "Bicycle or Walking",
-  // attend days
-  "1 วัน": "1 day",
-  "2 วัน": "2 days",
-  "3 วัน": "3 days",
-  // water bottle
-  เตรียม: "Brought one",
-  ไม่ได้เตรียม: "Didn't bring one",
-};
-
-/** Localize a Thai option value; falls back to the Thai value itself. */
-export function localizeOption(locale: "th" | "en", value: string): string {
-  return locale === "en" ? (OPTION_EN[value] ?? value) : value;
-}

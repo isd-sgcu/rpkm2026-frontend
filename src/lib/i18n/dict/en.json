@@ -39,6 +39,11 @@
     "title": "Emergency Contact"
   },
   "home": {
+    "idCard": {
+      "welcome": "Welcome",
+      "loading": "Loading...",
+      "edit": "Edit Info"
+    },
     "calendar": {
       "title": "Calendar",
       "empty": "No activities on this day"
@@ -200,10 +205,16 @@
           "save": "Save",
           "selectActivityFirst": "Please select an activity and round first.",
           "invalidStudentId": "Please enter a valid 10-digit student ID.",
+          "roundTime": "Round {start} - {end}",
           "successTitle": "Points Recorded",
           "successMessage": "Activity points recorded successfully.",
+          "alreadyCheckedInTitle": "Already Recorded",
           "failTitle": "Recording Failed",
           "failMessage": "Something went wrong. Please try again.",
+          "studentNotFound": "Student ID not found in the system.",
+          "notStaff": "This account doesn't have staff permission for this event.",
+          "invalidActivity": "Activity not found in the system.",
+          "pointsCapReached": "This student has already reached the maximum points.",
           "ok": "OK",
           "retry": "Try Again"
         }
@@ -219,8 +230,11 @@
         "save": "Save",
         "successTitle": "Check-in Successful",
         "successMessage": "Checked in to the event successfully.",
+        "alreadyCheckedInTitle": "Already Checked In",
         "failTitle": "Check-in Failed",
         "failMessage": "Something went wrong. Please try again.",
+        "studentNotFound": "Student ID not found in the system.",
+        "notStaff": "This account doesn't have staff permission for this event.",
         "ok": "OK",
         "retry": "Try Again"
       }
@@ -340,6 +354,8 @@
     },
     "qrcode": {
       "refresh": "Refresh",
+      "close": "Close",
+      "myQrTitle": "My QR Code",
       "troubleshoot": {
         "link": "Camera not working?",
         "title": "Camera Troubleshooting",
@@ -363,6 +379,39 @@
         "typeError": "Something went wrong while starting the camera. Please try again.",
         "unknown": "Something went wrong. Please try again."
       }
+    }
+  },
+  "editProfile": {
+    "heading": "Edit",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "saved": "Saved successfully",
+    "loading": "Loading...",
+    "loadError": "Unable to load your data",
+    "personal": {
+      "title": "Personal Information",
+      "realName": "Full name",
+      "studentId": "Student ID",
+      "faculty": "Faculty",
+      "phone": "Phone number",
+      "guardianPhone": "Guardian phone number",
+      "relation": "Relationship"
+    },
+    "health": {
+      "title": "Health Information",
+      "foodAllergy": "Food allergies",
+      "dietary": "Dietary restrictions",
+      "drugAllergy": "Drug allergies",
+      "chronicDisease": "Chronic conditions"
+    },
+    "travel": {
+      "title": "Travel Information",
+      "residence": "Residence",
+      "legsIntro": "Travel to the event",
+      "legLabel": "Leg {index}",
+      "vehicle": "Vehicle",
+      "origin": "Origin",
+      "destination": "Destination"
     }
   }
 }

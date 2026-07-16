@@ -10,8 +10,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@components/ui/select";
+import { recordWalkRallyAttendance } from "@lib/api/checkin";
+import { APIError } from "@lib/client";
 import { QueryProvider } from "@components/shared/QueryProvider";
-import { ScanEntryForm } from "@components/staff/ScanEntryForm";
+import {
+  ScanEntryForm,
+  ScanEntryError,
+  type ScanEntryResult,
+} from "@components/staff/ScanEntryForm";
 import { rounds } from "@components/walkrally/events/rounds";
 import events from "@components/walkrally/events/events.json";
 
@@ -22,18 +28,6 @@ const activityOptions = Object.values(events)
     nameTh: entry.nameTh,
     nameEn: entry.nameEn,
   }));
-
-interface RecordPayload {
-  studentId: string;
-  activityId: string;
-  round: number;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function recordPoints(_payload: RecordPayload) {
-  // TODO: call the record-points API (e.g. via a TanStack Query mutation).
-  // Throw on a non-2xx response to surface the error popup.
-}
 
 export function RecordPointsPanel() {
   return (
@@ -81,6 +75,62 @@ function RecordPointsPanelContent() {
     return false;
   }
 
+  async function recordPoints(studentId: string): Promise<ScanEntryResult> {
+    const activity = activityOptions.find((it) => it.id === activityId);
+    const activityName =
+      (locale === "th" ? activity?.nameTh : activity?.nameEn) ?? activityId;
+    const round = rounds.find((it) => String(it.index) === roundIndex);
+    const roundLabel = round
+      ? t("staff.walkrally.record.roundTime", {
+          start: round.start,
+          end: round.end,
+        })
+      : "";
+    // The API derives the round from the student's registration; the selected
+    // round is only shown in the confirmation popup.
+    const description = `${studentId}\n${activityName} ${roundLabel}`;
+
+    try {
+      await recordWalkRallyAttendance({ studentId, code: activityId });
+      return {
+        title: t("staff.walkrally.record.successTitle"),
+        message: description,
+      };
+    } catch (error) {
+      if (error instanceof APIError) {
+        switch (error.code) {
+          // Points were already recorded — show the success popup.
+          case "ALREADY_CHECKED_IN":
+            return {
+              title: t("staff.walkrally.record.alreadyCheckedInTitle"),
+              message: description,
+            };
+          case "STUDENT_NOT_FOUND":
+            throw new ScanEntryError(
+              t("staff.walkrally.record.failTitle"),
+              t("staff.walkrally.record.studentNotFound"),
+            );
+          case "FORBIDDEN_NOT_STAFF":
+            throw new ScanEntryError(
+              t("staff.walkrally.record.failTitle"),
+              t("staff.walkrally.record.notStaff"),
+            );
+          case "INVALID_ACTIVITY":
+            throw new ScanEntryError(
+              t("staff.walkrally.record.failTitle"),
+              t("staff.walkrally.record.invalidActivity"),
+            );
+          case "POINTS_CAP_REACHED":
+            throw new ScanEntryError(
+              t("staff.walkrally.record.failTitle"),
+              t("staff.walkrally.record.pointsCapReached"),
+            );
+        }
+      }
+      throw error;
+    }
+  }
+
   return (
     <ScanEntryForm
       labels={{
@@ -100,9 +150,7 @@ function RecordPointsPanelContent() {
         retry: t("staff.walkrally.record.retry"),
       }}
       canSubmit={canSubmit}
-      onSubmit={(studentId) =>
-        recordPoints({ studentId, activityId, round: Number(roundIndex) })
-      }
+      onSubmit={recordPoints}
     >
       <div className="flex flex-col gap-2">
         <span className="px-1 font-bold text-background">

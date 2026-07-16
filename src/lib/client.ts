@@ -4,10 +4,36 @@ export class APIError extends Error {
   constructor(
     public readonly status: number,
     message?: string,
+    /** Backend AppErrorCode, e.g. "STUDENT_NOT_FOUND" (see backend src/utils/error.ts). */
+    public readonly code?: string,
+    /** Extra payload for codes that carry one, e.g. ALREADY_CHECKED_IN's scannedAt/scannedBy. */
+    public readonly context?: Record<string, unknown>,
   ) {
     super(message ?? `API error: ${status}`);
     this.name = "ApiError";
   }
+}
+
+type ErrorEnvelope = {
+  success: false;
+  error: { code: string; context?: Record<string, unknown> };
+};
+
+async function parseErrorBody(response: Response): Promise<APIError> {
+  try {
+    const body = (await response.json()) as ErrorEnvelope;
+    if (body?.error?.code) {
+      return new APIError(
+        response.status,
+        body.error.code,
+        body.error.code,
+        body.error.context,
+      );
+    }
+  } catch {
+    // non-JSON body — fall through to the bare status error
+  }
+  return new APIError(response.status);
 }
 
 type RequestOptions = Omit<RequestInit, "method" | "body"> & {
@@ -38,7 +64,7 @@ async function request<T>(
   }
 
   if (!response.ok) {
-    throw new APIError(response.status);
+    throw await parseErrorBody(response);
   }
 
   if (response.status === 204) {

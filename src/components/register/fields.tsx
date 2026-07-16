@@ -6,9 +6,12 @@ import {
 } from "react-hook-form";
 import { Combobox } from "@base-ui/react/combobox";
 import { ChevronDownIcon } from "lucide-react";
+import { useStore } from "@nanostores/react";
 
 import { cn } from "@lib/utils";
+import { $locale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
+import { labelOf, type LabeledOption } from "@lib/register-options";
 import { Input } from "@components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@components/ui/radio-group";
 import {
@@ -27,7 +30,6 @@ type FieldName = {
     : never;
 }[keyof RegisterFormValues];
 export type Path = FieldPath<RegisterFormValues>;
-export type SelectOption = { value: string; label: string };
 
 export const controlClass =
   "h-11 w-full rounded-xl border border-rpkm-grey bg-transparent px-5 text-base text-black data-[size=default]:h-11 " +
@@ -99,11 +101,13 @@ export function TextField<TName extends FieldName>({
   label,
   placeholder,
   inputMode,
+  disabled,
 }: {
   name: TName;
   label: string;
   placeholder: string;
   inputMode?: React.ComponentProps<"input">["inputMode"];
+  disabled?: boolean;
 }) {
   const {
     register,
@@ -116,6 +120,7 @@ export function TextField<TName extends FieldName>({
         className={controlClass}
         placeholder={placeholder}
         inputMode={inputMode}
+        disabled={disabled}
         aria-invalid={!!errors[name]}
         {...register(name)}
       />
@@ -134,7 +139,7 @@ export function SelectField({
   name: Path;
   label?: string;
   placeholder: string;
-  options: readonly SelectOption[] | readonly string[];
+  options: readonly LabeledOption[];
   disabled?: boolean;
   onAfterChange?: () => void;
 }) {
@@ -142,11 +147,11 @@ export function SelectField({
     control,
     formState: { errors },
   } = useFormContext<RegisterFormValues>();
+  const locale = useStore($locale);
   const error = errorAt(errors, name);
-  const normalized = options.map((option) =>
-    typeof option === "string" ? { value: option, label: option } : option,
+  const items = Object.fromEntries(
+    options.map((o) => [o.value, labelOf(locale, o)]),
   );
-  const items = Object.fromEntries(normalized.map((o) => [o.value, o.label]));
 
   return (
     <FieldBlock label={label} error={error}>
@@ -171,9 +176,9 @@ export function SelectField({
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent className={popupClass}>
-              {normalized.map((option) => (
+              {options.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
-                  {option.label}
+                  {labelOf(locale, option)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -197,7 +202,7 @@ export function ComboboxField({
   name: Path;
   label?: string;
   placeholder: string;
-  options: readonly SelectOption[];
+  options: readonly LabeledOption[];
   disabled?: boolean;
   onAfterChange?: () => void;
 }) {
@@ -206,10 +211,18 @@ export function ComboboxField({
     control,
     formState: { errors },
   } = useFormContext<RegisterFormValues>();
+  const locale = useStore($locale);
   const error = errorAt(errors, name);
   const values = options.map((option) => option.value);
   const labelFor = (value: string) =>
-    options.find((option) => option.value === value)?.label ?? "";
+    labelOf(
+      locale,
+      options.find((option) => option.value === value) ?? {
+        value: "",
+        th: "",
+        en: "",
+      },
+    );
 
   return (
     <FieldBlock label={label} error={error}>
@@ -306,23 +319,21 @@ export function RadioGroupField<TName extends FieldName>({
   name,
   question,
   options,
-  getLabel = (value) => value,
 }: {
   name: TName;
   question: string;
-  options: readonly string[];
-  getLabel?: (value: string) => string;
+  options: readonly LabeledOption[];
 }) {
   const {
     control,
     trigger,
     formState: { errors },
   } = useFormContext<RegisterFormValues>();
+  const locale = useStore($locale);
   const error = errors[name]?.message;
 
   return (
     <div className="flex flex-col gap-3">
-      {/* TODO: i18n */}
       <p className="text-base text-foreground">{question}</p>
       <Controller
         control={control}
@@ -338,13 +349,12 @@ export function RadioGroupField<TName extends FieldName>({
             className="gap-3"
           >
             {options.map((option) => (
-              // TODO: i18n
               <label
-                key={option}
+                key={option.value}
                 className="flex cursor-pointer items-center gap-3 select-none"
               >
-                <RadioGroupItem value={option} aria-invalid={!!error} />
-                <span className="text-sm">{getLabel(option)}</span>
+                <RadioGroupItem value={option.value} aria-invalid={!!error} />
+                <span className="text-sm">{labelOf(locale, option)}</span>
               </label>
             ))}
           </RadioGroup>

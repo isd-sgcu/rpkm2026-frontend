@@ -1,8 +1,11 @@
 ---
 import WalkRallyLayout from "@layouts/WalkRallyLayout.astro";
 import { CheckInPanel } from "@components/staff/checkin/CheckInPanel";
+import BaseLayout from "@layouts/BaseLayout.astro";
 ---
 
-<WalkRallyLayout title={"Check-in"} navigateBack={"/staff"} bgColor="lightpink">
-  <CheckInPanel client:load />
-</WalkRallyLayout>
+<BaseLayout title="Check in">
+  <WalkRallyLayout navigateBack={"/"} bgColor="lightpink">
+    <CheckInPanel client:load />
+  </WalkRallyLayout>
+</BaseLayout>

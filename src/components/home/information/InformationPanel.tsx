@@ -1,5 +1,6 @@
 import { ChevronRight } from "lucide-react";
 import { getImageUrl } from "@lib/function";
+import { useProfile } from "@lib/auth/useProfile";
 import { useT } from "@lib/i18n/useT";
 import { Button, buttonVariants } from "@components/ui/button";
 import { cn } from "@lib/utils";
@@ -64,7 +65,8 @@ function ShapeButton({
 
 const InformationPanel = () => {
   const t = useT();
-  const isStaff = false;
+  const profile = useProfile();
+  const isStaff = profile.status === "ready" && profile.me.role === "staff";
 
   return (
     <div className="flex w-full flex-col gap-12">
@@ -114,7 +116,7 @@ const InformationPanel = () => {
               </div>
               <div className="min-w-0">
                 <ShapeButton
-                  href="/stamp"
+                  href="/chula-qr-quest"
                   imageUrl={stampButtonUrl}
                   capRatio="4/3"
                   fill="#6ABF73"
