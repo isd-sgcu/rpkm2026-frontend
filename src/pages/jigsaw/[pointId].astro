@@ -1,0 +1,22 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import "../../styles/global.css";
+import { appConfig } from "@lib/env";
+import { TOTAL_PIECES } from "@components/jigsaw/jigsawState";
+import { JigsawCollect } from "@components/jigsaw/JigsawCollect";
+
+// Static site: pre-generate one page per pointId (jigsaw01..jigsaw10). The
+// ?code= is read client-side at runtime. Static routes like scan.astro still
+// take precedence, so /jigsaw/scan is unaffected.
+export function getStaticPaths() {
+  return Array.from({ length: TOTAL_PIECES }, (_, i) => ({
+    params: { pointId: `jigsaw${String(i + 1).padStart(2, "0")}` },
+  }));
+}
+
+const { pointId } = Astro.params;
+---
+
+<BaseLayout title={appConfig.appName}>
+  <JigsawCollect pointId={pointId!} client:load />
+</BaseLayout>

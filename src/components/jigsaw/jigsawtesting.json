@@ -1,0 +1,114 @@
+{
+  "Chula Jigsaw Journey": [
+    {
+      "pointId": "jigsaw01",
+      "name.th": "สำนักงานวิทยทรัพยากร จุฬาลงกรณ์มหาวิทยาลัย",
+      "name.en": "Office of Academic Resources",
+      "desc.th": "หรือที่รู้จักโดยทั่วกันอีกชื่อในหมู่นิสิต คือ \"หอสมุดกลาง\" หนึ่งในหน่วยงานภายใต้จุฬาฯ โดยเป็นสถานที่รวบรวมทรัพยากรสื่อสารสนเทศต่าง ๆ ให้บริการด้านการสืบค้นข้อมูล จัดเก็บและยืมหนังสือ ทั้งหนังสือนวนิยาย วารสาร งานวิชาการ หรือสื่อดิจิทัล อีกทั้งยังให้บริการพื้นที่สำหรับการอ่านหนังสือแบบส่วนตัวและแบบห้องประชุม ไม่ว่าจะมาคนเดียวหรือกับกลุ่มเพื่อนก็สามารถใช้งานพื้นที่เหล่านั้นได้ พร้อมสิ่งอำนวยความสะดวกมากมาย ช่วงการสอบกลางภาคและปลายภาคมักจะเปิดให้บริการ 24 ชั่วโมงที่บริเวณชั้น 2 และชั้น 3 สำหรับนิสิตอีกด้วย โดยสามารถตรวจสอบเวลาทำการ บริการต่าง ๆ และค้นหารายการหนังสือที่ต้องการหยิบยืมได้โดยตรงผ่านทางเว็บไซต์ทางการของหอสมุดกลางหรือแอพพลิเคชัน CUNEX",
+      "desc.en": "Known as \"Central Library\" one of Chulalongkorn University's department which compiles various information resources and serves as a hub for research and book borrowing in many genre such as fiction, journals, academic works. This place also provides private reading area and public co-working space whether individually or with friends with many facilities service. On the 2nd and 3rd floor it offers 24 hours service during midterm and final exams period. You can check opening hours, explore services and search for books you wish to borrow via the official website of Central library or CUNEX application.",
+      "schedule.th": "จันทร์–ศุกร์ 8:00–19:00\nเสาร์ 10:00–19:00\nอาทิตย์และวันหยุดนักขัตฤกษ์ ปิดบริการ",
+      "schedule.en": "Monday–Friday 8AM–7PM\nSaturday–Sunday 10AM–7PM\nSunday & Holiday Closed",
+      "pointCode": "jj0101",
+      "qrCodePayload": "https://rpkm2026.com/jigsaw/jigsaw01?code=jj0101"
+    },
+    {
+      "pointId": "jigsaw02",
+      "name.th": "อาคารจามจุรี 9",
+      "name.en": "Chamchuri 9 Building",
+      "desc.th": "อาคารอเนกประสงค์สูง 6 ชั้นของจุฬาลงกรณ์มหาวิทยาลัย ตั้งอยู่บริเวณฝั่งตรงข้ามตลาดสามย่านและอยู่ถัดจากสนามกีฬาจุฬาฯ เป็นศูนย์รวมสิ่งอำนวยความสะดวกและแหล่งรวมบริการสำคัญสำหรับนิสิต เช่น พื้นที่อ่านหนังสือ ที่เปิด 24 ชั่วโมงในช่วงการสอบกลางภาคและปลายภาค และยังมีศูนย์บริการสุขภาพแห่งจุฬาฯ ในบริเวณชั้น 2 ที่นิสิตสามารถเข้ารับการตรวจรักษาพยาบาลขั้นพื้นฐานได้โดยไม่มีค่าใช้จ่าย อีกทั้งในบริเวณชั้น 1 ยังประกอบไปด้วยร้านค้าสหกรณ์ ร้านอาหาร ร้านกาแฟ ร้านถ่ายเอกสาร และไปรษณีย์ไทยให้นิสิตได้ใช้บริการอีกด้วย",
+      "desc.en": "A 6-story multipurpose building of Chulalongkorn University located opposite to Samyan market and next to Chulalongkorn University Sports Center. It offers various facilities and services for students such as study area which open 24 hours during midterm and final exams periods. It also has Chulalongkorn Health Service at the 2nd floor that let students get a medical check-up at no charges. Additionally, on the 1st floor also features cooperative shop, cafe, photocopy shop and Thailand post office.",
+      "schedule.th": "จันทร์–ศุกร์ 8:00–18:00\nเสาร์ 8:00–16:00\nอาทิตย์ ปิดทำการ",
+      "schedule.en": "Monday–Friday 8AM–6PM\nSaturday–Sunday 8AM–4PM\nSunday Closed",
+      "pointCode": "jj0202",
+      "qrCodePayload": "https://rpkm2026.com/jigsaw/jigsaw02?code=jj0202"
+    },
+    {
+      "pointId": "jigsaw03",
+      "name.th": "อุทยาน 100 ปี จุฬาลงกรณ์มหาวิทยาลัย",
+      "name.en": "Chulalongkorn University Centenary Park",
+      "desc.th": "สวนสาธารณะและพื้นที่สีเขียวขนาดใหญ่ประมาณ 29 ไร่ ใจกลางกรุงเทพฯ ใกล้กับบรรทัดทองและสวนหลวงสแควร์ ซึ่งถูกสร้างขึ้นในโอกาสครบรอบ 100 ปีแห่งการสถาปนามหาวิทยาลัย โดยถูกออกแบบภายใต้แนวคิด \"ป่าในเมือง\" เป็นพื้นที่สาธารณะอเนกประสงค์สำหรับให้นิสิตและประชาชนทั่วไปได้มาพักผ่อน ออกกำลังกาย และให้นิสิตได้มีพื้นที่ในการทำกิจกรรมต่าง ๆ เช่น จุฬากลางแปลง, การแสดงดนตรีสด, งานศิลปะวัฒนธรรมต่าง ๆ อีกทั้งยังเป็นแลนด์มาร์คสำคัญที่ตั้งอยู่โดยรอบมหาวิทยาลัยเช่นกัน",
+      "desc.en": "The park and green space with 46,400 square meters in the middle of Bangkok, near Banthatthong and Suan Luang Square. This place was built in occasion of Chulalongkorn University 100th anniversary with the concept of \"Urban Forest\" which is public multipurpose space for students and general public. It provides many services such as relaxing place, exercise area and the space for students to do activity for instance Chulaklangplaeng, live music, art and cultural events. Furthurmore it is an important landmark around the campus too.",
+      "schedule.th": "เปิดบริการทุกวัน 5:00–22:00",
+      "schedule.en": "Open everyday 5AM–10PM",
+      "pointCode": "jj0303",
+      "qrCodePayload": "https://rpkm2026.com/jigsaw/jigsaw03?code=jj0303"
+    },
+    {
+      "pointId": "jigsaw04",
+      "name.th": "ศาลเจ้าพ่อเสือ ตั่วเหล่าเอี๊ย สามย่าน",
+      "name.en": "Chao Pho Suea Shrine",
+      "desc.th": "ศูนย์รวมจิตใจและสถานที่ยึดเหนี่ยวศรัทธาของชาวไทยเชื้อสายจีนในพื้นที่มาอย่างยาวนาน ภายในศาลเจ้าเป็นที่ประดิษฐานขององค์ \"ตั่วเหล่าเอี๊ย\" (เทพเจ้าเสวียนเทียนซั่งตี้) และองค์เจ้าพ่อเสือ ซึ่งเป็นที่เคารพสักการะของชุมชนโดยรอบ ภายในตกแต่งด้วยศิลปะและสถาปัตยกรรมจีนดั้งเดิม ประดับด้วยงานไม้แกะสลักและโคมไฟที่สวยงามเป็นเอกลักษณ์ ประชาชนทั่วไปนิยมเดินทางมาขอพรเพื่อความเป็นสิริมงคลในช่วงเทศกาลสำคัญ เช่น เทศกาลตรุษจีนและวันสารทจีน จะมีผู้มีจิตศรัทธาจำนวนมากนำเครื่องสักการะตามธรรมเนียมปฏิบัติมาถวายอย่างต่อเนื่อง",
+      "desc.en": "This shrine is a long-standing spiritual home for the local Thai-Chinese community. It is home to the statues of 'Tua Lao Ia' (Xuantian Shangdi) and Chao Pho Suea, who are both respected by nearby community. Inside, you’ll find beautiful traditional Chinese architecture, decorated with wood carvings and unique lanterns. Many people visit to pray for good fortune, especially during festivals like the Lunar New Year and the Mid-Autumn Festival. During these times, the shrine is always busy with visitors bringing traditional offerings to pay their respects.",
+      "schedule.th": "เปิดบริการทุกวัน 7:00–18:00",
+      "schedule.en": "Open everyday 7AM–6PM",
+      "pointCode": "jj0404",
+      "qrCodePayload": "https://rpkm2026.com/jigsaw/jigsaw04?code=jj0404"
+    },
+    {
+      "pointId": "jigsaw05",
+      "name.th": "ตึกจักรพงษ์ (หอประวัติจุฬาลงกรณ์มหาวิทยาลัย)",
+      "name.en": "The Memorial Hall of Chulalongkorn University",
+      "desc.th": "ก่อนหน้านี้เคยเป็นสถานที่ให้นิสิตได้รวมตัวใช้เวลาว่างให้เกิดประโยชน์ มีการจัดตั้งสโมสรต่างๆ ให้นิสิตได้เรียนรู้ในสิ่งที่ชอบ เรียนรู้การใช้ชีวิตและทำงานร่วมกับคนอื่น จนเมื่อ พ.ศ. 2528 เมื่อสโมสรนิสิตย้ายออกไปยังสถานที่แห่งใหม่ ตึกจักรพงษ์จึงได้เปลี่ยนหน้าที่มาเป็นพิพิธภัณฑ์จัดแสดงสิ่งของทรงคุณค่า และน่าสนใจเกี่ยวกับประวัติศาสตร์ของจุฬาฯ ภายใต้ชื่อ \"หอประวัติจุฬาลงกรณ์มหาวิทยาลัย\" ที่เก็บรวบรวมเรื่องราวทางประวัติศาสตร์ในมิติต่างๆ ของจุฬาฯ ทั้งที่เป็นวัตถุ ภาพถ่าย เอกสาร แผนที่ ไมโครฟิล์ม โดยนิสิต บุคลากร และผู้ที่สนใจ นอกจากนี้ ยังมีส่วนจัดแสดงสิ่งของเครื่องใช้ของมหาวิทยาลัย ตั้งแต่สมัยสถาปนา และยังมีการจัดนิทรรศการจัดแสดงเรื่องราวต่างๆ ที่เกี่ยวข้องกับจุฬาฯ อีกด้วย",
+      "desc.en": "In the past, this building was a hub for students to spend their free time.It was a place for various student clubs where they could learn new skills, build friendships, and gain working experience. However, since the Student Union moved to a new location in 1985, the building has taken on a new role as the 'Chulalongkorn University Museum.' It serves as a place to explore the university’s history, collecting historic valuable artifacts, old photos, documents, maps, and microfilm. It’s open to students, staff, and anyone interested in learning about the university’s history The museum also features historical items from its early days, with exhibitions that share stories about Chulalongkorn University.",
+      "schedule.th": "จันทร์–ศุกร์ 8:30–16:30",
+      "schedule.en": "Monday–Friday 8:30AM–4:30PM",
+      "pointCode": "jj0505",
+      "qrCodePayload": "https://rpkm2026.com/jigsaw/jigsaw05?code=jj0505"
+    },
+    {
+      "pointId": "jigsaw06",
+      "name.th": "ศาลเจ้าแม่ทับทิม สะพานเหลือง",
+      "name.en": "Samyan Shrine of the Goddess Tubtim",
+      "desc.th": "ศาลเจ้าเก่าแก่ที่มีประวัติความเป็นมาอย่างยาวนาน อยู่ในบริเวณชุมชนสะพานเหลืองก่อนจะมีการพระราชทานพื้นที่เพื่อก่อตั้งจุฬาลงกรณ์มหาวิทยาลัย โดยมีองค์เจ้าแม่ทับทิม หรือ \"เทียนโหวเซี้ยบ้อ\" ที่แกะสลักจากไม้ ภายในถูกสร้างด้วยสถาปัตยกรรมแบบจีนแต้จิ๋ว เป็นองค์เทพประธานประดิษฐานอยู่ในบ้านของชาวชุมชนสะพานเหลือง มาตั้งแต่เริ่มก่อตั้งชุมชนและเปรียบเสมือนสัญลักษณ์ของชุมชน แต่เนื่องด้วยข้อพิพาทกี่เกิดขึ้นระหว่างศาลเจ้ากับมหาวิทยาลัย ทำให้มีคำสั่งสร้างศาลเจ้าแม่ทับทิมแห่งใหม่ขึ้นบริเวณข้าง ๆ อุทยานร้อยปี และมีคำสั่งรื้อถอนศาลเจ้าแม่ทับทิมสะพานเหลืองดั้งเดิม แต่ ณ ปัจจุบัน ยังคงตั้งอยู่เช่นเคยและเปิดให้สักการะได้ตามปกติ เนื่องจากยังอยู่ในกระบวนการต่อสู้ทางกฎหมายและข้อตกลงที่ยังไม่ได้ข้อยุติ",
+      "desc.en": "This is a old shrine with a long history. It’s been part of the Saphan Lueang community even before Chulalongkorn University was built. The main statue is Chao Mae Thapthim (Tian Hou Sheng Mu), which is carved from wood and has been the heart of the community since day one. The building is a beautiful example of traditional Teochew Chinese architecture. However, there has been a dispute between the shrine and the university. There was a plan to take down the old shrine to build condo and move it to a new spot next to the Centenary Park but for now, it's still standing in its original place. It’s still open for visitors and locals to come and pray, as the legal issues and agreements are still being worked out",
+      "schedule.th": "จันทร์–ศุกร์ 8:00–18:00\nเสาร์–อาทิตย์ 8:00–19:00",
+      "schedule.en": "Monday–Friday 8AM–6PM\nSaturday–Sunday 8AM–7PM",
+      "pointCode": "jj0606",
+      "qrCodePayload": "https://rpkm2026.com/jigsaw/jigsaw06?code=jj0606"
+    },
+    {
+      "pointId": "jigsaw07",
+      "name.th": "อาคารเฉลิมราชสุดากีฬาสถาน",
+      "name.en": "CU Sports Complex",
+      "desc.th": "อาคารศูนย์กีฬาในร่มขนาด 5 ชั้นของจุฬาลงกรณ์มหาวิทยาลัย ที่เปิดให้มุ่งเน้นการเสริมสร้างสุขภาวะที่ดีให้กับนิสิตในรั้วจุฬาลงกรณ์มหาวิทยาลัย โดยที่นิสิตสามารถใช้บริการได้โดยไม่มีค่าใช้จ่าย และบุคคลภายนอกสามารถใช้บริการได้ด้วยการจ่ายค่าบริการ ภายในประกอบไปด้วยสิ่งอำนวยความสะดวกในการออกกำลังกายมากมาย เช่น คอร์ทสนามแบดมินตัน สระว่ายน้ำกลางแจ้งมาตรฐาน ขนาด 50 เมตร ฟิตเนสที่มีลู่วิ่ง ที่ยกน้ำหนัก และเครื่องออกกำลังกายอื่น ๆ อีกมากมาย อีกทั้งยังมีห้องล็อกเกอร์ ห้องอาบน้ำ และห้องเปลี่ยนเสื้อผ้าที่สะอาดและถูกสุขลักษณะ เพื่อรองรับผู้เข้ามาใช้บริการในแต่ละวัน",
+      "desc.en": "This 5-story indoor sports complex at Chulalongkorn University dedicated to encouraging students to exercise for better health. It is completely free for students to use, while the general public can also use the facilities by paying service fee. Inside, there are many of facilities for exercise such as badminton courts, a standard 50-meter outdoor pool, and a gym with treadmills, weights, and others. It also have locker rooms, showers, and changing areas ready for everyone who comes to work out.",
+      "schedule.th": "จันทร์–ศุกร์ 6:00–21:00\nเสาร์–อาทิตย์ 9:00–18:00",
+      "schedule.en": "Monday–Friday 6AM–9 PM\nSaturday–Sunday 9AM–6PM",
+      "pointCode": "jj0707",
+      "qrCodePayload": "https://rpkm2026.com/jigsaw/jigsaw07?code=jj0707"
+    },
+    {
+      "pointId": "jigsaw08",
+      "name.th": "CU Plearn Space",
+      "name.en": "CU Plearn Space",
+      "desc.th": "ตั้งอยู่ฝั่งตรงข้ามของศาลาพระเกี้ยว เป็นพื้นที่ Co-Working Space ภายในมหาวิทยาลัย สำหรับให้นิสิตหรือบุคลากรภายในมานั่งทำงาน อ่านหนังสือ ทำกิจกรรม หรือพักผ่อนหย่อนใจ ตามคอนเซปต์ที่ผสมผสานระหว่างคำว่า \"Play\" และ \"Learn\" ภายในมีการแบ่งสัดส่วนชัดเจน ทั้งโซนพื้นที่นั่งทำงานแบบเปิด โซนพักผ่อน และห้องประชุมสำหรับปรึกษางานกลุ่ม อีกทั้งยังมีตู้กดอาหารและเครื่องดื่ม, ตู้ล็อกเกอร์, และบริการอื่นๆ ที่ครบครันต่อการอำนวจความสะดวก",
+      "desc.en": "Located across Sala Phra Kiao. It is a spot for students and staff to work, study, do activities, or just chill out. The whole place is built on the concept of mixing 'Play' and 'Learn'. Inside, the areas are divided into many zones such as open workspaces, relaxing zones, and meeting rooms for group projects. To make things more convenient, they also have food and drink vending machines, lockers, and other useful services.",
+      "schedule.th": "จันทร์–ศุกร์ 7:00–22:00\nเสาร์–อาทิตย์ 7:00–19:00",
+      "schedule.en": "Monday–Friday 7AM–10PM\nSaturday–Sunday 7AM–7PM",
+      "pointCode": "jj0808",
+      "qrCodePayload": "https://rpkm2026.com/jigsaw/jigsaw08?code=jj0808"
+    },
+    {
+      "pointId": "jigsaw09",
+      "name.th": "ศาลาพระเกี้ยว",
+      "name.en": "Sala Phra Kieo",
+      "desc.th": "อาคารอเนกประสงค์ที่นำสัญลักษณ์ \"พระเกี้ยว\" ซึ่งเป็นตราประจำมหาวิทยาลัยมาเป็นแนวคิดหลักในการออกแบบ ทำหน้าที่เป็นศูนย์กลางของกิจกรรมนิสิตและบริการต่าง ๆ ที่สำคัญ เช่น เป็นสถานที่จัดกิจกรรมอย่างงานเปิดบ้าน งานนิทรรศการต่าง ๆ บริเวณชั้นใต้ดินเป็นที่ตั้งของศูนย์หนังสือจุฬาลงกรณ์มหาวิทยาลัยสาขาใหญ่ที่ให้บริการจำหน่ายหนังสือ เครื่องเขียน และของที่ระลึก ในปี พ.ศ. 2559 สถานที่แห่งนี้ได้รับรางวัลอนุรักษ์ศิลปสถาปัตยกรรม โดยสมาคมสถาปนิกสยาม ในพระบรมราชูปถัมภ์",
+      "desc.en": "The design got inspiration from Phra Kiao, which is university's emblem. This place is a multipurpose building for services and student's activities such as Open House activity, Exhibition. On the underground floor is a Chulalongkorn University Book Center's main branch that sell books, stationery and souvenirs. This place has been awarded the Architectural Conservation Award by the Association of Siamese Architects under Royal Patronage.",
+      "schedule.th": "จันทร์–ศุกร์ 8:30–16:30",
+      "schedule.en": "Monday–Friday 8:30AM–4:30PM",
+      "pointCode": "jj0909",
+      "qrCodePayload": "https://rpkm2026.com/jigsaw/jigsaw09?code=jj0909"
+    },
+    {
+      "pointId": "jigsaw10",
+      "name.th": "อาคารมหาจุฬาลงกรณ์",
+      "name.en": "Maha Chulalongkorn Building",
+      "desc.th": "หรือที่รู้จักอีกชื่อคือ \"เทวาลัย\" เป็นอาคารเรียนหลังแรกของจุฬาลงกรณ์มหาวิทยาลัย สร้างขึ้นในสมัยพระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัว ก่อสร้างด้วยสถาปัตยกรรมรูปแบบตะวันตกผสมผสานกับไทยประเพณี ดังเช่นรูปแบบตัวอาคารทรงยุโรปและบันไดที่มีพญานาคตั้งอยู่ ปัจจุบันเป็นทั้งพื้นที่ศึกษาวิชาการของคณะอักษรศาสตร์ อีกทั้งด้วยความสวยงามทางสถาปัตยกรรม ทำให้สถานที่นี้เป็นหนึ่งในแลนด์มาร์คยอดฮิตของนิสิตในการถ่ายรูปกับสถาปัตยกรรมของสถานที่นี้ และนักท่องเที่ยวเองก็สามารถเยี่ยมชมสถานที่แห่งนี้ได้โดยไม่มีค่าใช้จ่ายเช่นกัน",
+      "desc.en": "Also known as Devalai, this place is the first academic building of Chulalongkorn University, it was built during the reign of King Rama VI. The design is a mix of Western and traditional Thai architecture such as western style structure paired with traditional Thai Naga staircases. Today, it take place as an academic building. for the Faculty of Arts. Also it has become a landmark that many students come to take a snap with and tourist can visit this place without any charges.",
+      "schedule.th": "ปิดปรับปรุง",
+      "schedule.en": "Under maintenance",
+      "pointCode": "jj1010",
+      "qrCodePayload": "https://rpkm2026.com/jigsaw/jigsaw10?code=jj1010"
+    }
+  ]
+}
