@@ -390,7 +390,11 @@
     }
   },
   "activity": {
-    "title": "Activity Registeration",
-    "button": "Activity Details"
+    "title": "Activity Registration",
+    "button": "Activity Details",
+    "fieldTrip": {
+      "button": "Register",
+      "buttonClosed": "Closed"
+    }
   }
 }
