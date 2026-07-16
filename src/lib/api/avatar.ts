@@ -6,7 +6,7 @@ type SuccessResponse<T> = {
 };
 
 /** Uploads a new profile picture (jpeg/png/webp ≤15MB — the backend
- *  recompresses to a 512×512 webp) and returns its public URL. The session's
+ *  recompresses to a ≤512px webp) and returns its public URL. The session's
  *  `user.image` is updated server-side; call `refreshSession()` after. */
 export async function uploadAvatar(file: File): Promise<string> {
   const form = new FormData();

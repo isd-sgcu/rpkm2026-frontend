@@ -11,7 +11,7 @@ import { EditPencil } from "./EditPencil";
 /**
  * Profile-photo box. Better Auth seeds `user.image` from the Google account;
  * the pencil replaces it via POST /v1/me/avatar (backend recompresses to a
- * 512×512 webp and updates the session user).
+ * ≤512px webp and updates the session user).
  */
 export function AvatarEditor() {
   const session = useSession();
