@@ -20,8 +20,7 @@ const GATED_EVENTS: Record<GatedEventKey, GatedEvent> = {
   chulaQrQuest: {
     unlockAt: new Date("2026-07-20T00:00:00+07:00").getTime(),
     allowedRoles: ["student"],
-    matches: (path) =>
-      path === "/chula-qr-quest" || path.startsWith("/chula-qr-quest/"),
+    matches: (path) => path === "/qrquest" || path.startsWith("/qrquest/"),
   },
 };
 

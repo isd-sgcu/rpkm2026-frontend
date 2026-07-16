@@ -69,7 +69,7 @@ function ChulaQrQuestHomePanelContent() {
       </div>
 
       <a
-        href="/chula-qr-quest/reward"
+        href="/qrquest/reward"
         className={cn(
           buttonVariants({ variant: "default", size: "sm" }),
           "mx-auto w-fit rounded-full",
@@ -124,7 +124,7 @@ function ChulaQrQuestHomePanelContent() {
       </div>
 
       <a
-        href="/chula-qr-quest/scan"
+        href="/qrquest/scan"
         className={cn(
           buttonVariants({ variant: "default", size: "lg" }),
           "mx-auto w-fit gap-2 rounded-full",

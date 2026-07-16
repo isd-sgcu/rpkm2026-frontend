@@ -162,7 +162,7 @@ const ChulaQrQuestScanPanel = () => {
       </Button>
 
       <a
-        href="/chula-qr-quest"
+        href="/qrquest"
         className={cn(
           buttonVariants({ variant: "outline", size: "sm" }),
           "rounded-full",

@@ -142,7 +142,7 @@ const InformationPanel = () => {
               </div>
               <div className="min-w-0">
                 <ShapeButton
-                  href="/chula-qr-quest"
+                  href="/qrquest"
                   imageUrl={stampButtonUrl}
                   capRatio="4/3"
                   fill="#6ABF73"
