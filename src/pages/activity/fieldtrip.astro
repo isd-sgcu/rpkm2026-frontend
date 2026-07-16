@@ -1,0 +1,9 @@
+---
+import ActivityLayout from "@layouts/ActivityLayout.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { appConfig } from "@lib/env";
+---
+
+<BaseLayout title={appConfig.appName}>
+  <ActivityLayout navigateBack="/" showMenuBorder={true} />
+</BaseLayout>
