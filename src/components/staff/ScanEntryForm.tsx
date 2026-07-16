@@ -1,14 +1,13 @@
-import { useState, type ReactNode } from "react";
-import { LoaderCircleIcon } from "lucide-react";
-import { toast } from "sonner";
-import { cn } from "@lib/utils";
-import { Button } from "@components/ui/button";
-import { Input } from "@components/ui/input";
-import { Toaster } from "@components/ui/sonner";
 import { CameraTroubleshoot } from "@components/shared/CameraTroubleshootDialog";
 import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 import { QrScanner } from "@components/shared/QrCodeScanner";
 import { ResultDialog } from "@components/staff/ResultDialog";
+import { Button } from "@components/ui/button";
+import { Input } from "@components/ui/input";
+import { cn } from "@lib/utils";
+import { LoaderCircleIcon } from "lucide-react";
+import { useState, type ReactNode } from "react";
+import { toast } from "sonner";
 
 type Mode = "qr" | "studentId";
 type Status = "idle" | "submitting" | "success" | "error";
@@ -244,8 +243,6 @@ export function ScanEntryForm({
         failMessage={dialog.message}
         retryLabel={labels.retry}
       />
-
-      <Toaster />
     </>
   );
 }
