@@ -420,6 +420,11 @@ export function getHouseById(id: string): House | undefined {
   return HOUSES.find((house) => house.id === id);
 }
 
+/** Real backend house codes are `"house01"`.."house22"`, matching local `id`s 1-22 in order. */
+export function getHouseByCode(code: string): House | undefined {
+  return HOUSES.find((house) => `house${house.id.padStart(2, "0")}` === code);
+}
+
 export const HOUSE_CAPACITY = 500;
 
 // Mock member counts until the houses API provides real numbers
