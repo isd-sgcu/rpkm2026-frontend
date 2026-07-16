@@ -70,35 +70,9 @@
       "title2": "Chula QR Quest",
       "subtitle": "Collect stamps from important locations around Chula, then redeem them for a reward!",
       "dateRange": "July 20 - August 7",
-      "playButton": "How to Play",
+      "rewardButton": "Reward Conditions",
       "scanButton": "Scan to Collect Stamps",
       "openInMaps": "Open in Google Maps"
-    },
-    "rule": {
-      "title1": "How to Play",
-      "title2": "Chula QR Quest",
-      "step1": {
-        "title": "Log In",
-        "text": "Log in to the system to receive your Scanner"
-      },
-      "step2": {
-        "title": "View the Map",
-        "text": "Open the map to see the locations of the QR codes",
-        "button": "Open Map"
-      },
-      "step3": {
-        "title": "Explore",
-        "text": "Scan the QR code at each location to collect a stamp"
-      },
-      "step4": {
-        "title": "Collect Them All",
-        "text": "Collect all the required stamps"
-      },
-      "step5": {
-        "title": "Claim Your Reward",
-        "text": "Follow reward redemption details on IG: rubpuenkaomai2026",
-        "button": "View Reward Details"
-      }
     },
     "reward": {
       "title": "Claim Reward",

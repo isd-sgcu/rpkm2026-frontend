@@ -48,13 +48,13 @@ const ChulaQrQuestHomePanel = () => {
       </div>
 
       <a
-        href="/chula-qr-quest/rule"
+        href="/chula-qr-quest/reward"
         className={cn(
           buttonVariants({ variant: "default", size: "sm" }),
           "mx-auto w-fit rounded-full",
         )}
       >
-        {t("chulaQrQuest.home.playButton")}
+        {t("chulaQrQuest.home.rewardButton")}
       </a>
 
       <div className="relative aspect-9/16 w-full overflow-hidden rounded-3xl border border-foreground">

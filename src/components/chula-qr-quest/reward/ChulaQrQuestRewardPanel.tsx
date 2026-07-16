@@ -6,7 +6,7 @@ import instagramIcon from "@assets/images/instagram_icon.svg";
 
 // TODO: fetch the user's collected stamp count from API
 const collectedStamps = 7;
-const TOTAL_STAMPS = 44;
+const TOTAL_STAMPS = 35;
 
 const ChulaQrQuestRewardPanel = () => {
   const t = useT();

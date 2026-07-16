@@ -70,35 +70,9 @@
       "title2": "Chula QR Quest",
       "subtitle": "สะสมตราประทับจากสถานที่สำคัญรอบจุฬาฯ ให้ครบ แล้วนำไปแลกรางวัล!",
       "dateRange": "20 กรกฎาคม - 7 สิงหาคม",
-      "playButton": "วิธีการเล่น",
+      "rewardButton": "เงื่อนไขการรับรางวัล",
       "scanButton": "สแกนเพื่อสะสมแสตมป์",
       "openInMaps": "เปิดใน Google Maps"
-    },
-    "rule": {
-      "title1": "วิธีเล่น",
-      "title2": "Chula QR Quest",
-      "step1": {
-        "title": "เข้าใช้งาน",
-        "text": "เข้าใช้งานระบบเพื่อรับ Scanner"
-      },
-      "step2": {
-        "title": "ดูแผนที่",
-        "text": "เปิดแผนที่ เพื่อดูตำแหน่งของ QR Code",
-        "button": "เปิดแผนที่"
-      },
-      "step3": {
-        "title": "ออกสำรวจ",
-        "text": "สแกน QR Code ประจำสถานที่ต่าง ๆ เพื่อรับ Stamp"
-      },
-      "step4": {
-        "title": "สะสม Stamp",
-        "text": "สะสม Stamp ให้ครบตามที่กำหนด"
-      },
-      "step5": {
-        "title": "แลกรางวัล",
-        "text": "ติดตามการแลกรางวัลได้ที่ IG: rubpuenkaomai2026",
-        "button": "ดูรายละเอียดการแลกรางวัล"
-      }
     },
     "reward": {
       "title": "การแลกรางวัล",
