@@ -14,7 +14,7 @@ const activities: FieldTripActivity[] = [
   },
   {
     id: "field-trip-2",
-    title: "Field Trip 2",
+    title: "Walk Rally",
     description:
       "เรียนรู้เรื่องราวและประวัติศาสตร์ของจุฬาฯ ผ่าน Workshop พิพิธภัณฑ์ และกิจกรรมบอร์ดเกม\nโดยมีรุ่นพี่ร่วมพาออกสำรวจและทำกิจกรรมไปด้วยกัน",
     registrationText:
