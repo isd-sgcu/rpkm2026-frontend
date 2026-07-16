@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import { useProfile } from "./useProfile";
 import type { ProfileState } from "./profile";
+import { saveReturnTo } from "./returnTo";
 import { toast } from "sonner";
 import { findGatedEvent, isUnlocked } from "@lib/guard";
 
@@ -72,12 +73,22 @@ export function useAccessGuard(pathname: string): { ready: boolean } {
 
   useEffect(() => {
     if (redirectTo) {
+      // Oh my god
       if (redirectTo === "/landing" && profile.status === "unauthenticated") {
         const target = window.location.pathname + window.location.search;
         console.log(target);
         if (target !== "/landing") {
           sessionStorage.setItem(POST_LOGIN_REDIRECT_KEY, target);
         }
+      }
+      if (redirectTo === "/landing") {
+        // Remember where the user was headed (e.g. /house?code=XYZ from an
+        // invite link) so /landing can send them back after login.
+        saveReturnTo(
+          window.location.pathname +
+            window.location.search +
+            window.location.hash,
+        );
       }
       if (import.meta.env.DEV) {
         toast.info("[dev] ยกเลิกการ redirect ของ AccessGaurd", {
