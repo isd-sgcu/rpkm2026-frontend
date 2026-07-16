@@ -2,10 +2,11 @@
 import MyFreshyStoryHeader from "@components/my-freshy-story/MyFreshyStoryHeader";
 import MyFreshyStoryLayout from "@layouts/MyFreshyStoryLayout.astro";
 import SocialSection from "@components/my-freshy-story/SocialSection";
+import { AuthGuard } from "@components/shared/AuthGuard";
 ---
 
 <MyFreshyStoryLayout navigateBack="/" title="My Freshy Story">
-  <!-- Header Section -->
+  <AuthGuard pathname={Astro.url.pathname} client:load />
   <MyFreshyStoryHeader client:load />
   <SocialSection client:load />
 </MyFreshyStoryLayout>
