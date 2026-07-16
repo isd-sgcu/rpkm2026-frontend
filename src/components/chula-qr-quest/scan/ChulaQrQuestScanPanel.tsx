@@ -72,7 +72,11 @@ const ChulaQrQuestScanPanel = () => {
       window.location.pathname,
       window.location.search,
     );
-    if (code) submitScan(code);
+    if (code) {
+      // Drop ?code=... so a refresh or back-nav does not re-submit it.
+      window.history.replaceState(null, "", window.location.pathname);
+      submitScan(code);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
