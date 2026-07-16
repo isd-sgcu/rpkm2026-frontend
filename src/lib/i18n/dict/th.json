@@ -409,7 +409,7 @@
       "houseRemove": "ยืนยันการลบ",
       "houseRemoveDesc": "คุณต้องการลบ{House}\nออกจากการจัดอันดับใช่หรือไม่ ?",
       "saveIncompleteTitle": "เกิดข้อผิดพลาด",
-      "saveIncompleteDescription": "กรุณาเลือกบ้านให้ครบ 5 อันดับ",
+      "saveIncompleteDescription": "กรุณาเลือกบ้านอย่างน้อย 1 อันดับ",
       "saveSuccessTitle": "บันทึกข้อมูลสำเร็จ",
       "saveSuccessDescription": "ประกาศผล 23 ก.ค. 2569 19:00 น.",
       "selectHouseConfirmTitle": "ยืนยันการเลือกบ้าน",

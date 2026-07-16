@@ -409,7 +409,7 @@
       "houseRemove": "Confirm Remove",
       "houseRemoveDesc": "Do you want to remove {House} from ranking?",
       "saveIncompleteTitle": "Ranking incomplete",
-      "saveIncompleteDescription": "Please select all 5 houses before saving.",
+      "saveIncompleteDescription": "Please select at least 1 house before saving.",
       "saveSuccessTitle": "Saved successfully",
       "saveSuccessDescription": "House annoucement on July 23, 2026 at 19:00.",
       "selectHouseConfirmTitle": "Confirm house selection",
