@@ -388,5 +388,13 @@
       "origin": "ต้นทาง",
       "destination": "ปลายทาง"
     }
+  },
+  "activity": {
+    "title": "ลงทะเบียนกิจกรรม",
+    "button": "รายละเอียด",
+    "fieldTrip": {
+      "button": "ลงทะเบียน",
+      "buttonClosed": "ปิดลงทะเบียน"
+    }
   }
 }

@@ -388,5 +388,9 @@
       "origin": "Origin",
       "destination": "Destination"
     }
+  },
+  "activity": {
+    "title": "Activity Registeration",
+    "button": "Activity Details"
   }
 }
