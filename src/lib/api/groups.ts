@@ -69,3 +69,28 @@ export async function kickMember(userId: string) {
   );
   return res.data;
 }
+
+export type HousePreference = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  groupId: string;
+  houseId: string;
+  rank: number;
+};
+
+/** The caller's group's ranked house choices, most preferred (rank 1) first. */
+export async function getHousePreferences() {
+  const res = await API.get<
+    SuccessResponse<{ housePreferences: HousePreference[] }>
+  >("/v1/rpkm/groups/me/house-preferences");
+  return res.data.housePreferences;
+}
+
+/** Leader only. Replaces the group's whole ranked house-choice set. */
+export async function setHousePreferences(houseIds: string[]) {
+  const res = await API.put<
+    SuccessResponse<{ housePreferences: HousePreference[] }>
+  >("/v1/rpkm/groups/me/house-preferences", { houseIds });
+  return res.data.housePreferences;
+}
