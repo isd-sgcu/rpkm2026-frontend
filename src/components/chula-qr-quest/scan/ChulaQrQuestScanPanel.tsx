@@ -27,7 +27,11 @@ interface StampPosition {
 
 const stampPositions = positions as StampPosition[];
 
+const QR_URL_PATTERN =
+  /^(https:\/\/rpkm2026\.com|http:\/\/localhost:4321)\/qrquest(\/|\?|$)/;
+
 function extractCode(scanned: string): string | null {
+  if (!QR_URL_PATTERN.test(scanned)) return null;
   try {
     return new URL(scanned).searchParams.get("code");
   } catch {
