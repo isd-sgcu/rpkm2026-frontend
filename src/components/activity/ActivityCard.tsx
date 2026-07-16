@@ -40,11 +40,6 @@ function parseLocalDate(iso: string): Date {
   return new Date(year, month - 1, day);
 }
 
-function startOfToday(): Date {
-  const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
-}
-
 /** Format as Thai short date with Buddhist-era year, e.g. "29 ก.พ. 69". */
 function formatThaiDate(date: Date): string {
   const day = date.getDate();
@@ -73,17 +68,12 @@ export function FieldTripCard({
     time,
     registerStartDate,
     registerEndDate,
-    formUrl,
     activityPeriod,
     detailsUrl,
   } = activity;
 
-  const today = startOfToday();
   const registerStart = parseLocalDate(registerStartDate);
   const registerEnd = parseLocalDate(registerEndDate);
-
-  // Registration is closed once today is past the end date.
-  const registrationClosed = today > registerEnd;
 
   const registrationText = `เปิดลงทะเบียน ${formatThaiDate(registerStart)} - ${formatThaiDate(registerEnd)} หรือจนกว่าจะเต็ม`;
   const activityText = activityPeriod ?? time;
@@ -121,8 +111,8 @@ export function FieldTripCard({
           </span>
         </div>
 
-        {/* Actions — placeholder links; wire the real URLs later. */}
-        <div className="mt-5 flex justify-center gap-3">
+        {/* Action — placeholder link; wire the real URL later. */}
+        <div className="mt-5 flex justify-center">
           <Button
             type="button"
             className="rounded-full px-6"
@@ -130,14 +120,6 @@ export function FieldTripCard({
             onClick={() => openLink(detailsUrl)}
           >
             รายละเอียด
-          </Button>
-          <Button
-            type="button"
-            className="rounded-full px-6"
-            disabled={disabled || registrationClosed}
-            onClick={() => openLink(formUrl)}
-          >
-            ลงทะเบียน
           </Button>
         </div>
       </div>
