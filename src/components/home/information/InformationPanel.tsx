@@ -1,6 +1,7 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Lock } from "lucide-react";
 import { getImageUrl } from "@lib/function";
 import { useProfile } from "@lib/auth/useProfile";
+import { isFreshyStoryUnlocked } from "@lib/guard";
 import { useT } from "@lib/i18n/useT";
 import { Button, buttonVariants } from "@components/ui/button";
 import { cn } from "@lib/utils";
@@ -20,6 +21,8 @@ interface ShapeButtonProps {
   fill: string;
   dark?: boolean;
   roundedBottom?: boolean;
+  disabled?: boolean;
+  disabledLabel?: string;
 }
 
 function ShapeButton({
@@ -29,9 +32,19 @@ function ShapeButton({
   capRatio,
   fill,
   roundedBottom,
+  disabled,
+  disabledLabel,
 }: ShapeButtonProps) {
   return (
-    <a href={href} className="flex w-full flex-col">
+    <a
+      href={disabled ? undefined : href}
+      aria-disabled={disabled}
+      tabIndex={disabled ? -1 : undefined}
+      className={cn(
+        "flex w-full flex-col",
+        disabled && "pointer-events-none grayscale opacity-50",
+      )}
+    >
       <div className="w-full overflow-hidden" style={{ aspectRatio: capRatio }}>
         <img src={imageUrl} alt="" className="block w-full" />
       </div>
@@ -47,6 +60,11 @@ function ShapeButton({
         >
           {label}
         </span>
+        {disabled && disabledLabel && (
+          <span className="text-center text-[0.65rem] text-foreground/70">
+            {disabledLabel}
+          </span>
+        )}
         <Button
           aria-hidden="true"
           tabIndex={-1}
@@ -56,7 +74,13 @@ function ShapeButton({
             "pointer-events-none rounded-full",
             "border-foreground bg-background",
           )}
-          iconStart={<ChevronRight className="text-foreground" />}
+          iconStart={
+            disabled ? (
+              <Lock className="text-foreground" />
+            ) : (
+              <ChevronRight className="text-foreground" />
+            )
+          }
         />
       </div>
     </a>
@@ -67,6 +91,7 @@ const InformationPanel = () => {
   const t = useT();
   const profile = useProfile();
   const isStaff = profile.status === "ready" && profile.me.role === "staff";
+  const freshyStoryLocked = !isFreshyStoryUnlocked();
 
   return (
     <div className="flex w-full flex-col gap-12">
@@ -130,6 +155,8 @@ const InformationPanel = () => {
                   capRatio="4/3"
                   fill="#6ABF73"
                   label={t("home.information.games.myFreshyStory")}
+                  disabled={freshyStoryLocked}
+                  disabledLabel={t("home.information.games.comingSoon")}
                 />
               </div>
             </div>
