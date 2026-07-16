@@ -28,14 +28,23 @@ interface StampPosition {
 const stampPositions = positions as StampPosition[];
 
 const QR_URL_PATTERN =
-  /^(?:https:\/\/rpkm2026\.com|http:\/\/localhost:4321)\/qrquest\/(quest\d+)(?:\?|$)/;
+  /^(?:https:\/\/rpkm2026\.com|http:\/\/localhost:4321)\/qrquest\/quest\d+(?:\?|$)/;
 
-function extractQuestId(scanned: string): string | null {
-  return scanned.match(QR_URL_PATTERN)?.[1] ?? null;
+function extractCode(scanned: string): string | null {
+  if (!QR_URL_PATTERN.test(scanned)) return null;
+  try {
+    return new URL(scanned).searchParams.get("code");
+  } catch {
+    return null;
+  }
 }
 
-function extractQuestIdFromPath(pathname: string): string | null {
-  return pathname.match(/^\/qrquest\/(quest\d+)$/)?.[1] ?? null;
+function extractCodeFromLocation(
+  pathname: string,
+  search: string,
+): string | null {
+  if (!/^\/qrquest\/quest\d+$/.test(pathname)) return null;
+  return new URLSearchParams(search).get("code");
 }
 
 function getCurrentPosition(): Promise<GeolocationPosition> {
@@ -59,8 +68,11 @@ const ChulaQrQuestScanPanel = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const questId = extractQuestIdFromPath(window.location.pathname);
-    if (questId) submitScan(questId);
+    const code = extractCodeFromLocation(
+      window.location.pathname,
+      window.location.search,
+    );
+    if (code) submitScan(code);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -145,7 +157,7 @@ const ChulaQrQuestScanPanel = () => {
 
   function handleScan(scanned: string) {
     if (busy || result) return;
-    const code = extractQuestId(scanned);
+    const code = extractCode(scanned);
     if (!code) {
       setResult({ status: "fail" });
       return;
