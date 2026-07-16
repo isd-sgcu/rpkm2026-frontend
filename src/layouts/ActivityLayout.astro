@@ -1,0 +1,61 @@
+---
+import { NavigationMenu } from "@components/shared/NavigationMenu";
+import Image from "astro/components/Image.astro";
+import header1 from "../assets/images/activity_header_1.svg";
+import { ChevronLeft } from "lucide-react";
+import type { HTMLAttributes } from "astro/types";
+
+//27 30 34
+
+interface Props extends HTMLAttributes<"div"> {
+  navigateBack?: string;
+  showMenu?: boolean;
+  showMenuBorder?: boolean;
+}
+
+const {
+  navigateBack = "",
+  showMenu = true,
+  showMenuBorder = false,
+  ...rest
+} = Astro.props;
+---
+
+<div class:list={["relative w-full min-w-0 min-h-200"]} {...rest}>
+  {
+    /* Header: the ribbon banner (header 1) with three decorative flourishes
+      placed on top of it, left to right. */
+  }
+  <div class="absolute left-0 right-0 top-0 grid place-items-center">
+    <div class="relative w-full">
+      <Image src={header1} alt="rpkm activity header" class="w-full" />
+    </div>
+  </div>
+
+  {
+    navigateBack && (
+      <div class="absolute left-4 top-[4.5cqw] sm:top-4.5 h-10 flex items-center z-10">
+        <a
+          href={navigateBack}
+          class="size-[48px] rounded-full bg-[#FEFDF5] border border-black grid place-items-center"
+        >
+          <ChevronLeft className="size-6.5 text-foreground" />
+        </a>
+      </div>
+    )
+  }
+
+  {
+    showMenu && (
+      <div class="absolute right-4 top-[3.5cqw] sm:top-3.5 z-10 flex items-center [&_button]:p-[10px]">
+        <NavigationMenu showBorder={showMenuBorder} client:load />
+      </div>
+    )
+  }
+
+  <div
+    class:list={["relative flex flex-col px-[1.25em] pt-[24cqw] pb-8 sm:pt-24"]}
+  >
+    <slot />
+  </div>
+</div>
