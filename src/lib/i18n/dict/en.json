@@ -95,6 +95,12 @@
       "failTitle": "Scan Failed",
       "failMessage": "Please try again",
       "locationRequired": "We need your location to collect this stamp. Please allow location access and try again.",
+      "alreadyCollectedTitle": "Already Collected",
+      "alreadyCollectedMessage": "You've already collected this stamp before.",
+      "errorGameClosed": "This activity isn't open right now.",
+      "errorOutOfGeofence": "You're too far from this checkpoint. Get closer and try again.",
+      "errorInvalidCheckpoint": "This QR code doesn't belong to Chula QR Quest.",
+      "errorNotFreshmen": "This account isn't a freshman and can't collect stamps.",
       "ok": "OK",
       "loginRequiredTitle": "Please log in / register\nto collect this year's stamps...",
       "loginRequiredButton": "Log in / Register"

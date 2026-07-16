@@ -7,6 +7,7 @@ import { Button, buttonVariants } from "@components/ui/button";
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
 import { $locale } from "@lib/i18n/locale";
+import { APIError } from "@lib/client";
 import { QrScanner } from "@components/shared/QrCodeScanner";
 import { CameraTroubleshoot } from "@components/shared/CameraTroubleshootDialog";
 import { collectCheckpoint, getGameProgress } from "@lib/api/games";
@@ -95,6 +96,42 @@ const ChulaQrQuestScanPanel = () => {
       ) {
         // GeolocationPositionError
         toast.error(t("chulaQrQuest.scan.locationRequired"));
+      } else if (err instanceof APIError) {
+        switch (err.code) {
+          case "ALREADY_COLLECTED":
+            setResult({
+              status: "fail",
+              title: t("chulaQrQuest.scan.alreadyCollectedTitle"),
+              message: t("chulaQrQuest.scan.alreadyCollectedMessage"),
+            });
+            break;
+          case "GAME_CLOSED":
+            setResult({
+              status: "fail",
+              message: t("chulaQrQuest.scan.errorGameClosed"),
+            });
+            break;
+          case "OUT_OF_GEOFENCE":
+            setResult({
+              status: "fail",
+              message: t("chulaQrQuest.scan.errorOutOfGeofence"),
+            });
+            break;
+          case "INVALID_CHECKPOINT":
+            setResult({
+              status: "fail",
+              message: t("chulaQrQuest.scan.errorInvalidCheckpoint"),
+            });
+            break;
+          case "NOT_FRESHMEN":
+            setResult({
+              status: "fail",
+              message: t("chulaQrQuest.scan.errorNotFreshmen"),
+            });
+            break;
+          default:
+            setResult({ status: "fail" });
+        }
       } else {
         setResult({ status: "fail" });
       }
