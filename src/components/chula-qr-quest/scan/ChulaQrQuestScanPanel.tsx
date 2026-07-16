@@ -1,11 +1,15 @@
 import { useRef, useState } from "react";
 import { CloudUpload } from "lucide-react";
 import { BarcodeDetector } from "barcode-detector/ponyfill";
+import { useStore } from "@nanostores/react";
+import { toast } from "sonner";
 import { Button, buttonVariants } from "@components/ui/button";
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
+import { $locale } from "@lib/i18n/locale";
 import { QrScanner } from "@components/shared/QrCodeScanner";
 import { CameraTroubleshoot } from "@components/shared/CameraTroubleshootDialog";
+import { collectCheckpoint, getGameProgress } from "@lib/api/games";
 import positions from "@components/chula-qr-quest/position.json";
 import {
   ChulaQrQuestScanResultDialog,
@@ -14,34 +18,93 @@ import {
 
 interface StampPosition {
   id: string;
-  name: string;
+  nameTh: string;
+  nameEn: string;
   lat: number;
   lng: number;
-  collected: boolean;
 }
 
 const stampPositions = positions as StampPosition[];
 
+function extractCode(scanned: string): string | null {
+  try {
+    return new URL(scanned).searchParams.get("code");
+  } catch {
+    return null;
+  }
+}
+
+function getCurrentPosition(): Promise<GeolocationPosition> {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject(new Error("unsupported"));
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(resolve, reject, {
+      enableHighAccuracy: true,
+      timeout: 10000,
+    });
+  });
+}
+
 const ChulaQrQuestScanPanel = () => {
   const t = useT();
+  const locale = useStore($locale);
   const [result, setResult] = useState<ScanResult | null>(null);
+  const [busy, setBusy] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // TODO: replace with a real API call that validates the scanned code and
-  // reports which stamp (if any) was collected.
-  function handleCode(_code: string) {
-    console.log(_code);
-    if (result) return;
-    const target =
-      stampPositions.find((p) => !p.collected) ?? stampPositions[0];
-    const collectedCount = stampPositions.filter((p) => p.collected).length + 1;
-    setResult({
-      status: "success",
-      shopName: target.name,
-      collectedCount,
-      totalCount: stampPositions.length,
-      collectedAt: new Date(),
-    });
+  async function submitScan(code: string) {
+    if (result || busy) return;
+    setBusy(true);
+    try {
+      const devicePosition = await getCurrentPosition();
+      const collected = await collectCheckpoint("csr", {
+        code,
+        lat: devicePosition.coords.latitude,
+        lng: devicePosition.coords.longitude,
+      });
+      const progress = await getGameProgress("csr");
+      const place = stampPositions.find((p) => p.id === collected.code);
+
+      setResult({
+        status: "success",
+        shopName: place
+          ? locale === "th"
+            ? place.nameTh
+            : place.nameEn
+          : collected.code,
+        collectedCount: progress.collected.length,
+        totalCount: stampPositions.length,
+        collectedAt: new Date(collected.scannedAt),
+      });
+    } catch (err) {
+      if (err instanceof Error && err.message === "unsupported") {
+        toast.error(t("chulaQrQuest.scan.locationRequired"));
+      } else if (
+        err &&
+        typeof err === "object" &&
+        "code" in err &&
+        typeof (err as { code: unknown }).code === "number"
+      ) {
+        // GeolocationPositionError
+        toast.error(t("chulaQrQuest.scan.locationRequired"));
+      } else {
+        setResult({ status: "fail" });
+      }
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function handleScan(scanned: string) {
+    if (busy || result) return;
+    const code = extractCode(scanned);
+    if (!code) {
+      setResult({ status: "fail" });
+      return;
+    }
+    submitScan(code);
   }
 
   async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
@@ -51,13 +114,13 @@ const ChulaQrQuestScanPanel = () => {
 
     const detector = new BarcodeDetector({ formats: ["qr_code"] });
     const codes = await detector.detect(file).catch(() => []);
-    const code = codes[0]?.rawValue;
+    const scanned = codes[0]?.rawValue;
 
-    if (!code) {
+    if (!scanned) {
       setResult({ status: "fail" });
       return;
     }
-    handleCode(code);
+    handleScan(scanned);
   }
 
   function closeResult() {
@@ -73,8 +136,9 @@ const ChulaQrQuestScanPanel = () => {
       <div className="relative isolate w-full max-w-70 overflow-hidden rounded-3xl border border-foreground p-4 mb-8">
         <QrScanner
           className="rounded-2xl"
-          paused={result !== null}
-          onScan={handleCode}
+          paused={result !== null || busy}
+          loading={busy}
+          onScan={handleScan}
         />
       </div>
       <CameraTroubleshoot />
@@ -90,6 +154,7 @@ const ChulaQrQuestScanPanel = () => {
         type="button"
         variant="default"
         className="rounded-full"
+        disabled={busy}
         onClick={() => fileInputRef.current?.click()}
         iconStart={<CloudUpload className="size-4" />}
       >

@@ -1,15 +1,30 @@
 import { Check, Lock } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { useT } from "@lib/i18n/useT";
 import { cn } from "@lib/utils";
+import { getGameProgress } from "@lib/api/games";
+import { QueryProvider } from "@components/shared/QueryProvider";
+import positions from "@components/chula-qr-quest/position.json";
 import trophyImage from "@assets/images/trophy.svg";
 import instagramIcon from "@assets/images/instagram_icon.svg";
 
-// TODO: fetch the user's collected stamp count from API
-const collectedStamps = 7;
-const TOTAL_STAMPS = 35;
+const TOTAL_STAMPS = positions.length;
 
 const ChulaQrQuestRewardPanel = () => {
+  return (
+    <QueryProvider>
+      <ChulaQrQuestRewardPanelContent />
+    </QueryProvider>
+  );
+};
+
+function ChulaQrQuestRewardPanelContent() {
   const t = useT();
+  const { data: progress } = useQuery({
+    queryKey: ["chula-qr-quest-progress"],
+    queryFn: () => getGameProgress("csr"),
+  });
+  const collectedStamps = progress?.collected.length ?? 0;
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -128,6 +143,6 @@ const ChulaQrQuestRewardPanel = () => {
       </div>
     </div>
   );
-};
+}
 
 export default ChulaQrQuestRewardPanel;

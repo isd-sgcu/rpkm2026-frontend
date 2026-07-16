@@ -90,6 +90,7 @@
       "collectedAt": "Received on {datetime}",
       "failTitle": "Scan Failed",
       "failMessage": "Please try again",
+      "locationRequired": "We need your location to collect this stamp. Please allow location access and try again.",
       "ok": "OK",
       "loginRequiredTitle": "Please log in / register\nto collect this year's stamps...",
       "loginRequiredButton": "Log in / Register"
