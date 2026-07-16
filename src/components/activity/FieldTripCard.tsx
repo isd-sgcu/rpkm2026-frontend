@@ -1,7 +1,16 @@
+import { useState } from "react";
+
 import { CalendarDays, Clock, MapPin } from "lucide-react";
 
 import { Button } from "@components/ui/button";
 import { cn } from "@lib/utils";
+
+// Registration is only open during 18–20 July 2026 (UTC+7), inclusive.
+// Expressed as absolute UTC instants so it's correct in any viewer timezone:
+//   18 Jul 2026 00:00 (+07) === 17 Jul 2026 17:00 UTC
+//   21 Jul 2026 00:00 (+07) === 20 Jul 2026 17:00 UTC (end of 20 Jul)
+const REGISTER_OPEN_UTC = Date.UTC(2026, 6, 17, 17, 0, 0);
+const REGISTER_CLOSE_UTC = Date.UTC(2026, 6, 20, 17, 0, 0);
 
 /** One sub-route within a field trip, e.g. "Plant Walk". */
 export type FieldTripRoute = {
@@ -47,6 +56,15 @@ export function FieldTripCard({
   className,
 }: FieldTripCardProps) {
   const { title, description, routes, registerUrl } = fieldTrip;
+
+  // Registration link is clickable only inside the 18–20 Jul 2026 (UTC+7)
+  // window (the backend may enforce this too). Whenever you can't register —
+  // before or after the window, or when disabled — the button turns grey and
+  // reads "ปิดลงทะเบียน".
+  const [now] = useState(() => Date.now());
+  const registrationOpen = now >= REGISTER_OPEN_UTC && now < REGISTER_CLOSE_UTC;
+  const canRegister = registrationOpen && !disabled;
+  const registerLabel = canRegister ? "ลงทะเบียน" : "ปิดลงทะเบียน";
 
   const openLink = (url?: string) => {
     // TODO: replace the placeholder registerUrl values with the real links.
@@ -111,11 +129,14 @@ export function FieldTripCard({
                 {route.registerUrl !== undefined && (
                   <Button
                     type="button"
-                    className="mt-auto self-center rounded-full px-6"
-                    disabled={disabled}
+                    className={cn(
+                      "mt-auto self-center rounded-full px-6",
+                      !canRegister && "bg-rpkm-grey",
+                    )}
+                    disabled={!canRegister}
                     onClick={() => openLink(route.registerUrl)}
                   >
-                    ลงทะเบียน
+                    {registerLabel}
                   </Button>
                 )}
               </div>
@@ -129,11 +150,14 @@ export function FieldTripCard({
           <div className="mt-5 flex justify-end">
             <Button
               type="button"
-              className="rounded-full px-6"
-              disabled={disabled}
+              className={cn(
+                "rounded-full px-6",
+                !canRegister && "bg-rpkm-grey",
+              )}
+              disabled={!canRegister}
               onClick={() => openLink(registerUrl)}
             >
-              ลงทะเบียน
+              {registerLabel}
             </Button>
           </div>
         )}
