@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Trash2 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { getImageUrl } from "@lib/function";
 import { useT } from "@lib/i18n/useT";
@@ -28,6 +27,7 @@ export function RegisteredActivityCard({
   const t = useT();
   const queryClient = useQueryClient();
   const imageUrl = getImageUrl(activity.imageName ?? "");
+  const deleteIcon = getImageUrl("delete.svg");
   const frameStyle = { backgroundColor: activity.accentColor };
   const [open, setOpen] = useState(false);
 
@@ -38,10 +38,9 @@ export function RegisteredActivityCard({
 
   return (
     <>
-      <a
-        href={`/walkrally/events/${activity.id}`}
+      <div
         style={frameStyle}
-        className="relative isolate block overflow-hidden rounded-3xl border border-foreground p-1"
+        className="relative isolate overflow-hidden rounded-3xl border border-foreground p-1"
       >
         <div className="relative flex flex-col items-center gap-3 rounded-[1.15rem] border border-foreground bg-rpkm-beige p-3 pr-4 min-[360px]:flex-row min-[360px]:items-start">
           <div
@@ -59,7 +58,7 @@ export function RegisteredActivityCard({
             )}
           </div>
 
-          <div className="min-w-0 flex-1">
+          <div className="w-full min-w-0 flex-1">
             <div className="pr-6 text-lg font-bold text-foreground">
               {activity.name}
             </div>
@@ -88,17 +87,17 @@ export function RegisteredActivityCard({
 
           <button
             type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setOpen(true);
-            }}
+            onClick={() => setOpen(true)}
             className="absolute top-2 right-2 flex size-6 items-center justify-center"
           >
-            <Trash2 className="size-6 fill-destructive text-destructive" />
+            <img
+              src={deleteIcon}
+              alt="Delete"
+              className="size-6 fill-destructive text-destructive"
+            />
           </button>
         </div>
-      </a>
+      </div>
 
       <ConfirmActionDialog
         open={open}
