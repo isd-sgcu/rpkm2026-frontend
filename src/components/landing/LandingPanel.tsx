@@ -63,7 +63,7 @@ export function LandingPanel() {
   const isResolving = isSigningIn || session.status !== "unauthenticated";
 
   return (
-    <div className="relative flex w-full flex-col self-start overflow-x-clip bg-background pb-20.5">
+    <div className="relative flex w-full min-h-screen flex-col overflow-x-clip bg-background">
       {/* noise ? */}
       <MonotoneNoise
         noiseColor="rgba(0 0 0 / 0.25)"
@@ -75,7 +75,7 @@ export function LandingPanel() {
         <img src={topLanding.src} alt="" className="w-32 -scale-x-100" />
       </div>
 
-      <div className={`relative z-2 px-4 mt-28`}>
+      <div className="relative z-2 flex flex-1 items-center justify-center px-4">
         <div className="@container relative mx-auto w-full max-w-92.5">
           <img
             src={centerLanding.src}
