@@ -100,21 +100,11 @@ export default function Ranking() {
     if (!activeRank) return;
 
     setSelectedHouses((prev) => {
-      const updated = { ...prev };
-
-      // Remove the house if it already exists in another rank
-      Object.keys(updated).forEach((rank) => {
-        const key = rank as keyof RankingHouses;
-
-        if (updated[key] === house) {
-          updated[key] = null;
-        }
-      });
+      // Keep the ranking unique even if selection is triggered outside the UI.
+      if (Object.values(prev).includes(house)) return prev;
 
       // Assign the house to the selected rank
-      updated[activeRank] = house;
-
-      return updated;
+      return { ...prev, [activeRank]: house };
     });
 
     setActiveRank(null);
@@ -138,21 +128,22 @@ export default function Ranking() {
   };
 
   const handleSubmit = () => {
-    const orderedHouses = order.map((rank) => selectedHouses[rank]);
-    const hasEmptyRank = orderedHouses.some((house) => house === null);
+    const orderedHouses = order
+      .map((rank) => selectedHouses[rank])
+      .filter((house): house is string => house !== null);
 
-    if (hasEmptyRank) {
+    if (orderedHouses.length === 0) {
       setSaveAlertType("error");
       setShowSaveAlert(true);
       return;
     }
 
     const payload: RankingHouses = {
-      house1: orderedHouses[0],
-      house2: orderedHouses[1],
-      house3: orderedHouses[2],
-      house4: orderedHouses[3],
-      house5: orderedHouses[4],
+      house1: orderedHouses[0] ?? null,
+      house2: orderedHouses[1] ?? null,
+      house3: orderedHouses[2] ?? null,
+      house4: orderedHouses[3] ?? null,
+      house5: orderedHouses[4] ?? null,
     };
 
     // Mock API
@@ -312,6 +303,9 @@ export default function Ranking() {
         <HouseSelectPopup
           onClose={() => setActiveRank(null)}
           onSelect={handleSelectHouse}
+          disabledHouses={Object.values(selectedHouses).filter(
+            (house): house is string => house !== null,
+          )}
         />
       )}
 

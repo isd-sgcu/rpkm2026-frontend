@@ -16,11 +16,13 @@ const SIZES = ["S", "M", "L", "XL", "XXL"] as const;
 type HouseSelectPopupProps = {
   onClose: () => void;
   onSelect: (house: string) => void;
+  disabledHouses: readonly string[];
 };
 
 export default function HouseSelectPopup({
   onClose,
   onSelect,
+  disabledHouses,
 }: HouseSelectPopupProps) {
   const t = useT();
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,6 +30,7 @@ export default function HouseSelectPopup({
   const [selectedHouseDetail, setSelectedHouseDetail] = useState<House | null>(
     null,
   );
+  const disabledHouseNames = new Set(disabledHouses);
 
   const filteredHouses = HOUSES.filter((house) => {
     const query = searchTerm.toLowerCase();
@@ -109,13 +112,15 @@ export default function HouseSelectPopup({
               {filteredHouses.map((house) => {
                 const memberCount = getHouseMemberCount(house);
                 const isFull = memberCount >= HOUSE_CAPACITY;
+                const isRanked = disabledHouseNames.has(house.name.th);
 
                 return (
                   <button
                     key={house.id}
                     type="button"
+                    disabled={isRanked}
                     onClick={() => setSelectedHouseDetail(house)}
-                    className="flex flex-col gap-2 rounded-[10px] border bg-rpkm-beige p-2 text-left"
+                    className="flex flex-col gap-2 rounded-[10px] border bg-rpkm-beige p-2 text-left disabled:cursor-not-allowed disabled:grayscale disabled:opacity-50"
                   >
                     <div className="relative w-full">
                       <img
