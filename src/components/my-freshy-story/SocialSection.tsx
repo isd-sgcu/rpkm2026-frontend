@@ -5,8 +5,8 @@ import { getImageUrl } from "@lib/function";
 import ListChip from "./ListChip";
 export default function SocialSection() {
   const t = useT();
-  const InstagramIconUrl = getImageUrl("Instagram.svg");
-  const TikTokIconUrl = getImageUrl("TikTok.svg");
+  const InstagramIconUrl = getImageUrl("instagram.svg");
+  const TikTokIconUrl = getImageUrl("tiktok.svg");
 
   return (
     <MonotoneNoiseContainer className="grow bg-rpkm-red border rounded-t-4xl flex flex-col p-4 gap-4 mt-6">
@@ -43,15 +43,20 @@ export default function SocialSection() {
         </div>
       </MonotoneNoiseContainer>
       <MonotoneNoiseContainer className="bg-rpkm-beige border rounded-4xl flex flex-col p-4">
-        <h2 className="text-xl font-bold flex items-center gap-2">
+        <a
+          href="https://www.tiktok.com/@rubpuenkaomai2026"
+          target="_blank"
+          rel="noreferrer"
+          className="text-xl font-bold flex items-center gap-2 w-fit"
+        >
           Reels / TikTok{" "}
           <img
-            className="-translate-y-1"
+            className="-translate-0.5"
             width={24}
             alt=""
             src={TikTokIconUrl}
           />
-        </h2>
+        </a>
         <p className="mt-2">{t("myfreshystory.reelstiktok.description")}</p>
         <div className="flex flex-wrap gap-4 my-4 text-sm">
           <div className="min-w-1/2">
