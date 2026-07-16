@@ -125,7 +125,7 @@ const InformationPanel = () => {
               </div>
               <div className="min-w-0">
                 <ShapeButton
-                  href="/freshy-story"
+                  href="/my-freshy-story"
                   imageUrl={freshyButtonUrl}
                   capRatio="4/3"
                   fill="#6ABF73"
