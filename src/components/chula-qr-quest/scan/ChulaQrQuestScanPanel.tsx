@@ -87,7 +87,7 @@ const ChulaQrQuestScanPanel = () => {
         lng: devicePosition.coords.longitude,
       });
       const progress = await getGameProgress("csr");
-      const place = stampPositions.find((p) => p.id === collected.code);
+      const place = stampPositions.find((p) => p.id === collected.checkpointId);
 
       setResult({
         status: "success",

@@ -49,7 +49,7 @@ function ChulaQrQuestHomePanelContent() {
     queryFn: () => getGameProgress("csr"),
   });
   const collectedIds = new Set(
-    (progress?.collected ?? []).map((entry) => entry.code),
+    (progress?.collected ?? []).map((entry) => entry.checkpointId),
   );
 
   return (
