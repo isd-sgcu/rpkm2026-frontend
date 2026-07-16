@@ -2,7 +2,7 @@
 import {
   FieldTripCard,
   type FieldTripActivity,
-} from "@components/fieldtrip/FieldTripCard";
+} from "@components/activity/ActivityCard";
 import ActivityLayout from "@layouts/ActivityLayout.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { appConfig } from "@lib/env";
@@ -36,7 +36,7 @@ const activities: FieldTripActivity[] = [
 <BaseLayout title={appConfig.appName}>
   <ActivityLayout navigateBack="/" showMenuBorder={true}>
     <div class="w-full flex flex-col items-center">
-      <div class="w-[301px] px-6 py-10">
+      <div class="w-[301px]">
         <header class="relative z-10 text-center">
           <h1 class="text-3xl font-bold">ลงทะเบียนกิจกรรม</h1>
         </header>

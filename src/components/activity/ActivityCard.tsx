@@ -1,8 +1,5 @@
-import { Clock, Link as LinkIcon, MapPin } from "lucide-react";
+import { CalendarDays } from "lucide-react";
 
-import pot1Image from "@assets/images/artboard_15.svg";
-import pot2Image from "@assets/images/artboard_16.svg";
-import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 import { Button } from "@components/ui/button";
 import { cn } from "@lib/utils";
 
@@ -17,6 +14,10 @@ export type FieldTripActivity = {
   /** When registration closes (inclusive), as a local ISO date. */
   registerEndDate: string;
   formUrl: string;
+  /** Optional activity-period text (e.g. "22-29 ก.ค. 69 …"); falls back to `time`. */
+  activityPeriod?: string;
+  /** Optional link for the "รายละเอียด" (details) button. */
+  detailsUrl?: string;
 };
 
 const THAI_MONTHS_SHORT = [
@@ -71,94 +72,75 @@ export function FieldTripCard({
     title,
     description,
     time,
-    location,
     registerStartDate,
     registerEndDate,
     formUrl,
+    activityPeriod,
+    detailsUrl,
   } = activity;
 
   const today = startOfToday();
-  const registerEnd = parseLocalDate(registerEndDate);
   const registerStart = parseLocalDate(registerStartDate);
+  const registerEnd = parseLocalDate(registerEndDate);
 
   // Registration is closed once today is past the end date.
   const registrationClosed = today > registerEnd;
-  const registrationOpen = today >= registerStart && today <= registerEnd;
 
-  const dateRangeText = registrationOpen
-    ? `วันนี้ - ${formatThaiDate(registerEnd)}`
-    : `${formatThaiDate(registerStart)} - ${formatThaiDate(registerEnd)}`;
+  const registrationText = `เปิดลงทะเบียน ${formatThaiDate(registerStart)} - ${formatThaiDate(registerEnd)} หรือจนกว่าจะเต็ม`;
+  const activityText = activityPeriod ?? time;
 
-  const handleRegister = () => {
-    // TODO: replace the placeholder formUrl with the real Google Form link.
-    if (!formUrl) return;
-    window.open(formUrl, "_blank", "noopener,noreferrer");
+  // TODO: the two action buttons are placeholders — drop the real links in here.
+  const openLink = (url?: string) => {
+    if (!url) return;
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
     <article
-      className={cn("relative w-[301px] rounded-xl border bg-white", className)}
+      className={cn(
+        "w-[301px] rounded-2xl border border-black bg-rpkm-blue p-3",
+        className,
+      )}
     >
-      <div className="grid gap-4 p-6">
-        <div className="grid gap-2">
-          <h2 className="text-2xl font-bold">{title}</h2>
-          <p className="text-xs leading-relaxed text-[#46545b]">
-            {description}
-          </p>
+      {/* Title lives in the blue header. Placeholder blue — change later. */}
+      <h2 className="mb-2 px-1 text-2xl font-bold text-white">{title}</h2>
+
+      {/* White info panel nested inside the blue card. */}
+      <div className="rounded-xl border border-black bg-white p-4">
+        {/* Description. */}
+        <p className="text-xs leading-relaxed text-[#46545b]">{description}</p>
+
+        {/* Registration period + activity period. */}
+        <div className="mt-4 grid gap-2 text-xs text-[#46545b]">
+          <span className="flex items-start gap-2">
+            <CalendarDays className="mt-0.5 size-4 shrink-0" aria-hidden />
+            <span>{registrationText}</span>
+          </span>
+          <span className="flex items-start gap-2">
+            <CalendarDays className="mt-0.5 size-4 shrink-0" aria-hidden />
+            <span>{activityText}</span>
+          </span>
         </div>
 
-        <div className="grid gap-3">
-          <div className="flex items-center justify-between gap-3">
-            <span className="flex items-center gap-2 text-xs">
-              <Clock className="size-4 shrink-0" aria-hidden />
-              {time}
-            </span>
-            {registrationClosed ? (
-              <Button
-                type="button"
-                size="sm"
-                disabled
-                className="bg-[#D9D9D9] text-foreground hover:bg-[#D9D9D9] disabled:opacity-100"
-              >
-                ปิดลงทะเบียน
-              </Button>
-            ) : (
-              <Button
-                type="button"
-                size="sm"
-                disabled={disabled}
-                onClick={handleRegister}
-                iconEnd={<LinkIcon />}
-              >
-                ลงทะเบียน
-              </Button>
-            )}
-          </div>
-
-          <div className="flex items-center justify-between gap-3">
-            <span className="flex items-center gap-2 text-xs">
-              <MapPin className="size-4 shrink-0" aria-hidden />
-              {location}
-            </span>
-            <span className="text-xs text-[#46545b]">{dateRangeText}</span>
-          </div>
+        {/* Actions — placeholder links; wire the real URLs later. */}
+        <div className="mt-5 flex justify-center gap-3">
+          <Button
+            type="button"
+            className="rounded-full px-6"
+            disabled={disabled}
+            onClick={() => openLink(detailsUrl)}
+          >
+            รายละเอียด
+          </Button>
+          <Button
+            type="button"
+            className="rounded-full px-6"
+            disabled={disabled || registrationClosed}
+            onClick={() => openLink(formUrl)}
+          >
+            ลงทะเบียน
+          </Button>
         </div>
-      </div>
-
-      {/* Decorative plant shelf. Sits in front of the card; the pots overflow
-          above the band and must not be clipped by it. */}
-      <div className="relative z-10 mt-10" aria-hidden>
-        <MonotoneNoiseContainer className="h-[15px] rounded-[25px] border border-black bg-rpkm-blue" />
-        <img
-          src={pot1Image.src}
-          alt=""
-          className="pointer-events-none absolute bottom-0 left-6 z-20 w-16"
-        />
-        <img
-          src={pot2Image.src}
-          alt=""
-          className="pointer-events-none absolute bottom-0 right-6 z-20 w-16"
-        />
       </div>
     </article>
   );
