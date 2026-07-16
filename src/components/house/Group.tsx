@@ -1,6 +1,6 @@
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
-// import Image from "astro/components/Image.astro";
 import Logo from "@assets/images/house/house_group_logo.svg";
+import SendIcon from "@assets/icons/send.svg";
 import { Button } from "@components/ui/button";
 import { Input } from "@components/ui/input";
 
@@ -11,23 +11,44 @@ import { Input } from "@components/ui/input";
 
 export default function Group() {
   return (
-    <div>
-      <MonotoneNoiseContainer className="flex flex-col items-center bg-rpkm-light-pink rounded-4xl border px-10 py-6 gap-5">
-        <img src={Logo.src} alt="Group Logo" className="mx-auto" />
-        <Button type="button" size="xl" className="w-[80%] py-10 text-xl">
-          สร้างห้อง
-        </Button>
+    <MonotoneNoiseContainer
+      noise={{
+        noiseSize: 0.7,
+        noiseDensity: 20,
+        noiseColor: "rgba(0 0 0 / 0.59)",
+        noiseSeed: 7087,
+      }}
+      className="flex w-full flex-col items-center gap-6 rounded-[29px] border border-foreground bg-[#f1aacc] px-8 py-5"
+    >
+      <img
+        src={Logo.src}
+        alt="จับกลุ่มคู่หู"
+        width={109}
+        height={75}
+        className="mx-auto"
+      />
 
-        <div className="flex flex-row items-center border-black w-full border-2 py-5 px-5 bg-white rounded-full">
-          <Input placeholder="โปรดกรอกรหัสห้อง" className="text-lg flex-1" />
+      <Button
+        type="button"
+        size="xl"
+        className="h-17.5 w-[85%] rounded-full border-foreground text-2xl"
+      >
+        สร้างห้อง
+      </Button>
 
-          {/* <img 
-            src={SendIcon.src}
-            alt="Send Icon"
-            className="w-10 h-10"
-          /> */}
-        </div>
-      </MonotoneNoiseContainer>
-    </div>
+      <div className="relative w-full">
+        <Input
+          placeholder="โปรดกรอกรหัสห้อง"
+          className="h-13.5 rounded-full border-foreground bg-background px-13 text-center"
+        />
+        <button
+          type="button"
+          aria-label="เข้าร่วมห้อง"
+          className="absolute top-1/2 right-4 -translate-y-1/2"
+        >
+          <img src={SendIcon.src} alt="" className="size-6" />
+        </button>
+      </div>
+    </MonotoneNoiseContainer>
   );
 }
