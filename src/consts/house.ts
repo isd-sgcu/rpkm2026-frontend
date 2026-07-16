@@ -32,8 +32,7 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanKhunnoo.webp",
     link: {
       facebook: null,
-      instagram:
-        "https://www.instagram.com/baankhunnoo_official?igsh=c3N3aWExeHhyMW1i",
+      instagram: "https://www.instagram.com/baankhunnoo_official",
       tiktok: null,
     },
   },
@@ -50,9 +49,8 @@ export const HOUSES: House[] = [
     size: "S",
     logoUrl: "/house/BaanKoh.webp",
     link: {
-      facebook: "https://www.facebook.com/baan.k.chula?",
-      instagram:
-        "https://www.instagram.com/baankohchula?igsh=MWFsZG8wZWRoMmZ0aQ==",
+      facebook: "https://www.facebook.com/baan.k.chula",
+      instagram: "https://www.instagram.com/baankohchula",
       tiktok: null,
     },
   },
@@ -70,8 +68,7 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanDung.webp",
     link: {
       facebook: null,
-      instagram:
-        "https://www.instagram.com/baandung.official?igsh=cmI4Y3pmY21tNWoy&utm_source=qr",
+      instagram: "https://www.instagram.com/baandung.official",
       tiktok: null,
     },
   },
@@ -89,9 +86,8 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanYerm.webp",
     link: {
       facebook: null,
-      instagram:
-        "https://www.instagram.com/baanyerm.chula?igsh=MXAwcjRtY3BzMmpheg%3D%3D&utm_source=qr",
-      tiktok: "https://www.tiktok.com/@baanyermm?_r=1&_t=ZS-97fs0SuBuAK",
+      instagram: "https://www.instagram.com/baanyerm.chula",
+      tiktok: "https://www.tiktok.com/@baanyermm",
     },
   },
   {
@@ -108,8 +104,7 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanRoom.webp",
     link: {
       facebook: null,
-      instagram:
-        "https://www.instagram.com/baanroomchula?igsh=MTV1ZmRuOXI1cTN5aw%3D%3D&utm_source=qr",
+      instagram: "https://www.instagram.com/baanroomchula",
       tiktok: null,
     },
   },
@@ -163,8 +158,7 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanAgape.webp",
     link: {
       facebook: null,
-      instagram:
-        "https://www.instagram.com/baanagapechula?igsh=ZmxqZnJiY3g2NGZu",
+      instagram: "https://www.instagram.com/baanagapechula",
       tiktok: null,
     },
   },
@@ -182,9 +176,8 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanBoe.webp",
     link: {
       facebook: null,
-      instagram:
-        "https://www.instagram.com/baanboe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
-      tiktok: "https://www.tiktok.com/@baanboe?_r=1&_t=ZS-97fm637SeW4",
+      instagram: "https://www.instagram.com/baanboe",
+      tiktok: "https://www.tiktok.com/@baanboe",
     },
   },
   {
@@ -202,7 +195,7 @@ export const HOUSES: House[] = [
     link: {
       facebook: null,
       instagram: "https://www.instagram.com/baanaaum.official",
-      tiktok: "https://www.tiktok.com/@baanaaum1995?_r=1&_t=ZS-97pU2MmZLfd",
+      tiktok: "https://www.tiktok.com/@baanaaum1995",
     },
   },
   {
@@ -218,11 +211,9 @@ export const HOUSES: House[] = [
     size: "M",
     logoUrl: "/house/BaanKidz.webp",
     link: {
-      facebook: "https://www.facebook.com/share/14d7T4ZEMJa/?mibextid=wwXIfr",
-      instagram:
-        "https://www.instagram.com/baankids.official?igsh=MTl0ZzAyNmxzMHNvOA==",
-      tiktok:
-        "https://www.tiktok.com/@baankids.official0?_r=1&_t=ZS-97pPIN0m1Ym",
+      facebook: "https://www.facebook.com/share/14d7T4ZEMJa/",
+      instagram: "https://www.instagram.com/baankids.official",
+      tiktok: "https://www.tiktok.com/@baankids.official0",
     },
   },
   {
@@ -239,10 +230,8 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanNork.webp",
     link: {
       facebook: null,
-      instagram:
-        "https://www.instagram.com/baannork.chula?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
-      tiktok:
-        "https://www.tiktok.com/@baannork.chula?is_from_webapp=1&sender_device=pc",
+      instagram: "https://www.instagram.com/baannork.chula",
+      tiktok: "https://www.tiktok.com/@baannork.chula",
     },
   },
   {
@@ -260,7 +249,7 @@ export const HOUSES: House[] = [
     link: {
       facebook: null,
       instagram: "https://www.instagram.com/jodeh_official",
-      tiktok: "https://www.tiktok.com/@jodeh_official?_r=1&_t=ZS-97poy1b1MMz",
+      tiktok: "https://www.tiktok.com/@jodeh_official",
     },
   },
   {
@@ -277,10 +266,8 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanAchuan.webp",
     link: {
       facebook: "https://www.facebook.com/baanachuan/?locale=th_TH",
-      instagram:
-        "https://www.instagram.com/baanachuan_official?igsh=cGpwZTRyOHB3c3Zy&utm_source=qr",
-      tiktok:
-        "https://www.tiktok.com/@baanachuan.offici?_r=1&_t=ZS-97flsWNsT7i",
+      instagram: "https://www.instagram.com/baanachuan_official",
+      tiktok: "https://www.tiktok.com/@baanachuan.offici",
     },
   },
   {
@@ -298,7 +285,7 @@ export const HOUSES: House[] = [
     link: {
       facebook: null,
       instagram: "https://www.instagram.com/baan.haaw",
-      tiktok: "https://www.tiktok.com/@baanhaaw?_r=1&_t=ZS-97q9glQu6Wv",
+      tiktok: "https://www.tiktok.com/@baanhaaw",
     },
   },
   {
@@ -315,9 +302,8 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanSod.webp",
     link: {
       facebook: null,
-      instagram:
-        "https://www.instagram.com/baansod.official?igsh=MTgyczByamxsZGZxZQ==",
-      tiktok: "https://www.tiktok.com/@baansod.official?_r=1&_t=ZS-97pVNObCFJC",
+      instagram: "https://www.instagram.com/baansod.official",
+      tiktok: "https://www.tiktok.com/@baansod.official",
     },
   },
   {
@@ -335,7 +321,7 @@ export const HOUSES: House[] = [
     link: {
       facebook: null,
       instagram: "https://www.instagram.com/baankoom.chula",
-      tiktok: "https://www.tiktok.com/@baankoom.chula?_r=1&_t=ZS-97pwD8l07us",
+      tiktok: "https://www.tiktok.com/@baankoom.chula",
     },
   },
   {
@@ -352,9 +338,8 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanJo+.webp",
     link: {
       facebook: null,
-      instagram:
-        "https://www.instagram.com/baanjochula?igsh=MXdrdDBnMHRkNHlvbg%3D%3D&utm_source=qr",
-      tiktok: "https://www.tiktok.com/@baanjochula2025?_r=1&_t=ZS-97pr8PAu1aO",
+      instagram: "https://www.instagram.com/baanjochula",
+      tiktok: "https://www.tiktok.com/@baanjochula2025",
     },
   },
   {
@@ -371,10 +356,8 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanSoeiteelheemouy.webp",
     link: {
       facebook: null,
-      instagram:
-        "https://www.instagram.com/baansoeiteelheemouy?igsh=cHJqMGlua3E1cGdx&utm_source=qr",
-      tiktok:
-        "https://www.tiktok.com/@baansoeiteelheemouy?_r=1&_t=ZS-97pHgBx1Glg",
+      instagram: "https://www.instagram.com/baansoeiteelheemouy",
+      tiktok: "https://www.tiktok.com/@baansoeiteelheemouy",
     },
   },
   {
@@ -391,8 +374,8 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanJaew.webp",
     link: {
       facebook: null,
-      instagram: "https://www.instagram.com/baanjaew?igsh=MWcxYW5pcnQzYzdobQ==",
-      tiktok: "https://www.tiktok.com/@baanjaew?_r=1&_t=ZS-97fmSVJgLa8",
+      instagram: "https://www.instagram.com/baanjaew",
+      tiktok: "https://www.tiktok.com/@baanjaew",
     },
   },
   {
@@ -410,7 +393,7 @@ export const HOUSES: House[] = [
     link: {
       facebook: null,
       instagram: "https://www.instagram.com/baanyimchula",
-      tiktok: "https://www.tiktok.com/@baanyimcu?_r=1&_t=ZS-97hg60hBnUr",
+      tiktok: "https://www.tiktok.com/@baanyimcu",
     },
   },
   {
@@ -427,14 +410,19 @@ export const HOUSES: House[] = [
     logoUrl: "/house/BaanRangs.webp",
     link: {
       facebook: null,
-      instagram:
-        "https://www.instagram.com/baanrangs.official?igsh=MTRibm02NnRxcGZvMw==",
-      tiktok:
-        "https://www.tiktok.com/@baanrangs.official?_r=1&_t=ZS-97kPYDDqkVz",
+      instagram: "https://www.instagram.com/baanrangs.official",
+      tiktok: "https://www.tiktok.com/@baanrangs.official",
     },
   },
 ];
 
 export function getHouseById(id: string): House | undefined {
   return HOUSES.find((house) => house.id === id);
+}
+
+export const HOUSE_CAPACITY = 500;
+
+// Mock member counts until the houses API provides real numbers
+export function getHouseMemberCount(house: House): number {
+  return (Number.parseInt(house.id, 10) * 137) % HOUSE_CAPACITY;
 }
