@@ -1,4 +1,4 @@
-export type GatedEventKey = "freshyStory" | "walkRally";
+export type GatedEventKey = "freshyStory" | "walkRally" | "chulaQrQuest";
 
 interface GatedEvent {
   unlockAt: number;
@@ -16,6 +16,12 @@ const GATED_EVENTS: Record<GatedEventKey, GatedEvent> = {
     unlockAt: new Date("2026-07-22T00:00:00+07:00").getTime(),
     allowedRoles: ["student"],
     matches: (path) => path === "/walkrally" || path.startsWith("/walkrally/"),
+  },
+  chulaQrQuest: {
+    unlockAt: new Date("2026-07-20T00:00:00+07:00").getTime(),
+    allowedRoles: ["student"],
+    matches: (path) =>
+      path === "/chula-qr-quest" || path.startsWith("/chula-qr-quest/"),
   },
 };
 
