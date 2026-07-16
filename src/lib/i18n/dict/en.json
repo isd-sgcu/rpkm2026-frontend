@@ -401,8 +401,9 @@
       "noHouses": "You haven't selected\nany houses yet.",
       "selectHouse": "Select House",
       "save": "Save",
-      "houseAnnouncement": "House selection results\nJuly 26, 2026 at 19:00",
+      "houseAnnouncement": "House selection results\nJuly 23, 2026 at 19:00",
       "houseClear": "Clear.",
+      "houseDone": "Done",
       "houseClearTitle": "Confirm clear data.",
       "houseClearDescription": "Ranking data will be clear.",
       "houseRemove": "Confirm Remove",
@@ -410,7 +411,18 @@
       "saveIncompleteTitle": "Ranking incomplete",
       "saveIncompleteDescription": "Please select all 5 houses before saving.",
       "saveSuccessTitle": "Saved successfully",
-      "saveSuccessDescription": "House annoucement on July 23, 2026 at 19:00."
+      "saveSuccessDescription": "House annoucement on July 23, 2026 at 19:00.",
+      "selectHouseConfirmTitle": "Confirm house selection",
+      "selectHouseConfirmDescription": "Add {House}\nto your ranking",
+      "village": "Village",
+      "ok": "OK"
+    },
+    "popup": {
+      "searchPlaceholder": "Search houses",
+      "close": "Close"
+    },
+    "detail": {
+      "addHouse": "Add this house"
     },
     "group": {
       "title": "Group Pairing"
