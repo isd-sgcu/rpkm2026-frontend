@@ -9,6 +9,7 @@ import plantsRight from "@assets/images/landing_plants_right.svg";
 import { Button } from "@components/ui/button";
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 import { signInWithGoogle } from "@lib/api/auth";
+import { popReturnTo } from "@lib/auth/returnTo";
 import { useSession } from "@lib/auth/useSession";
 import { useProfile } from "@lib/auth/useProfile";
 import { POST_LOGIN_REDIRECT_KEY } from "@lib/auth/useAccessGuard";
@@ -35,7 +36,12 @@ export function LandingPanel() {
         window.location.href = savedRedirect;
         return;
       }
-      window.location.href = profile.me.registered ? "/" : "/register";
+      // Always pop so a stale destination can't hijack a later login;
+      // unregistered users must finish /register first and simply lose it.
+      const returnTo = popReturnTo();
+      window.location.href = profile.me.registered
+        ? (returnTo ?? "/")
+        : "/register";
     }
   }, [profile.status]);
 
