@@ -29,7 +29,7 @@ export function FieldTripCard({
   // TODO: the two action buttons are placeholders — drop the real links in here.
   const openLink = (url?: string) => {
     if (!url) return;
-    window.open(url, "_blank", "noopener,noreferrer");
+    window.location.href = url;
   };
 
   return (
