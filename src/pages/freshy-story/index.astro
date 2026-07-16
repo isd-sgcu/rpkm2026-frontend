@@ -1,0 +1,10 @@
+---
+import MyFreshyStoryHeader from "@components/my-freshy-story/MyFreshyStoryHeader";
+import MyFreshyStoryLayout from "@layouts/MyFreshyStoryLayout.astro";
+import SocialSection from "@components/my-freshy-story/SocialSection";
+---
+
+<MyFreshyStoryLayout navigateBack="/" title="My Freshy Story">
+  <MyFreshyStoryHeader client:load />
+  <SocialSection client:load />
+</MyFreshyStoryLayout>

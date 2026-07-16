@@ -21,7 +21,6 @@ const ProfileCardOrScanButton = () => {
   const studentId = me?.studentId ?? "";
   const bannerId = studentId || "—";
 
-
   if (isStaff) {
     return (
       <a
@@ -36,7 +35,6 @@ const ProfileCardOrScanButton = () => {
       </a>
     );
   }
-
 
   return (
     <div

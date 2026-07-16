@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useProfile } from "./useProfile";
 import type { ProfileState } from "./profile";
 import { toast } from "sonner";
+import { isFreshyStoryUnlocked } from "@lib/guard";
 
 const STAFF_ALLOWED_PATHS = ["/"];
 const PUBLIC_PATHS = ["/landing"];
@@ -15,6 +16,10 @@ function normalizePath(pathname: string): string {
 }
 
 function resolveRedirect(profile: ProfileState, path: string): string | null {
+  if (path === "/freshy-story" && !isFreshyStoryUnlocked()) {
+    return "/";
+  }
+
   if (profile.status === "ready") {
     const isStaff = profile.me.role === "staff";
     if (
@@ -27,6 +32,7 @@ function resolveRedirect(profile: ProfileState, path: string): string | null {
     if (!isStaff && !profile.me.registered && path !== "/register")
       return "/register";
     if (!isStaff && profile.me.registered && path === "/register") return "/";
+    if (path === "/freshy-story" && profile.me.role !== "student") return "/";
     return null;
   }
 

@@ -1,0 +1,88 @@
+---
+import { NavigationMenu } from "@components/shared/NavigationMenu";
+import { MonotoneNoise } from "@components/shared/MonotoneNoise";
+import { ChevronLeft } from "lucide-react";
+import flowerPot from "@assets/images/artboard_16.svg";
+import { Image } from "astro:assets";
+import { AuthGuard } from "@components/shared/AuthGuard";
+import "@styles/global.css";
+
+const {
+  title,
+  description = "RPKM 2026 frontend application",
+  navigateBack = "",
+  showMenu = true,
+  haveNoise = true,
+  ...rest
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-[#A3E4A9] text-foreground font-sans">
+    <AuthGuard pathname={Astro.url.pathname} client:load />
+    <main
+      class:list={[
+        "relative w-full min-h-screen overflow-hidden sm:max-w-md sm:mx-auto",
+      ]}
+      {...rest}
+    >
+      {
+        haveNoise && (
+          <MonotoneNoise
+            className="absolute inset-0 z-0 pointer-events-none"
+            client:load
+          />
+        )
+      }
+
+      {
+        navigateBack && (
+          <div class="absolute left-4 top-[4.5cqw] sm:top-4.5 h-10 flex items-center z-10">
+            <a
+              href={navigateBack}
+              class="size-10 rounded-full bg-white border border-black grid place-items-center"
+            >
+              <ChevronLeft className="size-6.5 text-foreground" />
+            </a>
+          </div>
+        )
+      }
+
+      <div class="absolute inset-0 pointer-events-none z-50" aria-hidden="true">
+        <Image
+          src={flowerPot}
+          alt=""
+          class="absolute top-[-11%] right-[20%] -rotate-174 w-[48%]"
+        />
+        <Image
+          src={flowerPot}
+          alt=""
+          class="absolute top-[20%] right-[-20%] -rotate-45 w-[38%]"
+        />
+      </div>
+
+      {
+        showMenu && (
+          <div class="absolute right-4 top-[4.5cqw] sm:top-4.5 h-10 flex items-center z-10">
+            <NavigationMenu client:load />
+          </div>
+        )
+      }
+
+      <div
+        class="relative min-h-screen flex flex-col pt-[20cqw] sm:pt-24 z-10 pointer-events-none"
+      >
+        <div class="grow h-full pointer-events-auto flex flex-col">
+          <slot />
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
