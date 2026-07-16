@@ -7,6 +7,10 @@
       "ready": "Ready"
     }
   },
+  "notFound": {
+    "title": "Page not found",
+    "backHome": "Back to home"
+  },
   "landing": {
     "eyebrow": "Event",
     "titleLine1": "Welcoming New Students",

@@ -15,7 +15,17 @@ function normalizePath(pathname: string): string {
   return pathname;
 }
 
+export const POST_LOGIN_REDIRECT_KEY = "rpkm:postLoginRedirect";
+
 function resolveRedirect(profile: ProfileState, path: string): string | null {
+  // Checked before the event-lock gate: an unauthenticated visitor should go
+  // log in first regardless of whether the page is locked — once they're
+  // back and "ready", this function runs again and the gate applies normally.
+  if (profile.status === "unauthenticated") {
+    if (PUBLIC_PATHS.includes(path)) return null;
+    return "/landing";
+  }
+
   const gated = findGatedEvent(path);
   if (gated && !isUnlocked(gated[0])) {
     return "/";
@@ -46,16 +56,18 @@ function resolveRedirect(profile: ProfileState, path: string): string | null {
     return null;
   }
 
-  if (profile.status === "unauthenticated" && !PUBLIC_PATHS.includes(path)) {
-    return "/landing";
-  }
-
   return null;
 }
 
 export function useAccessGuard(pathname: string): { ready: boolean } {
   const profile = useProfile();
-  const path = normalizePath(pathname);
+  // Prefer the real browser URL over the build-time prop: they match for
+  // every normally-matched route, but diverge on the static 404 fallback
+  // (see src/pages/404.astro), where the Astro-resolved path is always
+  // "/404" while window.location still has the real requested path/query.
+  const path = normalizePath(
+    typeof window !== "undefined" ? window.location.pathname : pathname,
+  );
   const redirectTo = resolveRedirect(profile, path);
 
   useEffect(() => {
@@ -65,6 +77,12 @@ export function useAccessGuard(pathname: string): { ready: boolean } {
           description: `จริงๆ ควรโดน redirect ไป ${redirectTo} แต่ยกเลิกเพราะอยู่ใน dev`,
         });
         return;
+      }
+      if (redirectTo === "/landing" && profile.status === "unauthenticated") {
+        const target = window.location.pathname + window.location.search;
+        if (target !== "/landing") {
+          sessionStorage.setItem(POST_LOGIN_REDIRECT_KEY, target);
+        }
       }
       window.location.href = redirectTo;
     }

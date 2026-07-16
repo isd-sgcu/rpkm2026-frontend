@@ -7,6 +7,10 @@
       "ready": "พร้อม"
     }
   },
+  "notFound": {
+    "title": "ไม่พบหน้านี้",
+    "backHome": "กลับหน้าหลัก"
+  },
   "landing": {
     "eyebrow": "กิจกรรม",
     "titleLine1": "ต้อนรับนิสิตใหม่",

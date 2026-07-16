@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CloudUpload } from "lucide-react";
 import { BarcodeDetector } from "barcode-detector/ponyfill";
 import { useStore } from "@nanostores/react";
@@ -53,6 +53,12 @@ const ChulaQrQuestScanPanel = () => {
   const [result, setResult] = useState<ScanResult | null>(null);
   const [busy, setBusy] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const code = new URLSearchParams(window.location.search).get("code");
+    if (code) submitScan(code);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function submitScan(code: string) {
     if (result || busy) return;
