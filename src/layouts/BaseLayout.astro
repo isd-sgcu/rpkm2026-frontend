@@ -29,6 +29,15 @@ const {
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-background text-foreground font-sans">
+    <script is:inline>
+      const userAgent = navigator.userAgent;
+      if (/Line\//.test(userAgent)) {
+        const url = new URL(location.href);
+        url.searchParams.append("openExternalBrowser", "1");
+        location.href = url.toString();
+      }
+    </script>
+
     <AuthGuard client:load pathname={Astro.url.pathname} />
     <Toaster client:load />
     <main
