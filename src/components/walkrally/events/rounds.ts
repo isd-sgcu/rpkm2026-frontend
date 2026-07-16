@@ -4,9 +4,6 @@ export interface Round {
   end: string;
 }
 
-// Every activity runs on the default schedule except CU Museum, which runs on
-// its own times — mirrors WALK_RALLY.rounds in the backend
-// (fdrpkm2026-backend/src/constants.ts).
 const defaultSchedule: Round[] = [
   { index: 1, start: "09:00", end: "09:30" },
   { index: 2, start: "10:00", end: "10:30" },
@@ -27,4 +24,21 @@ const cuMuseumSchedule: Round[] = [
 
 export function getRoundSchedule(activityId?: string): Round[] {
   return activityId === "cu-museum" ? cuMuseumSchedule : defaultSchedule;
+}
+
+const toMinutes = (hhmm: string) => {
+  const [h, m] = hhmm.split(":").map(Number);
+  return h * 60 + m;
+};
+
+/** End-exclusive overlap: touching slots (one's end == other's start) don't conflict. */
+export function timesOverlap(
+  aStart: string,
+  aEnd: string,
+  bStart: string,
+  bEnd: string,
+): boolean {
+  return (
+    toMinutes(aStart) < toMinutes(bEnd) && toMinutes(bStart) < toMinutes(aEnd)
+  );
 }

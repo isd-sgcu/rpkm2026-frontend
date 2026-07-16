@@ -1,11 +1,8 @@
-import { useState, useSyncExternalStore } from "react";
-import { useStore } from "@nanostores/react";
+import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, ChevronRight, Users } from "lucide-react";
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
-import { $locale } from "@lib/i18n/locale";
-import { getImageUrl } from "@lib/function";
 import { ConfirmActionDialog } from "@components/walkrally/ConfirmActionDialog";
 import {
   getActivityRounds,
@@ -13,34 +10,14 @@ import {
   type WalkRallyRound,
 } from "@lib/api/walkrally";
 import { MINIGAME_ACTIVITY_CODE } from "@components/walkrally/events/minigameActivity";
-import events from "@components/walkrally/events/events.json";
 
-const ACCENT_MINIGAME = "#8b688d";
 const ROUND_CAPACITY = 30;
-
-function subscribeNoop() {
-  return () => {};
-}
-
-function getUrlGameSnapshot(): string | undefined {
-  return new URLSearchParams(window.location.search).get("game") ?? undefined;
-}
-
-function getServerGameSnapshot(): string | undefined {
-  return undefined;
-}
 
 export function MinigamePanel() {
   const t = useT();
-  const locale = useStore($locale);
   const queryClient = useQueryClient();
   const [selectedRound, setSelectedRound] = useState<WalkRallyRound | null>(
     null,
-  );
-  const chosenGameId = useSyncExternalStore(
-    subscribeNoop,
-    getUrlGameSnapshot,
-    getServerGameSnapshot,
   );
 
   const roundsQueryKey = ["walkrally-activity-rounds", MINIGAME_ACTIVITY_CODE];
@@ -50,24 +27,6 @@ export function MinigamePanel() {
   });
   const rounds = data?.rounds ?? [];
   const registeredRound = data?.registeredRound ?? null;
-
-  const chosenGame = chosenGameId
-    ? events.minigame.find((game) => game.id === chosenGameId)
-    : undefined;
-  const chosenGameName = chosenGame
-    ? locale === "th"
-      ? chosenGame.nameTh
-      : chosenGame.nameEn
-    : undefined;
-  const chosenGameImage =
-    chosenGame && "imageName" in chosenGame
-      ? getImageUrl(chosenGame.imageName as string)
-      : undefined;
-  const chosenGameDescription = chosenGame
-    ? locale === "th"
-      ? chosenGame.descriptionTh
-      : chosenGame.descriptionEn
-    : undefined;
 
   function closeDialog() {
     setSelectedRound(null);
@@ -85,52 +44,16 @@ export function MinigamePanel() {
 
   return (
     <div className="flex flex-col gap-4">
-      {chosenGame ? (
-        <a
-          href="/walkrally/events/minigames"
-          style={{ backgroundColor: ACCENT_MINIGAME }}
-          className="relative isolate overflow-hidden rounded-3xl border border-black p-1"
-        >
-          <div className="relative flex flex-col items-center gap-3 rounded-[1.15rem] border border-black bg-white p-2 pr-10 sm:gap-4 sm:p-3 min-[360px]:flex-row">
-            <div
-              style={{ backgroundColor: ACCENT_MINIGAME }}
-              className="relative isolate shrink-0 overflow-hidden rounded-2xl border border-black p-1"
-            >
-              {chosenGameImage ? (
-                <img
-                  src={chosenGameImage}
-                  alt=""
-                  className="size-24 rounded-xl border border-black object-cover sm:size-28"
-                />
-              ) : (
-                <div className="size-24 rounded-xl border border-black bg-muted sm:size-28" />
-              )}
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="text-base font-bold sm:text-lg">
-                {chosenGameName}
-              </div>
-              {chosenGameDescription && (
-                <p className="text-xs text-muted-foreground sm:text-sm">
-                  {chosenGameDescription}
-                </p>
-              )}
-            </div>
-            <ChevronRight className="absolute right-2 bottom-2 size-6 shrink-0 text-black" />
-          </div>
-        </a>
-      ) : (
-        <a
-          href="/walkrally/events/minigames"
-          style={{ backgroundColor: ACCENT_MINIGAME }}
-          className="flex items-center gap-3 rounded-2xl border border-black p-3 text-background"
-        >
-          <p className="flex-1 text-sm whitespace-pre-line">
-            {t("walkrally.events.minigameSummary")}
-          </p>
-          <ChevronRight className="size-5 shrink-0" />
-        </a>
-      )}
+      <a
+        href="/walkrally/events/minigames"
+        style={{ backgroundColor: "#8b688d" }}
+        className="flex items-center gap-3 rounded-2xl border border-black p-3 text-background"
+      >
+        <p className="flex-1 text-sm whitespace-pre-line">
+          {t("walkrally.events.minigameSummary")}
+        </p>
+        <ChevronRight className="size-5 shrink-0" />
+      </a>
 
       <div className="rounded-3xl bg-rpkm-red p-4 text-background">
         <h2 className="text-center text-lg font-bold">
@@ -151,10 +74,7 @@ export function MinigamePanel() {
                 key={round.round}
                 type="button"
                 disabled={
-                  !chosenGameId ||
-                  registeredRound !== null ||
-                  crossActivityConflict ||
-                  isFull
+                  registeredRound !== null || crossActivityConflict || isFull
                 }
                 onClick={() => setSelectedRound(round)}
                 className={cn(
@@ -218,7 +138,7 @@ export function MinigamePanel() {
         confirmMessage={
           selectedRound
             ? t("walkrally.events.confirmMessage", {
-                name: chosenGameName ?? t("walkrally.events.tabs.minigame"),
+                name: t("walkrally.events.tabs.minigame"),
                 index: String(selectedRound.round),
               })
             : ""
@@ -229,7 +149,7 @@ export function MinigamePanel() {
         successMessage={
           selectedRound
             ? t("walkrally.events.successMessage", {
-                name: chosenGameName ?? t("walkrally.events.tabs.minigame"),
+                name: t("walkrally.events.tabs.minigame"),
                 index: String(selectedRound.round),
               })
             : ""

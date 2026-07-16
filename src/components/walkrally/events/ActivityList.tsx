@@ -26,7 +26,14 @@ export function ActivityList({ tab }: ActivityListProps) {
 
   const activities: Activity[] = walkrally[tab].map((entry) => ({
     id: entry.id,
-    name: locale === "th" ? entry.nameTh : entry.nameEn,
+    name:
+      locale === "th"
+        ? "nameTh" in entry
+          ? entry.nameTh
+          : ""
+        : "nameEn" in entry
+          ? entry.nameEn
+          : "",
     description:
       locale === "th"
         ? "descriptionTh" in entry

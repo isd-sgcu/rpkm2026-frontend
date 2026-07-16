@@ -163,6 +163,32 @@
       "failMessage": "Invalid student ID, or you are not registered in the system.",
       "ok": "OK",
       "retry": "Try Again"
+    },
+    "minigames": {
+      "dixit": {
+        "name": "Dixit",
+        "description": "A storytelling card game full of imagination — one player becomes the \"storyteller\" and gives a clue from a dreamlike illustration, while everyone else guesses which card matches."
+      },
+      "sheriff-of-nottingham": {
+        "name": "Sheriff of Nottingham",
+        "description": "Play as a merchant trying to smuggle goods into the city while dodging the Sheriff's inspection — bluff, negotiate, and outwit each other."
+      },
+      "the-mind": {
+        "name": "The Mind",
+        "description": "A cooperative game where players must play numbered cards in ascending order without communicating at all — pure teamwork and intuition."
+      },
+      "insider": {
+        "name": "Insider",
+        "description": "A social deduction game — one secret \"insider\" already knows the answer and must guide the group there without getting caught."
+      },
+      "muffin-time": {
+        "name": "Muffin Time",
+        "description": "A fast, silly party card game — whoever is left holding the \"burnt muffin\" card when time's up loses instantly."
+      },
+      "exploding-kittens": {
+        "name": "Exploding Kittens",
+        "description": "Draw cards and avoid the exploding kitten — use special cards to defuse it or trick your opponents into drawing it instead."
+      }
     }
   },
   "myfreshystory": {

@@ -1,35 +1,12 @@
-import { useStore } from "@nanostores/react";
-import { useQuery } from "@tanstack/react-query";
-import { $locale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
 import { getImageUrl } from "@lib/function";
-import { QueryProvider } from "@components/shared/QueryProvider";
-import { getWalkRallyMe } from "@lib/api/walkrally";
 import events from "@components/walkrally/events/events.json";
-import { MINIGAME_ACTIVITY_CODE } from "@components/walkrally/events/minigameActivity";
 
 const ACCENT_MINIGAME = "#8b688d";
 
 export function MinigameListPanel() {
-  return (
-    <QueryProvider>
-      <MinigameListPanelContent />
-    </QueryProvider>
-  );
-}
-
-function MinigameListPanelContent() {
   const t = useT();
-  const locale = useStore($locale);
   const games = events.minigame;
-
-  const { data: walkRally } = useQuery({
-    queryKey: ["walkrally-me"],
-    queryFn: getWalkRallyMe,
-  });
-  const isRegistered = (walkRally?.registrations ?? []).some(
-    (r) => r.code === MINIGAME_ACTIVITY_CODE,
-  );
 
   return (
     <div className="flex flex-col gap-4">
@@ -39,21 +16,18 @@ function MinigameListPanelContent() {
 
       <div className="flex flex-col gap-4 px-4">
         {games.map((game) => {
-          const name = locale === "th" ? game.nameTh : game.nameEn;
-          const description =
-            locale === "th" ? game.descriptionTh : game.descriptionEn;
-          const imageName =
-            "imageName" in game ? (game.imageName as string) : undefined;
-          const imageUrl = imageName ? getImageUrl(imageName) : undefined;
-          const CardTag = isRegistered ? "div" : "a";
+          const name = t(
+            `walkrally.minigames.${game.id}.name` as "walkrally.minigames.dixit.name",
+          );
+          const description = t(
+            `walkrally.minigames.${game.id}.description` as "walkrally.minigames.dixit.description",
+          );
+          const imageUrl = game.imageName
+            ? getImageUrl(game.imageName)
+            : undefined;
           return (
-            <CardTag
+            <div
               key={game.id}
-              href={
-                isRegistered
-                  ? undefined
-                  : `/walkrally/events?tab=minigame&game=${game.id}`
-              }
               style={{ backgroundColor: ACCENT_MINIGAME }}
               className="relative isolate overflow-hidden rounded-3xl border border-foreground p-1"
             >
@@ -81,7 +55,7 @@ function MinigameListPanelContent() {
                   )}
                 </div>
               </div>
-            </CardTag>
+            </div>
           );
         })}
       </div>

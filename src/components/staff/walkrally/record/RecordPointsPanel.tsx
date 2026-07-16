@@ -19,15 +19,23 @@ import {
   type ScanEntryResult,
 } from "@components/staff/ScanEntryForm";
 import { getRoundSchedule } from "@components/walkrally/events/rounds";
+import { MINIGAME_ACTIVITY_CODE } from "@components/walkrally/events/minigameActivity";
 import events from "@components/walkrally/events/events.json";
+import th from "@lib/i18n/dict/th.json";
+import en from "@lib/i18n/dict/en.json";
 
-const activityOptions = Object.values(events)
-  .flat()
-  .map((entry) => ({
+const activityOptions = [
+  ...[...events.workshop, ...events.walkingTour].map((entry) => ({
     id: entry.id,
     nameTh: entry.nameTh,
     nameEn: entry.nameEn,
-  }));
+  })),
+  {
+    id: MINIGAME_ACTIVITY_CODE,
+    nameTh: th.walkrally.events.tabs.minigame,
+    nameEn: en.walkrally.events.tabs.minigame,
+  },
+];
 
 export function RecordPointsPanel() {
   return (

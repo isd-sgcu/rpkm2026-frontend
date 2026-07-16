@@ -8,6 +8,7 @@ import { QueryProvider } from "@components/shared/QueryProvider";
 import { RegisteredActivityCard } from "@components/walkrally/RegisteredActivityCard";
 import { getMe } from "@lib/api/rpkm";
 import { getWalkRallyMe } from "@lib/api/walkrally";
+import { MINIGAME_ACTIVITY_CODE } from "@components/walkrally/events/minigameActivity";
 
 import events from "@components/walkrally/events/events.json";
 
@@ -39,7 +40,29 @@ function WalkRallyHomePanelContent() {
 
   const registeredActivities = (walkRally?.registrations ?? []).flatMap(
     (reg) => {
-      for (const [group, list] of Object.entries(events)) {
+      if (reg.code === MINIGAME_ACTIVITY_CODE) {
+        return [
+          {
+            id: reg.code,
+            name: t("walkrally.events.tabs.minigame"),
+            description: undefined as string | undefined,
+            imageName: undefined as string | undefined,
+            round: reg.round,
+            start: reg.start,
+            end: reg.end,
+            place: reg.place,
+            accentColor: tabAccentColor.minigame,
+          },
+        ];
+      }
+      const groups: [
+        string,
+        typeof events.workshop | typeof events.walkingTour,
+      ][] = [
+        ["workshop", events.workshop],
+        ["walkingTour", events.walkingTour],
+      ];
+      for (const [group, list] of groups) {
         const entry = list.find((e) => e.id === reg.code);
         if (!entry) continue;
         return [
