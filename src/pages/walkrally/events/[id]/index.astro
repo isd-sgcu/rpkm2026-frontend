@@ -5,17 +5,24 @@ import { ActivityDetailPanel } from "@components/walkrally/events/ActivityDetail
 import walkrally from "@components/walkrally/events/events.json";
 
 export function getStaticPaths() {
-  return [...walkrally.workshop, ...walkrally.walkingTour].map((entry) => ({
-    params: { id: entry.id },
-    props: { entry },
-  }));
+  return [
+    ...walkrally.workshop.map((entry) => ({
+      params: { id: entry.id },
+      props: { entry, tab: "workshop" },
+    })),
+    ...walkrally.walkingTour.map((entry) => ({
+      params: { id: entry.id },
+      props: { entry, tab: "walkingTour" },
+    })),
+  ];
 }
 
-const { entry } = Astro.props;
+const { entry, tab } = Astro.props;
+const navigateBack = `/walkrally/events?tab=${tab}`;
 ---
 
 <BaseLayout title={entry.nameTh}>
-  <WalkRallyLayout bgColor="beige" navigateBack={"/walkrally/events"}>
+  <WalkRallyLayout bgColor="beige" navigateBack={navigateBack}>
     <ActivityDetailPanel entry={entry} client:load />
   </WalkRallyLayout>
 </BaseLayout>
