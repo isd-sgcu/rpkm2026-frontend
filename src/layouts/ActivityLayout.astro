@@ -3,6 +3,7 @@ import { NavigationMenu } from "@components/shared/NavigationMenu";
 import Image from "astro/components/Image.astro";
 import header1 from "../assets/images/activity_header_1.svg";
 import bottomActivity from "../assets/images/bottom_activity.svg";
+import artboard15 from "@assets/images/artboard_15.svg";
 import artboard16 from "../assets/images/artboard_16.svg";
 import { ChevronLeft } from "lucide-react";
 import type { HTMLAttributes } from "astro/types";
@@ -44,6 +45,19 @@ const {
   {
     showBottomDecoration && (
       <div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 mx-auto mt-[39px] h-full w-[393px] max-w-full overflow-hidden">
+        {/* left-side plant, bleeding off the left edge of the frame */}
+        <img
+          src={artboard15.src}
+          alt=""
+          aria-hidden="true"
+          class="absolute w-35 top-[375px] left-[-75px] rotate-[29.49deg] max-w-none"
+        />
+        <img
+          src={artboard15.src}
+          alt=""
+          aria-hidden="true"
+          class="absolute w-35 top-[590px] right-[-75px] rotate-[-20.54deg] max-w-none"
+        />
         <img
           src={bottomActivity.src}
           alt=""

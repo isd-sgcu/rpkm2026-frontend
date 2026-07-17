@@ -3,6 +3,8 @@ import { useState } from "react";
 import { CalendarDays } from "lucide-react";
 
 import { Button } from "@components/ui/button";
+import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
+import artboard22 from "@assets/images/artboard_22.svg";
 import { cn } from "@lib/utils";
 import { useT } from "@lib/i18n/useT";
 
@@ -55,15 +57,27 @@ export function FieldTripCard({
   return (
     <article
       className={cn(
-        "w-82 rounded-xl border border-rpkm-black bg-rpkm-blue p-1.25",
+        "relative w-82 rounded-xl border border-rpkm-black bg-rpkm-blue p-1.25",
         className,
       )}
     >
+      {/* Decorative plant peeking out from the bottom-right of the card. */}
+      <img
+        src={artboard22.src}
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute bottom-[-58px] right-10 z-20 w-18 max-w-none"
+      />
+
       {/* Title lives in the blue header. Placeholder blue — change later. */}
       <h2 className="py-1 px-1 mx-3 text-2xl font-bold text-white">{title}</h2>
 
-      {/* White info panel nested inside the blue card. */}
-      <div className="rounded-xl border border-rpkm-black bg-white p-1">
+      {/* White info panel nested inside the blue card, with a subtle monotone
+        noise texture layered behind its content. */}
+      <MonotoneNoiseContainer
+        noise={{ noiseColor: "#80CBE8" }}
+        className="rounded-xl border border-rpkm-black bg-background p-1"
+      >
         {/* Description. */}
         <p className="mt-2 mx-1 text-xs leading-relaxed text-[#46545b] whitespace-pre-wrap">
           {description}
@@ -92,7 +106,7 @@ export function FieldTripCard({
             {t("activity.button")}
           </Button>
         </div>
-      </div>
+      </MonotoneNoiseContainer>
     </article>
   );
 }

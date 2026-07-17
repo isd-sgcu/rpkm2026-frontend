@@ -27,12 +27,12 @@ const ActivityPanel = () => {
   ];
 
   return (
-    <div className="relative mx-auto h-full w-[393px] max-w-full overflow-hidden flex flex-col items-center">
+    <div className="relative mx-auto h-full w-[393px] max-w-full flex flex-col items-center">
       <div className="w-75">
         <header className="relative z-10 text-center">
           <h1 className="text-3xl font-bold">{t("activity.title")}</h1>
         </header>
-        <section className="relative z-10 mt-8 gap-12 flex flex-col items-center">
+        <section className="relative z-10 mt-8 gap-14 flex flex-col items-center">
           {activities.map((activity) => (
             <FieldTripCard key={activity.id} activity={activity} />
           ))}
