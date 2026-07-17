@@ -20,7 +20,7 @@ const EmergencyPanel = () => {
   return (
     <>
       {/*  Header  */}
-      <div className="w-full flex flex-col items-center gap-2 text-foreground">
+      <div className="w-full flex flex-col items-center gap-2 text-rpkm-red">
         <PhoneCall />
         <p className="text-2xl font-bold text-center">{t("emergency.title")}</p>
       </div>
@@ -34,27 +34,29 @@ const EmergencyPanel = () => {
               key={e.nameTh}
               className={cn(
                 buttonVariants({ variant: "default" }),
-                "h-fit px-6 py-4 flex flex-col gap-2 items-center whitespace-normal",
+                "h-fit rounded-full bg-rpkm-red text-white hover:bg-rpkm-red/85 px-6 py-3 flex flex-col gap-1 items-center whitespace-normal",
               )}
             >
-              {phone1 && (
-                <a
-                  href={`tel:${phone1.replace(/-/g, "")}`}
-                  className="flex gap-2"
-                >
-                  <PhoneCall fill="var(--color-primary-foreground)" />
-                  <span>{phone1}</span>
-                </a>
-              )}
-              {phone2 && (
-                <a
-                  href={`tel:${phone2.replace(/-/g, "")}`}
-                  className="flex gap-2"
-                >
-                  <PhoneCall fill="var(--color-primary-foreground)" />
-                  <span>{phone2}</span>
-                </a>
-              )}
+              <div className="flex flex-wrap justify-center gap-x-5 gap-y-1">
+                {phone1 && (
+                  <a
+                    href={`tel:${phone1.replace(/-/g, "")}`}
+                    className="flex items-center gap-2"
+                  >
+                    <PhoneCall className="size-4" fill="white" />
+                    <span>{phone1}</span>
+                  </a>
+                )}
+                {phone2 && (
+                  <a
+                    href={`tel:${phone2.replace(/-/g, "")}`}
+                    className="flex items-center gap-2"
+                  >
+                    <PhoneCall className="size-4" fill="white" />
+                    <span>{phone2}</span>
+                  </a>
+                )}
+              </div>
 
               <p>{locale === "th" ? e.nameTh : e.nameEn}</p>
             </div>
