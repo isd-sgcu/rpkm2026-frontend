@@ -1,0 +1,8 @@
+# Cloudflare serves these headers for all static assets. Safe hardening set
+# (no CSP yet — a CSP needs testing against the app's inline scripts/styles
+# before enabling, or it will break the site).
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
