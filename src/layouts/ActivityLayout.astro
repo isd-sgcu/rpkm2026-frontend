@@ -11,12 +11,14 @@ interface Props extends HTMLAttributes<"div"> {
   navigateBack?: string;
   showMenu?: boolean;
   showMenuBorder?: boolean;
+  showBottomDecoration?: boolean;
 }
 
 const {
   navigateBack = "",
   showMenu = true,
   showMenuBorder = false,
+  showBottomDecoration = false,
   ...rest
 } = Astro.props;
 ---
@@ -36,32 +38,35 @@ const {
     /* Bottom decorations: the green ellipse with a flower at each corner sitting
       in front of it. Pinned to the bottom of the page inside a 393x852 frame
       that mirrors the activity content frame, so the Figma coordinates map 1:1.
-      Overflow is clipped so the parts that bleed past the frame edges hide. */
+      Overflow is clipped so the parts that bleed past the frame edges hide.
+      Opt-in per page (only the activity index shows it). */
   }
-  <div
-    class="pointer-events-none absolute inset-x-0 bottom-0 z-0 mx-auto mt-[39px] h-full w-[393px] max-w-full overflow-hidden"
-  >
-    <img
-      src={bottomActivity.src}
-      alt=""
-      aria-hidden="true"
-      class="absolute bottom-0 left-1/2 w-full max-w-none -translate-x-1/2"
-    />
-    {/* right flower */}
-    <img
-      src={artboard16.src}
-      alt=""
-      aria-hidden="true"
-      class="absolute bottom-[-36px] left-[307.2px] z-20 w-32 max-w-none -scale-x-100 rotate-[-47.42deg]"
-    />
-    {/* left flower */}
-    <img
-      src={artboard16.src}
-      alt=""
-      aria-hidden="true"
-      class="absolute bottom-[-36px] left-[-40px] z-20 w-32 max-w-none -scale-100 rotate-[-132.58deg]"
-    />
-  </div>
+  {
+    showBottomDecoration && (
+      <div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 mx-auto mt-[39px] h-full w-[393px] max-w-full overflow-hidden">
+        <img
+          src={bottomActivity.src}
+          alt=""
+          aria-hidden="true"
+          class="absolute bottom-0 left-1/2 w-full max-w-none -translate-x-1/2"
+        />
+        {/* right flower */}
+        <img
+          src={artboard16.src}
+          alt=""
+          aria-hidden="true"
+          class="absolute bottom-[-36px] left-[307.2px] z-20 w-32 max-w-none -scale-x-100 rotate-[-47.42deg]"
+        />
+        {/* left flower */}
+        <img
+          src={artboard16.src}
+          alt=""
+          aria-hidden="true"
+          class="absolute bottom-[-36px] left-[-40px] z-20 w-32 max-w-none -scale-100 rotate-[-132.58deg]"
+        />
+      </div>
+    )
+  }
 
   {
     navigateBack && (
