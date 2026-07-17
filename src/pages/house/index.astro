@@ -3,23 +3,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import PanelFrameLayout from "@layouts/PanelFrameLayout.astro";
 import Ranking from "@components/house/Ranking";
 import Group from "@components/house/Group";
-
-// // Fetch ranking data
-// const rankingData: RankingProps = await API.get("/house/ranking").catch(() => ({
-//   houses: {
-//     house1: null,
-//     house2: null,
-//     house3: null,
-//     house4: null,
-//     house5: null,
-//   },
-// }));
-
-// // Fetch group data
-// const groupData = await API.get("/user/group").catch(() => ({
-//   group_id: "",
-//   group_name: "",
-// }));
+import { Toaster } from "@components/ui/sonner";
 ---
 
 <BaseLayout title="การจัดการบ้าน" showFooter>
@@ -30,5 +14,6 @@ import Group from "@components/house/Group";
   >
     <Ranking client:load />
     <Group client:load />
+    <Toaster client:load />
   </PanelFrameLayout>
 </BaseLayout>

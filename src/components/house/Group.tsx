@@ -3,7 +3,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 import { QueryProvider } from "@components/shared/QueryProvider";
-import { Toaster } from "@components/ui/sonner";
 import { Button } from "@components/ui/button";
 import { Input } from "@components/ui/input";
 import Logo from "@assets/images/house/house_group_logo.svg";
@@ -285,8 +284,6 @@ function GroupPanel() {
           onClose={() => setModalOpen(false)}
         />
       )}
-
-      <Toaster />
     </>
   );
 }

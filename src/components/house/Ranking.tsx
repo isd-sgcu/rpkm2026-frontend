@@ -15,7 +15,6 @@ import {
   AlertDialogTrigger,
 } from "@components/ui/alert-dialog";
 import { QueryProvider } from "@components/shared/QueryProvider";
-import { Toaster } from "@components/ui/sonner";
 import stamp from "@assets/images/house/house_ranking_stamp.svg";
 import HouseSelector from "./HouseSelector";
 import HouseSelectPopup from "./HouseSelectPopup";
@@ -476,8 +475,6 @@ function RankingPanel() {
           </div>
         </AlertDialogContent>
       </AlertDialog>
-
-      <Toaster />
     </div>
   );
 }
