@@ -13,6 +13,7 @@ interface Props extends HTMLAttributes<"div"> {
   showMenu?: boolean;
   showMenuBorder?: boolean;
   showBottomDecoration?: boolean;
+  showFieldTripDecoration?: boolean;
 }
 
 const {
@@ -20,11 +21,15 @@ const {
   showMenu = true,
   showMenuBorder = false,
   showBottomDecoration = false,
+  showFieldTripDecoration = false,
   ...rest
 } = Astro.props;
 ---
 
-<div class:list={["relative w-full min-w-0 min-h-screen"]} {...rest}>
+<div
+  class:list={["relative w-full min-w-0 min-h-screen overflow-x-clip"]}
+  {...rest}
+>
   {
     /* Header: the ribbon banner (header 1) with three decorative flourishes
       placed on top of it, left to right. */
@@ -108,6 +113,17 @@ const {
       "relative flex flex-col px-[1.25em] pt-[24cqw] pb-36 sm:pt-24",
     ]}
   >
+    {
+      /* Field Trip page decoration — placeholder position, adjust later. */
+      showFieldTripDecoration && (
+        <img
+          src={artboard16.src}
+          alt=""
+          aria-hidden="true"
+          class="pointer-events-none absolute top-[157px] left-[313px] z-0 w-36 max-w-none rotate-[-90deg]"
+        />
+      )
+    }
     <slot />
   </div>
 </div>

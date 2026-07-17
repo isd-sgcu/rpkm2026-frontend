@@ -6,7 +6,11 @@ import { appConfig } from "@lib/env";
 ---
 
 <BaseLayout title={appConfig.appName}>
-  <ActivityLayout navigateBack="/activity" showMenuBorder={true}>
+  <ActivityLayout
+    navigateBack="/activity"
+    showMenuBorder={true}
+    showFieldTripDecoration={true}
+  >
     <FieldTripPanel client:load />
   </ActivityLayout>
 </BaseLayout>
