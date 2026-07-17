@@ -12,7 +12,7 @@ const ActivityPanel = () => {
       description: t("activity.cards.fieldTrip.description"),
       registrationText: t("activity.cards.fieldTrip.registrationText"),
       activityText: t("activity.cards.fieldTrip.activityText"),
-      detailsUrl: "./activity/fieldtrip",
+      detailsUrl: "/activity/fieldtrip",
     },
     {
       id: "field-trip-2",
