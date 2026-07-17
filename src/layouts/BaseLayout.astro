@@ -42,10 +42,14 @@ const {
     <Toaster client:load />
     <main
       class={cn(
-        "grid place-items-center relative z-1",
+        "grid relative z-1",
         footerVariant === "landing"
-          ? ""
+          ? // An auto column sizes to the artwork's intrinsic 402px and centring
+            // shrink-wraps it; the landing art is full-bleed, so pin the column
+            // to the viewport instead.
+            "grid-cols-1 place-items-stretch"
           : cn(
+              "place-items-center",
               "sm:max-w-md sm:mx-auto",
               showFooter ? "min-h-[calc(100vh-1rem)]" : "min-h-screen",
             ),
