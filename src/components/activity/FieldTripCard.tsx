@@ -18,15 +18,8 @@ export type FieldTripRoute = {
   name?: string;
   /** Free text, e.g. "22-23 กรกฎาคม 69". */
   date: string;
-  /** Free text, e.g. "8:30-11:00 น.". */
   time: string;
-  /** Free text; use "\n" to split onto multiple lines. */
   location: string;
-  /**
-   * Optional per-route registration link. When set, this route shows its own
-   * register button (e.g. eco's Plant Walk + Trashvenger). Leave it out to use a
-   * single card-level button instead (see FieldTrip.registerUrl).
-   */
   registerUrl?: string;
 };
 
@@ -35,16 +28,11 @@ export type FieldTrip = {
   title: string;
   description: string;
   routes: FieldTripRoute[];
-  /** Optional single registration link, when the routes have no own links. */
   registerUrl?: string;
 };
 
 type FieldTripCardProps = {
   fieldTrip: FieldTrip;
-  /**
-   * Background colour of the card's coloured (outer) layer. Set this per card —
-   * each of the three cards uses a different colour. Any CSS colour works.
-   */
   color?: string;
   disabled?: boolean;
   className?: string;
@@ -71,7 +59,6 @@ export function FieldTripCard({
     : t("activity.fieldTrip.buttonClosed");
 
   const openLink = (url?: string) => {
-    // TODO: replace the placeholder registerUrl values with the real links.
     if (!url) return;
     window.open(url, "_blank", "noopener,noreferrer");
   };

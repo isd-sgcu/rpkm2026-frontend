@@ -48,7 +48,6 @@ export function FieldTripCard({
     detailsUnlockUtc !== undefined && now < detailsUnlockUtc;
   const detailsDisabled = disabled || detailsLocked;
 
-  // TODO: the two action buttons are placeholders — drop the real links in here.
   const openLink = (url?: string) => {
     if (!url) return;
     window.location.href = url;
@@ -69,21 +68,16 @@ export function FieldTripCard({
         className="pointer-events-none absolute bottom-[-58px] right-10 z-20 w-18 max-w-none"
       />
 
-      {/* Title lives in the blue header. Placeholder blue — change later. */}
       <h2 className="py-1 px-1 mx-3 text-2xl font-bold text-white">{title}</h2>
 
-      {/* White info panel nested inside the blue card, with a subtle monotone
-        noise texture layered behind its content. */}
       <MonotoneNoiseContainer
         noise={{ noiseColor: "#80CBE8" }}
         className="rounded-xl border border-rpkm-black bg-background p-1"
       >
-        {/* Description. */}
         <p className="mt-2 mx-1 text-xs leading-relaxed text-[#46545b] whitespace-pre-wrap">
           {description}
         </p>
 
-        {/* Registration period + activity period. */}
         <div className="mt-4 mx-1 grid gap-2 text-xs text-[#46545b]">
           <span className="flex items-start gap-2 whitespace-pre-wrap">
             <CalendarDays className="mt-0.5 size-4 shrink-0" aria-hidden />
@@ -95,7 +89,6 @@ export function FieldTripCard({
           </span>
         </div>
 
-        {/* Action — placeholder link; wire the real URL later. */}
         <div className="mt-5 mb-3 flex justify-center">
           <Button
             type="button"

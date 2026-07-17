@@ -4,7 +4,6 @@ import { useT } from "@lib/i18n/useT";
 const ActivityPanel = () => {
   const t = useT();
 
-  // Add more cards later by appending activities to this list.
   const activities: FieldTripActivity[] = [
     {
       id: "field-trip-1",
