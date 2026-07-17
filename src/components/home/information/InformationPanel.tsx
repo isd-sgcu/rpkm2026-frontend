@@ -138,6 +138,8 @@ const InformationPanel = () => {
                   capRatio="4/3"
                   fill="#6ABF73"
                   label={t("home.information.games.jigsaw")}
+                  disabled
+                  disabledLabel={t("home.information.games.comingSoon")}
                 />
               </div>
               <div className="min-w-0">
