@@ -8,6 +8,7 @@ import { Button } from "@components/ui/button";
 import { Input } from "@components/ui/input";
 import Logo from "@assets/images/house/house_group_logo.svg";
 import SendIcon from "@assets/icons/send.svg";
+import Vine from "@assets/images/house/group_vine.svg";
 import { APIError } from "@lib/client";
 import { useT, type Translator } from "@lib/i18n/useT";
 import { useProfile } from "@lib/auth/useProfile";
@@ -98,6 +99,40 @@ function SoloCreateJoin({ onCreateRoom }: { onCreateRoom: () => void }) {
   );
 }
 
+// const mockGetMyGroup = async (): Promise<GroupWithMembers> => ({
+//   id: "group-1",
+//   createdAt: new Date().toISOString(),
+//   updatedAt: new Date().toISOString(),
+//   leaderId: "1",
+//   joinCode: "ABC123",
+//   assignedHouseId: null,
+//   assignedAt: null,
+//   confirmedAt: null,
+//   members: [
+//     {
+//       userId: "1",
+//       firstName: "Alice",
+//       lastName: "",
+//       nickname: "Leader",
+//       isLeader: true,
+//     },
+//     {
+//       userId: "2",
+//       firstName: "Bob",
+//       lastName: "",
+//       nickname: "Bob",
+//       isLeader: false,
+//     },
+//     {
+//       userId: "3",
+//       firstName: "Chris",
+//       lastName: "",
+//       nickname: "Chris",
+//       isLeader: false,
+//     },
+//   ],
+// });
+
 function GroupSummary({
   group,
   onOpen,
@@ -106,6 +141,13 @@ function GroupSummary({
   onOpen: () => void;
 }) {
   const t = useT();
+
+  const decorations = [
+    "rotate-5 -translate-y-2",
+    "-rotate-5 translate-y-2",
+    "rotate-4 -translate-y-1",
+    "-rotate-4",
+  ];
 
   return (
     <>
@@ -116,16 +158,22 @@ function GroupSummary({
         })}
       </p>
 
-      <div className="flex w-full items-start justify-center gap-1">
+      <div className="relative flex w-full items-start justify-between gap-1">
+        <img src={Vine.src} alt="vine decoration" className="absolute top-5" />
         {Array.from(
           { length: GROUP_MAX_MEMBERS },
           (_, index) => group.members[index] ?? null,
         ).map((member, index) => (
           <div
             key={member?.userId ?? `empty-${index}`}
-            className="h-20.25 w-17.25"
+            className="h-20.25 w-17.25 flex items-center justify-center"
           >
-            <div className="origin-top-left scale-[0.62]">
+            <div
+              className={`${decorations[index]} scale-[0.65]`}
+              style={{
+                scale: "clamp(0.65, 2%, 0.85)",
+              }}
+            >
               {member ? (
                 <MemberWindow
                   variant={member.isLeader ? "leader" : "member"}
@@ -172,6 +220,7 @@ function GroupPanel() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["rpkm-group"],
     queryFn: getMyGroup,
+    // queryFn: mockGetMyGroup,
   });
 
   const autoJoinMutation = useMutation({
