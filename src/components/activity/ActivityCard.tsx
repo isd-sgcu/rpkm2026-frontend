@@ -4,6 +4,7 @@ import { CalendarDays } from "lucide-react";
 
 import { Button } from "@components/ui/button";
 import { cn } from "@lib/utils";
+import { useT } from "@lib/i18n/useT";
 
 export type FieldTripActivity = {
   id: string;
@@ -30,6 +31,7 @@ export function FieldTripCard({
   disabled = false,
   className,
 }: FieldTripCardProps) {
+  const t = useT();
   const {
     title,
     description,
@@ -87,7 +89,7 @@ export function FieldTripCard({
             disabled={detailsDisabled}
             onClick={() => openLink(detailsUrl)}
           >
-            รายละเอียด
+            {t("activity.button")}
           </Button>
         </div>
       </div>

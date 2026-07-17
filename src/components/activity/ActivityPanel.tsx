@@ -1,37 +1,36 @@
 import { FieldTripCard, type FieldTripActivity } from "./ActivityCard";
-
-// Add more cards later by appending activities to this list.
-const activities: FieldTripActivity[] = [
-  {
-    id: "field-trip-1",
-    title: "Field Trip",
-    description:
-      "ออกสำรวจจุฬาฯ ผ่าน 3 เส้นทางที่ออกแบบมาให้คุณได้เรียนรู้ ทั้งประวัติศาสตร์ ชุมชน และสิ่งแวดล้อม",
-    registrationText: "เปิดลงทะเบียน 18 - 20 ก.ค. 69 หรือจนกว่าจะเต็ม",
-    activityText:
-      "กิจกรรมตั้งแต่วันที่ 22-29 ก.ค. 69\n(เวลาเข้าร่วมขึ้นอยู่กับเส้นทางที่เลือก)",
-    detailsUrl: "./activity/fieldtrip",
-  },
-  {
-    id: "field-trip-2",
-    title: "Walk Rally",
-    description:
-      "เรียนรู้เรื่องราวและประวัติศาสตร์ของจุฬาฯ ผ่าน Workshop พิพิธภัณฑ์ และกิจกรรมบอร์ดเกม\nโดยมีรุ่นพี่ร่วมพาออกสำรวจและทำกิจกรรมไปด้วยกัน",
-    registrationText:
-      "เปิดลงทะเบียน  22–29 ก.ค. 69\nและเปิดรับ Walk-in ตามจำนวนที่เหลือในวันงาน",
-    activityText: "กิจกรรมวันที่ 31 ก.ค. 69 12:00-16:00 น.",
-    detailsUrl: "../walkrally",
-    // 22 Jul 2026 00:00 (+07) === 21 Jul 2026 17:00 UTC
-    detailsUnlockUtc: Date.UTC(2026, 6, 21, 17, 0, 0),
-  },
-];
+import { useT } from "@lib/i18n/useT";
 
 const ActivityPanel = () => {
+  const t = useT();
+
+  // Add more cards later by appending activities to this list.
+  const activities: FieldTripActivity[] = [
+    {
+      id: "field-trip-1",
+      title: t("activity.cards.fieldTrip.title"),
+      description: t("activity.cards.fieldTrip.description"),
+      registrationText: t("activity.cards.fieldTrip.registrationText"),
+      activityText: t("activity.cards.fieldTrip.activityText"),
+      detailsUrl: "./activity/fieldtrip",
+    },
+    {
+      id: "field-trip-2",
+      title: t("activity.cards.walkRally.title"),
+      description: t("activity.cards.walkRally.description"),
+      registrationText: t("activity.cards.walkRally.registrationText"),
+      activityText: t("activity.cards.walkRally.activityText"),
+      detailsUrl: "../walkrally",
+      // 22 Jul 2026 00:00 (+07) === 21 Jul 2026 17:00 UTC
+      detailsUnlockUtc: Date.UTC(2026, 6, 21, 17, 0, 0),
+    },
+  ];
+
   return (
     <div className="w-full flex flex-col items-center">
       <div className="w-75">
         <header className="relative z-10 text-center">
-          <h1 className="text-3xl font-bold">ลงทะเบียนกิจกรรม</h1>
+          <h1 className="text-3xl font-bold">{t("activity.title")}</h1>
         </header>
         <section className="relative z-10 mt-8 gap-6 flex flex-col items-center">
           {activities.map((activity) => (

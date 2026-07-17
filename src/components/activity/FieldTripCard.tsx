@@ -4,6 +4,7 @@ import { CalendarDays, Clock, MapPin } from "lucide-react";
 
 import { Button } from "@components/ui/button";
 import { cn } from "@lib/utils";
+import { useT } from "@lib/i18n/useT";
 
 // Registration is only open from 18 Jul 19:00 to 21 Jul 00:00 2026 (UTC+7).
 // Expressed as absolute UTC instants so it's correct in any viewer timezone:
@@ -55,6 +56,7 @@ export function FieldTripCard({
   disabled = false,
   className,
 }: FieldTripCardProps) {
+  const t = useT();
   const { title, description, routes, registerUrl } = fieldTrip;
 
   // Registration link is clickable only inside the 18–20 Jul 2026 (UTC+7)
@@ -64,7 +66,9 @@ export function FieldTripCard({
   const [now] = useState(() => Date.now());
   const registrationOpen = now >= REGISTER_OPEN_UTC && now < REGISTER_CLOSE_UTC;
   const canRegister = registrationOpen && !disabled;
-  const registerLabel = canRegister ? "ลงทะเบียน" : "ปิดลงทะเบียน";
+  const registerLabel = canRegister
+    ? t("activity.fieldTrip.button")
+    : t("activity.fieldTrip.buttonClosed");
 
   const openLink = (url?: string) => {
     // TODO: replace the placeholder registerUrl values with the real links.
