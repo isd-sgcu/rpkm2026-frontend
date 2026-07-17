@@ -4,6 +4,7 @@ import { getImageUrl } from "@lib/function";
 import { useT } from "@lib/i18n/useT";
 import { ConfirmActionDialog } from "@components/walkrally/ConfirmActionDialog";
 import { unregisterFromActivity } from "@lib/api/walkrally";
+import { isWalkRallyActivityLocked } from "@components/walkrally/activityLock";
 
 export interface RegisteredActivity {
   id: string;
@@ -30,6 +31,7 @@ export function RegisteredActivityCard({
   const deleteIcon = getImageUrl("delete.svg");
   const frameStyle = { backgroundColor: activity.accentColor };
   const [open, setOpen] = useState(false);
+  const activityLocked = isWalkRallyActivityLocked();
 
   async function handleConfirmCancel() {
     await unregisterFromActivity(activity.id);
@@ -86,8 +88,9 @@ export function RegisteredActivityCard({
 
           <button
             type="button"
+            disabled={activityLocked}
             onClick={() => setOpen(true)}
-            className="absolute top-2 right-2 flex size-6 items-center justify-center"
+            className="absolute top-2 right-2 flex size-6 items-center justify-center disabled:hidden"
           >
             <img
               src={deleteIcon}

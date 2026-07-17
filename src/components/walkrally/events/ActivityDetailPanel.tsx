@@ -13,6 +13,7 @@ import {
   registerForActivity,
   type WalkRallyRound,
 } from "@lib/api/walkrally";
+import { isWalkRallyActivityLocked } from "@components/walkrally/activityLock";
 
 const ROUND_CAPACITY = 30;
 
@@ -57,6 +58,7 @@ function ActivityDetailPanelContent({ entry }: ActivityDetailPanelProps) {
   });
   const rounds = data?.rounds ?? [];
   const registeredRound = data?.registeredRound ?? null;
+  const activityLocked = isWalkRallyActivityLocked();
 
   useEffect(() => {
     document.title = name;
@@ -113,7 +115,10 @@ function ActivityDetailPanelContent({ entry }: ActivityDetailPanelProps) {
                 key={round.round}
                 type="button"
                 disabled={
-                  registeredRound !== null || crossActivityConflict || isFull
+                  activityLocked ||
+                  registeredRound !== null ||
+                  crossActivityConflict ||
+                  isFull
                 }
                 onClick={() => setSelectedRound(round)}
                 className={cn(
@@ -123,7 +128,7 @@ function ActivityDetailPanelContent({ entry }: ActivityDetailPanelProps) {
                     : crossActivityConflict || isFull
                       ? "bg-[#f4c3ab]"
                       : "bg-background",
-                  sameActivityLocked && "opacity-50",
+                  (sameActivityLocked || activityLocked) && "opacity-50",
                 )}
               >
                 <div className="flex flex-col gap-1 min-[360px]:flex-row min-[360px]:items-center min-[360px]:justify-between min-[360px]:gap-2">
