@@ -75,7 +75,7 @@ export function FieldTripCard({
     >
       {/* Title strip — the only part where the coloured layer shows. */}
       <MonotoneNoiseContainer noise={{ noiseColor: "#80CBE8" }}>
-        <h2 className="px-3 pt-3 pb-2 text-xl font-bold text-white">{title}</h2>
+        <h2 className="px-3 pt-1 pb-1 text-xl font-bold text-white">{title}</h2>
 
         {/* White info panel — reaches both sides and the bottom of the card.
             Its own noise layer sits behind the content, above the opaque bg. */}
