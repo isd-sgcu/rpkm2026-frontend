@@ -88,19 +88,19 @@ const FieldTripPanel = () => {
           </p>
           <div className="flex flex-col items-left">
             <p className="flex items-start gap-1 text-xs font-normal leading-normal">
-              <CalendarDays className="size-[18px] shrink-0 text-black" />
+              <CalendarDays className="size-4.5 shrink-0 text-black" />
               เปิดลงทะเบียน 18-20 ก.ค. 69 หรือจนกว่าจะเต็ม
               <br />
             </p>
             <p className="flex items-start gap-1 text-xs font-normal leading-normal">
-              <CalendarDays className="mt-1.5 size-[18px] shrink-0 text-black" />
+              <CalendarDays className="mt-1.5 size-4.5 shrink-0 text-black" />
               กิจกรรมตั้งแต่วันที่ 22-29 ก.ค. 69 <br />{" "}
               (เวลาเข้าร่วมขึ้นอยู่กับเส้นทางที่เลือก)
             </p>
           </div>
         </header>
       </div>
-      <div className="w-full flex items-left my-[15px]">
+      <div className="w-full flex items-left my-4">
         <header className="relative z-10 text-left">
           <h1 className="text-xl font-bold">เลือกเส้นทางที่สนใจ</h1>
           <p className="flex items-start gap-1 text-xs font-normal leading-normal">

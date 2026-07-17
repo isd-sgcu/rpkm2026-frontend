@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { CalendarDays } from "lucide-react";
 
 import { Button } from "@components/ui/button";
@@ -10,6 +12,11 @@ export type FieldTripActivity = {
   registrationText?: string;
   activityText?: string;
   detailsUrl?: string;
+  /**
+   * Absolute UTC instant (ms, from Date.UTC) before which the "รายละเอียด"
+   * button stays disabled. Leave unset for no gating.
+   */
+  detailsUnlockUtc?: number;
 };
 
 type FieldTripCardProps = {
@@ -23,8 +30,19 @@ export function FieldTripCard({
   disabled = false,
   className,
 }: FieldTripCardProps) {
-  const { title, description, registrationText, activityText, detailsUrl } =
-    activity;
+  const {
+    title,
+    description,
+    registrationText,
+    activityText,
+    detailsUrl,
+    detailsUnlockUtc,
+  } = activity;
+
+  const [now] = useState(() => Date.now());
+  const detailsLocked =
+    detailsUnlockUtc !== undefined && now < detailsUnlockUtc;
+  const detailsDisabled = disabled || detailsLocked;
 
   // TODO: the two action buttons are placeholders — drop the real links in here.
   const openLink = (url?: string) => {
@@ -35,7 +53,7 @@ export function FieldTripCard({
   return (
     <article
       className={cn(
-        "w-[328px] rounded-xl border border-rpkm-black bg-rpkm-blue p-[5px]",
+        "w-82 rounded-xl border border-rpkm-black bg-rpkm-blue p-1.25",
         className,
       )}
     >
@@ -65,8 +83,8 @@ export function FieldTripCard({
         <div className="mt-5 mb-3 flex justify-center">
           <Button
             type="button"
-            className="rounded-full px-6"
-            disabled={disabled}
+            className={cn("rounded-full px-6", detailsLocked && "bg-rpkm-grey")}
+            disabled={detailsDisabled}
             onClick={() => openLink(detailsUrl)}
           >
             รายละเอียด

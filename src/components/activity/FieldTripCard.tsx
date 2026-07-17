@@ -5,11 +5,11 @@ import { CalendarDays, Clock, MapPin } from "lucide-react";
 import { Button } from "@components/ui/button";
 import { cn } from "@lib/utils";
 
-// Registration is only open during 18–20 July 2026 (UTC+7), inclusive.
+// Registration is only open from 18 Jul 19:00 to 21 Jul 00:00 2026 (UTC+7).
 // Expressed as absolute UTC instants so it's correct in any viewer timezone:
-//   18 Jul 2026 00:00 (+07) === 17 Jul 2026 17:00 UTC
-//   21 Jul 2026 00:00 (+07) === 20 Jul 2026 17:00 UTC (end of 20 Jul)
-const REGISTER_OPEN_UTC = Date.UTC(2026, 6, 17, 17, 0, 0);
+//   18 Jul 2026 19:00 (+07) === 18 Jul 2026 12:00 UTC
+//   21 Jul 2026 00:00 (+07) === 20 Jul 2026 17:00 UTC
+const REGISTER_OPEN_UTC = Date.UTC(2026, 6, 18, 12, 0, 0);
 const REGISTER_CLOSE_UTC = Date.UTC(2026, 6, 20, 17, 0, 0);
 
 /** One sub-route within a field trip, e.g. "Plant Walk". */
@@ -75,7 +75,7 @@ export function FieldTripCard({
   return (
     <article
       className={cn(
-        "w-full max-w-[370px] overflow-hidden rounded-2xl border border-rpkm-black",
+        "w-full max-w-92.5 overflow-hidden rounded-2xl border border-rpkm-black",
         className,
       )}
       // Coloured (outer) layer — swap the colour per card.

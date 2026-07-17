@@ -21,17 +21,19 @@ const activities: FieldTripActivity[] = [
       "เปิดลงทะเบียน  22–29 ก.ค. 69\nและเปิดรับ Walk-in ตามจำนวนที่เหลือในวันงาน",
     activityText: "กิจกรรมวันที่ 31 ก.ค. 69 12:00-16:00 น.",
     detailsUrl: "../walkrally",
+    // 22 Jul 2026 00:00 (+07) === 21 Jul 2026 17:00 UTC
+    detailsUnlockUtc: Date.UTC(2026, 6, 21, 17, 0, 0),
   },
 ];
 
 const ActivityPanel = () => {
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="w-[301px]">
+      <div className="w-75">
         <header className="relative z-10 text-center">
           <h1 className="text-3xl font-bold">ลงทะเบียนกิจกรรม</h1>
         </header>
-        <section className="relative z-10 mt-8 grid gap-6 flex justify-center items-center">
+        <section className="relative z-10 mt-8 gap-6 flex flex-col items-center">
           {activities.map((activity) => (
             <FieldTripCard key={activity.id} activity={activity} />
           ))}
