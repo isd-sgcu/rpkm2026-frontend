@@ -39,11 +39,7 @@ function extractCode(scanned: string): string | null {
   }
 }
 
-function extractCodeFromLocation(
-  pathname: string,
-  search: string,
-): string | null {
-  if (!/^\/qrquest\/quest\d+$/.test(pathname)) return null;
+function extractCodeFromLocation(search: string): string | null {
   return new URLSearchParams(search).get("code");
 }
 
@@ -68,10 +64,7 @@ const ChulaQrQuestScanPanel = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const code = extractCodeFromLocation(
-      window.location.pathname,
-      window.location.search,
-    );
+    const code = extractCodeFromLocation(window.location.search);
     if (code) {
       // Drop ?code=... so a refresh or back-nav does not re-submit it.
       window.history.replaceState(null, "", window.location.pathname);
