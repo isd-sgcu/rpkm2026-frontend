@@ -8,6 +8,7 @@ import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 import { signInWithGoogle } from "@lib/api/auth";
 import { useSession } from "@lib/auth/useSession";
 import { useProfile } from "@lib/auth/useProfile";
+import { POST_LOGIN_REDIRECT_KEY } from "@lib/auth/useAccessGuard";
 import { useT } from "@lib/i18n/useT";
 
 export function LandingPanel() {
@@ -18,8 +19,19 @@ export function LandingPanel() {
 
   useEffect(() => {
     if (profile.status === "ineligible") {
+      sessionStorage.removeItem(POST_LOGIN_REDIRECT_KEY);
       window.location.href = "/not-eligible";
     } else if (profile.status === "ready" && profile.me.role !== "staff") {
+      // A deep link (e.g. a Chula QR Quest sticker scanned while logged out)
+      // stashed its target here before bouncing to login — send them back
+      // to it instead of the default destination. useAccessGuard re-validates
+      // that path normally once they land (register/lock/role checks still apply).
+      const savedRedirect = sessionStorage.getItem(POST_LOGIN_REDIRECT_KEY);
+      if (savedRedirect) {
+        sessionStorage.removeItem(POST_LOGIN_REDIRECT_KEY);
+        window.location.href = savedRedirect;
+        return;
+      }
       window.location.href = profile.me.registered ? "/" : "/register";
     }
   }, [profile.status]);
@@ -51,7 +63,7 @@ export function LandingPanel() {
   const isResolving = isSigningIn || session.status !== "unauthenticated";
 
   return (
-    <div className="relative flex w-full flex-col self-start overflow-x-clip bg-background pb-20.5">
+    <div className="relative flex w-full min-h-screen flex-col overflow-x-clip bg-background">
       {/* noise ? */}
       <MonotoneNoise
         noiseColor="rgba(0 0 0 / 0.25)"
@@ -63,7 +75,7 @@ export function LandingPanel() {
         <img src={topLanding.src} alt="" className="w-32 -scale-x-100" />
       </div>
 
-      <div className={`relative z-2 px-4 mt-28`}>
+      <div className="relative z-2 flex flex-1 items-center justify-center px-4">
         <div className="@container relative mx-auto w-full max-w-92.5">
           <img
             src={centerLanding.src}

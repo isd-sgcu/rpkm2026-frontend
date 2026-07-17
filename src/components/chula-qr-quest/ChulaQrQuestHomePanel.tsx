@@ -1,5 +1,7 @@
 import { Calendar, MapPin } from "lucide-react";
 import type MapLibreGL from "maplibre-gl";
+import { useQuery } from "@tanstack/react-query";
+import { useStore } from "@nanostores/react";
 import { buttonVariants } from "@components/ui/button";
 import {
   Map,
@@ -8,18 +10,21 @@ import {
   MarkerContent,
   MarkerPopup,
 } from "@components/ui/map";
+import { QueryProvider } from "@components/shared/QueryProvider";
 import { useT } from "@lib/i18n/useT";
+import { $locale } from "@lib/i18n/locale";
 import { cn } from "@lib/utils";
+import { getGameProgress } from "@lib/api/games";
 import scanIcon from "@assets/images/scan.svg";
 import positions from "@components/chula-qr-quest/position.json";
 import rpkmMapStyle from "@components/chula-qr-quest/map-style.json";
 
 interface StampPosition {
   id: string;
-  name: string;
+  nameTh: string;
+  nameEn: string;
   lat: number;
   lng: number;
-  collected: boolean;
 }
 
 const stampPositions = positions as StampPosition[];
@@ -29,7 +34,23 @@ const mapStyle = rpkmMapStyle as MapLibreGL.StyleSpecification;
 const MAP_CENTER: [number, number] = [100.5296, 13.7367];
 
 const ChulaQrQuestHomePanel = () => {
+  return (
+    <QueryProvider>
+      <ChulaQrQuestHomePanelContent />
+    </QueryProvider>
+  );
+};
+
+function ChulaQrQuestHomePanelContent() {
   const t = useT();
+  const locale = useStore($locale);
+  const { data: progress } = useQuery({
+    queryKey: ["chula-qr-quest-progress"],
+    queryFn: () => getGameProgress("csr"),
+  });
+  const collectedIds = new Set(
+    (progress?.collected ?? []).map((entry) => entry.checkpointId),
+  );
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -48,13 +69,13 @@ const ChulaQrQuestHomePanel = () => {
       </div>
 
       <a
-        href="/chula-qr-quest/rule"
+        href="/qrquest/reward"
         className={cn(
           buttonVariants({ variant: "default", size: "sm" }),
           "mx-auto w-fit rounded-full",
         )}
       >
-        {t("chulaQrQuest.home.playButton")}
+        {t("chulaQrQuest.home.rewardButton")}
       </a>
 
       <div className="relative aspect-9/16 w-full overflow-hidden rounded-3xl border border-foreground">
@@ -75,14 +96,16 @@ const ChulaQrQuestHomePanel = () => {
                 <MapPin
                   className={cn(
                     "size-6 text-foreground",
-                    position.collected
+                    collectedIds.has(position.id)
                       ? "fill-rpkm-red"
                       : "fill-muted-foreground",
                   )}
                 />
               </MarkerContent>
               <MarkerPopup>
-                <p className="font-bold">{position.name}</p>
+                <p className="font-bold">
+                  {locale === "th" ? position.nameTh : position.nameEn}
+                </p>
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${position.lat},${position.lng}`}
                   target="_blank"
@@ -101,7 +124,7 @@ const ChulaQrQuestHomePanel = () => {
       </div>
 
       <a
-        href="/chula-qr-quest/scan"
+        href="/qrquest/scan"
         className={cn(
           buttonVariants({ variant: "default", size: "lg" }),
           "mx-auto w-fit gap-2 rounded-full",
@@ -112,6 +135,6 @@ const ChulaQrQuestHomePanel = () => {
       </a>
     </div>
   );
-};
+}
 
 export default ChulaQrQuestHomePanel;

@@ -7,6 +7,10 @@
       "ready": "Ready"
     }
   },
+  "notFound": {
+    "title": "Page not found",
+    "backHome": "Back to home"
+  },
   "landing": {
     "eyebrow": "Event",
     "titleLine1": "Welcoming New Students",
@@ -70,35 +74,9 @@
       "title2": "Chula QR Quest",
       "subtitle": "Collect stamps from important locations around Chula, then redeem them for a reward!",
       "dateRange": "July 20 - August 7",
-      "playButton": "How to Play",
+      "rewardButton": "Reward Conditions",
       "scanButton": "Scan to Collect Stamps",
       "openInMaps": "Open in Google Maps"
-    },
-    "rule": {
-      "title1": "How to Play",
-      "title2": "Chula QR Quest",
-      "step1": {
-        "title": "Log In",
-        "text": "Log in to the system to receive your Scanner"
-      },
-      "step2": {
-        "title": "View the Map",
-        "text": "Open the map to see the locations of the QR codes",
-        "button": "Open Map"
-      },
-      "step3": {
-        "title": "Explore",
-        "text": "Scan the QR code at each location to collect a stamp"
-      },
-      "step4": {
-        "title": "Collect Them All",
-        "text": "Collect all the required stamps"
-      },
-      "step5": {
-        "title": "Claim Your Reward",
-        "text": "Follow reward redemption details on IG: rubpuenkaomai2026",
-        "button": "View Reward Details"
-      }
     },
     "reward": {
       "title": "Claim Reward",
@@ -110,10 +88,19 @@
     },
     "scan": {
       "title": "Scan QR Code",
+      "uploadImage": "Upload Image",
+      "cancel": "Cancel",
       "successTitle": "You received a stamp!",
       "collectedAt": "Received on {datetime}",
       "failTitle": "Scan Failed",
       "failMessage": "Please try again",
+      "locationRequired": "We need your location to collect this stamp. Please allow location access and try again.",
+      "alreadyCollectedTitle": "Already Collected",
+      "alreadyCollectedMessage": "You've already collected this stamp before.",
+      "errorGameClosed": "This activity isn't open right now.",
+      "errorOutOfGeofence": "You're too far from this checkpoint. Get closer and try again.",
+      "errorInvalidCheckpoint": "This QR code doesn't belong to Chula QR Quest.",
+      "errorNotFreshmen": "This account isn't a freshman and can't collect stamps.",
       "ok": "OK",
       "loginRequiredTitle": "Please log in / register\nto collect this year's stamps...",
       "loginRequiredButton": "Log in / Register"

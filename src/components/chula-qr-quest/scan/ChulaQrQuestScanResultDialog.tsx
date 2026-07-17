@@ -50,7 +50,7 @@ export type ScanResult =
       totalCount: number;
       collectedAt: Date;
     }
-  | { status: "fail" };
+  | { status: "fail"; title?: string; message?: string };
 
 interface ChulaQrQuestScanResultDialogProps {
   open: boolean;
@@ -120,10 +120,10 @@ export function ChulaQrQuestScanResultDialog({
             <div className="flex flex-col items-center gap-4 px-4 pb-6 text-center">
               <div className="flex flex-col items-center gap-1">
                 <DialogTitle className="text-2xl font-bold">
-                  {t("chulaQrQuest.scan.failTitle")}
+                  {result.title ?? t("chulaQrQuest.scan.failTitle")}
                 </DialogTitle>
                 <DialogDescription className="text-foreground">
-                  {t("chulaQrQuest.scan.failMessage")}
+                  {result.message ?? t("chulaQrQuest.scan.failMessage")}
                 </DialogDescription>
               </div>
               <Button

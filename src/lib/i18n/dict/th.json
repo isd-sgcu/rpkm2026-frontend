@@ -7,6 +7,10 @@
       "ready": "พร้อม"
     }
   },
+  "notFound": {
+    "title": "ไม่พบหน้านี้",
+    "backHome": "กลับหน้าหลัก"
+  },
   "landing": {
     "eyebrow": "กิจกรรม",
     "titleLine1": "ต้อนรับนิสิตใหม่",
@@ -70,35 +74,9 @@
       "title2": "Chula QR Quest",
       "subtitle": "สะสมตราประทับจากสถานที่สำคัญรอบจุฬาฯ ให้ครบ แล้วนำไปแลกรางวัล!",
       "dateRange": "20 กรกฎาคม - 7 สิงหาคม",
-      "playButton": "วิธีการเล่น",
+      "rewardButton": "เงื่อนไขการรับรางวัล",
       "scanButton": "สแกนเพื่อสะสมแสตมป์",
       "openInMaps": "เปิดใน Google Maps"
-    },
-    "rule": {
-      "title1": "วิธีเล่น",
-      "title2": "Chula QR Quest",
-      "step1": {
-        "title": "เข้าใช้งาน",
-        "text": "เข้าใช้งานระบบเพื่อรับ Scanner"
-      },
-      "step2": {
-        "title": "ดูแผนที่",
-        "text": "เปิดแผนที่ เพื่อดูตำแหน่งของ QR Code",
-        "button": "เปิดแผนที่"
-      },
-      "step3": {
-        "title": "ออกสำรวจ",
-        "text": "สแกน QR Code ประจำสถานที่ต่าง ๆ เพื่อรับ Stamp"
-      },
-      "step4": {
-        "title": "สะสม Stamp",
-        "text": "สะสม Stamp ให้ครบตามที่กำหนด"
-      },
-      "step5": {
-        "title": "แลกรางวัล",
-        "text": "ติดตามการแลกรางวัลได้ที่ IG: rubpuenkaomai2026",
-        "button": "ดูรายละเอียดการแลกรางวัล"
-      }
     },
     "reward": {
       "title": "การแลกรางวัล",
@@ -110,10 +88,19 @@
     },
     "scan": {
       "title": "สแกน QR Code",
+      "uploadImage": "อัปโหลดรูปภาพ",
+      "cancel": "ยกเลิก",
       "successTitle": "คุณได้รับสแตมป์แล้ว!",
       "collectedAt": "ได้รับเมื่อวันที่ {datetime}",
       "failTitle": "สแกนไม่สำเร็จ",
       "failMessage": "กรุณาลองใหม่อีกครั้ง",
+      "locationRequired": "ต้องขอตำแหน่งที่ตั้งของคุณเพื่อเก็บสแตมป์นี้ กรุณาอนุญาตการเข้าถึงตำแหน่งแล้วลองใหม่อีกครั้ง",
+      "alreadyCollectedTitle": "เก็บสแตมป์นี้ไปแล้ว",
+      "alreadyCollectedMessage": "คุณเก็บสแตมป์จุดนี้ไปแล้วก่อนหน้านี้",
+      "errorGameClosed": "กิจกรรมนี้ยังไม่เปิดหรือปิดรับแล้ว",
+      "errorOutOfGeofence": "คุณอยู่ไกลจากจุดนี้เกินไป กรุณาเข้าใกล้จุดนี้แล้วลองสแกนใหม่",
+      "errorInvalidCheckpoint": "QR นี้ไม่ใช่ของกิจกรรม Chula QR Quest",
+      "errorNotFreshmen": "บัญชีนี้ไม่ใช่นิสิตใหม่ ไม่สามารถเก็บสแตมป์ได้",
       "ok": "ตกลง",
       "loginRequiredTitle": "โปรดล็อกอิน/ลงทะเบียน\nเพื่อเก็บสแตมป์ปีนี้...",
       "loginRequiredButton": "เข้าสู่ระบบ / ลงทะเบียน"

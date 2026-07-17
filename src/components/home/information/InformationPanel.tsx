@@ -92,6 +92,7 @@ const InformationPanel = () => {
   const profile = useProfile();
   const isStaff = profile.status === "ready" && profile.me.role === "staff";
   const freshyStoryLocked = !isUnlocked("freshyStory");
+  const chulaQrQuestLocked = !isUnlocked("chulaQrQuest");
 
   return (
     <div className="flex w-full flex-col gap-12">
@@ -141,11 +142,13 @@ const InformationPanel = () => {
               </div>
               <div className="min-w-0">
                 <ShapeButton
-                  href="/chula-qr-quest"
+                  href="/qrquest"
                   imageUrl={stampButtonUrl}
                   capRatio="4/3"
                   fill="#6ABF73"
                   label={t("home.information.games.stamp")}
+                  disabled={chulaQrQuestLocked}
+                  disabledLabel={t("home.information.games.comingSoon")}
                 />
               </div>
               <div className="min-w-0">

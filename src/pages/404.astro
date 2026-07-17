@@ -1,0 +1,8 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { NotFoundOrQrQuestFallback } from "@components/shared/NotFoundOrQrQuestFallback";
+---
+
+<BaseLayout title="Not Found">
+  <NotFoundOrQrQuestFallback client:load />
+</BaseLayout>
