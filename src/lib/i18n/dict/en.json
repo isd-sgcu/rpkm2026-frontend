@@ -440,5 +440,70 @@
       "origin": "Origin",
       "destination": "Destination"
     }
+  },
+  "activity": {
+    "title": "Activity Registration",
+    "button": "Details",
+    "fieldTrip": {
+      "button": "Register",
+      "buttonClosed": "Closed"
+    },
+    "cards": {
+      "fieldTrip": {
+        "title": "Field Trip",
+        "description": "Explore Chulalongkorn University through 3 routes designed to teach you history, community, and environment.",
+        "registrationText": "Registration open 18 - 20 Jul 26 or until full",
+        "activityText": "Activities run 22-29 Jul 26\n(time depends on the route chosen)"
+      },
+      "walkRally": {
+        "title": "Walk Rally",
+        "description": "Learn Chulalongkorn's stories and history through workshops, museums, and board games\nwith seniors guiding you along the way.",
+        "registrationText": "Registration open 22–29 Jul 26\nWalk-ins accepted based on remaining slots on the day",
+        "activityText": "Activity on 31 Jul 26, 12:00-16:00"
+      }
+    },
+    "fieldTripPage": {
+      "title": "Field Trip",
+      "description1": "Explore Chulalongkorn University through 3 routes designed to teach you history,",
+      "description2": "community, and environment.",
+      "registrationNote": "Registration open 18-20 Jul 26 or until full",
+      "activityNote": "Activities run 22-29 Jul 26",
+      "activityNoteDetail": "(time depends on the route chosen)",
+      "chooseTitle": "Choose a route",
+      "chooseNote1": "Note: you may join at most 1 round per route,",
+      "chooseNote2": "and every activity has 1 round per day.",
+      "routes": {
+        "eco": {
+          "title": "Eco Route",
+          "description": "Explore the plant life around Chulalongkorn, take in the green spaces, and learn how waste is managed to build environmental awareness and support sustainability.\nCome experience Chulalongkorn's environment, enjoy nature, and help take care of resources sustainably on the dates below!\n\nP.S. The Eco Route has 2 sub-routes: Plantwalk (walk and explore the trees on campus) and Trashvenger (explore waste management on campus).\n\nYou may join both sub-routes (once each).",
+          "plantWalk": {
+            "name": "Plant Walk",
+            "date": "22-23 Jul 26",
+            "time": "8:30-11:00",
+            "location": "22nd: Maha Chulalongkorn Building\n23rd: Chamchuri 5 Building"
+          },
+          "trashvenger": {
+            "name": "Trashvenger",
+            "date": "24 Jul 26\n27 Jul 26",
+            "time": "8:30-11:00",
+            "location": "University Office Canteen"
+          }
+        },
+        "samyan": {
+          "title": "Samyan Community Route",
+          "description": "Explore another side of campus life — great food after class, places to relax, spots of faith and fortune-telling, and the stories of the Samyan community that will become a cherished memory of your student life.\n\nCome discover the charm of the community around Chulalongkorn on the dates below <3",
+          "date": "22-25 Jul 26",
+          "time": "15:30-18:00",
+          "location": "Faculty of Commerce and Accountancy Canteen (Maha Chulalongkorn Building)"
+        },
+        "campus": {
+          "title": "Campus Route",
+          "description": "Join us in weaving a new chapter together by exploring the university — a route full of trivia about history, architecture, and small stories hidden around campus. What comes next is full of stories waiting for everyone to discover!\n\nWant to know how warm Chulalongkorn feels? Come collect memories with us on the dates below~",
+          "date": "25-29 Jul 26",
+          "time": "8:30-11:00",
+          "location": "Faculty of Commerce and Accountancy Canteen (Maha Chulalongkorn Building)"
+        }
+      }
+    }
   }
 }

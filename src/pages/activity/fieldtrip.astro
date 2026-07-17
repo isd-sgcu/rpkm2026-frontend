@@ -1,9 +1,12 @@
 ---
+import FieldTripPanel from "@components/activity/FieldTripPanel";
 import ActivityLayout from "@layouts/ActivityLayout.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { appConfig } from "@lib/env";
 ---
 
 <BaseLayout title={appConfig.appName}>
-  <ActivityLayout navigateBack="/" showMenuBorder={true} />
+  <ActivityLayout navigateBack="/activity" showMenuBorder={true}>
+    <FieldTripPanel client:load />
+  </ActivityLayout>
 </BaseLayout>
