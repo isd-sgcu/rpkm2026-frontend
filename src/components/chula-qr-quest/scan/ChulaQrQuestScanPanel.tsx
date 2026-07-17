@@ -1,21 +1,20 @@
-import { useEffect, useRef, useState } from "react";
-import { CloudUpload } from "lucide-react";
-import { BarcodeDetector } from "barcode-detector/ponyfill";
-import { useStore } from "@nanostores/react";
-import { toast } from "sonner";
-import { Button, buttonVariants } from "@components/ui/button";
-import { cn } from "@lib/utils";
-import { useT } from "@lib/i18n/useT";
-import { $locale } from "@lib/i18n/locale";
-import { APIError } from "@lib/client";
-import { QrScanner } from "@components/shared/QrCodeScanner";
-import { CameraTroubleshoot } from "@components/shared/CameraTroubleshootDialog";
-import { collectCheckpoint, getGameProgress } from "@lib/api/games";
 import positions from "@components/chula-qr-quest/position.json";
 import {
   ChulaQrQuestScanResultDialog,
   type ScanResult,
 } from "@components/chula-qr-quest/scan/ChulaQrQuestScanResultDialog";
+import { CameraTroubleshoot } from "@components/shared/CameraTroubleshootDialog";
+import { QrScanner } from "@components/shared/QrCodeScanner";
+import { buttonVariants } from "@components/ui/button";
+import { collectCheckpoint, getGameProgress } from "@lib/api/games";
+import { APIError } from "@lib/client";
+import { $locale } from "@lib/i18n/locale";
+import { useT } from "@lib/i18n/useT";
+import { cn } from "@lib/utils";
+import { useStore } from "@nanostores/react";
+import { BarcodeDetector } from "barcode-detector/ponyfill";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 interface StampPosition {
   id: string;
@@ -205,7 +204,7 @@ const ChulaQrQuestScanPanel = () => {
         className="hidden"
         onChange={handleFileUpload}
       />
-      <Button
+      {/* <Button
         type="button"
         variant="default"
         className="rounded-full"
@@ -214,7 +213,7 @@ const ChulaQrQuestScanPanel = () => {
         iconStart={<CloudUpload className="size-4" />}
       >
         {t("chulaQrQuest.scan.uploadImage")}
-      </Button>
+      </Button> */}
 
       <a
         href="/qrquest"
