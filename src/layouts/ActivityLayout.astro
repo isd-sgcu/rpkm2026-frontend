@@ -2,6 +2,9 @@
 import { NavigationMenu } from "@components/shared/NavigationMenu";
 import Image from "astro/components/Image.astro";
 import header1 from "../assets/images/activity_header_1.svg";
+import bottomActivity from "../assets/images/bottom_activity.svg";
+import artboard15 from "@assets/images/artboard_15.svg";
+import artboard16 from "../assets/images/artboard_16.svg";
 import { ChevronLeft } from "lucide-react";
 import type { HTMLAttributes } from "astro/types";
 
@@ -9,17 +12,24 @@ interface Props extends HTMLAttributes<"div"> {
   navigateBack?: string;
   showMenu?: boolean;
   showMenuBorder?: boolean;
+  showBottomDecoration?: boolean;
+  showFieldTripDecoration?: boolean;
 }
 
 const {
   navigateBack = "",
   showMenu = true,
   showMenuBorder = false,
+  showBottomDecoration = false,
+  showFieldTripDecoration = false,
   ...rest
 } = Astro.props;
 ---
 
-<div class:list={["relative w-full min-w-0 min-h-screen"]} {...rest}>
+<div
+  class:list={["relative w-full min-w-0 min-h-screen overflow-x-clip"]}
+  {...rest}
+>
   {
     /* Header: the ribbon banner (header 1) with three decorative flourishes
       placed on top of it, left to right. */
@@ -29,6 +39,53 @@ const {
       <Image src={header1} alt="rpkm activity header" class="w-full" />
     </div>
   </div>
+
+  {
+    /* Bottom decorations: the green ellipse with a flower at each corner sitting
+      in front of it. Pinned to the bottom of the page inside a 393x852 frame
+      that mirrors the activity content frame, so the Figma coordinates map 1:1.
+      Overflow is clipped so the parts that bleed past the frame edges hide.
+      Opt-in per page (only the activity index shows it). */
+  }
+  {
+    showBottomDecoration && (
+      <div class="pointer-events-none absolute inset-x-0 bottom-0 z-0 mx-auto mt-[39px] h-full w-[393px] max-w-full overflow-hidden">
+        {/* left-side plant, bleeding off the left edge of the frame */}
+        <img
+          src={artboard15.src}
+          alt=""
+          aria-hidden="true"
+          class="absolute w-35 top-[375px] left-[-75px] rotate-[29.49deg] max-w-none"
+        />
+        <img
+          src={artboard15.src}
+          alt=""
+          aria-hidden="true"
+          class="absolute w-35 top-[590px] right-[-75px] rotate-[-20.54deg] max-w-none"
+        />
+        <img
+          src={bottomActivity.src}
+          alt=""
+          aria-hidden="true"
+          class="absolute bottom-0 left-1/2 w-full max-w-none -translate-x-1/2"
+        />
+        {/* right flower */}
+        <img
+          src={artboard16.src}
+          alt=""
+          aria-hidden="true"
+          class="absolute bottom-[-36px] left-[307.2px] z-20 w-32 max-w-none -scale-x-100 rotate-[-47.42deg]"
+        />
+        {/* left flower */}
+        <img
+          src={artboard16.src}
+          alt=""
+          aria-hidden="true"
+          class="absolute bottom-[-36px] left-[-40px] z-20 w-32 max-w-none -scale-100 rotate-[-132.58deg]"
+        />
+      </div>
+    )
+  }
 
   {
     navigateBack && (
@@ -52,8 +109,21 @@ const {
   }
 
   <div
-    class:list={["relative flex flex-col px-[1.25em] pt-[24cqw] pb-8 sm:pt-24"]}
+    class:list={[
+      "relative flex flex-col px-[1.25em] pt-[24cqw] pb-36 sm:pt-24",
+    ]}
   >
+    {
+      /* Field Trip page decoration — placeholder position, adjust later. */
+      showFieldTripDecoration && (
+        <img
+          src={artboard16.src}
+          alt=""
+          aria-hidden="true"
+          class="pointer-events-none absolute top-[157px] left-[313px] z-0 w-36 max-w-none rotate-[-90deg]"
+        />
+      )
+    }
     <slot />
   </div>
 </div>

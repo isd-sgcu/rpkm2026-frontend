@@ -6,8 +6,6 @@ import { useT } from "@lib/i18n/useT";
 const FieldTripPanel = () => {
   const t = useT();
 
-  // One entry per card. `color` is the outer/behind layer colour — change it
-  // per card. `data` is the card content, built from the dict below.
   const fieldTrips: { color: string; data: FieldTrip }[] = [
     {
       color: "#6ABF73",
@@ -21,7 +19,7 @@ const FieldTripPanel = () => {
             date: t("activity.fieldTripPage.routes.eco.plantWalk.date"),
             time: t("activity.fieldTripPage.routes.eco.plantWalk.time"),
             location: t("activity.fieldTripPage.routes.eco.plantWalk.location"),
-            registerUrl: "https://forms.gle/m4y6pyWxjZzU18Si7", // TODO: Plant Walk link
+            registerUrl: "https://forms.gle/m4y6pyWxjZzU18Si7",
           },
           {
             name: t("activity.fieldTripPage.routes.eco.trashvenger.name"),
@@ -30,7 +28,7 @@ const FieldTripPanel = () => {
             location: t(
               "activity.fieldTripPage.routes.eco.trashvenger.location",
             ),
-            registerUrl: "https://forms.gle/SEHikkUfS1AtM6WP6 ", // TODO: Trashvenger link
+            registerUrl: "https://forms.gle/SEHikkUfS1AtM6WP6 ",
           },
         ],
       },
@@ -108,7 +106,6 @@ const FieldTripPanel = () => {
         </header>
       </div>
 
-      {/* Three cards, each a different colour. */}
       <div className="flex w-full flex-col items-center gap-6 pb-8">
         {fieldTrips.map(({ color, data }) => (
           <FieldTripCard key={data.id} fieldTrip={data} color={color} />
