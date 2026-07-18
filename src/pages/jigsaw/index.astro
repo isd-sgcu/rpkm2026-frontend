@@ -2,11 +2,10 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import JigsawLayout from "@layouts/JigsawLayout.astro";
 import "../../styles/global.css";
-import { appConfig } from "@lib/env";
 import { JigsawHomePanel } from "@components/jigsaw/JigsawHomePanel";
 ---
 
-<BaseLayout title={appConfig.appName}>
+<BaseLayout title="RPKM Jigsaw Journey">
   <JigsawLayout navigateBack="/" showMenuBorder={true}>
     <JigsawHomePanel client:load />
   </JigsawLayout>

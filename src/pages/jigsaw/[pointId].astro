@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import "../../styles/global.css";
-import { appConfig } from "@lib/env";
 import { TOTAL_PIECES } from "@components/jigsaw/jigsawState";
 import { JigsawCollect } from "@components/jigsaw/JigsawCollect";
 
@@ -17,6 +16,6 @@ export function getStaticPaths() {
 const { pointId } = Astro.params;
 ---
 
-<BaseLayout title={appConfig.appName}>
+<BaseLayout title="RPKM Jigsaw Journey">
   <JigsawCollect pointId={pointId!} client:load />
 </BaseLayout>
