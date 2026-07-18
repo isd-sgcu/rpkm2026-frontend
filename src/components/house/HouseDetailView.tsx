@@ -1,5 +1,5 @@
 import { Button } from "@components/ui/button";
-import { HOUSE_CAPACITY, type House } from "../../consts/house";
+import type { House } from "../../consts/house";
 import { useHouseMemberCounts } from "./useHouseMemberCounts";
 import { ChevronLeft, Plus, User } from "lucide-react";
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
@@ -113,7 +113,9 @@ export default function HouseDetailView({
               <div className="flex items-center gap-1 text-sm">
                 <span>
                   <span className="text-rpkm-red">{memberCount ?? "-"}</span>
-                  <span className="text-black">/{HOUSE_CAPACITY}</span>
+                  <span className="text-black">
+                    /{house.capacity >= 250 ? "∞" : house.capacity}
+                  </span>
                 </span>
                 <User className="size-4 text-black" />
               </div>

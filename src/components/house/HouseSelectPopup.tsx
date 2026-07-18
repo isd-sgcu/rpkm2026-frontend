@@ -1,5 +1,5 @@
 import { Button } from "@components/ui/button";
-import { HOUSES, HOUSE_CAPACITY, type House } from "../../consts/house";
+import { HOUSES, type House } from "../../consts/house";
 import { useHouseMemberCounts } from "./useHouseMemberCounts";
 import { useState } from "react";
 import { ChevronRight, Search, User } from "lucide-react";
@@ -108,7 +108,7 @@ export default function HouseSelectPopup({
             <div className="grid grid-cols-2 gap-3 pb-2">
               {filteredHouses.map((house) => {
                 const memberCount = memberCountOf(house);
-                const isFull = (memberCount ?? 0) >= HOUSE_CAPACITY;
+                const isFull = (memberCount ?? 0) >= house.capacity;
                 const isRanked = disabledHouseNames.has(house.name.th);
 
                 return (
@@ -136,7 +136,9 @@ export default function HouseSelectPopup({
                           <span className="text-rpkm-beige">
                             {memberCount ?? "-"}
                           </span>
-                          <span className="text-white">/{HOUSE_CAPACITY}</span>
+                          <span className="text-white">
+                            /{house.capacity >= 250 ? "∞" : house.capacity}
+                          </span>
                         </span>
                       </div>
                     </div>

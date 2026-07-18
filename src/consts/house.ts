@@ -9,6 +9,7 @@ export type House = {
     en: string;
   };
   size: "S" | "M" | "L" | "XL" | "XXL";
+  capacity: number;
   logoUrl: string;
   link: {
     facebook: string | null;
@@ -29,6 +30,7 @@ export const HOUSES: House[] = [
       en: "Baankhunnoo size S\nCozy pure game vibes",
     },
     size: "S",
+    capacity: 59,
     logoUrl: "/house/BaanKhunnoo.webp",
     link: {
       facebook: null,
@@ -47,6 +49,7 @@ export const HOUSES: House[] = [
       en: "Once Koh, Always Koh",
     },
     size: "S",
+    capacity: 59,
     logoUrl: "/house/BaanKoh.webp",
     link: {
       facebook: "https://www.facebook.com/baan.k.chula",
@@ -65,6 +68,7 @@ export const HOUSES: House[] = [
       en: "How could 'Baan Dang‘ NOT be a hit?\nIt's THE spot for cool, stylish people. Sure, it's a small house — but it's still amazing!!",
     },
     size: "S",
+    capacity: 59,
     logoUrl: "/house/BaanDung.webp",
     link: {
       facebook: null,
@@ -83,6 +87,7 @@ export const HOUSES: House[] = [
       en: "Get high on the vibe,\nget close at the yerm",
     },
     size: "S",
+    capacity: 59,
     logoUrl: "/house/BaanYerm.webp",
     link: {
       facebook: null,
@@ -101,6 +106,7 @@ export const HOUSES: House[] = [
       en: "A gathering of clumsy but sports-loving people,\nfull of fun and laughter, fostering deep bonds of friendship.",
     },
     size: "S",
+    capacity: 59,
     logoUrl: "/house/BaanRoom.webp",
     link: {
       facebook: null,
@@ -119,6 +125,7 @@ export const HOUSES: House[] = [
       en: "BaanRhoy — Where every moment is Rhoy,\nand every memory feels like home.\nSee you at the Rhoy-est home of all.",
     },
     size: "S",
+    capacity: 59,
     logoUrl: "/house/BaanRhoy.webp",
     link: {
       facebook: null,
@@ -137,6 +144,7 @@ export const HOUSES: House[] = [
       en: "This house is never full,\nit's just empty without you🫪",
     },
     size: "S",
+    capacity: 59,
     logoUrl: "/house/BaanLaijai.webp",
     link: {
       facebook: null,
@@ -155,6 +163,7 @@ export const HOUSES: House[] = [
       en: "Amidst the crashing waves of chaos and confusion across the great sea of Chula, the ship called Agape welcomes freshies aboard, setting sail on a journey to discover new friendships!",
     },
     size: "S",
+    capacity: 59,
     logoUrl: "/house/BaanAgape.webp",
     link: {
       facebook: null,
@@ -173,6 +182,7 @@ export const HOUSES: House[] = [
       en: "welcome every lost puppies back to baan boe!",
     },
     size: "S",
+    capacity: 59,
     logoUrl: "/house/BaanBoe.webp",
     link: {
       facebook: null,
@@ -191,6 +201,7 @@ export const HOUSES: House[] = [
       en: "To infinity and beyond! A-AUM’s toy box is open, Perfectly sized and non-stop fun. Come join us🚀",
     },
     size: "M",
+    capacity: 89,
     logoUrl: "/house/BaanA-Aum.webp",
     link: {
       facebook: null,
@@ -209,6 +220,7 @@ export const HOUSES: House[] = [
       en: "Join for the FUN, stay for the FAMILY. Be part of the KIDZ family!",
     },
     size: "M",
+    capacity: 89,
     logoUrl: "/house/BaanKidz.webp",
     link: {
       facebook: "https://www.facebook.com/share/14d7T4ZEMJa/",
@@ -227,6 +239,7 @@ export const HOUSES: House[] = [
       en: "Nothing beat a jet 2 u holiday and right now u can come Baannork per person.",
     },
     size: "M",
+    capacity: 89,
     logoUrl: "/house/BaanNork.webp",
     link: {
       facebook: null,
@@ -245,6 +258,7 @@ export const HOUSES: House[] = [
       en: "“FreshmeFreshmen festival lasts just three days, but the healing vibes at Baan Jodeh Huesa last all four years!",
     },
     size: "L",
+    capacity: 119,
     logoUrl: "/house/BaanJodeh.webp",
     link: {
       facebook: null,
@@ -263,6 +277,7 @@ export const HOUSES: House[] = [
       en: "Dragons stand majestic, cheers flow with grace. Drums thunder through every heart, as A-chuan reigns supreme across the land.",
     },
     size: "L",
+    capacity: 119,
     logoUrl: "/house/BaanAchuan.webp",
     link: {
       facebook: "https://www.facebook.com/baanachuan/?locale=th_TH",
@@ -281,6 +296,7 @@ export const HOUSES: House[] = [
       en: "Come as freshmen, leave as family. Let’s make BAANHAAW the loudest party of all time",
     },
     size: "L",
+    capacity: 119,
     logoUrl: "/house/BaanHaaw.webp",
     link: {
       facebook: null,
@@ -299,6 +315,7 @@ export const HOUSES: House[] = [
       en: "Hello ! Fresh house for freshy Thank you !",
     },
     size: "XL",
+    capacity: 199,
     logoUrl: "/house/BaanSod.webp",
     link: {
       facebook: null,
@@ -317,6 +334,7 @@ export const HOUSES: House[] = [
       en: "Baan Koom -- Chula's most distinct house with unique recreational activities. We are ready to welcome all freshies with greatness, great fun, and great love from our members.",
     },
     size: "XL",
+    capacity: 199,
     logoUrl: "/house/BaanKoom.webp",
     link: {
       facebook: null,
@@ -335,6 +353,7 @@ export const HOUSES: House[] = [
       en: "There is only one truth.. Baan Jo+ is where you belong!",
     },
     size: "XL",
+    capacity: 199,
     logoUrl: "/house/BaanJo+.webp",
     link: {
       facebook: null,
@@ -353,6 +372,7 @@ export const HOUSES: House[] = [
       en: "Ladies and gentlemen, the curtains rise at Soeitee the Grand Theatre. Step into a world of mystery and compose a timeless masterpiece with us. 💌You’re all invited to Baan Soeitee Lheemouy!",
     },
     size: "XL",
+    capacity: 199,
     logoUrl: "/house/BaanSoeiteelheemouy.webp",
     link: {
       facebook: null,
@@ -371,6 +391,7 @@ export const HOUSES: House[] = [
       en: "Hello Jaew people! Are you ready to be Jaew? Because we believe that everyone is Jaew💙👍🏻",
     },
     size: "XL",
+    capacity: 199,
     logoUrl: "/house/BaanJaew.webp",
     link: {
       facebook: null,
@@ -389,6 +410,7 @@ export const HOUSES: House[] = [
       en: "A big home where hearts are always close.24 years of laughter, memories, and lasting bonds.You bring the smile, we'll bring the family.",
     },
     size: "XXL",
+    capacity: 250,
     logoUrl: "/house/BaanYim.webp",
     link: {
       facebook: null,
@@ -407,6 +429,7 @@ export const HOUSES: House[] = [
       en: "Baanrangs is a home of warmth, friendship, and unforgettable memories that make the beginning of your CU journey even more meaningful throughout the year.",
     },
     size: "XXL",
+    capacity: 250,
     logoUrl: "/house/BaanRangs.webp",
     link: {
       facebook: null,
@@ -428,5 +451,3 @@ export function getHouseCode(house: House): string {
 export function getHouseByCode(code: string): House | undefined {
   return HOUSES.find((house) => getHouseCode(house) === code);
 }
-
-export const HOUSE_CAPACITY = 500;
