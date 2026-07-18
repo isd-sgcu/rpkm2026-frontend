@@ -6,14 +6,14 @@ import { cn } from "@lib/utils";
 import "@styles/global.css";
 
 type Props = {
-  title: string;
+  title?: string;
   description?: string;
   showFooter?: boolean;
   footerVariant?: FooterVariant;
 };
 
 const {
-  title,
+  title = "RPKM 2026",
   description = "RPKM 2026 frontend application",
   showFooter = false,
   footerVariant = "default",
@@ -26,6 +26,7 @@ const {
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-background text-foreground font-sans">
