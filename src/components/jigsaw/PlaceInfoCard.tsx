@@ -25,22 +25,25 @@ export function PlaceInfoCard({
 }: PlaceInfoCardProps) {
   return (
     /* Back plate: green, peeks out around the front as a frame. */
-    <div className={cn("rounded-3xl bg-rpkm-green p-2.5", className)}>
-      {/* Front plate: cream, holds the photo, title and map pin. */}
-      <div className="relative flex items-center gap-4 rounded-3xl bg-[#FFFAC9] p-4">
-        {/* Green square framing the photo, centred inside. */}
-        <div className="aspect-square w-2/5 shrink-0 rounded-2xl bg-rpkm-green p-1.5">
+    <div className={cn("rounded-3xl border bg-rpkm-green p-2.5", className)}>
+      {/* Front plate: cream, holds the title and map pin. */}
+      <div className="relative flex items-stretch rounded-[29px] border border-foreground bg-[#FFFAC9]">
+        {/* Image card: sits in front of both plates with its own border,
+            reaching out over the green frame on the top, bottom and left. */}
+        <div className="relative z-10 -my-3 -ml-3 w-2/5 shrink-0 overflow-hidden rounded-3xl border border-foreground bg-rpkm-green p-3">
           <img
             src={image}
             alt={imageAlt}
-            className="h-full w-full rounded-xl object-cover"
+            className="h-full w-full rounded-2xl object-cover"
           />
         </div>
 
-        {/* Title, centred in the remaining space. */}
-        <h2 className="flex-1 pr-6 pb-6 text-lg leading-snug font-normal text-foreground">
-          {title}
-        </h2>
+        {/* Title box, centred in the remaining space. */}
+        <div className="flex flex-1 items-center p-4 pr-6 pb-8">
+          <h2 className="text-lg leading-snug font-normal text-foreground">
+            {title}
+          </h2>
+        </div>
 
         {/* Map pin: taps through to Google Maps. */}
         <a
