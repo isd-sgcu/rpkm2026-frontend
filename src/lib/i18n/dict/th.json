@@ -576,7 +576,7 @@
     "dateRange": "20 กรกฎาคม - 3 สิงหาคม",
     "note": "กิจกรรมสำหรับนิสิตชั้นปีที่ 1 (CU110)",
     "detailButton": "รายละเอียดสถานที่",
-    "progressionBar": "คุณเก็บได้แล้ว {collected}/{total} ชิ้น",
+    "progressionBar": "คุณเก็บได้แล้ว {count}/{TOTAL_PIECES} ชิ้น",
     "scanButton": "สแกนเพื่อรับชิ้นส่วน",
     "scan": {
       "title": "สแกนเพื่อรับชิ้นส่วน",

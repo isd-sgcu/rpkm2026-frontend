@@ -1,5 +1,6 @@
+import { CircleAlert } from "lucide-react";
 import { PlaceInfoCard } from "./PlaceInfoCard";
-
+import { useT } from "@lib/i18n/useT";
 /**
  * Placeholder photos for each place, keyed by number (1..10). Reuses the piece
  * artwork (jigsaw_<n>.png) until real place photos exist. `import.meta.glob`
@@ -26,43 +27,43 @@ for (const [path, module] of Object.entries(photoModules)) {
  */
 const PLACES = [
   {
-    title: "สำนักงานวิทยทรัพยากร จุฬาลงกรณ์มหาวิทยาลัย",
+    title: "jigsaw.info.loc1",
     mapUrl: "https://maps.app.goo.gl/EAV9zKPWMGMV3wPc6",
   },
   {
-    title: "อาคารจามจุรี 9",
+    title: "jigsaw.info.loc2",
     mapUrl: "https://maps.app.goo.gl/3Ka6bH3UH2Viurfi8",
   },
   {
-    title: "อุทยาน 100 ปี จุฬาลงกรณ์มหาวิทยาลัย",
+    title: "jigsaw.info.loc3",
     mapUrl: "https://maps.app.goo.gl/wux3wsUxhdZiXJs67",
   },
   {
-    title: "ศาลเจ้าพ่อเสือ ตั่วเหล่าเอี๊ย สามย่าน",
+    title: "jigsaw.info.loc4",
     mapUrl: "https://maps.app.goo.gl/K6p5fqdGrWC4RzbB6",
   },
   {
-    title: "ตึกจักรพงษ์ (หอประวัติจุฬาลงกรณ์มหาวิทยาลัย)",
+    title: "jigsaw.info.loc5",
     mapUrl: "https://maps.app.goo.gl/3rCgadm7rzy8n4zL8",
   },
   {
-    title: "ศาลเจ้าแม่ทับทิม สะพานเหลือง",
+    title: "jigsaw.info.loc6",
     mapUrl: "https://maps.app.goo.gl/EFZi8jAQpEY2DATu6",
   },
   {
-    title: "อาคารเฉลิมราชสุดากีฬาสถาน",
+    title: "jigsaw.info.loc7",
     mapUrl: "https://maps.app.goo.gl/DxWd3vSAG28dSvZy6",
   },
   {
-    title: "CU Plearn Space",
+    title: "jigsaw.info.loc8",
     mapUrl: "https://maps.app.goo.gl/iofZzaKnrnrWjgDQ9",
   },
   {
-    title: "ศาลาพระเกี้ยว",
+    title: "jigsaw.info.loc9",
     mapUrl: "https://maps.app.goo.gl/tryrBcNrajaDiTWe7",
   },
   {
-    title: "อาคารมหาจุฬาลงกรณ์",
+    title: "jigsaw.info.loc10",
     mapUrl: "https://maps.app.goo.gl/Agp8t2jpXyao9jkN7",
   },
 ].map((place, i) => ({
@@ -75,17 +76,41 @@ const PLACES = [
  * stacked vertically, each rendered as a {@link PlaceInfoCard}.
  */
 export function PlaceInfoPanel() {
+  const t = useT();
+
   return (
     <div className="flex w-full flex-col gap-5">
-      {PLACES.map((place) => (
-        <PlaceInfoCard
-          key={place.title}
-          image={place.image}
-          title={place.title}
-          mapUrl={place.mapUrl}
-          imageAlt={place.title}
-        />
-      ))}
+      {PLACES.map((place) => {
+        // `title` holds an i18n key (e.g. "jigsaw.info.loc1"); t() resolves it to
+        // the current locale. Titles not yet migrated to a key are returned as-is
+        // by useT, so the array can be converted one entry at a time.
+        const title = t(place.title as Parameters<typeof t>[0]);
+        return (
+          <PlaceInfoCard
+            key={place.title}
+            image={place.image}
+            title={title}
+            mapUrl={place.mapUrl}
+            imageAlt={title}
+          />
+        );
+      })}
     </div>
   );
 }
+
+export const PlaceInfoHeader = () => {
+  const t = useT();
+
+  return (
+    <div className="flex flex-col items-start gap-1">
+      <h1 className="text-3xl font-bold whitespace-pre-line">
+        {t("jigsaw.info.title")}
+      </h1>
+      <p className="flex items-center gap-1.5 text-base font-normal">
+        <CircleAlert className="size-5 shrink-0" />
+        {t("jigsaw.info.note")}
+      </p>
+    </div>
+  );
+};

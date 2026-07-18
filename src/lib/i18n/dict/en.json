@@ -572,11 +572,11 @@
   "jigsaw": {
     "title1": "Jigsaw Hunting Activity",
     "title2": "Chula Jigsaw Journey",
-    "subtitle": "Colleting Digital Jigsaw from notable locations around the campus, then redeem them for a reward!",
+    "subtitle": "Colleting Digital Jigsaw \nfrom notable locations around the campus, then redeem them for a reward!",
     "dateRange": "20 July - 3 August",
     "note": "Exclusive for freshmen students (CU110)",
     "detailButton": "Location Details",
-    "progressionBar": "You've collected {collected}/{total} pieces",
+    "progressionBar": "You've collected {count}/{TOTAL_PIECES} pieces",
     "scanButton": "Scan to Collect Jigsaw",
     "scan": {
       "title": "Scan to Collect Jigsaw",

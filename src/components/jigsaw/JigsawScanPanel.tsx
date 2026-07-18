@@ -26,6 +26,7 @@ import {
   TOTAL_PIECES,
 } from "./jigsawState";
 import { collectScannedJigsaw } from "./jigsawScanFlow";
+import { useT } from "@lib/i18n/useT";
 
 /**
  * Scan page panel. Shows the live QR scanner; a successful scan just logs its
@@ -37,6 +38,7 @@ import { collectScannedJigsaw } from "./jigsawScanFlow";
  * TODO: route the real QR scan result into the collection flow.
  */
 export function JigsawScanPanel() {
+  const t = useT();
   const found = useStore($foundPieces);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [decoding, setDecoding] = useState(false);
@@ -174,7 +176,7 @@ export function JigsawScanPanel() {
           decoding ? <Loader2 className="animate-spin" /> : <CloudUpload />
         }
       >
-        อัปโหลดรูปภาพ
+        {t("jigsaw.scan.uploadButton")}
       </Button>
 
       {/* Cancel: return to the jigsaw page. */}
@@ -186,7 +188,7 @@ export function JigsawScanPanel() {
           window.location.href = "/jigsaw";
         }}
       >
-        ยกเลิก
+        {t("jigsaw.scan.cancelButton")}
       </Button>
 
       <Button

@@ -1,22 +1,19 @@
 ---
 import { NavigationMenu } from "@components/shared/NavigationMenu";
-import { ChevronLeft, CircleAlert } from "lucide-react";
+import { PlaceInfoHeader } from "@components/jigsaw/PlaceInfoCard";
+import { ChevronLeft } from "lucide-react";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"div"> {
   navigateBack?: string;
   showMenu?: boolean;
   showMenuBorder?: boolean;
-  title?: string;
-  description?: string;
 }
 
 const {
   navigateBack = "",
   showMenu = true,
   showMenuBorder = true,
-  title = "สถานที่\nกิจกรรมสะสมจิกซอร์",
-  description = "กิจกรรมสำหรับนิสิตชั้นปีที่ 1 (CU110)",
   ...rest
 } = Astro.props;
 ---
@@ -25,11 +22,7 @@ const {
   <header
     class="relative flex h-[40cqw] sm:h-40 w-full flex-col items-start justify-center gap-1 rounded-b-[30px] border border-foreground bg-[#E65325] px-20 text-left text-white"
   >
-    <h1 class="text-3xl font-bold whitespace-pre-line">{title}</h1>
-    <p class="flex items-center gap-1.5 text-base font-normal">
-      <CircleAlert className="size-5 shrink-0" />
-      {description}
-    </p>
+    <PlaceInfoHeader client:load />
   </header>
 
   {

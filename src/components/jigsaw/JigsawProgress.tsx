@@ -1,12 +1,14 @@
 import { useStore } from "@nanostores/react";
 
 import { $foundPieces, TOTAL_PIECES } from "./jigsawState";
-
+import { useT } from "@lib/i18n/useT";
 /**
  * Progress bar that fills dynamically according to how many jigsaw pieces the
  * user has collected.
  */
-export function JigsawProgress() {
+export const JigsawProgress = () => {
+  const t = useT();
+
   const found = useStore($foundPieces);
   const count = found.length;
   const percent = Math.round((count / TOTAL_PIECES) * 100);
@@ -26,8 +28,11 @@ export function JigsawProgress() {
       />
       {/* Label centred over the whole bar. */}
       <span className="absolute inset-0 flex items-center justify-center text-base font-normal whitespace-nowrap">
-        คุณเก็บได้แล้ว {count}/{TOTAL_PIECES} ชิ้น
+        {t("jigsaw.progressionBar", {
+          count: String(count),
+          TOTAL_PIECES: String(TOTAL_PIECES),
+        })}
       </span>
     </div>
   );
-}
+};

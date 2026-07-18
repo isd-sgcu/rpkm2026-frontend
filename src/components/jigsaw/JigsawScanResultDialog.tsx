@@ -14,6 +14,7 @@ import {
 import { JigsawProgress } from "./JigsawProgress";
 import { JigsawPiecePlaceholder } from "./JigsawPiecePlaceholder";
 import { setPendingClaim, type PieceId } from "./jigsawState";
+import { useT } from "@lib/i18n/useT";
 
 /**
  * Collected artwork for each jigsaw piece (jigsaw_<n>.png), keyed by piece
@@ -112,6 +113,7 @@ export function JigsawScanResultDialog({
   onOpenChange,
   result,
 }: JigsawScanResultDialogProps) {
+  const t = useT();
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   // Redirecting to Google navigates away; if the browser restores this page
@@ -161,7 +163,7 @@ export function JigsawScanResultDialog({
         {result?.status === "success" && (
           <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
             <DialogTitle className="text-2xl font-bold">
-              ได้รับจิกซอร์ชิ้นใหม่ !
+              {t("jigsaw.successPopup.title")}
             </DialogTitle>
 
             <JigsawProgress />
@@ -191,24 +193,24 @@ export function JigsawScanResultDialog({
             </div>
 
             <DialogDescription className="text-base text-[#372F32]">
-              ได้รับเมื่อวันที่ {formatReceivedAt(result.receivedAt)}
+              {t("jigsaw.successPopup.collectedAt", {
+                datetime: formatReceivedAt(result.receivedAt),
+              })}
             </DialogDescription>
 
             <Button
               className="rounded-r-lg w-[72px] h-[32px] bg-[#6ABF73] text-[#FEFDF5] font-base border-1 top-22 shadow-none focus-visible:ring-0 border-foreground"
               onClick={() => onOpenChange(false)}
             >
-              ตกลง
+              {t("jigsaw.successPopup.confirmButton")}
             </Button>
           </div>
         )}
 
         {result?.status === "login-required" && (
           <div className="relative h-full text-center">
-            <DialogTitle className="absolute inset-x-0 top-[85px] px-6 text-2xl leading-snug font-bold">
-              โปรดล็อกอิน / ลงทะเบียน
-              <br />
-              เพื่อเก็บสแตมป์นี้…
+            <DialogTitle className="absolute inset-x-0 top-[85px] px-6 text-2xl leading-snug font-bold whitespace-pre-line">
+              {t("jigsaw.loginPopup.title")}
             </DialogTitle>
             <DialogDescription className="sr-only">
               เข้าสู่ระบบเพื่อบันทึกชิ้นส่วนจิกซอร์ที่คุณเพิ่งพบ
@@ -223,7 +225,7 @@ export function JigsawScanResultDialog({
                 isSigningIn ? <Loader2 className="animate-spin" /> : undefined
               }
             >
-              เข้าสู่ระบบ / ลงทะเบียน
+              {t("jigsaw.loginPopup.loginButton")}
             </Button>
 
             {/* Green hill: an ellipse wider than the card so its top edge reads
@@ -241,10 +243,10 @@ export function JigsawScanResultDialog({
             <div className="flex flex-col items-center gap-4 px-6 pb-6 text-center">
               <div className="flex flex-col items-center gap-1">
                 <DialogTitle className="text-2xl font-bold">
-                  สแกนไม่สำเร็จ
+                  {t("jigsaw.failedPopup.title")}
                 </DialogTitle>
                 <DialogDescription className="text-foreground">
-                  กรุณาลองใหม่อีกครั้ง
+                  {t("jigsaw.failedPopup.description")}
                 </DialogDescription>
               </div>
 
@@ -252,7 +254,7 @@ export function JigsawScanResultDialog({
                 className="rounded-r-lg w-[72px] h-[32px] border-1 border-foreground bg-[#D33D3D] text-white shadow-none focus-visible:ring-0"
                 onClick={() => onOpenChange(false)}
               >
-                ตกลง
+                {t("jigsaw.failedPopup.confirmButton")}
               </Button>
             </div>
           </>
