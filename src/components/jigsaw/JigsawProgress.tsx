@@ -12,19 +12,21 @@ export function JigsawProgress() {
   const percent = Math.round((count / TOTAL_PIECES) * 100);
 
   return (
-    <div className="flex w-full items-center gap-2 rounded-full border-2 border-dashed border-gray-400 px-4 py-2 text-sm">
-      <div className="h-2 flex-1 overflow-hidden rounded-full bg-gray-200">
-        <div
-          className="h-full rounded-full bg-rpkm-green transition-[width] duration-500 ease-out"
-          style={{ width: `${percent}%` }}
-          role="progressbar"
-          aria-valuenow={count}
-          aria-valuemin={0}
-          aria-valuemax={TOTAL_PIECES}
-        />
-      </div>
-      <span className="text-base font-normal whitespace-nowrap">
-        {count}/{TOTAL_PIECES} ชิ้น
+    <div className="relative w-[268px] h-[25px] overflow-hidden rounded-2xl border-1 border-foreground text-sm">
+      {/* Yellow fill: grows left-to-right with progress. The container owns the
+          outer border; the fill only draws a border on its right edge (the
+          moving cap), so nothing doubles up on the left/top/bottom. */}
+      <div
+        className="absolute inset-y-0 left-0 rounded-r-2xl border-r border-foreground bg-rpkm-yellow transition-[width]"
+        style={{ width: `${percent}%` }}
+        role="progressbar"
+        aria-valuenow={count}
+        aria-valuemin={0}
+        aria-valuemax={TOTAL_PIECES}
+      />
+      {/* Label centred over the whole bar. */}
+      <span className="absolute inset-0 flex items-center justify-center text-base font-normal whitespace-nowrap">
+        คุณเก็บได้แล้ว {count}/{TOTAL_PIECES} ชิ้น
       </span>
     </div>
   );

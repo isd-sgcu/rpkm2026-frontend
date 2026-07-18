@@ -14,18 +14,18 @@ export function JigsawHomePanel() {
           <h1 className="text-3xl font-bold">กิจกรรมสะสมจิกซอร์</h1>
           <h1 className="text-3xl font-bold">Chula Jigsaw Journey</h1>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center mt-2">
           <h2 className="text-base font-bold">สะสมชิ้นส่วน Digital Jigsaw</h2>
           <h2 className="text-base font-bold">
             จากสถานที่สำคัญรอบจุฬาฯ พร้อมรับรางวัลเมื่อสะสมครบ
           </h2>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center mt-2">
           <p className="flex items-start gap-1 text-base font-normal">
             <CalendarDays className="mt-0.5 size-[18px] shrink-0 text-black" />
             20 กรกฎาคม - 3 สิงหาคม
           </p>
-          <p className="flex items-start gap-1 text-base font-normal">
+          <p className="flex items-start gap-1 text-base font-normal mt-2">
             <CircleAlert className="mt-0.5 size-[18px] shrink-0 text-black" />
             เข้าร่วมเฉพาะนิสิตชั้นปี 1 หรือรหัส CU110
           </p>
@@ -34,7 +34,7 @@ export function JigsawHomePanel() {
 
       <a
         href="/jigsaw/placeinfo"
-        className="flex w-[159px] h-[33px] items-center justify-center gap-[8px] rounded-lg border border-foreground p-[16px] text-center font-bold size-base bg-rpkm-yellow"
+        className="flex w-[159px] h-[33px] items-center -mt-3 justify-center gap-[8px] rounded-lg border border-foreground p-[16px] text-center font-bold text-base bg-rpkm-yellow"
       >
         รายละเอียดสถานที่
       </a>
@@ -43,7 +43,7 @@ export function JigsawHomePanel() {
 
       <a
         href="/jigsaw/scan"
-        className="flex w-full items-center justify-center gap-2 rounded-xl border border-solid border-gray-400 py-3 text-center font-bold"
+        className="flex w-[268px] h-[33px] items-center justify-center gap-[8px] rounded-lg border border-foreground p-[16px] text-center font-bold text-base bg-rpkm-yellow"
       >
         <ScanLine className="size-24px" />
         สแกนเพื่อรับชิ้นส่วน

@@ -3,6 +3,7 @@ import { NavigationMenu } from "@components/shared/NavigationMenu";
 import Image from "astro/components/Image.astro";
 import header1 from "../assets/images/jigsaw_header_1.svg";
 import header2 from "../assets/images/jigsaw_header_2.svg";
+import footer from "../assets/images/jigsaw_footer.svg";
 import { ChevronLeft } from "lucide-react";
 import type { HTMLAttributes } from "astro/types";
 
@@ -62,4 +63,6 @@ const {
   >
     <slot />
   </div>
+
+  <Image src={footer} alt="" class="w-full" />
 </div>
