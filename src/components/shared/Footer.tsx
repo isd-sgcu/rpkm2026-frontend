@@ -12,11 +12,6 @@ function DefaultDecoration() {
   return (
     <div className="w-full sm:max-w-140 mx-auto overflow-x-clip sm:overflow-x-visible relative flex justify-center">
       <img
-        src={houseImage.src}
-        alt="decoration"
-        className="min-w-[40vw] w-132 max-w-[103vw] absolute bottom-0 translate-y-[15%] z-1"
-      />
-      <img
         src={pot2Image.src}
         alt="decoration"
         className="w-42 sm:w-54 absolute left-0 bottom-0 rotate-23 translate-x-[-40%] translate-y-[48%] z-1"
