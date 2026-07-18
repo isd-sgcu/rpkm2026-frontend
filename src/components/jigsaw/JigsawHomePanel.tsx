@@ -32,6 +32,13 @@ export function JigsawHomePanel() {
         </div>
       </header>
 
+      <a
+        href="/jigsaw/placeinfo"
+        className="flex w-[159px] h-[33px] items-center justify-center gap-[8px] rounded-lg border border-foreground p-[16px] text-center font-bold size-base bg-rpkm-yellow"
+      >
+        รายละเอียดสถานที่
+      </a>
+
       <JigsawPanel />
 
       <a
