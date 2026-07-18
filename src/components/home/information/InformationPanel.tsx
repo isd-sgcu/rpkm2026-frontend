@@ -90,7 +90,7 @@ function ShapeButton({
 const InformationPanel = () => {
   const t = useT();
   const profile = useProfile();
-  const isStaff = profile.status === "ready" && profile.me.role === "staff";
+  const isStaff = profile.status === "ready" && profile.me.staffRole !== null;
   const freshyStoryLocked = !isUnlocked("freshyStory");
   const chulaQrQuestLocked = !isUnlocked("chulaQrQuest");
   const jigsawLocked = !isUnlocked("jigsaw");

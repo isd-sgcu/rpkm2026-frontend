@@ -12,7 +12,7 @@ const ProfileCardOrScanButton = () => {
   const profile = useProfile();
   const me = profile.status === "ready" ? profile.me : undefined;
 
-  const isStaff = profile.status === "ready" && profile.me.role === "staff";
+  const isStaff = profile.status === "ready" && profile.me.staffRole !== null;
   const scanHref =
     profile.status === "ready" && profile.me.staffRole === "walkrally"
       ? "/staff/walkrally/record"

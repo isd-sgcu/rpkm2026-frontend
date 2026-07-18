@@ -31,7 +31,11 @@ function resolveRedirect(profile: ProfileState, path: string): string | null {
   }
 
   if (profile.status === "ready") {
-    const isStaff = profile.me.role === "staff";
+    // `role` is account-wide (set on the student row), so a firstdate-only
+    // staffer still has role === "staff" here. `staffRole` is looked up per
+    // project (null when this account has no rpkm staff registration), so
+    // it's the only field that actually gates rpkm's /staff pages.
+    const isStaff = profile.me.staffRole !== null;
     if (
       isStaff &&
       !STAFF_ALLOWED_PATHS.includes(path) &&

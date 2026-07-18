@@ -25,7 +25,7 @@ export function LandingPanel() {
       // Discard any stored destination so it can't leak into a later login.
       popReturnTo();
       window.location.href = "/not-eligible";
-    } else if (profile.status === "ready" && profile.me.role !== "staff") {
+    } else if (profile.status === "ready" && profile.me.staffRole === null) {
       // A deep link (e.g. a Chula QR Quest sticker scanned while logged out)
       // stashed its target before bouncing to login — send them back to it
       // instead of the default destination. useAccessGuard re-validates that

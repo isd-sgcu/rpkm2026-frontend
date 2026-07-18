@@ -34,7 +34,7 @@ interface NavigationMenuProps {
 // not shadcn sidebar. actually a drawer
 export function NavigationMenu({ showBorder }: NavigationMenuProps) {
   const profile = useProfile();
-  const isStaff = profile.status === "ready" && profile.me.role === "staff";
+  const isStaff = profile.status === "ready" && profile.me.staffRole !== null;
   const studentId = profile.status === "ready" ? profile.me.studentId : "";
   const scanHref =
     profile.status === "ready" && profile.me.staffRole === "walkrally"
