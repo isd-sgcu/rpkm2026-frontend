@@ -403,8 +403,8 @@ export const HOUSES: House[] = [
       en: "BaanRANGS",
     },
     description: {
-      en: "บ้านแรงส์ บ้านที่สืบทอดความทรงจำ และมิตรภาพมากว่า 26 ปี ผ่านกิจกรรมอันเป็นเอกลักษณ์ ความสนุก และคอมมูนิตี้ที่ส่งต่อมิตรภาพจากรุ่นสู่รุ่น",
-      th: "Baanrangs is a home of warmth, friendship, and unforgettable memories that make the beginning of your CU journey even more meaningful throughout the year.",
+      th: "บ้านแรงส์ บ้านที่สืบทอดความทรงจำ และมิตรภาพมากว่า 26 ปี ผ่านกิจกรรมอันเป็นเอกลักษณ์ ความสนุก และคอมมูนิตี้ที่ส่งต่อมิตรภาพจากรุ่นสู่รุ่น",
+      en: "Baanrangs is a home of warmth, friendship, and unforgettable memories that make the beginning of your CU journey even more meaningful throughout the year.",
     },
     size: "XXL",
     logoUrl: "/house/BaanRangs.webp",
