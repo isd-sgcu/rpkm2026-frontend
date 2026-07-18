@@ -16,8 +16,6 @@ function normalizePath(pathname: string): string {
   return pathname;
 }
 
-export const POST_LOGIN_REDIRECT_KEY = "rpkm:postLoginRedirect";
-
 function resolveRedirect(profile: ProfileState, path: string): string | null {
   // Checked before the event-lock gate: an unauthenticated visitor should go
   // log in first regardless of whether the page is locked — once they're
@@ -73,14 +71,6 @@ export function useAccessGuard(pathname: string): { ready: boolean } {
 
   useEffect(() => {
     if (redirectTo) {
-      // Oh my god
-      if (redirectTo === "/landing" && profile.status === "unauthenticated") {
-        const target = window.location.pathname + window.location.search;
-        console.log(target);
-        if (target !== "/landing") {
-          sessionStorage.setItem(POST_LOGIN_REDIRECT_KEY, target);
-        }
-      }
       if (redirectTo === "/landing") {
         // Remember where the user was headed (e.g. /house?code=XYZ from an
         // invite link) so /landing can send them back after login.
@@ -90,6 +80,7 @@ export function useAccessGuard(pathname: string): { ready: boolean } {
             window.location.hash,
         );
       }
+
       if (import.meta.env.DEV) {
         toast.info("[dev] ยกเลิกการ redirect ของ AccessGaurd", {
           description: `จริงๆ ควรโดน redirect ไป ${redirectTo} แต่ยกเลิกเพราะอยู่ใน dev`,

@@ -1,9 +1,6 @@
 import { Button } from "@components/ui/button";
-import {
-  HOUSE_CAPACITY,
-  getHouseMemberCount,
-  type House,
-} from "../../consts/house";
+import { HOUSE_CAPACITY, type House } from "../../consts/house";
+import { useHouseMemberCounts } from "./useHouseMemberCounts";
 import { ChevronLeft, Plus, User } from "lucide-react";
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa6";
@@ -51,10 +48,11 @@ export default function HouseDetailView({
   showAddButton = true,
 }: HouseDetailViewProps) {
   const t = useT();
+  const memberCountOf = useHouseMemberCounts();
 
   if (!house) return null;
 
-  const memberCount = getHouseMemberCount(house);
+  const memberCount = memberCountOf(house);
 
   return (
     <MonotoneNoiseContainer className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-rpkm-light-blue">
@@ -114,7 +112,7 @@ export default function HouseDetailView({
 
               <div className="flex items-center gap-1 text-sm">
                 <span>
-                  <span className="text-rpkm-red">{memberCount}</span>
+                  <span className="text-rpkm-red">{memberCount ?? "-"}</span>
                   <span className="text-black">/{HOUSE_CAPACITY}</span>
                 </span>
                 <User className="size-4 text-black" />

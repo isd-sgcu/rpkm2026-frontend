@@ -1,10 +1,6 @@
 import { Button } from "@components/ui/button";
-import {
-  HOUSES,
-  HOUSE_CAPACITY,
-  getHouseMemberCount,
-  type House,
-} from "../../consts/house";
+import { HOUSES, HOUSE_CAPACITY, type House } from "../../consts/house";
+import { useHouseMemberCounts } from "./useHouseMemberCounts";
 import { useState } from "react";
 import { ChevronRight, Search, User } from "lucide-react";
 import { useT } from "@lib/i18n/useT";
@@ -31,6 +27,7 @@ export default function HouseSelectPopup({
     null,
   );
   const disabledHouseNames = new Set(disabledHouses);
+  const memberCountOf = useHouseMemberCounts();
 
   const filteredHouses = HOUSES.filter((house) => {
     const query = searchTerm.toLowerCase();
@@ -110,8 +107,8 @@ export default function HouseSelectPopup({
           <div className="min-h-0 flex-1 overflow-y-auto">
             <div className="grid grid-cols-2 gap-3 pb-2">
               {filteredHouses.map((house) => {
-                const memberCount = getHouseMemberCount(house);
-                const isFull = memberCount >= HOUSE_CAPACITY;
+                const memberCount = memberCountOf(house);
+                const isFull = (memberCount ?? 0) >= HOUSE_CAPACITY;
                 const isRanked = disabledHouseNames.has(house.name.th);
 
                 return (
@@ -136,7 +133,9 @@ export default function HouseSelectPopup({
                       >
                         <User className="size-3 text-white" />
                         <span className="text-[10px] leading-none">
-                          <span className="text-rpkm-beige">{memberCount}</span>
+                          <span className="text-rpkm-beige">
+                            {memberCount ?? "-"}
+                          </span>
                           <span className="text-white">/{HOUSE_CAPACITY}</span>
                         </span>
                       </div>

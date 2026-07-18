@@ -16,3 +16,14 @@ export async function getHouses() {
 export async function getHouseDetail(id: string) {
   return API.get<HouseRecord>(`/v1/rpkm/houses/${id}`);
 }
+
+export type HouseStatRecord = {
+  houseId: string;
+  code: string;
+  /** Students whose group ranked this house first (whole roster counted). */
+  count: number;
+};
+
+export async function getHouseStats() {
+  return API.get<HouseStatRecord[]>("/v1/rpkm/houses/stats");
+}
