@@ -303,6 +303,7 @@ export default function GroupDetailModal({
                         key={member.userId}
                         variant={member.isLeader ? "leader" : "member"}
                         name={memberName(member)}
+                        avatarUrl={member.avatarUrl}
                         onKick={
                           viewerIsLeader && member.userId !== currentUserId
                             ? () => setDialog({ type: "kick", member })

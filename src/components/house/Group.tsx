@@ -177,6 +177,7 @@ function GroupSummary({
                 <MemberWindow
                   variant={member.isLeader ? "leader" : "member"}
                   name={memberName(member)}
+                  avatarUrl={member.avatarUrl}
                 />
               ) : (
                 <MemberWindow variant="empty" />

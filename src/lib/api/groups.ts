@@ -13,6 +13,7 @@ export type GroupMember = {
   lastName: string;
   nickname: string | null;
   isLeader: boolean;
+  avatarUrl: string | null;
 };
 
 export type GroupWithMembers = {

@@ -40,11 +40,13 @@ const STAR: Record<MemberWindowVariant, { src: string }> = {
 export function MemberWindow({
   variant,
   name,
+  avatarUrl,
   onKick,
   kickLabel,
 }: {
   variant: MemberWindowVariant;
   name?: string;
+  avatarUrl?: string | null;
   onKick?: () => void;
   kickLabel?: string;
 }) {
@@ -54,11 +56,14 @@ export function MemberWindow({
         className={`absolute top-[10px] left-[4px] flex size-[103px] items-center justify-center rounded-[3px] border border-[#373032] ${FRAME_BG[variant]}`}
       >
         <div
-          className={`flex size-[87px] items-center justify-center rounded-[3px] border border-[#373032] ${INNER_BG[variant]}`}
+          className={`flex size-[87px] items-center justify-center overflow-hidden rounded-[3px] border border-[#373032] ${INNER_BG[variant]}`}
         >
-          {variant !== "empty" && (
-            <UserRound className="size-12 text-[#373032]/50" />
-          )}
+          {variant !== "empty" &&
+            (avatarUrl ? (
+              <img src={avatarUrl} alt="" className="size-full object-cover" />
+            ) : (
+              <UserRound className="size-12 text-[#373032]/50" />
+            ))}
         </div>
       </div>
 
