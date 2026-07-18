@@ -41,6 +41,12 @@ export function isUnlocked(key: GatedEventKey): boolean {
   return now >= event.unlockAt;
 }
 
+/** The unlock instant for a gated event, so UI can show "opens on X"
+ *  instead of a generic "coming soon". */
+export function getUnlockAt(key: GatedEventKey): number {
+  return GATED_EVENTS[key].unlockAt;
+}
+
 export function findGatedEvent(
   path: string,
 ): [GatedEventKey, GatedEvent] | null {

@@ -1,169 +1,173 @@
-import { ChevronRight, Lock } from "lucide-react";
-import { getImageUrl } from "@lib/function";
+import { ChevronRight } from "lucide-react";
+import { useStore } from "@nanostores/react";
 import { useProfile } from "@lib/auth/useProfile";
-import { isUnlocked } from "@lib/guard";
+import { isUnlocked, getUnlockAt, type GatedEventKey } from "@lib/guard";
 import { useT } from "@lib/i18n/useT";
-import { Button, buttonVariants } from "@components/ui/button";
+import { $locale } from "@lib/i18n/locale";
+import { buttonVariants } from "@components/ui/button";
 import { cn } from "@lib/utils";
 import Calendar from "./Calendar";
 import rpkmLogo from "@assets/images/artboard_1.svg";
+import registerHouseIcon from "@assets/images/home/register-house.png";
+import registerActivityIcon from "@assets/images/home/register-activity.png";
+import jigsawTrophy from "@assets/images/home/game-jigsaw-trophy.png";
+import qrQuestTrophy from "@assets/images/home/game-qrquest-trophy.png";
+import freshyTrophy from "@assets/images/home/game-freshy-trophy.png";
 
-const houseButtonUrl = getImageUrl("house_button.svg");
-const jigsawButtonUrl = getImageUrl("jigsaw_button.svg");
-const stampButtonUrl = getImageUrl("stamp_button.svg");
-const freshyButtonUrl = getImageUrl("freshy_button.svg");
+function unlockDateLabel(key: GatedEventKey, locale: "th" | "en") {
+  const formatter = new Intl.DateTimeFormat(
+    locale === "th" ? "th-TH" : "en-US",
+    {
+      day: "numeric",
+      month: "short",
+    },
+  );
+  return formatter.format(new Date(getUnlockAt(key)));
+}
 
-interface ShapeButtonProps {
+interface RegisterButtonProps {
   href: string;
-  label: string;
-  imageUrl?: string;
-  capRatio: string; // aspect-ratio "width / height"
-  fill: string;
-  dark?: boolean;
-  roundedBottom?: boolean;
+  iconUrl: string;
+  title: string;
+  description: string;
+}
+
+function RegisterButton({
+  href,
+  iconUrl,
+  title,
+  description,
+}: RegisterButtonProps) {
+  return (
+    <a
+      href={href}
+      className="flex w-full items-center gap-4 rounded-[15px] border border-foreground bg-rpkm-red p-3"
+    >
+      <img src={iconUrl} alt="" className="size-13.5 shrink-0" />
+      <div className="flex min-w-0 flex-1 items-start gap-2">
+        <div className="flex min-w-0 flex-1 flex-col gap-1 text-background">
+          <p className="text-[16px] leading-tight font-bold">{title}</p>
+          <p className="text-[11px] leading-snug whitespace-pre-line opacity-90">
+            {description}
+          </p>
+        </div>
+        <ChevronRight className="mt-0.5 size-4 shrink-0 text-background" />
+      </div>
+    </a>
+  );
+}
+
+interface GameCardProps {
+  href: string;
+  trophyUrl: string;
+  title: string;
+  description: string;
   disabled?: boolean;
   disabledLabel?: string;
 }
 
-function ShapeButton({
+function GameCard({
   href,
-  label,
-  imageUrl,
-  capRatio,
-  fill,
-  roundedBottom,
+  trophyUrl,
+  title,
+  description,
   disabled,
   disabledLabel,
-}: ShapeButtonProps) {
+}: GameCardProps) {
   return (
     <a
       href={disabled ? undefined : href}
       aria-disabled={disabled}
       tabIndex={disabled ? -1 : undefined}
       className={cn(
-        "flex w-full flex-col",
-        disabled && "pointer-events-none grayscale opacity-50",
+        "flex min-w-0 flex-1 flex-col items-center gap-2 text-center",
+        disabled && "pointer-events-none grayscale opacity-60",
       )}
     >
-      <div className="w-full overflow-hidden" style={{ aspectRatio: capRatio }}>
-        <img src={imageUrl} alt="" className="block w-full" />
+      <img src={trophyUrl} alt="" className="h-15.75 w-auto" />
+      <div className="flex items-center justify-center gap-1.5">
+        <p className="text-[16px] leading-tight font-bold text-foreground">
+          {title}
+        </p>
+        <ChevronRight className="size-2.5 shrink-0 text-foreground" />
       </div>
-      <div
-        className={cn(
-          "flex flex-col items-center gap-1 border border-t-0 border-foreground px-2 py-2",
-          roundedBottom && "rounded-b-2xl",
-        )}
-        style={{ backgroundColor: fill }}
-      >
-        <span
-          className={cn("text-center text-xs font-bold", "text-foreground")}
-        >
-          {label}
-        </span>
-        {disabled && disabledLabel && (
-          <span className="text-center text-[0.65rem] text-foreground/70">
-            {disabledLabel}
-          </span>
-        )}
-        <Button
-          aria-hidden="true"
-          tabIndex={-1}
-          variant="outline"
-          size="icon-xs"
-          className={cn(
-            "pointer-events-none rounded-full",
-            "border-foreground bg-background",
-          )}
-          iconStart={
-            disabled ? (
-              <Lock className="text-foreground" />
-            ) : (
-              <ChevronRight className="text-foreground" />
-            )
-          }
-        />
-      </div>
+      <p className="text-[11px] leading-tight text-foreground">
+        {disabled ? disabledLabel : description}
+      </p>
     </a>
   );
 }
 
 const InformationPanel = () => {
   const t = useT();
+  const locale = useStore($locale);
   const profile = useProfile();
   const isStaff = profile.status === "ready" && profile.me.staffRole !== null;
   const freshyStoryLocked = !isUnlocked("freshyStory");
   const chulaQrQuestLocked = !isUnlocked("chulaQrQuest");
   const jigsawLocked = !isUnlocked("jigsaw");
 
+  const unlockLabel = (key: GatedEventKey) =>
+    t("home.information.games.opensOn", { date: unlockDateLabel(key, locale) });
+
   return (
     <div className="flex w-full flex-col gap-12">
       {!isStaff && (
         <>
           <div className="flex flex-col gap-4">
-            <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="text-2xl font-bold text-rpkm-red">
               {t("home.information.registerTitle")}
             </h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="min-w-0">
-                <ShapeButton
-                  href="/house"
-                  imageUrl={houseButtonUrl}
-                  capRatio="100 / 33"
-                  fill="#FFF27C"
-                  roundedBottom
-                  label={t("home.information.register.friendHouse")}
-                />
-              </div>
-              <div className="min-w-0">
-                <ShapeButton
-                  href="/activity"
-                  imageUrl={houseButtonUrl}
-                  capRatio="100 / 33"
-                  fill="#FFF27C"
-                  roundedBottom
-                  label={t("home.information.register.activity")}
-                />
-              </div>
+            <div className="flex flex-col gap-4">
+              <RegisterButton
+                href="/house"
+                iconUrl={registerHouseIcon.src}
+                title={t("home.information.register.friendHouse")}
+                description={t("home.information.register.friendHouseDesc")}
+              />
+              <RegisterButton
+                href="/activity"
+                iconUrl={registerActivityIcon.src}
+                title={t("home.information.register.activity")}
+                description={t("home.information.register.activityDesc")}
+              />
             </div>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="text-2xl font-bold text-rpkm-red">
               {t("home.information.gameTitle")}
             </h2>
-            <div className="grid grid-cols-3 items-start gap-3">
-              <div className="min-w-0">
-                <ShapeButton
+            <div className="flex flex-col gap-8">
+              <div className="flex items-start gap-4">
+                <GameCard
                   href="/jigsaw"
-                  imageUrl={jigsawButtonUrl}
-                  capRatio="4/3"
-                  fill="#6ABF73"
-                  label={t("home.information.games.jigsaw")}
+                  trophyUrl={jigsawTrophy.src}
+                  title={t("home.information.games.jigsaw")}
+                  description={t("home.information.games.jigsawDesc")}
                   disabled={jigsawLocked}
-                  disabledLabel={t("home.information.games.comingSoon")}
+                  disabledLabel={unlockLabel("jigsaw")}
                 />
-              </div>
-              <div className="min-w-0">
-                <ShapeButton
+                <GameCard
                   href="/qrquest"
-                  imageUrl={stampButtonUrl}
-                  capRatio="4/3"
-                  fill="#6ABF73"
-                  label={t("home.information.games.stamp")}
+                  trophyUrl={qrQuestTrophy.src}
+                  title={t("home.information.games.stamp")}
+                  description={t("home.information.games.stampDesc")}
                   disabled={chulaQrQuestLocked}
-                  disabledLabel={t("home.information.games.comingSoon")}
+                  disabledLabel={unlockLabel("chulaQrQuest")}
                 />
               </div>
-              <div className="min-w-0">
-                <ShapeButton
-                  href="/freshy-story"
-                  imageUrl={freshyButtonUrl}
-                  capRatio="4/3"
-                  fill="#6ABF73"
-                  label={t("home.information.games.myFreshyStory")}
-                  disabled={freshyStoryLocked}
-                  disabledLabel={t("home.information.games.comingSoon")}
-                />
+              <div className="flex justify-center">
+                <div className="w-1/2 min-w-0">
+                  <GameCard
+                    href="/freshy-story"
+                    trophyUrl={freshyTrophy.src}
+                    title={t("home.information.games.myFreshyStory")}
+                    description={t("home.information.games.myFreshyStoryDesc")}
+                    disabled={freshyStoryLocked}
+                    disabledLabel={unlockLabel("freshyStory")}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -171,7 +175,7 @@ const InformationPanel = () => {
       )}
 
       <div className="flex flex-col gap-4">
-        <h2 className="text-2xl font-bold text-foreground">
+        <h2 className="text-2xl font-bold text-rpkm-red">
           {t("home.information.informationTitle")}
         </h2>
         <Calendar />
