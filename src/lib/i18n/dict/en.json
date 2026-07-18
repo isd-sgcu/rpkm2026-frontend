@@ -46,7 +46,8 @@
     "idCard": {
       "welcome": "Welcome",
       "loading": "Loading...",
-      "edit": "Edit Info"
+      "edit": "Edit Info",
+      "editAvatar": "Edit profile photo"
     },
     "calendar": {
       "title": "Calendar",
@@ -58,13 +59,19 @@
       "informationTitle": "Event Information",
       "register": {
         "friendHouse": "Welcome House",
-        "activity": "Activities"
+        "friendHouseDesc": "Meet new friends and make great memories through Welcome House activities",
+        "activity": "Register for Activities",
+        "activityDesc": "Explore Chula and learn about the university through various activities"
       },
       "games": {
-        "jigsaw": "Collect Jigsaw",
-        "stamp": "Collect Stamps",
-        "myFreshyStory": "My Freshy Story",
-        "comingSoon": "Coming Soon"
+        "jigsaw": "Jigsaw Journey",
+        "jigsawDesc": "Hunt for jigsaw pieces at landmarks in and around the university",
+        "stamp": "QR Quest",
+        "stampDesc": "Get to know shops around Chula better by supporting local vendors",
+        "myFreshyStory": "Freshy Story",
+        "myFreshyStoryDesc": "Tell the story of your jigsaw hunt through community shops around the university, together with new friends",
+        "comingSoon": "Coming Soon",
+        "opensOn": "Opens {date}"
       }
     }
   },
