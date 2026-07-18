@@ -2,3 +2,4 @@ dist
 .astro
 node_modules
 bun.lock
+src/lib/backend.d.ts

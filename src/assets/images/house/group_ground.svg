@@ -1,0 +1,38 @@
+<svg width="393" height="265" viewBox="0 0 393 265" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+<g id="Design">
+
+
+<g id="&#224;&#184;&#136;&#224;&#184;&#177;&#224;&#184;&#154;&#224;&#184;&#132;&#224;&#184;&#185;&#224;&#185;&#136;&#224;&#184;&#132;&#224;&#184;&#185;&#224;&#185;&#136;&#224;&#184;&#171;&#224;&#184;&#185;">
+
+
+<g id="&#224;&#184;&#170;&#224;&#184;&#163;&#224;&#185;&#137;&#224;&#184;&#178;&#224;&#184;&#135;&#224;&#184;&#171;&#224;&#185;&#137;&#224;&#184;&#173;&#224;&#184;&#135;" clip-path="url(#clip0_1_186)">
+
+<g id="Ellipse 1224" filter="url(#filter0_n_1_186)">
+<ellipse cx="196.5" cy="238" rx="367.5" ry="238" fill="#6ABF73"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_n_1_186" x="-171" y="0" width="735" height="476" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.25641024112701416 0.25641024112701416" stitchTiles="stitch" numOctaves="3" result="noise" seed="6321" />
+<feColorMatrix in="noise" type="luminanceToAlpha" result="alphaNoise" />
+<feComponentTransfer in="alphaNoise" result="coloredNoise1">
+<feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "/>
+</feComponentTransfer>
+<feComposite operator="in" in2="shape" in="coloredNoise1" result="noise1Clipped" />
+<feFlood flood-color="rgba(0, 0, 0, 0.5)" result="color1Flood" />
+<feComposite operator="in" in2="noise1Clipped" in="color1Flood" result="color1" />
+<feMerge result="effect1_noise_1_186">
+<feMergeNode in="shape" />
+<feMergeNode in="color1" />
+</feMerge>
+</filter>
+<clipPath id="clip0_1_186"><rect width="393" height="265" fill="white"/>
+
+</clipPath>
+</defs>
+</svg>

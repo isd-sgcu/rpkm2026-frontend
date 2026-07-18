@@ -25,6 +25,7 @@ bun dev
 bun run build
 bun run preview
 bun run typecheck
+bun run api:types
 bun run lint
 bun run format
 bun run format:check
@@ -34,6 +35,10 @@ bun run hooks:install
 `bun run hooks:install` enables the versioned pre-commit hook in `.githooks/`.
 The hook formats staged files, re-stages them, and lints staged lintable files
 before each commit.
+
+`src/lib/backend.d.ts` is the committed Eden API type snapshot. Run
+`bun run api:types` whenever backend routes change; the command expects the
+backend checkout at `../fdrpkm2026-backend`.
 
 ## Environment Variables
 

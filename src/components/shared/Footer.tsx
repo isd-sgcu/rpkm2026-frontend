@@ -3,7 +3,6 @@ import อบจLogo from "@assets/images/อบจ.png";
 import instagramIcon from "@assets/images/instagram_icon.svg";
 import pot1Image from "@assets/images/artboard_15.svg";
 import pot2Image from "@assets/images/artboard_16.svg";
-import hillImage from "@assets/images/bottom_landing.svg";
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 
 export type FooterVariant = "default" | "landing";
@@ -25,41 +24,22 @@ function DefaultDecoration() {
   );
 }
 
-function LandingDecoration() {
-  return (
-    <div className="relative mt-[-16.92%] aspect-402/200 w-full overflow-hidden">
-      <img
-        src={hillImage.src}
-        alt=""
-        className="absolute inset-x-0 top-[58.5%] w-full"
-      />
-      <img
-        src={pot2Image.src}
-        alt="decoration"
-        className="absolute bottom-0 left-0 w-[80%] translate-x-[-40%] translate-y-[40%]"
-      />
-      <img
-        src={pot2Image.src}
-        alt="decoration"
-        className="absolute right-0 bottom-0 w-[80%] translate-x-1/2 translate-y-[40%]"
-      />
-    </div>
-  );
-}
-
 export function Footer({ variant = "default" }: { variant?: FooterVariant }) {
   const landing = variant === "landing";
 
   return (
-    // The landing's decoration reaches up past the footer into main, which is z-1, so
+    // The default decoration reaches up past the footer into main, which is z-1, so
     // this has to outrank it or main's background paints over the planters.
     <footer
-      className={`w-full overflow-x-clip relative ${landing ? "z-2" : "z-0"}`}
+      className={`w-full overflow-x-clip relative ${
+        landing ? "z-2 -mt-16" : "z-0"
+      }`}
     >
-      {landing ? <LandingDecoration /> : <DefaultDecoration />}
+      {!landing && <DefaultDecoration />}
       <MonotoneNoiseContainer
-        className={`bg-rpkm-green/79 flex flex-col items-center text-center gap-3 px-4 pt-11 pb-6 ${
-          landing ? "border-t" : ""
+        noise={{ noiseColor: "rgba(0 0 0 / 0.25)" }}
+        className={`flex flex-col items-center text-center gap-3 px-4 pt-11 pb-6 ${
+          landing ? "bg-rpkm-green border-t" : "bg-rpkm-green/79"
         }`}
       >
         <div className="flex gap-3">
@@ -76,7 +56,10 @@ export function Footer({ variant = "default" }: { variant?: FooterVariant }) {
           Student Government Chulalongkorn University
         </span>
       </MonotoneNoiseContainer>
-      <section className="border-t bg-[#D3F3FF] px-4 pt-2.5 pb-2 flex flex-col items-center">
+      <MonotoneNoiseContainer
+        className="border-t bg-[#D3F3FF] px-4 pt-2.5 pb-2 flex flex-col items-center"
+        noise={{ noiseColor: "rgba(0 0 0 / 0.25)" }}
+      >
         <h3 className="text-lg font-bold"> Contact us </h3>
         <div className="flex text-center gap-7 text-xs mt-0.5">
           <a
@@ -94,7 +77,7 @@ export function Footer({ variant = "default" }: { variant?: FooterVariant }) {
             <span>Instagram</span>
           </a>
         </div>
-      </section>
+      </MonotoneNoiseContainer>
     </footer>
   );
 }

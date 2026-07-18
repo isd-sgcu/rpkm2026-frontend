@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="407" height="205" viewBox="-3 -2 407 205" fill="none"><defs><filter id="creamNoise" filterUnits="objectBoundingBox" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
+<feTurbulence type="fractalNoise" baseFrequency="0.256410 0.256410" stitchTiles="stitch" numOctaves="3" result="noise" seed="255444" />
+<feColorMatrix in="noise" type="luminanceToAlpha" result="alphaNoise" />
+<feComponentTransfer in="alphaNoise" result="discreteNoise"><feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" /></feComponentTransfer>
+<feFlood flood-color="rgb(0 0 0)" flood-opacity="0.25" result="flood" />
+<feComposite operator="in" in="flood" in2="discreteNoise" result="noiseOnly" />
+<feComposite operator="in" in="noiseOnly" in2="SourceGraphic" result="noiseClipped" />
+<feMerge><feMergeNode in="SourceGraphic" /><feMergeNode in="noiseClipped" /></feMerge>
+</filter>
+
+</defs><path d="M288.699 23.658C306.047 16.6398 330.943 0 330.943 0H402.355V117.165H311.833C292.722 117.165 272.812 122.464 269.955 129.37C267.098 136.276 272.606 143.077 280.653 143.077H330.943C334.857 143.077 368.258 137.77 370.169 155.469C371.953 171.98 347.787 181.381 339.995 181.381C332.203 181.381 278.335 175.446 239.414 181.381C215.901 184.966 203.565 192.278 180.072 196.026C159.015 199.386 125.758 200.533 125.758 200.533C125.758 200.533 91.0026 199.465 83.5144 181.381C72.5856 154.987 101.619 155.469 145.874 155.469C190.13 155.469 246.739 176.199 239.414 135.191C233.891 104.264 189.081 141.94 145.874 135.191C114.752 130.329 88.4053 135.191 65.4098 135.191C42.4144 135.191 16.6467 139.419 17.1317 117.165C17.5863 96.3072 41.81 96.2613 60.3805 94.6333C87.674 92.2406 108.879 96.8923 145.874 94.6333C189.52 91.9683 227.873 98.4137 246.523 85.1771C248.241 83.9573 249.87 78.4237 244.052 74.6613C229.765 65.4221 190.13 73.2281 190.13 73.2281C190.13 73.2281 137.112 93.2004 112.682 73.2281C104.146 66.2491 98.9441 61.4772 94.5787 50.6964C80.5459 16.0411 147.926 38.2461 181.584 33.0762C223.727 26.603 248.691 39.8435 288.699 23.658Z" fill="#FEFDF5" filter="url(#creamNoise)" stroke="#382F32" stroke-width="1.5" />
+<rect x="0.933752" y="0.538523" width="193.975" height="13.31" rx="6.65502" transform="matrix(0.969928 -0.243392 0.275075 0.961423 16.7784 368.064)" fill="#E87E8D" stroke="#373032" stroke-width="1.5" />
+<rect x="-0.933752" y="0.538523" width="193.975" height="13.31" rx="6.65502" transform="matrix(-0.969928 -0.243392 -0.275075 0.961423 383.406 367.61)" fill="#E87E8D" stroke="#373032" stroke-width="1.5" />
+</svg>
