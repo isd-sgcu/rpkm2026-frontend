@@ -9,9 +9,9 @@ import plantsRight from "@assets/images/landing_plants_right.svg";
 import { Button } from "@components/ui/button";
 import { MonotoneNoiseContainer } from "@components/shared/MonotoneNoise";
 import { signInWithGoogle } from "@lib/api/auth";
+import { popReturnTo } from "@lib/auth/returnTo";
 import { useSession } from "@lib/auth/useSession";
 import { useProfile } from "@lib/auth/useProfile";
-import { POST_LOGIN_REDIRECT_KEY } from "@lib/auth/useAccessGuard";
 import { useT } from "@lib/i18n/useT";
 
 export function LandingPanel() {
@@ -22,20 +22,20 @@ export function LandingPanel() {
 
   useEffect(() => {
     if (profile.status === "ineligible") {
-      sessionStorage.removeItem(POST_LOGIN_REDIRECT_KEY);
+      // Discard any stored destination so it can't leak into a later login.
+      popReturnTo();
       window.location.href = "/not-eligible";
     } else if (profile.status === "ready" && profile.me.role !== "staff") {
       // A deep link (e.g. a Chula QR Quest sticker scanned while logged out)
-      // stashed its target here before bouncing to login — send them back
-      // to it instead of the default destination. useAccessGuard re-validates
-      // that path normally once they land (register/lock/role checks still apply).
-      const savedRedirect = sessionStorage.getItem(POST_LOGIN_REDIRECT_KEY);
-      if (savedRedirect) {
-        sessionStorage.removeItem(POST_LOGIN_REDIRECT_KEY);
-        window.location.href = savedRedirect;
-        return;
-      }
-      window.location.href = profile.me.registered ? "/" : "/register";
+      // stashed its target before bouncing to login — send them back to it
+      // instead of the default destination. useAccessGuard re-validates that
+      // path normally once they land (register/lock/role checks still apply).
+      // Always pop so a stale destination can't hijack a later login;
+      // unregistered users must finish /register first and simply lose it.
+      const returnTo = popReturnTo();
+      window.location.href = profile.me.registered
+        ? (returnTo ?? "/")
+        : "/register";
     }
   }, [profile.status]);
 

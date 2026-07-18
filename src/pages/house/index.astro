@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PanelFrameLayout from "@layouts/PanelFrameLayout.astro";
+import Ranking from "@components/house/Ranking";
+import Group from "@components/house/Group";
+import { Toaster } from "@components/ui/sonner";
+---
+
+<BaseLayout title="การจัดการบ้าน" showFooter>
+  <PanelFrameLayout
+    navigateBack={"/"}
+    showMenu={true}
+    className="gap-10 flex flex-col"
+  >
+    <Ranking client:load />
+    <Group client:load />
+    <Toaster client:load />
+  </PanelFrameLayout>
+</BaseLayout>

@@ -1,10 +1,11 @@
-import { API } from "@lib/client";
+import { APIError, eden } from "@lib/client";
 
-export type GetProjectNameResponse = {
-  name: string;
-  version: string;
-};
+export async function getProjectName() {
+  const { data, error, response } = await eden.get();
 
-export function getProjectName() {
-  return API.get<GetProjectNameResponse>("/");
+  if (error) {
+    throw new APIError(response.status);
+  }
+
+  return data;
 }

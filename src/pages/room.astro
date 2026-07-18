@@ -1,0 +1,67 @@
+---
+// Invite-link landing page: /room#CODE → /house?code=CODE.
+// The join code travels in the URL hash so it never reaches the server,
+// which means the redirect has to happen client-side. Auth is enforced on
+// /house itself (BaseLayout's AuthGuard), and the actual join + member
+// refresh happens in the Group panel there.
+//
+// Crawlers and link scrapers don't run JS, so the head/body below is what
+// LINE/Discord/Facebook show as the share preview. The page stays noindex —
+// invite links are private and shouldn't rank in search — but noindex does
+// not affect Open Graph previews.
+
+const title = "คำเชิญเข้าร่วมห้อง | RPKM 2026";
+const description =
+  "เพื่อนของคุณชวนคุณเข้าร่วมห้องสำหรับกิจกรรมรับเพื่อนก้าวใหม่ (RPKM 2026) แตะลิงก์เพื่อเข้าร่วมห้องและเลือกบ้านด้วยกัน";
+
+// Astro.site comes from astro.config.mjs — share previews need absolute URLs.
+const pageUrl = new URL("/room", Astro.site);
+const ogImage = new URL("/og.png", Astro.site);
+---
+
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#fefdf5" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="RPKM 2026" />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="th_TH" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="RPKM 2026 — รับเพื่อนก้าวใหม่" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+  </head>
+  <body
+    style="min-height: 100vh; display: grid; place-items: center; margin: 0; background: #fefdf5; color: #373032; font-family: sans-serif; text-align: center;"
+  >
+    <script>
+      const code = window.location.hash.replace(/^#/, "").trim().toUpperCase();
+      window.location.replace(
+        code ? `/house?code=${encodeURIComponent(code)}` : "/house",
+      );
+    </script>
+
+    <!-- Visible to crawlers, JS-off users, and anyone during the redirect. -->
+    <main>
+      <h1 style="font-size: 1.25rem;">คำเชิญเข้าร่วมห้อง RPKM 2026</h1>
+      <p>กำลังพาไปยังหน้าการจัดการบ้าน…</p>
+      <p><a href="/house" style="color: #373032;">ไปยังหน้าการจัดการบ้าน</a></p>
+    </main>
+  </body>
+</html>
