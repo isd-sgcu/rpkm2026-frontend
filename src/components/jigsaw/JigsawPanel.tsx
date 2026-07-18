@@ -41,6 +41,7 @@ export function JigsawPanel() {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-mount read of a client-only scan handoff
       setScanResult({
         status: "success",
+        pieceId: pending.pieceId,
         receivedAt: new Date(pending.receivedAt),
       });
     } else if (pending?.status === "login-required") {
@@ -65,6 +66,7 @@ export function JigsawPanel() {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time post-login award of a client-only claim
     setScanResult({
       status: "success",
+      pieceId: claim.pieceId,
       receivedAt: new Date(claim.receivedAt),
     });
   }, [session.status]);

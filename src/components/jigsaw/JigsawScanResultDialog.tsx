@@ -15,6 +15,22 @@ import { JigsawProgress } from "./JigsawProgress";
 import { JigsawPiecePlaceholder } from "./JigsawPiecePlaceholder";
 import { setPendingClaim, type PieceId } from "./jigsawState";
 
+/**
+ * Collected artwork for each jigsaw piece (jigsaw_<n>.png), keyed by piece
+ * number (1..10). `import.meta.glob` needs a literal relative pattern, so the
+ * "@assets" alias can't be used here.
+ */
+const pieceImageModules = import.meta.glob<{ default: ImageMetadata }>(
+  "../../assets/images/jigsaw_*.png",
+  { eager: true },
+);
+
+const pieceImageByNumber: Record<number, ImageMetadata> = {};
+for (const [path, module] of Object.entries(pieceImageModules)) {
+  const pieceNumber = Number(path.match(/jigsaw_(\d+)\.png$/)?.[1]);
+  if (pieceNumber) pieceImageByNumber[pieceNumber] = module.default;
+}
+
 const MONTH_SHORT_TH = [
   "ม.ค.",
   "ก.พ.",
@@ -75,7 +91,7 @@ function Flower({
  * before it can be saved, or a failed scan.
  */
 export type JigsawScanResult =
-  | { status: "success"; receivedAt: Date }
+  | { status: "success"; pieceId: PieceId; receivedAt: Date }
   | { status: "login-required"; pieceId: PieceId; receivedAt: Date }
   | { status: "fail" };
 
@@ -86,10 +102,10 @@ interface JigsawScanResultDialogProps {
 }
 
 /**
- * Pop-up shown after a scan. On success it presents the freshly collected piece
- * (a pink placeholder standing in for the real artwork) with the shared
- * {@link JigsawProgress} bar and the collected date; on failure it shows a red
- * alert. The "ตกลง" button closes the pop-up in both cases.
+ * Pop-up shown after a scan. On success it presents the freshly collected
+ * piece's artwork (jigsaw_<n>.png, falling back to a pink placeholder) with the
+ * shared {@link JigsawProgress} bar and the collected date; on failure it shows
+ * a red alert. The "ตกลง" button closes the pop-up in both cases.
  */
 export function JigsawScanResultDialog({
   open,
@@ -163,7 +179,15 @@ export function JigsawScanResultDialog({
                 centerColor="#ffffff"
                 className="absolute bottom-1 left-1 w-11"
               />
-              <JigsawPiecePlaceholder className="relative mx-auto w-3/4" />
+              {pieceImageByNumber[result.pieceId] ? (
+                <img
+                  src={pieceImageByNumber[result.pieceId].src}
+                  alt="ชิ้นส่วนจิกซอร์"
+                  className="relative mx-auto h-40 w-auto"
+                />
+              ) : (
+                <JigsawPiecePlaceholder className="relative mx-auto w-3/4" />
+              )}
             </div>
 
             <DialogDescription className="text-base text-[#372F32]">
