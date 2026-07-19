@@ -91,6 +91,7 @@ const PRESETS: { label: string; body: Omit<CreateUserBody, "studentId"> }[] = [
   },
   { label: "RPKM staff", body: { staffRoles: ["rpkm"] } },
   { label: "Walkrally staff", body: { staffRoles: ["walkrally"] } },
+  { label: "Freshmennight staff", body: { staffRoles: ["freshmennight"] } },
   { label: "Firstdate staff", body: { staffRoles: ["firstdate"] } },
 ];
 
