@@ -1,12 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useStore } from "@nanostores/react";
-import {
-  ScanLine,
-  CircleAlert,
-  LogIn,
-  CloudUpload,
-  Loader2,
-} from "lucide-react";
+import { CloudUpload, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@components/ui/button";
@@ -18,28 +11,17 @@ import {
   JigsawScanResultDialog,
   type JigsawScanResult,
 } from "./JigsawScanResultDialog";
-import {
-  $foundPieces,
-  markPieceFound,
-  setPendingScan,
-  syncStoredPieces,
-  TOTAL_PIECES,
-} from "./jigsawState";
+import { syncStoredPieces } from "./jigsawState";
 import { collectScannedJigsaw } from "./jigsawScanFlow";
 import { useT } from "@lib/i18n/useT";
 
 /**
- * Scan page panel. Shows the live QR scanner; a successful scan just logs its
- * contents for now (the collection flow isn't wired to it yet). The buttons
- * below are placeholder tests for the scan outcomes: a success awards the next
- * uncollected piece; a login-required scan finds a piece but defers saving it
- * until the user logs in; a failure awards nothing. Each records the result and
- * navigates to the jigsaw page, which shows the matching pop-up on arrival.
- * TODO: route the real QR scan result into the collection flow.
+ * Scan page panel. Shows the live QR scanner and an image-upload fallback; a
+ * successful scan runs the shared collect flow and redirects to the jigsaw
+ * page, which shows the matching pop-up on arrival.
  */
 export function JigsawScanPanel() {
   const t = useT();
-  const found = useStore($foundPieces);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [decoding, setDecoding] = useState(false);
   // Result of the last scan, driving the success/fail pop-up.
@@ -51,10 +33,7 @@ export function JigsawScanPanel() {
     syncStoredPieces();
   }, []);
 
-  const allFound = found.length >= TOTAL_PIECES;
-
   function handleQrScan(code: string) {
-    console.log("Jigsaw QR scanned:", code);
     // Same shared collect flow the /jigsaw/<pointId> deep link uses.
     if (collectScannedJigsaw(code)) {
       // Valid — show the success pop-up on the jigsaw page.
@@ -101,46 +80,6 @@ export function JigsawScanPanel() {
     }
   }
 
-  function handleScanSuccess() {
-    const nextPiece = Array.from(
-      { length: TOTAL_PIECES },
-      (_, i) => i + 1,
-    ).find((id) => !found.includes(id));
-    if (nextPiece === undefined) return;
-
-    markPieceFound(nextPiece);
-    setPendingScan({
-      status: "success",
-      pieceId: nextPiece,
-      receivedAt: new Date().toISOString(),
-    });
-    // Redirect to the jigsaw page, which shows the reward pop-up on arrival.
-    window.location.href = "/jigsaw";
-  }
-
-  function handleScanLoginRequired() {
-    const nextPiece = Array.from(
-      { length: TOTAL_PIECES },
-      (_, i) => i + 1,
-    ).find((id) => !found.includes(id));
-    if (nextPiece === undefined) return;
-
-    // Do not award yet — the piece is saved only after the user logs in.
-    setPendingScan({
-      status: "login-required",
-      pieceId: nextPiece,
-      receivedAt: new Date().toISOString(),
-    });
-    // Redirect to the jigsaw page, which shows the login-required pop-up.
-    window.location.href = "/jigsaw";
-  }
-
-  function handleScanFail() {
-    setPendingScan({ status: "fail" });
-    // Redirect to the jigsaw page, which shows the failure pop-up on arrival.
-    window.location.href = "/jigsaw";
-  }
-
   return (
     <div className="flex w-full max-w-sm flex-col items-center gap-4">
       {/* Live QR scanner (replicated from the staff ScanEntryForm). */}
@@ -183,41 +122,12 @@ export function JigsawScanPanel() {
       <Button
         variant="outline"
         size="lg"
-        className="rounded-r-lg w-[72px] h-[32px] text-base font-bold border-1"
+        className="rounded-r-lg w-18 h-8 text-base font-bold border-1"
         onClick={() => {
           window.location.href = "/jigsaw";
         }}
       >
         {t("jigsaw.scan.cancelButton")}
-      </Button>
-
-      <Button
-        variant="green"
-        size="xl"
-        onClick={handleScanSuccess}
-        disabled={allFound}
-        iconStart={<ScanLine />}
-      >
-        {allFound ? "เก็บครบทุกชิ้นแล้ว" : "สแกนเพื่อรับชิ้นส่วน (จำลอง)"}
-      </Button>
-
-      <Button
-        variant="outline"
-        size="xl"
-        onClick={handleScanLoginRequired}
-        disabled={allFound}
-        iconStart={<LogIn />}
-      >
-        จำลองสแกน (ต้องเข้าสู่ระบบ)
-      </Button>
-
-      <Button
-        variant="outline"
-        size="xl"
-        onClick={handleScanFail}
-        iconStart={<CircleAlert />}
-      >
-        จำลองสแกนไม่สำเร็จ
       </Button>
 
       {/* Success / fail pop-up for the scan result. */}
