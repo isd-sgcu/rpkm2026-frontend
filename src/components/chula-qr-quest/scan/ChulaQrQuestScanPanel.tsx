@@ -5,7 +5,7 @@ import {
 } from "@components/chula-qr-quest/scan/ChulaQrQuestScanResultDialog";
 import { CameraTroubleshoot } from "@components/shared/CameraTroubleshootDialog";
 import { QrScanner } from "@components/shared/QrCodeScanner";
-import { buttonVariants } from "@components/ui/button";
+import { Button, buttonVariants } from "@components/ui/button";
 import { collectCheckpoint, getGameProgress } from "@lib/api/games";
 import { APIError } from "@lib/client";
 import { $locale } from "@lib/i18n/locale";
@@ -13,6 +13,7 @@ import { useT } from "@lib/i18n/useT";
 import { cn } from "@lib/utils";
 import { useStore } from "@nanostores/react";
 import { BarcodeDetector } from "barcode-detector/ponyfill";
+import { CloudUpload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -204,7 +205,7 @@ const ChulaQrQuestScanPanel = () => {
         className="hidden"
         onChange={handleFileUpload}
       />
-      {/* <Button
+      <Button
         type="button"
         variant="default"
         className="rounded-full"
@@ -213,7 +214,7 @@ const ChulaQrQuestScanPanel = () => {
         iconStart={<CloudUpload className="size-4" />}
       >
         {t("chulaQrQuest.scan.uploadImage")}
-      </Button> */}
+      </Button>
 
       <a
         href="/qrquest"

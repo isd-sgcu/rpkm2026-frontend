@@ -108,6 +108,8 @@ export function JigsawScanPanel() {
 
   return (
     <div className="flex w-full max-w-sm flex-col items-center gap-4">
+      <h1 className="text-3xl font-bold">{t("jigsaw.scan.title")}</h1>
+
       {/* Live QR scanner (replicated from the staff ScanEntryForm). */}
       <div className="relative isolate w-full overflow-hidden rounded-[1.8rem] border border-black bg-rpkm-light-green p-4">
         <MonotoneNoise
