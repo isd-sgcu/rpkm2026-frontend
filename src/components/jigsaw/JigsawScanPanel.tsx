@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { CloudUpload, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -11,8 +11,12 @@ import {
   JigsawScanResultDialog,
   type JigsawScanResult,
 } from "./JigsawScanResultDialog";
-import { syncStoredPieces } from "./jigsawState";
-import { collectScannedJigsaw } from "./jigsawScanFlow";
+import { setPendingScan } from "./jigsawState";
+import {
+  collectJigsawCode,
+  describeJigsawCollectError,
+  extractJigsawCode,
+} from "./jigsawScanFlow";
 import { useT } from "@lib/i18n/useT";
 
 /**
@@ -23,25 +27,46 @@ import { useT } from "@lib/i18n/useT";
 export function JigsawScanPanel() {
   const t = useT();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [decoding, setDecoding] = useState(false);
-  // Result of the last scan, driving the success/fail pop-up.
+  const [busy, setBusy] = useState(false);
+  // Result of the last scan, driving the fail pop-up (success redirects away).
   const [scanResult, setScanResult] = useState<JigsawScanResult | null>(null);
   // Guards against the camera re-emitting the same code every scanDelay.
   const lastCameraCodeRef = useRef<string | null>(null);
 
-  useEffect(() => {
-    syncStoredPieces();
-  }, []);
-
-  function handleQrScan(code: string) {
-    // Same shared collect flow the /jigsaw/<pointId> deep link uses.
-    if (collectScannedJigsaw(code)) {
-      // Valid — show the success pop-up on the jigsaw page.
-      window.location.href = "/jigsaw";
-    } else {
-      // Invalid QR — show the fail pop-up in place so the user can retry.
+  async function handleQrScan(rawUrl: string) {
+    if (busy) return;
+    const code = extractJigsawCode(rawUrl);
+    if (!code) {
       setScanResult({ status: "fail" });
+      return;
     }
+
+    setBusy(true);
+    const outcome = await collectJigsawCode(code);
+    setBusy(false);
+
+    if (outcome.status === "success") {
+      setPendingScan({
+        status: "success",
+        pieceId: outcome.pieceId,
+        receivedAt: outcome.receivedAt,
+      });
+      window.location.href = "/jigsaw";
+      return;
+    }
+    // Location errors surface as a toast (matches the Chula QR Quest scanner)
+    // so the camera view stays visible instead of being covered by a dialog.
+    if (
+      outcome.error === "location-unsupported" ||
+      outcome.error === "location-denied"
+    ) {
+      toast.error(t("jigsaw.scan.locationRequired"));
+      return;
+    }
+    setScanResult({
+      status: "fail",
+      ...describeJigsawCollectError(outcome.error, t),
+    });
   }
 
   function handleCameraScan(code: string) {
@@ -63,20 +88,21 @@ export function JigsawScanPanel() {
     event.target.value = "";
     if (!file) return;
 
-    setDecoding(true);
+    setBusy(true);
     try {
       const { BarcodeDetector } = await import("barcode-detector/ponyfill");
       const detector = new BarcodeDetector({ formats: ["qr_code"] });
       const [barcode] = await detector.detect(file);
       if (barcode?.rawValue) {
-        handleQrScan(barcode.rawValue);
+        setBusy(false);
+        await handleQrScan(barcode.rawValue);
       } else {
+        setBusy(false);
         toast.error("ไม่พบ QR code ในรูปภาพ");
       }
     } catch {
+      setBusy(false);
       toast.error("ไม่สามารถอ่านรูปภาพได้");
-    } finally {
-      setDecoding(false);
     }
   }
 
@@ -91,7 +117,7 @@ export function JigsawScanPanel() {
         />
         <QrScanner
           className="rounded-2xl"
-          paused={scanResult !== null}
+          paused={scanResult !== null || busy}
           onScan={handleCameraScan}
         />
       </div>
@@ -108,11 +134,11 @@ export function JigsawScanPanel() {
       <Button
         variant="default"
         // size="xl"
-        className="rounded-r-lg w-[167px] h-[33px] text-base font-bold border-1 bg-[#FBE200]"
+        className="rounded-r-lg w-41.75 h-8.25 text-base font-bold border bg-[#FBE200]"
         onClick={() => fileInputRef.current?.click()}
-        disabled={decoding}
+        disabled={busy}
         iconStart={
-          decoding ? <Loader2 className="animate-spin" /> : <CloudUpload />
+          busy ? <Loader2 className="animate-spin" /> : <CloudUpload />
         }
       >
         {t("jigsaw.scan.uploadButton")}
@@ -122,7 +148,7 @@ export function JigsawScanPanel() {
       <Button
         variant="outline"
         size="lg"
-        className="rounded-r-lg w-18 h-8 text-base font-bold border-1"
+        className="rounded-r-lg w-18 h-8 text-base font-bold border"
         onClick={() => {
           window.location.href = "/jigsaw";
         }}
@@ -130,7 +156,7 @@ export function JigsawScanPanel() {
         {t("jigsaw.scan.cancelButton")}
       </Button>
 
-      {/* Success / fail pop-up for the scan result. */}
+      {/* Fail pop-up for the scan result (success redirects to /jigsaw instead). */}
       <JigsawScanResultDialog
         open={scanResult !== null}
         onOpenChange={(open) => {

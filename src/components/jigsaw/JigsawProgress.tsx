@@ -14,7 +14,7 @@ export const JigsawProgress = () => {
   const percent = Math.round((count / TOTAL_PIECES) * 100);
 
   return (
-    <div className="relative w-[268px] h-[25px] overflow-hidden rounded-2xl border-1 border-foreground text-sm">
+    <div className="relative w-67 h-6.25 overflow-hidden rounded-2xl border border-foreground text-sm">
       {/* Yellow fill: grows left-to-right with progress. The container owns the
           outer border; the fill only draws a border on its right edge (the
           moving cap), so nothing doubles up on the left/top/bottom. */}

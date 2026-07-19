@@ -2,12 +2,7 @@ import type { CSSProperties } from "react";
 import { useStore } from "@nanostores/react";
 
 import jigsawImage from "@assets/images/jigsaw.png";
-import {
-  $collectedAt,
-  $foundPieces,
-  markPieceFound,
-  TOTAL_PIECES,
-} from "./jigsawState";
+import { $collectedAt, $foundPieces, TOTAL_PIECES } from "./jigsawState";
 
 /**
  * Position of each cover's top-left corner, as percentages of the board. Each
@@ -154,10 +149,6 @@ function formatCollectedAt(iso: string | undefined): string | null {
  * build up the picture one piece at a time. When all ten are collected the
  * individual masks and pieces are dropped in favour of the seamless full
  * picture (jigsaw.png).
- *
- * Until the QR scan flow is wired up, tapping a mask simulates scanning that
- * piece so the reveal + progress behaviour can be demonstrated.
- * TODO: replace the onClick simulation with the result of a real QR scan.
  */
 export function JigsawBoard() {
   const found = useStore($foundPieces);
@@ -166,7 +157,7 @@ export function JigsawBoard() {
   const complete = found.length >= TOTAL_PIECES;
 
   return (
-    <div className="relative mx-auto h-[230px] w-[346px]">
+    <div className="relative mx-auto h-57.5 w-86.5">
       {/* Board artwork, clipped so piece knobs never spill past the board. */}
       <div className="absolute inset-0 overflow-hidden">
         {complete ? (
@@ -194,13 +185,11 @@ export function JigsawBoard() {
               );
             }
             return (
-              <button
+              <div
                 key={pieceId}
-                type="button"
                 data-piece={pieceId}
-                onClick={() => markPieceFound(pieceId)}
                 style={pieceBoxStyle(pieceId)}
-                className="absolute block max-w-none transition-opacity hover:opacity-90"
+                className="absolute block max-w-none"
                 aria-label={`ชิ้นที่ ${pieceId} (ยังไม่พบ)`}
               >
                 <img
@@ -208,7 +197,7 @@ export function JigsawBoard() {
                   alt=""
                   className="block h-full w-full max-w-none"
                 />
-              </button>
+              </div>
             );
           })
         )}

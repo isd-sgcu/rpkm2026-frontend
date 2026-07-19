@@ -570,7 +570,7 @@
     }
   },
   "jigsaw": {
-    "title1": "กิจกรรมสะสมจิกซอร์",
+    "title1": "กิจกรรมสะสมจิกซอว์",
     "title2": "Chula Jigsaw Journey",
     "subtitle": "สะสมชิ้นส่วน Digital Jigsaw \nจากสถานที่สำคัญรอบจุฬาฯ พร้อมรับรางวัลเมื่อสะสมครบ",
     "dateRange": "20 กรกฎาคม - 3 สิงหาคม",
@@ -581,7 +581,14 @@
     "scan": {
       "title": "สแกนเพื่อรับชิ้นส่วน",
       "uploadButton": "อัปโหลดรูปภาพ",
-      "cancelButton": "ยกเลิก"
+      "cancelButton": "ยกเลิก",
+      "locationRequired": "ต้องขอตำแหน่งที่ตั้งของคุณเพื่อเก็บชิ้นส่วนนี้ กรุณาอนุญาตการเข้าถึงตำแหน่งแล้วลองใหม่อีกครั้ง",
+      "alreadyCollectedTitle": "เก็บชิ้นส่วนนี้ไปแล้ว",
+      "alreadyCollectedMessage": "คุณเก็บชิ้นส่วนจุดนี้ไปแล้วก่อนหน้านี้",
+      "errorGameClosed": "กิจกรรมนี้ยังไม่เปิดหรือปิดรับแล้ว",
+      "errorOutOfGeofence": "คุณอยู่ไกลจากจุดนี้เกินไป กรุณาเข้าใกล้จุดนี้แล้วลองสแกนใหม่",
+      "errorInvalidCheckpoint": "QR นี้ไม่ใช่ของกิจกรรม Chula Jigsaw Journey",
+      "errorNotFreshmen": "บัญชีนี้ไม่ใช่นิสิตใหม่ ไม่สามารถเก็บชิ้นส่วนได้"
     },
     "successPopup": {
       "title": "ได้รับจิกซอร์ชิ้นใหม่!",

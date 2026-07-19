@@ -1,57 +1,37 @@
 import { atom } from "nanostores";
 
+import { getGameProgress } from "@lib/api/games";
+
 /** Total number of jigsaw pieces the user can collect. */
 export const TOTAL_PIECES = 10;
 
 /** Piece ids run from 1..TOTAL_PIECES, matching the board slots. */
 export type PieceId = number;
 
-const STORAGE_KEY = "jigsaw-found-pieces";
-const TIMES_KEY = "jigsaw-collected-at";
+/**
+ * Backend `checkpoints.id` for each board slot (1..TOTAL_PIECES, index 0 ->
+ * piece 1), fixed by seeding the checkpoints with these exact UUIDs. Safe to
+ * ship in the client bundle — unlike the QR `code`, a checkpoint's id alone
+ * can't be used to fake a scan (the backend still requires the matching code
+ * and a device position inside its geofence).
+ */
+const PIECE_CHECKPOINT_IDS: readonly string[] = [
+  "a0000000-0000-0000-0000-000000000001",
+  "a0000000-0000-0000-0000-000000000002",
+  "a0000000-0000-0000-0000-000000000003",
+  "a0000000-0000-0000-0000-000000000004",
+  "a0000000-0000-0000-0000-000000000005",
+  "a0000000-0000-0000-0000-000000000006",
+  "a0000000-0000-0000-0000-000000000007",
+  "a0000000-0000-0000-0000-000000000008",
+  "a0000000-0000-0000-0000-000000000009",
+  "a0000000-0000-0000-0000-00000000000a",
+];
 
-function readStoredPieces(): PieceId[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw) as unknown;
-    if (!Array.isArray(parsed)) return [];
-    return parsed
-      .filter(
-        (id): id is number =>
-          typeof id === "number" && id >= 1 && id <= TOTAL_PIECES,
-      )
-      .sort((a, b) => a - b);
-  } catch {
-    return [];
-  }
-}
-
-function readStoredTimes(): Record<PieceId, string> {
-  if (typeof window === "undefined") return {};
-  try {
-    const raw = localStorage.getItem(TIMES_KEY);
-    if (!raw) return {};
-    const parsed = JSON.parse(raw) as unknown;
-    if (!parsed || typeof parsed !== "object") return {};
-    const out: Record<PieceId, string> = {};
-    for (const [key, value] of Object.entries(
-      parsed as Record<string, unknown>,
-    )) {
-      const id = Number(key);
-      if (
-        Number.isInteger(id) &&
-        id >= 1 &&
-        id <= TOTAL_PIECES &&
-        typeof value === "string"
-      ) {
-        out[id] = value;
-      }
-    }
-    return out;
-  } catch {
-    return {};
-  }
+/** Maps a backend checkpoint id to its board slot (1..TOTAL_PIECES); null if unrecognized. */
+export function pieceIdFromCheckpointId(checkpointId: string): PieceId | null {
+  const index = PIECE_CHECKPOINT_IDS.indexOf(checkpointId);
+  return index === -1 ? null : index + 1;
 }
 
 /** Ids of the pieces the user has already found, sorted ascending. */
@@ -60,33 +40,26 @@ export const $foundPieces = atom<PieceId[]>([]);
 /** ISO timestamp of when each found piece was collected, keyed by piece id. */
 export const $collectedAt = atom<Record<PieceId, string>>({});
 
-function persist(pieces: PieceId[]) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(pieces));
-}
-
-function persistTimes(times: Record<PieceId, string>) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(TIMES_KEY, JSON.stringify(times));
-}
-
-/** Load persisted progress into the store (call once on mount). */
-export function syncStoredPieces() {
-  const stored = readStoredPieces();
-  const current = $foundPieces.get();
-  if (
-    stored.length !== current.length ||
-    stored.some((id, i) => id !== current[i])
-  ) {
-    $foundPieces.set(stored);
+/** Load the authenticated user's collected pieces from the backend (call once on mount). */
+export async function syncProgress(): Promise<void> {
+  const progress = await getGameProgress("jigsaw");
+  const found: PieceId[] = [];
+  const times: Record<PieceId, string> = {};
+  for (const checkpoint of progress.collected) {
+    const id = pieceIdFromCheckpointId(checkpoint.checkpointId);
+    if (id === null) continue;
+    found.push(id);
+    times[id] = checkpoint.scannedAt;
   }
-  $collectedAt.set(readStoredTimes());
+  found.sort((a, b) => a - b);
+  $foundPieces.set(found);
+  $collectedAt.set(times);
 }
 
 /**
- * Mark a piece as found. Called after the user successfully scans the QR code
- * for that specific piece. No-op if the id is out of range or already found.
- * `collectedAt` (ISO string) records when it was obtained; defaults to now.
+ * Mark a piece as found, e.g. right after a successful scan, so the UI updates
+ * without waiting on a fresh {@link syncProgress} round-trip. No-op if the id
+ * is out of range or already found.
  */
 export function markPieceFound(
   id: PieceId,
@@ -95,21 +68,8 @@ export function markPieceFound(
   if (id < 1 || id > TOTAL_PIECES) return;
   const current = $foundPieces.get();
   if (current.includes(id)) return;
-  const next = [...current, id].sort((a, b) => a - b);
-  $foundPieces.set(next);
-  persist(next);
-
-  const times = { ...$collectedAt.get(), [id]: collectedAt };
-  $collectedAt.set(times);
-  persistTimes(times);
-}
-
-/** Clear all collected pieces (useful for testing the flow). */
-export function resetPieces() {
-  $foundPieces.set([]);
-  persist([]);
-  $collectedAt.set({});
-  persistTimes({});
+  $foundPieces.set([...current, id].sort((a, b) => a - b));
+  $collectedAt.set({ ...$collectedAt.get(), [id]: collectedAt });
 }
 
 const PENDING_SCAN_KEY = "jigsaw-pending-scan";
@@ -123,12 +83,6 @@ export type PendingScan =
       status: "success";
       pieceId: PieceId;
       /** ISO timestamp of when the piece was collected. */
-      receivedAt: string;
-    }
-  | {
-      // The scan found a piece, but the user must log in before it can be saved.
-      status: "login-required";
-      pieceId: PieceId;
       receivedAt: string;
     }
   | { status: "fail" };
@@ -156,53 +110,15 @@ export function takePendingScan(): PendingScan | null {
     const parsed = JSON.parse(raw) as PendingScan;
     if (parsed?.status === "fail") return { status: "fail" };
     if (
-      (parsed?.status === "success" || parsed?.status === "login-required") &&
+      parsed?.status === "success" &&
       typeof parsed.pieceId === "number" &&
       typeof parsed.receivedAt === "string"
     ) {
       return {
-        status: parsed.status,
+        status: "success",
         pieceId: parsed.pieceId,
         receivedAt: parsed.receivedAt,
       };
-    }
-  } catch {
-    // fall through to null
-  }
-  return null;
-}
-
-const PENDING_CLAIM_KEY = "jigsaw-pending-claim";
-
-export interface PendingClaim {
-  pieceId: PieceId;
-  receivedAt: string;
-}
-
-/**
- * Remember a piece the user found but could not yet save because they needed to
- * log in. Uses localStorage (not sessionStorage) so it survives the round-trip
- * out to the Google login page and back. The jigsaw page awards it once the
- * user is authenticated.
- */
-export function setPendingClaim(claim: PendingClaim) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(PENDING_CLAIM_KEY, JSON.stringify(claim));
-}
-
-/** Read and clear the pending claim. Returns null when there is none or it is malformed. */
-export function takePendingClaim(): PendingClaim | null {
-  if (typeof window === "undefined") return null;
-  const raw = localStorage.getItem(PENDING_CLAIM_KEY);
-  if (!raw) return null;
-  localStorage.removeItem(PENDING_CLAIM_KEY);
-  try {
-    const parsed = JSON.parse(raw) as Partial<PendingClaim>;
-    if (
-      typeof parsed?.pieceId === "number" &&
-      typeof parsed?.receivedAt === "string"
-    ) {
-      return { pieceId: parsed.pieceId, receivedAt: parsed.receivedAt };
     }
   } catch {
     // fall through to null

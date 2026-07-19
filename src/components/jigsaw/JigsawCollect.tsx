@@ -5,8 +5,12 @@ import {
   JigsawScanResultDialog,
   type JigsawScanResult,
 } from "./JigsawScanResultDialog";
-import { syncStoredPieces } from "./jigsawState";
-import { collectScannedJigsaw } from "./jigsawScanFlow";
+import { setPendingScan } from "./jigsawState";
+import {
+  collectJigsawCode,
+  describeJigsawCollectError,
+} from "./jigsawScanFlow";
+import { useT } from "@lib/i18n/useT";
 
 /**
  * Landing component for the `/jigsaw/<pointId>?code=<code>` deep link — the URL
@@ -15,21 +19,34 @@ import { collectScannedJigsaw } from "./jigsawScanFlow";
  * reward pop-up; an invalid code shows the fail pop-up instead.
  */
 export function JigsawCollect({ pointId }: { pointId: string }) {
+  const t = useT();
   const [result, setResult] = useState<JigsawScanResult | null>(null);
 
   useEffect(() => {
-    syncStoredPieces();
-    const code = new URLSearchParams(window.location.search).get("code") ?? "";
-    // Rebuild the canonical QR URL so the validator works regardless of which
-    // host actually served this page (e.g. localhost while testing).
-    const url = `https://rpkm2026.com/jigsaw/${pointId}?code=${encodeURIComponent(code)}`;
-    if (collectScannedJigsaw(url)) {
-      window.location.href = "/jigsaw";
-    } else {
+    const code = new URLSearchParams(window.location.search).get("code");
+    if (!code) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time deep-link collect on mount
       setResult({ status: "fail" });
+      return;
     }
-  }, [pointId]);
+
+    collectJigsawCode(code).then((outcome) => {
+      if (outcome.status === "success") {
+        setPendingScan({
+          status: "success",
+          pieceId: outcome.pieceId,
+          receivedAt: outcome.receivedAt,
+        });
+        window.location.href = "/jigsaw";
+        return;
+      }
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time deep-link collect on mount
+      setResult({
+        status: "fail",
+        ...describeJigsawCollectError(outcome.error, t),
+      });
+    });
+  }, [pointId, t]);
 
   return (
     <div className="grid min-h-[60vh] w-full place-items-center">
