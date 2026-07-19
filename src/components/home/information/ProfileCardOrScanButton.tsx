@@ -18,10 +18,13 @@ const ProfileCardOrScanButton = () => {
   const me = profile.status === "ready" ? profile.me : undefined;
 
   const isStaff = profile.status === "ready" && profile.me.staffRole !== null;
+  const staffRole = profile.status === "ready" ? profile.me.staffRole : null;
   const scanHref =
-    profile.status === "ready" && profile.me.staffRole === "walkrally"
+    staffRole === "walkrally"
       ? "/staff/walkrally/record"
-      : "/staff/checkin";
+      : staffRole === "freshmennight"
+        ? "/staff/freshmennight"
+        : "/staff/checkin";
 
   const name = me
     ? `${me.firstName} ${me.lastName}`.trim()

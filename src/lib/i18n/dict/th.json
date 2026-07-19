@@ -259,6 +259,25 @@
       "notStaff": "บัญชีนี้ไม่มีสิทธิ์สตาฟสำหรับงานนี้",
       "ok": "ตกลง",
       "retry": "ลองอีกครั้ง"
+    },
+    "freshmenNight": {
+      "title": "เช็คอินรับริสแบนด์",
+      "subtitle": "Freshmen Night",
+      "modeQr": "แสกน QR Code",
+      "modeStudentId": "ใช้รหัสนิสิต",
+      "studentIdLabel": "กรุณากรอกเลขนิสิต 10 หลัก",
+      "studentIdPlaceholder": "รหัสนิสิต",
+      "invalidStudentId": "กรุณากรอกเลขนิสิต 10 หลักให้ถูกต้อง",
+      "save": "บันทึก",
+      "successTitle": "เช็คอินสำเร็จ",
+      "successMessage": "เช็คอินรับริสแบนด์เรียบร้อยแล้ว",
+      "alreadyCheckedInTitle": "บันทึกข้อมูลสำเร็จ",
+      "failTitle": "เช็คอินไม่สำเร็จ",
+      "failMessage": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
+      "studentNotFound": "ไม่พบรหัสนิสิตนี้ในระบบ",
+      "notStaff": "บัญชีนี้ไม่มีสิทธิ์สตาฟสำหรับงานนี้",
+      "ok": "ตกลง",
+      "retry": "ลองอีกครั้ง"
     }
   },
   "register": {

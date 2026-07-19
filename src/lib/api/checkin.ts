@@ -24,6 +24,15 @@ export async function checkinRegistration(studentId: string) {
   return res.data;
 }
 
+/** Staff-only: check a freshman in to Freshmen Night by their CUNET student id. */
+export async function checkinFreshmenNight(studentId: string) {
+  const res = await API.post<SuccessResponse<CheckinEntry>>(
+    "/v1/rpkm/checkin/freshmennight",
+    { student_id: studentId },
+  );
+  return res.data;
+}
+
 export type WalkRallyAttendance = {
   studentId: string;
   activityId: string;

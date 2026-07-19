@@ -259,6 +259,25 @@
       "notStaff": "This account doesn't have staff permission for this event.",
       "ok": "OK",
       "retry": "Try Again"
+    },
+    "freshmenNight": {
+      "title": "Wristband Check-in",
+      "subtitle": "Freshmen Night",
+      "modeQr": "Scan QR Code",
+      "modeStudentId": "Student ID",
+      "studentIdLabel": "Enter the 10-digit student ID",
+      "studentIdPlaceholder": "Student ID",
+      "invalidStudentId": "Please enter a valid 10-digit student ID.",
+      "save": "Save",
+      "successTitle": "Check-in Successful",
+      "successMessage": "Wristband check-in completed successfully.",
+      "alreadyCheckedInTitle": "Already Checked In",
+      "failTitle": "Check-in Failed",
+      "failMessage": "Something went wrong. Please try again.",
+      "studentNotFound": "Student ID not found in the system.",
+      "notStaff": "This account doesn't have staff permission for this event.",
+      "ok": "OK",
+      "retry": "Try Again"
     }
   },
   "register": {

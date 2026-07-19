@@ -36,10 +36,13 @@ export function NavigationMenu({ showBorder }: NavigationMenuProps) {
   const profile = useProfile();
   const isStaff = profile.status === "ready" && profile.me.staffRole !== null;
   const studentId = profile.status === "ready" ? profile.me.studentId : "";
+  const staffRole = profile.status === "ready" ? profile.me.staffRole : null;
   const scanHref =
-    profile.status === "ready" && profile.me.staffRole === "walkrally"
+    staffRole === "walkrally"
       ? "/staff/walkrally/record"
-      : "/staff/checkin";
+      : staffRole === "freshmennight"
+        ? "/staff/freshmennight"
+        : "/staff/checkin";
   const t = useT();
   // QR dialog is controlled here so it can survive the drawer closing.
   const [qrOpen, setQrOpen] = useState(false);

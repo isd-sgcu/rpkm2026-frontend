@@ -1,0 +1,11 @@
+---
+import WalkRallyLayout from "@layouts/WalkRallyLayout.astro";
+import { FreshmenNightPanel } from "@components/staff/freshmennight/FreshmenNightPanel";
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Freshmen Night Check in">
+  <WalkRallyLayout navigateBack={"/"} bgColor="beige">
+    <FreshmenNightPanel client:load />
+  </WalkRallyLayout>
+</BaseLayout>
