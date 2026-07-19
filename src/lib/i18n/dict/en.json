@@ -568,5 +568,53 @@
         }
       }
     }
+  },
+  "jigsaw": {
+    "title1": "Jigsaw Hunting Activity",
+    "title2": "Chula Jigsaw Journey",
+    "subtitle": "Colleting Digital Jigsaw \nfrom notable locations around the campus, then redeem them for a reward!",
+    "dateRange": "20 July - 3 August",
+    "note": "Exclusive for freshmen students (CU110)",
+    "detailButton": "Location Details",
+    "progressionBar": "You've collected {count}/{TOTAL_PIECES} pieces",
+    "scanButton": "Scan to Collect Jigsaw",
+    "scan": {
+      "title": "Scan to Collect Jigsaw",
+      "uploadButton": "Upload Image",
+      "cancelButton": "Cancel"
+    },
+    "successPopup": {
+      "title": "You receive a new jigsaw!",
+      "collectedAt": "Received on {datetime}",
+      "progressionBar": "You've collected {collected}/{total} pieces",
+      "confirmButton": "Confirm"
+    },
+    "failedPopup": {
+      "title": "Scan Failed",
+      "description": "Please try again",
+      "confirmButton": "Confirm"
+    },
+    "loginPopup": {
+      "title": "Please Login/Register\nTo collect this Jigsaw",
+      "loginButton": "Login / Register",
+      "note": "Exclusive for freshmen students (CU110)"
+    },
+    "hover": {
+      "title": "Received on {datetime}"
+    },
+    "info": {
+      "title": "Jigsaw Hunting Location",
+      "note": "Exclusive for freshmen students (CU110)",
+      "loc1": "Office of Academic Resources, Chulalongkorn University",
+      "loc2": "Chamchuri 9 Building",
+      "loc3": "Chulalongkorn University Centenary Park",
+      "loc4": "Chao Pho Suea Shrine",
+      "loc5": "The Memorial Hall of Chulalongkorn University",
+      "loc6": "Samyan Shrine of the Goddess Tubtim",
+      "loc7": "CU Sports Complex",
+      "loc8": "CU Plearn Space",
+      "loc9": "Sala Phra Kieo",
+      "loc10": "Maha Chulalongkorn Building"
+    }
   }
 }

@@ -1,0 +1,52 @@
+---
+import { NavigationMenu } from "@components/shared/NavigationMenu";
+import { PlaceInfoHeader } from "@components/jigsaw/PlaceInfoCard";
+import { ChevronLeft } from "lucide-react";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  navigateBack?: string;
+  showMenu?: boolean;
+  showMenuBorder?: boolean;
+}
+
+const {
+  navigateBack = "",
+  showMenu = true,
+  showMenuBorder = true,
+  ...rest
+} = Astro.props;
+---
+
+<div class:list={["relative w-full min-h-screen bg-[#FCDCF0]"]} {...rest}>
+  <header
+    class="relative flex h-[40cqw] sm:h-40 w-full flex-col items-start justify-center gap-1 rounded-b-[30px] border border-foreground bg-[#E65325] px-20 text-left text-white"
+  >
+    <PlaceInfoHeader client:load />
+  </header>
+
+  {
+    navigateBack && (
+      <div class="absolute left-4 top-[4.5cqw] sm:top-4.5 h-10 flex items-center z-10">
+        <a
+          href={navigateBack}
+          class="size-10 rounded-full bg-white border border-black grid place-items-center"
+        >
+          <ChevronLeft className="size-6.5 text-foreground" />
+        </a>
+      </div>
+    )
+  }
+
+  {
+    showMenu && (
+      <div class="absolute right-4 top-[2.5cqw] sm:top-2.5 z-10 flex items-center">
+        <NavigationMenu showBorder={showMenuBorder} client:load />
+      </div>
+    )
+  }
+
+  <div class:list={["relative flex flex-col px-[1.25em] pt-6 pb-8"]}>
+    <slot />
+  </div>
+</div>
