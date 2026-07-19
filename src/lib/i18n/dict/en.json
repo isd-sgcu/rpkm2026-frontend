@@ -588,7 +588,9 @@
       "errorGameClosed": "This activity isn't open right now.",
       "errorOutOfGeofence": "You're too far from this checkpoint. Get closer and try again.",
       "errorInvalidCheckpoint": "This QR code doesn't belong to Chula Jigsaw Journey.",
-      "errorNotFreshmen": "This account isn't a freshman and can't collect pieces."
+      "errorNotFreshmen": "This account isn't a freshman and can't collect pieces.",
+      "uploadNoQrFound": "No QR code found in the image",
+      "uploadReadError": "Couldn't read the image"
     },
     "successPopup": {
       "title": "You receive a new jigsaw!",

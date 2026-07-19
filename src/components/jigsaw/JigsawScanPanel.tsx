@@ -98,11 +98,11 @@ export function JigsawScanPanel() {
         await handleQrScan(barcode.rawValue);
       } else {
         setBusy(false);
-        toast.error("ไม่พบ QR code ในรูปภาพ");
+        toast.error(t("jigsaw.scan.uploadNoQrFound"));
       }
     } catch {
       setBusy(false);
-      toast.error("ไม่สามารถอ่านรูปภาพได้");
+      toast.error(t("jigsaw.scan.uploadReadError"));
     }
   }
 

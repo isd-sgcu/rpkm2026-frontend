@@ -588,7 +588,9 @@
       "errorGameClosed": "กิจกรรมนี้ยังไม่เปิดหรือปิดรับแล้ว",
       "errorOutOfGeofence": "คุณอยู่ไกลจากจุดนี้เกินไป กรุณาเข้าใกล้จุดนี้แล้วลองสแกนใหม่",
       "errorInvalidCheckpoint": "QR นี้ไม่ใช่ของกิจกรรม Chula Jigsaw Journey",
-      "errorNotFreshmen": "บัญชีนี้ไม่ใช่นิสิตใหม่ ไม่สามารถเก็บชิ้นส่วนได้"
+      "errorNotFreshmen": "บัญชีนี้ไม่ใช่นิสิตใหม่ ไม่สามารถเก็บชิ้นส่วนได้",
+      "uploadNoQrFound": "ไม่พบ QR code ในรูปภาพ",
+      "uploadReadError": "ไม่สามารถอ่านรูปภาพได้"
     },
     "successPopup": {
       "title": "ได้รับจิกซอร์ชิ้นใหม่!",
