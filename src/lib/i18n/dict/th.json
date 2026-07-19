@@ -94,7 +94,7 @@
       "collectedProgress": "คุณเก็บได้แล้ว {collected}/{total} ชิ้น"
     },
     "scan": {
-      "title": "สแกน QR Code",
+      "title": "สแกนเพื่อสะสมแสตมป์",
       "uploadImage": "อัปโหลดรูปภาพ",
       "cancel": "ยกเลิก",
       "successTitle": "คุณได้รับสแตมป์แล้ว!",

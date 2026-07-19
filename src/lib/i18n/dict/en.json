@@ -94,7 +94,7 @@
       "collectedProgress": "You've collected {collected}/{total} pieces"
     },
     "scan": {
-      "title": "Scan QR Code",
+      "title": "Scan to Collect Stamp",
       "uploadImage": "Upload Image",
       "cancel": "Cancel",
       "successTitle": "You received a stamp!",

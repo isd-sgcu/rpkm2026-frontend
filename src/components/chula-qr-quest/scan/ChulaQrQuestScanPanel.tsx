@@ -4,16 +4,16 @@ import {
   type ScanResult,
 } from "@components/chula-qr-quest/scan/ChulaQrQuestScanResultDialog";
 import { CameraTroubleshoot } from "@components/shared/CameraTroubleshootDialog";
+import { MonotoneNoise } from "@components/shared/MonotoneNoise";
 import { QrScanner } from "@components/shared/QrCodeScanner";
-import { Button, buttonVariants } from "@components/ui/button";
+import { Button } from "@components/ui/button";
 import { collectCheckpoint, getGameProgress } from "@lib/api/games";
 import { APIError } from "@lib/client";
 import { $locale } from "@lib/i18n/locale";
 import { useT } from "@lib/i18n/useT";
-import { cn } from "@lib/utils";
 import { useStore } from "@nanostores/react";
 import { BarcodeDetector } from "barcode-detector/ponyfill";
-import { CloudUpload } from "lucide-react";
+import { CloudUpload, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -183,12 +183,17 @@ const ChulaQrQuestScanPanel = () => {
   }
 
   return (
-    <div className="w-full flex flex-col items-center gap-6">
-      <h1 className="text-2xl font-bold text-center">
+    <div className="flex w-full max-w-sm flex-col items-center gap-4">
+      <h1 className="text-3xl font-bold text-center">
         {t("chulaQrQuest.scan.title")}
       </h1>
 
-      <div className="relative isolate w-full max-w-70 overflow-hidden rounded-3xl border border-foreground p-4 mb-8">
+      <div className="relative isolate w-full overflow-hidden rounded-[1.8rem] border border-black bg-rpkm-light-green p-4">
+        <MonotoneNoise
+          noiseSize={4}
+          noiseDensity={12}
+          className="pointer-events-none absolute inset-0 -z-1"
+        />
         <QrScanner
           className="rounded-2xl"
           paused={result !== null || busy}
@@ -196,7 +201,7 @@ const ChulaQrQuestScanPanel = () => {
           onScan={handleScan}
         />
       </div>
-      <CameraTroubleshoot />
+      <CameraTroubleshoot className="-mt-1 text-foreground" />
 
       <input
         ref={fileInputRef}
@@ -208,23 +213,26 @@ const ChulaQrQuestScanPanel = () => {
       <Button
         type="button"
         variant="default"
-        className="rounded-full"
+        className="rounded-r-lg w-41.75 h-8.25 text-base font-bold border bg-[#FBE200]"
         disabled={busy}
         onClick={() => fileInputRef.current?.click()}
-        iconStart={<CloudUpload className="size-4" />}
+        iconStart={
+          busy ? <Loader2 className="animate-spin" /> : <CloudUpload />
+        }
       >
         {t("chulaQrQuest.scan.uploadImage")}
       </Button>
 
-      <a
-        href="/qrquest"
-        className={cn(
-          buttonVariants({ variant: "outline", size: "sm" }),
-          "rounded-full",
-        )}
+      <Button
+        variant="outline"
+        size="lg"
+        className="rounded-r-lg w-18 h-8 text-base font-bold border"
+        onClick={() => {
+          window.location.href = "/qrquest";
+        }}
       >
         {t("chulaQrQuest.scan.cancel")}
-      </a>
+      </Button>
 
       <ChulaQrQuestScanResultDialog
         open={result !== null}
