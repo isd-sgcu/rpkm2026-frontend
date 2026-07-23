@@ -422,6 +422,10 @@
     }
   },
   "house": {
+    "announce": {
+      "title": "Congratulations",
+      "subtitle": "You are a member of"
+    },
     "ranking": {
       "title": "House Ranking",
       "noHouses": "You haven't selected\nany houses yet.",

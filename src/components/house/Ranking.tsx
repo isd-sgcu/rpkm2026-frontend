@@ -19,6 +19,8 @@ import stamp from "@assets/images/house/house_ranking_stamp.svg";
 import HouseSelector from "./HouseSelector";
 import HouseSelectPopup from "./HouseSelectPopup";
 import HouseDetailView from "./HouseDetailView";
+import HouseAnnounce from "./HouseAnnounce";
+import { isHouseResultAnnounced } from "./houseResultLock";
 import edit_icon from "@assets/icons/edit.svg";
 import danger_icon from "@assets/icons/danger.svg";
 import success_icon from "@assets/icons/success.svg";
@@ -30,7 +32,7 @@ import {
   getHousePreferences,
   setHousePreferences,
 } from "@lib/api/groups";
-import { getHouses } from "@lib/api/houses";
+import { getHouses, getHouseResult } from "@lib/api/houses";
 import {
   DndContext,
   closestCenter,
@@ -479,10 +481,28 @@ function RankingPanel() {
   );
 }
 
+function RankingOrAnnounce() {
+  // Also gated server-side (RESULT_NOT_ANNOUNCED before the announce window),
+  // but skipping the request entirely before 19:00 avoids a guaranteed-to-fail
+  // call on every load.
+  const { data: houseResult, isSuccess } = useQuery({
+    queryKey: ["rpkm-house-result"],
+    queryFn: getHouseResult,
+    enabled: isHouseResultAnnounced(),
+    retry: false,
+  });
+
+  if (isSuccess && houseResult) {
+    return <HouseAnnounce house={getHouseByCode(houseResult.code) ?? null} />;
+  }
+
+  return <RankingPanel />;
+}
+
 export default function Ranking() {
   return (
     <QueryProvider>
-      <RankingPanel />
+      <RankingOrAnnounce />
     </QueryProvider>
   );
 }
