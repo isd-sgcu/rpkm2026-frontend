@@ -22,7 +22,7 @@ export default function HouseAnnounce({ house }: HouseAnnounceProps) {
   const t = useT();
 
   return (
-    <div className="relative mx-auto aspect-[371/451] w-full max-w-96">
+    <div className="relative mx-auto aspect-371/451 w-full max-w-96">
       <img
         src={roof.src}
         alt=""
@@ -33,8 +33,18 @@ export default function HouseAnnounce({ house }: HouseAnnounceProps) {
         src={card.src}
         alt=""
         aria-hidden="true"
-        className="absolute left-[7.26%] top-[14.63%] h-[87.8%] w-[86.79%] object-fill"
+        className="absolute left-[7.26%] top-[12.20%] h-[87.8%] w-[86.79%] object-fill"
       />
+
+      {house && (
+        <img
+          src={house.logoUrl}
+          alt={house.name.th}
+          aria-hidden="true"
+          className="absolute left-[35%] top-[48%] aspect-square w-[32%] object-contain z-10"
+        />
+      )}
+
       <img
         src={decor.src}
         alt=""
