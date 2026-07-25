@@ -1,0 +1,18 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ChulaQrQuestLayout from "@layouts/ChulaQrQuestLayout.astro";
+import ChulaQrQuestScanPanel from "@components/chula-qr-quest/scan/ChulaQrQuestScanPanel";
+import positions from "@components/chula-qr-quest/position.json";
+
+export function getStaticPaths() {
+  return Array.from({ length: positions.length }, (_, i) => ({
+    params: { quest: `quest${String(i + 1).padStart(2, "0")}` },
+  }));
+}
+---
+
+<BaseLayout title="RPKM Chula QR Quest Scan Page">
+  <ChulaQrQuestLayout navigateBack="/qrquest" showMenuBorder={true}>
+    <ChulaQrQuestScanPanel client:load />
+  </ChulaQrQuestLayout>
+</BaseLayout>
