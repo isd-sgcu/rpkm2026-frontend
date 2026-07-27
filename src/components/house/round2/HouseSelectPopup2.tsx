@@ -108,8 +108,10 @@ export default function HouseSelectPopup2({
           <div className="min-h-0 flex-1 overflow-y-auto">
             <div className="grid grid-cols-2 gap-3 pb-2">
               {filteredHouses.map((house) => {
-                const memberCount = memberCountOf(house);
-                const isFull = (memberCount ?? 0) >= house.capacity;
+                // First-choice student count (round-2 scope), not occupancy —
+                // there is no capacity concept shown or enforced client-side
+                // for round 2, so a house is never disabled for being "full".
+                const firstChoiceCount = memberCountOf(house);
                 const isRanked = disabledHouseNames.has(house.name.th);
                 const isUnavailable = !ROUND2_AVAILABLE_HOUSE_CODES.includes(
                   getHouseCode(house),
@@ -119,7 +121,7 @@ export default function HouseSelectPopup2({
                   <button
                     key={house.id}
                     type="button"
-                    disabled={isRanked || isFull || isUnavailable}
+                    disabled={isRanked || isUnavailable}
                     onClick={() => setSelectedHouseDetail(house)}
                     className="flex flex-col gap-2 rounded-[10px] border bg-rpkm-beige p-2 text-left disabled:cursor-not-allowed disabled:grayscale disabled:opacity-50"
                   >
@@ -137,19 +139,10 @@ export default function HouseSelectPopup2({
                           </span>
                         </div>
                       ) : (
-                        <div
-                          className={`absolute inset-x-0 bottom-0 flex h-5 items-center gap-1 rounded-[10px] border px-2 ${
-                            isFull ? "bg-rpkm-red" : "bg-rpkm-green"
-                          }`}
-                        >
+                        <div className="absolute inset-x-0 bottom-0 flex h-5 items-center gap-1 rounded-[10px] border bg-rpkm-green px-2">
                           <User className="size-3 text-white" />
-                          <span className="text-[10px] leading-none">
-                            <span className="text-rpkm-beige">
-                              {memberCount ?? "-"}
-                            </span>
-                            <span className="text-white">
-                              /{house.capacity >= 250 ? "∞" : house.capacity}
-                            </span>
+                          <span className="text-[10px] leading-none text-rpkm-beige">
+                            {firstChoiceCount ?? "-"}
                           </span>
                         </div>
                       )}
