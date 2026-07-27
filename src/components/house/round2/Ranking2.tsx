@@ -16,11 +16,10 @@ import {
 } from "@components/ui/alert-dialog";
 import { QueryProvider } from "@components/shared/QueryProvider";
 import stamp from "@assets/images/house/house_ranking_stamp.svg";
-import HouseSelector2 from "./HouseSelector2";
+import HouseSelector from "../HouseSelector";
 import HouseSelectPopup2 from "./HouseSelectPopup2";
 import HouseDetailView from "../HouseDetailView";
-import HouseAnnounce from "../HouseAnnounce";
-import { isRound2Open, isRound2ResultAnnounced } from "./houseRound2Lock";
+import { isRound2Open } from "./houseRound2Lock";
 import { useTimeTick } from "../useTimeTick";
 import edit_icon from "@assets/icons/edit.svg";
 import danger_icon from "@assets/icons/danger.svg";
@@ -29,12 +28,12 @@ import { getHouseByCode, HOUSES, type House } from "../../../consts/house";
 import { APIError } from "@lib/client";
 import { useProfile } from "@lib/auth/useProfile";
 import {
-  getMyGroup2,
-  getHousePreferences2,
-  setHousePreferences2,
-} from "@lib/api/groups2";
+  getMyGroup,
+  getHousePreferences,
+  setHousePreferences,
+} from "@lib/api/groups";
 import { getHouses } from "@lib/api/houses";
-import { getHouseResult2 } from "@lib/api/houses2";
+import type { RankingHouses } from "../Ranking";
 import {
   DndContext,
   closestCenter,
@@ -48,14 +47,6 @@ import {
   arrayMove,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-
-export type RankingHouses = {
-  house1: string | null;
-  house2: string | null;
-  house3: string | null;
-  house4: string | null;
-  house5: string | null;
-};
 
 const rankingKeys: (keyof RankingHouses)[] = [
   "house1",
@@ -89,19 +80,25 @@ function compactRanking(names: string[]): RankingHouses {
 function saveErrorMessage(err: unknown, t: ReturnType<typeof useT>) {
   if (err instanceof APIError) {
     switch (err.code) {
-      case "ROUND2_CLOSED":
+      // Covers both "round 2 isn't open right now" and "this group already
+      // has a house" — the backend uses the same code for preference-save
+      // attempts in both cases, same as round 1's own HOUSE_PICK_CLOSED.
+      case "HOUSE_PICK_CLOSED":
         return t("house.round2.closedDesc");
-      case "ROUND2_NOT_OPEN":
-        return t("house.round2.notOpenDesc");
-      case "ALREADY_HAS_HOUSE":
-        return t("house.round2.alreadyHasHouseDesc");
-      case "HOUSE_NOT_AVAILABLE_ROUND2":
+      // A submitted houseId doesn't exist, or isn't in the round-2 whitelist.
+      case "BAD_REQUEST":
         return t("house.round2.houseNotAvailableDesc");
     }
   }
   return t("house.ranking.saveErrorDescription");
 }
 
+/**
+ * Round 2 reuses round 1's exact group/preferences endpoints and records —
+ * there is no separate "round-2 group". By the time this renders,
+ * HouseRoundGate has already confirmed the group is still houseless, so
+ * this only needs the ranking UI itself (no announce-vs-ranking branch here).
+ */
 function RankingPanel2() {
   const [activeRank, setActiveRank] = useState<keyof RankingHouses | null>(
     null,
@@ -134,12 +131,12 @@ function RankingPanel2() {
   const now = useTimeTick();
 
   const { data: group } = useQuery({
-    queryKey: ["rpkm-group2"],
-    queryFn: getMyGroup2,
+    queryKey: ["rpkm-group"],
+    queryFn: getMyGroup,
   });
   const { data: preferences } = useQuery({
-    queryKey: ["rpkm-house-preferences2"],
-    queryFn: getHousePreferences2,
+    queryKey: ["rpkm-house-preferences"],
+    queryFn: getHousePreferences,
   });
   const { data: houseRecords } = useQuery({
     queryKey: ["rpkm-houses"],
@@ -208,9 +205,9 @@ function RankingPanel2() {
   const canEdit = hasSelectedHouse && isEditing && isEditable;
 
   const saveMutation = useMutation({
-    mutationFn: setHousePreferences2,
+    mutationFn: setHousePreferences,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["rpkm-house-preferences2"] });
+      queryClient.invalidateQueries({ queryKey: ["rpkm-house-preferences"] });
       setSaveAlertType("success");
       setSaveErrorDescription(null);
       setShowSaveAlert(true);
@@ -389,7 +386,7 @@ function RankingPanel2() {
               >
                 <div className="flex flex-col justify-center items-center gap-3 w-full">
                   {order.map((rank, index) => (
-                    <HouseSelector2
+                    <HouseSelector
                       key={rank}
                       rank={rank}
                       index={index}
@@ -448,6 +445,7 @@ function RankingPanel2() {
           disabledHouses={Object.values(selectedHouses).filter(
             (house): house is string => house !== null,
           )}
+          houseRecords={houseRecords}
         />
       )}
 
@@ -508,33 +506,10 @@ function RankingPanel2() {
   );
 }
 
-function RankingOrAnnounce2() {
-  // Re-render periodically so `enabled` below flips to true on its own once
-  // the announce boundary passes, instead of only on the next unrelated
-  // render or a full reload.
-  const now = useTimeTick();
-
-  // Also gated server-side (ROUND2_RESULT_NOT_ANNOUNCED before the announce
-  // window), but skipping the request entirely before 19:00 avoids a
-  // guaranteed-to-fail call on every load.
-  const { data: houseResult, isSuccess } = useQuery({
-    queryKey: ["rpkm-house-result2"],
-    queryFn: getHouseResult2,
-    enabled: isRound2ResultAnnounced(now),
-    retry: false,
-  });
-
-  if (isSuccess && houseResult) {
-    return <HouseAnnounce house={getHouseByCode(houseResult.code) ?? null} />;
-  }
-
-  return <RankingPanel2 />;
-}
-
 export default function Ranking2() {
   return (
     <QueryProvider>
-      <RankingOrAnnounce2 />
+      <RankingPanel2 />
     </QueryProvider>
   );
 }

@@ -460,8 +460,6 @@
       "openingSoon": "Round 2 house selection opens July 28, 2026 at 00:00.",
       "closedWaiting": "Round 2 selection is closed.\nResults announce July 30, 2026 at 19:00.",
       "notApplicable": "Round 2 doesn't apply to you — you already have a house.",
-      "alreadyHasHouseDesc": "You already have a house and cannot join round 2.",
-      "notOpenDesc": "Round 2 house selection hasn't opened yet.",
       "closedDesc": "Round 2 house selection is closed and can no longer be changed.",
       "houseNotAvailableDesc": "One of the selected houses is not available in round 2."
     },

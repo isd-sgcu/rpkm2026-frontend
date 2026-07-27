@@ -1,6 +1,6 @@
 import { Button } from "@components/ui/button";
 import { getHouseCode, HOUSES, type House } from "../../../consts/house";
-import { ROUND2_AVAILABLE_HOUSE_CODES } from "../../../consts/round2";
+import type { HouseRecord } from "@lib/api/houses";
 import { useHouseMemberCounts2 } from "./useHouseMemberCounts2";
 import { useState } from "react";
 import { ChevronRight, Search, User } from "lucide-react";
@@ -14,12 +14,15 @@ type HouseSelectPopup2Props = {
   onClose: () => void;
   onSelect: (house: string) => void;
   disabledHouses: readonly string[];
+  /** From `getHouses()` — carries the real `availableInRound2`/`capacity` per house. */
+  houseRecords: readonly HouseRecord[] | undefined;
 };
 
 export default function HouseSelectPopup2({
   onClose,
   onSelect,
   disabledHouses,
+  houseRecords,
 }: HouseSelectPopup2Props) {
   const t = useT();
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,6 +32,12 @@ export default function HouseSelectPopup2({
   );
   const disabledHouseNames = new Set(disabledHouses);
   const memberCountOf = useHouseMemberCounts2();
+  // Until houseRecords loads, every house is treated as unavailable rather
+  // than selectable — safer default than briefly allowing picks the server
+  // will reject.
+  const recordByCode = new Map(
+    (houseRecords ?? []).map((record) => [record.code, record]),
+  );
 
   const filteredHouses = HOUSES.filter((house) => {
     const query = searchTerm.toLowerCase();
@@ -108,14 +117,15 @@ export default function HouseSelectPopup2({
           <div className="min-h-0 flex-1 overflow-y-auto">
             <div className="grid grid-cols-2 gap-3 pb-2">
               {filteredHouses.map((house) => {
-                // First-choice student count (round-2 scope), not occupancy —
-                // there is no capacity concept shown or enforced client-side
-                // for round 2, so a house is never disabled for being "full".
+                // First-choice student count (round-2 scope). Round-2 houses
+                // come back from the backend with capacity: null (no
+                // occupancy limit is enforced/shown for them), so a house is
+                // never disabled here for being "full" — only for already
+                // being picked or not being in the round-2 whitelist.
+                const record = recordByCode.get(getHouseCode(house));
                 const firstChoiceCount = memberCountOf(house);
                 const isRanked = disabledHouseNames.has(house.name.th);
-                const isUnavailable = !ROUND2_AVAILABLE_HOUSE_CODES.includes(
-                  getHouseCode(house),
-                );
+                const isUnavailable = !record?.availableInRound2;
 
                 return (
                   <button
@@ -143,6 +153,11 @@ export default function HouseSelectPopup2({
                           <User className="size-3 text-white" />
                           <span className="text-[10px] leading-none text-rpkm-beige">
                             {firstChoiceCount ?? "-"}
+                            {record?.capacity != null && (
+                              <span className="text-white">
+                                /{record.capacity}
+                              </span>
+                            )}
                           </span>
                         </div>
                       )}
