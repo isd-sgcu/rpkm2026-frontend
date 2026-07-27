@@ -451,7 +451,17 @@
     },
     "popup": {
       "searchPlaceholder": "Search houses",
-      "close": "Close"
+      "close": "Close",
+      "unavailable": "Unavailable"
+    },
+    "round2": {
+      "rankingTitle": "House Ranking (Round 2)",
+      "houseAnnouncement": "House selection results\nJuly 30, 2026 at 19:00",
+      "openingSoon": "Round 2 house selection opens July 28, 2026 at 00:00.",
+      "closedWaiting": "Round 2 selection is closed.\nResults announce July 30, 2026 at 19:00.",
+      "notApplicable": "Round 2 doesn't apply to you — you already have a house.",
+      "closedDesc": "Round 2 house selection is closed and can no longer be changed.",
+      "houseNotAvailableDesc": "One of the selected houses is not available in round 2."
     },
     "detail": {
       "addHouse": "Add this house"
