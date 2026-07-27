@@ -6,6 +6,7 @@ import Group from "./Group";
 import HouseAnnounce from "./HouseAnnounce";
 import { getHouseByCode } from "../../consts/house";
 import { getHouseResult } from "@lib/api/houses";
+import { APIError } from "@lib/client";
 import { isHouseResultAnnounced } from "./houseResultLock";
 import {
   isRound2Closed,
@@ -42,6 +43,8 @@ function HouseRoundGateInner() {
   const {
     data: houseResult,
     isSuccess,
+    isError,
+    error,
     isFetched,
   } = useQuery({
     queryKey: ["rpkm-house-result"],
@@ -55,11 +58,26 @@ function HouseRoundGateInner() {
         : false,
   });
 
-  // Round-1 result not confirmed yet (still loading, not announced yet, or
-  // errored) — fall back to the untouched round-1 flow. This is the
+  // A RESULT_NOT_ANNOUNCED throw is not a failure to fall back on — it means
+  // the group is still houseless and its result window hasn't opened. Once a
+  // round-2 group saves any pick, the backend switches this endpoint to the
+  // (later) round-2 announce window and throws RESULT_NOT_ANNOUNCED until
+  // then, so treat that exactly like a confirmed-houseless (null) result:
+  // stay in the round-2 flow below instead of bouncing to round 1.
+  const resultPending =
+    isError &&
+    error instanceof APIError &&
+    error.code === "RESULT_NOT_ANNOUNCED";
+
+  // Round-1 result genuinely unknown (still loading, not announced yet, or an
+  // unexpected error) — fall back to the untouched round-1 flow. This is the
   // defensive/out-of-scope path; round 1 is expected to already be fully
   // closed and announced before round 2 opens.
-  if (!isHouseResultAnnounced(now) || !isFetched || !isSuccess) {
+  if (
+    !isHouseResultAnnounced(now) ||
+    !isFetched ||
+    (!isSuccess && !resultPending)
+  ) {
     return (
       <>
         <Ranking />
@@ -82,9 +100,10 @@ function HouseRoundGateInner() {
     );
   }
 
-  // Confirmed still houseless. Round 2 applies. Group actions are gated
-  // server-side to the round-2 window too (a stale round-1 lock reapplies
-  // outside it), so there's nothing useful to show before it opens.
+  // Still houseless (result was null, or RESULT_NOT_ANNOUNCED for a group
+  // that already has round-2 picks on file). Round 2 applies. Group actions
+  // are gated server-side to the round-2 window too (a stale round-1 lock
+  // reapplies outside it), so there's nothing useful to show before it opens.
   if (isRound2NotYetOpen(now)) {
     return <Round2OpeningSoon />;
   }
