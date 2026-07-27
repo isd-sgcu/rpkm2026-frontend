@@ -21,6 +21,7 @@ import HouseSelectPopup2 from "./HouseSelectPopup2";
 import HouseDetailView from "../HouseDetailView";
 import HouseAnnounce from "../HouseAnnounce";
 import { isRound2Open, isRound2ResultAnnounced } from "./houseRound2Lock";
+import { useTimeTick } from "../useTimeTick";
 import edit_icon from "@assets/icons/edit.svg";
 import danger_icon from "@assets/icons/danger.svg";
 import success_icon from "@assets/icons/success.svg";
@@ -127,6 +128,10 @@ function RankingPanel2() {
   const t = useT();
   const queryClient = useQueryClient();
   const profile = useProfile();
+  // Re-render periodically so isRound2Open() below (and the closed-vs-open
+  // copy further down) flips on its own at the scheduled boundary instead
+  // of only on the next unrelated render or a full reload.
+  const now = useTimeTick();
 
   const { data: group } = useQuery({
     queryKey: ["rpkm-group2"],
@@ -147,7 +152,7 @@ function RankingPanel2() {
     !!group &&
     currentUserId !== null &&
     group.leaderId === currentUserId &&
-    isRound2Open();
+    isRound2Open(now);
 
   // Maps a local house's Thai name (how selection state identifies a house)
   // to the real backend houseId, so submits can send real uuids.
@@ -187,6 +192,13 @@ function RankingPanel2() {
       });
       setSelectedHouses(nextSelected);
       setHaveSelectedHouse(true);
+    } else {
+      // Confirmed empty preferences (e.g. a fresh group from just
+      // joining/leaving/being kicked) — clear any leftover selection from
+      // whatever group was previously loaded, don't just leave it displayed.
+      setSelectedHouses(emptyRanking);
+      setOrder(rankingKeys);
+      setHaveSelectedHouse(false);
     }
   }
 
@@ -394,7 +406,7 @@ function RankingPanel2() {
 
             <div className="w-full flex flex-row items-end justify-between gap-4">
               <p className="text-rpkm-yellow text-sm font-normal whitespace-pre-line">
-                {isRound2Open()
+                {isRound2Open(now)
                   ? t("house.round2.houseAnnouncement")
                   : t("house.round2.closedWaiting")}
               </p>
@@ -497,13 +509,18 @@ function RankingPanel2() {
 }
 
 function RankingOrAnnounce2() {
+  // Re-render periodically so `enabled` below flips to true on its own once
+  // the announce boundary passes, instead of only on the next unrelated
+  // render or a full reload.
+  const now = useTimeTick();
+
   // Also gated server-side (ROUND2_RESULT_NOT_ANNOUNCED before the announce
   // window), but skipping the request entirely before 19:00 avoids a
   // guaranteed-to-fail call on every load.
   const { data: houseResult, isSuccess } = useQuery({
     queryKey: ["rpkm-house-result2"],
     queryFn: getHouseResult2,
-    enabled: isRound2ResultAnnounced(),
+    enabled: isRound2ResultAnnounced(now),
     retry: false,
   });
 

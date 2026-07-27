@@ -8,6 +8,7 @@ import { getHouseByCode } from "../../consts/house";
 import { getHouseResult } from "@lib/api/houses";
 import { isHouseResultAnnounced } from "./houseResultLock";
 import { isRound2NotYetOpen } from "./round2/houseRound2Lock";
+import { useTimeTick } from "./useTimeTick";
 import Ranking2 from "./round2/Ranking2";
 import Group2 from "./round2/Group2";
 
@@ -22,6 +23,11 @@ function Round2OpeningSoon() {
 
 function HouseRoundGateInner() {
   const t = useT();
+  // Re-render periodically so the branches below (all keyed off wall-clock
+  // boundaries) advance on their own while the page stays open, instead of
+  // only re-evaluating on the next unrelated render or a full reload.
+  const now = useTimeTick();
+
   // Same query/gate as round-1's own RankingOrAnnounce (Ranking.tsx) — reused
   // here purely to learn whether the viewer already has a round-1 house,
   // before deciding whether round 1 or round 2 UI applies.
@@ -32,7 +38,7 @@ function HouseRoundGateInner() {
   } = useQuery({
     queryKey: ["rpkm-house-result"],
     queryFn: getHouseResult,
-    enabled: isHouseResultAnnounced(),
+    enabled: isHouseResultAnnounced(now),
     retry: false,
   });
 
@@ -40,7 +46,7 @@ function HouseRoundGateInner() {
   // errored) — fall back to the untouched round-1 flow. This is the
   // defensive/out-of-scope path; round 1 is expected to already be fully
   // closed and announced before round 2 opens.
-  if (!isHouseResultAnnounced() || !isFetched || !isSuccess) {
+  if (!isHouseResultAnnounced(now) || !isFetched || !isSuccess) {
     return (
       <>
         <Ranking />
@@ -62,7 +68,7 @@ function HouseRoundGateInner() {
   }
 
   // Confirmed round-1-house-less. Round 2 applies.
-  if (isRound2NotYetOpen()) {
+  if (isRound2NotYetOpen(now)) {
     return <Round2OpeningSoon />;
   }
 
