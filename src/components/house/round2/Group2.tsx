@@ -56,6 +56,7 @@ function SoloCreateJoin({ onCreateRoom }: { onCreateRoom: () => void }) {
     onSuccess: () => {
       setJoinCodeInput("");
       queryClient.invalidateQueries({ queryKey: ["rpkm-group2"] });
+      queryClient.invalidateQueries({ queryKey: ["rpkm-house-preferences2"] });
     },
     onError: (err) => toast.error(joinErrorMessage2(err, t)),
   });
@@ -199,6 +200,7 @@ function GroupPanel2() {
     onSuccess: () => {
       toast.success(t("house.group.joinSuccess"));
       queryClient.invalidateQueries({ queryKey: ["rpkm-group2"] });
+      queryClient.invalidateQueries({ queryKey: ["rpkm-house-preferences2"] });
     },
     onError: (err) => toast.error(joinErrorMessage2(err, t)),
   });

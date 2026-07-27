@@ -168,8 +168,10 @@ export default function GroupDetailModal2({
         : "";
   const inviteLinkDisplay = inviteLink.replace(/^https?:\/\//, "");
 
-  const invalidate = () =>
+  const invalidate = () => {
     queryClient.invalidateQueries({ queryKey: ["rpkm-group2"] });
+    queryClient.invalidateQueries({ queryKey: ["rpkm-house-preferences2"] });
+  };
 
   const leaveMutation = useMutation({
     mutationFn: leaveGroup2,
