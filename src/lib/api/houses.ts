@@ -7,6 +7,8 @@ export type HouseRecord = {
   info: unknown | null;
   createdAt: string;
   updatedAt: string;
+  /** Whether this house is in the round-2 whitelist (hardcoded server-side). */
+  availableInRound2: boolean;
 };
 
 export async function getHouses() {
@@ -24,8 +26,10 @@ export type HouseStatRecord = {
   count: number;
 };
 
-export async function getHouseStats() {
-  return API.get<HouseStatRecord[]>("/v1/rpkm/houses/stats");
+/** `round` defaults to 1 server-side when omitted. */
+export async function getHouseStats(round?: 1 | 2) {
+  const query = round === 2 ? "?round=2" : "";
+  return API.get<HouseStatRecord[]>(`/v1/rpkm/houses/stats${query}`);
 }
 
 type SuccessResponse<T> = {

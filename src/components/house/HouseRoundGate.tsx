@@ -7,10 +7,14 @@ import HouseAnnounce from "./HouseAnnounce";
 import { getHouseByCode } from "../../consts/house";
 import { getHouseResult } from "@lib/api/houses";
 import { isHouseResultAnnounced } from "./houseResultLock";
-import { isRound2NotYetOpen } from "./round2/houseRound2Lock";
+import {
+  isRound2Closed,
+  isRound2NotYetOpen,
+  isRound2Open,
+  isRound2ResultAnnounced,
+} from "./round2/houseRound2Lock";
 import { useTimeTick } from "./useTimeTick";
 import Ranking2 from "./round2/Ranking2";
-import Group2 from "./round2/Group2";
 
 function Round2OpeningSoon() {
   const t = useT();
@@ -28,9 +32,13 @@ function HouseRoundGateInner() {
   // only re-evaluating on the next unrelated render or a full reload.
   const now = useTimeTick();
 
-  // Same query/gate as round-1's own RankingOrAnnounce (Ranking.tsx) — reused
-  // here purely to learn whether the viewer already has a round-1 house,
-  // before deciding whether round 1 or round 2 UI applies.
+  // Round 2 reuses round 1's exact /groups/* and /houses/* endpoints — a
+  // still-houseless group's result can only change at a fixed clock event
+  // (round-2 announce), not something the user triggers, so this query
+  // can't rely on the usual refetch triggers (refocus, remount, mutation).
+  // Poll lightly only while that's a live possibility (round 2 open, or
+  // closed but not yet announced) so the switch to HouseAnnounce below
+  // happens without a reload.
   const {
     data: houseResult,
     isSuccess,
@@ -40,6 +48,11 @@ function HouseRoundGateInner() {
     queryFn: getHouseResult,
     enabled: isHouseResultAnnounced(now),
     retry: false,
+    refetchInterval: () =>
+      !isRound2ResultAnnounced(Date.now()) &&
+      (isRound2Open(Date.now()) || isRound2Closed(Date.now()))
+        ? 30_000
+        : false,
   });
 
   // Round-1 result not confirmed yet (still loading, not announced yet, or
@@ -55,7 +68,9 @@ function HouseRoundGateInner() {
     );
   }
 
-  // Confirmed: the viewer's round-1 group got a house. Round 2 doesn't apply.
+  // Confirmed: the viewer's group got a house (round 1 or round 2 — the
+  // backend resolves which announce window applies per group automatically).
+  // Round 2 never applies to a group that already has one.
   if (houseResult) {
     return (
       <>
@@ -67,7 +82,9 @@ function HouseRoundGateInner() {
     );
   }
 
-  // Confirmed round-1-house-less. Round 2 applies.
+  // Confirmed still houseless. Round 2 applies. Group actions are gated
+  // server-side to the round-2 window too (a stale round-1 lock reapplies
+  // outside it), so there's nothing useful to show before it opens.
   if (isRound2NotYetOpen(now)) {
     return <Round2OpeningSoon />;
   }
@@ -75,7 +92,7 @@ function HouseRoundGateInner() {
   return (
     <>
       <Ranking2 />
-      <Group2 />
+      <Group />
     </>
   );
 }

@@ -12,7 +12,7 @@ import { getHouseCode, type House } from "../../consts/house";
 export function useHouseMemberCounts(): (house: House) => number | undefined {
   const { data: stats } = useQuery({
     queryKey: ["rpkm-house-stats"],
-    queryFn: getHouseStats,
+    queryFn: () => getHouseStats(),
   });
 
   const countByCode = new Map(stats?.map((stat) => [stat.code, stat.count]));
