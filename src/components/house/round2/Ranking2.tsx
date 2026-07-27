@@ -65,6 +65,15 @@ const emptyRanking: RankingHouses = {
 };
 
 /**
+ * Distinct "not yet seeded" marker for the sync-from-server ref below. Must NOT
+ * be any value `preferences` can hold: the query cache is shared with round 1
+ * under the same key, so `preferences` can already be populated on this
+ * component's first render — seeding the ref to `preferences` itself would make
+ * `preferences === seededPreferences` and skip the initial sync forever.
+ */
+const UNSEEDED = Symbol("unseeded");
+
+/**
  * Collapses gaps in the ranking: the given houses (already in display order)
  * are reassigned to ranks 1..n top-down, so an empty rank can never sit
  * above a filled one.
@@ -142,7 +151,9 @@ function RankingPanel2() {
     queryKey: ["rpkm-houses"],
     queryFn: getHouses,
   });
-  const [seededPreferences, setSeededPreferences] = useState(preferences);
+  const [seededPreferences, setSeededPreferences] = useState<
+    typeof preferences | typeof UNSEEDED
+  >(UNSEEDED);
 
   const currentUserId = profile.status === "ready" ? profile.me.id : null;
   const isEditable =
@@ -171,8 +182,9 @@ function RankingPanel2() {
   if (preferences !== seededPreferences && houseRecords && !isEditing) {
     setSeededPreferences(preferences);
 
+    const prefList = preferences ?? [];
     const recordById = new Map(houseRecords.map((r) => [r.id, r]));
-    const names = (preferences ?? [])
+    const names = prefList
       .slice()
       .sort((a, b) => a.rank - b.rank)
       .map((pref) => {
@@ -189,14 +201,19 @@ function RankingPanel2() {
       });
       setSelectedHouses(nextSelected);
       setHaveSelectedHouse(true);
-    } else {
-      // Confirmed empty preferences (e.g. a fresh group from just
+    } else if (prefList.length === 0) {
+      // Genuinely empty preferences (e.g. a fresh group from just
       // joining/leaving/being kicked) — clear any leftover selection from
       // whatever group was previously loaded, don't just leave it displayed.
       setSelectedHouses(emptyRanking);
       setOrder(rankingKeys);
       setHaveSelectedHouse(false);
     }
+    // else: preferences exist but none mapped to a local house yet (house
+    // records still refetching, or a code that doesn't line up). Leave the
+    // current selection untouched rather than wiping a populated ranking to
+    // empty — that transient-empty wipe is what made saved picks flash then
+    // vanish on reload. Round 1 (Ranking.tsx) has no clear branch at all.
   }
 
   const hasSelectedHouse = Object.values(selectedHouses).some(
