@@ -189,7 +189,13 @@ function RankingPanel2() {
       .sort((a, b) => a.rank - b.rank)
       .map((pref) => {
         const record = recordById.get(pref.houseId);
-        const local = record ? getHouseByCode(record.code) : undefined;
+        // Preferences may predate round 2 (carried over from round 1's full
+        // 22-house list). Drop any pick the round-2 whitelist no longer
+        // allows here, at population time — otherwise it lands in
+        // `selectedHouses` unfiltered and the always-visible Save button
+        // below can resubmit it verbatim, which the backend 400s on.
+        if (!record?.availableInRound2) return null;
+        const local = getHouseByCode(record.code);
         return local?.name.th ?? null;
       })
       .filter((name): name is string => name !== null);
