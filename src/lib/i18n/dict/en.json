@@ -253,12 +253,12 @@
       "successTitle": "Check-in Successful",
       "successMessage": "Checked in to the event successfully.",
       "welcome": "",
-      "alreadyCheckedInTitle": "Already Checked In",
+      "alreadyCheckedInTitle": "Already Registered",
       "failTitle": "Check-in Failed",
       "failMessage": "Something went wrong. Please try again.",
       "studentNotFound": "Student ID not found in the system.",
       "notStaff": "This account doesn't have staff permission for this event.",
-      "ok": "OK",
+      "ok": "Register Next Person",
       "retry": "Try Again"
     },
     "freshmenNight": {
