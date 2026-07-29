@@ -6,6 +6,7 @@ export function FreshmenNightPanel() {
     <CheckinScanPanel
       namespace="staff.freshmenNight"
       checkin={checkinFreshmenNight}
+      alreadyRegisteredIsError
     />
   );
 }
