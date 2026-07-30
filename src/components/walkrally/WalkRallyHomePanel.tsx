@@ -143,6 +143,21 @@ function WalkRallyHomePanelContent() {
           </div>
         </div>
 
+        <div className="relative isolate flex flex-col gap-2 overflow-hidden rounded-3xl border border-black bg-rpkm-beige p-4">
+          <MonotoneNoise className="absolute inset-0 -z-1 pointer-events-none" />
+          <h3 className="text-lg font-bold text-foreground">
+            {t("walkrally.home.redeem.title")}
+          </h3>
+          <p className="text-sm text-foreground">
+            {t("walkrally.home.redeem.description")}
+          </p>
+          <div className="flex flex-col gap-1 text-sm text-muted-foreground">
+            <span>{t("walkrally.home.redeem.time")}</span>
+            <span>{t("walkrally.home.redeem.place")}</span>
+            <span>{t("walkrally.home.redeem.eligibility")}</span>
+          </div>
+        </div>
+
         <h2 className="text-xl font-bold text-foreground">
           {t("walkrally.home.registeredTitle")}
         </h2>

@@ -128,7 +128,14 @@
       "cancelSuccessTitle": "ยกเลิกกิจกรรมสำเร็จ",
       "cancelSuccessMessage": "ยกเลิกกิจกรรม {name} รอบที่ {index} เรียบร้อยแล้ว",
       "cancelFailTitle": "ยกเลิกไม่สำเร็จ",
-      "cancelFailMessage": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+      "cancelFailMessage": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
+      "redeem": {
+        "title": "แลกของรางวัล",
+        "description": "สะสมแต้มง่ายๆ! เพียงเข้าร่วมกิจกรรม Walk Rally 1 กิจกรรม = 1 แต้ม สะสมครบ 4 แต้ม แล้วมาแลกรับของรางวัลกัน",
+        "time": "เวลา 9:00 - 16:00 น.",
+        "place": "แลกได้ที่จุด Photobooth หน้าหอประชุมจุฬาฯ",
+        "eligibility": "ร่วมได้ทุกกิจกรรมของ Walk Rally (ยกเว้น Photobooth)"
+      }
     },
     "events": {
       "title": "กิจกรรม",

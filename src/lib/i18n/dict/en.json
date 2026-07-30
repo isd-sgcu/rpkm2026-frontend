@@ -128,7 +128,14 @@
       "cancelSuccessTitle": "Activity Cancelled",
       "cancelSuccessMessage": "{name}, Round {index} has been cancelled.",
       "cancelFailTitle": "Cancellation Failed",
-      "cancelFailMessage": "Something went wrong. Please try again."
+      "cancelFailMessage": "Something went wrong. Please try again.",
+      "redeem": {
+        "title": "Redeem Your Prize",
+        "description": "Collecting points is easy! Join 1 Walk Rally activity = 1 point. Collect 4 points to redeem your prize.",
+        "time": "Time: 9:00 AM - 4:00 PM",
+        "place": "Redeem at the Photobooth point in front of Chulalongkorn University Auditorium",
+        "eligibility": "Valid for all Walk Rally activities (except Photobooth)"
+      }
     },
     "events": {
       "title": "Activities",
