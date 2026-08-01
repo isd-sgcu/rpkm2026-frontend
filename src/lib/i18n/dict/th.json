@@ -47,7 +47,10 @@
       "welcome": "ยินดีต้อนรับ",
       "loading": "กำลังโหลด...",
       "edit": "แก้ไขข้อมูล",
-      "editAvatar": "แก้ไขรูปโปรไฟล์"
+      "editAvatar": "แก้ไขรูปโปรไฟล์",
+      "checkinRegistered": "ลงทะเบียนแล้ว",
+      "checkinNotRegistered": "ยังไม่ได้ลงทะเบียน",
+      "checkinRefresh": "รีเฟรชสถานะการลงทะเบียน"
     },
     "calendar": {
       "title": "ปฏิทิน",

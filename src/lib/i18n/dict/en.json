@@ -47,7 +47,10 @@
       "welcome": "Welcome",
       "loading": "Loading...",
       "edit": "Edit Info",
-      "editAvatar": "Edit profile photo"
+      "editAvatar": "Edit profile photo",
+      "checkinRegistered": "Checked in",
+      "checkinNotRegistered": "Not checked in yet",
+      "checkinRefresh": "Refresh check-in status"
     },
     "calendar": {
       "title": "Calendar",

@@ -1,11 +1,12 @@
-import { useRef } from "react";
-import { ScanLine, UserRound } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Check, RotateCw, ScanLine, UserRound } from "lucide-react";
 
 import houseSvg from "@assets/images/rpkm-id-card-house.svg";
 import { EditPencil } from "@components/edit-profile/EditPencil";
 import { useAvatarUpload } from "@components/edit-profile/useAvatarUpload";
 import { QrCode, QrCodeDialog } from "@components/shared/QrCode";
 import { buttonVariants } from "@components/ui/button";
+import { getRegistrationCheckinStatus } from "@lib/api/checkin";
 import { useProfile } from "@lib/auth/useProfile";
 import { useSession } from "@lib/auth/useSession";
 import { useT } from "@lib/i18n/useT";
@@ -32,6 +33,24 @@ const ProfileCardOrScanButton = () => {
   const faculty = me?.faculty ?? "";
   const studentId = me?.studentId ?? "";
   const bannerId = studentId || "—";
+
+  const [checkedIn, setCheckedIn] = useState(false);
+  const [checkinLoading, setCheckinLoading] = useState(true);
+  const fetchCheckinStatus = useCallback(() => {
+    if (!studentId || isStaff) return Promise.resolve();
+    return getRegistrationCheckinStatus()
+      .then((status) => setCheckedIn(status !== null))
+      .finally(() => setCheckinLoading(false));
+  }, [studentId, isStaff]);
+
+  useEffect(() => {
+    fetchCheckinStatus();
+  }, [fetchCheckinStatus]);
+
+  const refreshCheckinStatus = () => {
+    setCheckinLoading(true);
+    fetchCheckinStatus();
+  };
 
   const image = session.status === "authenticated" ? session.user.image : null;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -129,15 +148,40 @@ const ProfileCardOrScanButton = () => {
               {faculty}
             </span>
           )}
-          <a
-            href="/edit-profile"
-            className="mt-[3%] inline-flex w-fit items-center gap-[1.5cqw] rounded-[8px] border border-foreground bg-rpkm-yellow px-[2.5cqw] py-[1cqw]"
-          >
-            <EditPencil className="size-[3.6cqw]" />
-            <span className="font-bold text-[2.7cqw] text-foreground">
-              {t("home.idCard.edit")}
-            </span>
-          </a>
+          <div className="mt-[3%] flex items-center gap-[3cqw]">
+            <a
+              href="/edit-profile"
+              className="inline-flex w-fit shrink-0 items-center gap-[1.5cqw] rounded-[8px] border border-foreground bg-rpkm-yellow px-[2.5cqw] py-[1cqw]"
+            >
+              <EditPencil className="size-[3.6cqw]" />
+              <span className="font-bold text-[2.7cqw] text-foreground">
+                {t("home.idCard.edit")}
+              </span>
+            </a>
+            <button
+              type="button"
+              onClick={refreshCheckinStatus}
+              disabled={checkinLoading}
+              aria-label={t("home.idCard.checkinRefresh")}
+              className="flex min-w-0 items-center gap-[1cqw] truncate text-[2.7cqw] font-semibold text-rpkm-red disabled:opacity-60"
+            >
+              {checkedIn ? (
+                <Check className="size-[3cqw] shrink-0" />
+              ) : (
+                <RotateCw
+                  className={cn(
+                    "size-[3cqw] shrink-0",
+                    checkinLoading && "animate-spin",
+                  )}
+                />
+              )}
+              <span className="truncate">
+                {checkedIn
+                  ? t("home.idCard.checkinRegistered")
+                  : t("home.idCard.checkinNotRegistered")}
+              </span>
+            </button>
+          </div>
         </div>
 
         {/* Right card — tap the QR to enlarge it */}

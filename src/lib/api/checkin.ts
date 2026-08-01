@@ -1,4 +1,4 @@
-import { API } from "@lib/client";
+import { API, APIError } from "@lib/client";
 
 type SuccessResponse<T> = {
   success: true;
@@ -22,6 +22,30 @@ export async function checkinRegistration(studentId: string) {
     { student_id: studentId },
   );
   return res.data;
+}
+
+export type CheckinStatus = {
+  scannedAt: string;
+  scannedBy: string;
+};
+
+/**
+ * Self-serve: has the authenticated freshman been checked in to RPKM yet?
+ * The backend 404s (NOT_FOUND) when there's no scan on record — that's a
+ * normal "not checked in" state here, not an error.
+ */
+export async function getRegistrationCheckinStatus() {
+  try {
+    const res = await API.get<SuccessResponse<CheckinStatus>>(
+      "/v1/rpkm/checkin/registration/status",
+    );
+    return res.data;
+  } catch (err) {
+    if (err instanceof APIError && err.status === 404) {
+      return null;
+    }
+    throw err;
+  }
 }
 
 /** Staff-only: check a freshman in to Freshmen Night by their CUNET student id. */
