@@ -15,6 +15,9 @@ interface CheckinScanPanelProps {
   namespace: Namespace;
   // API call that checks the student in; its errors are mapped to dialogs here.
   checkin: (studentId: string) => Promise<unknown>;
+  // When true, an already-registered student shows the alert (error) dialog
+  // instead of a green "success" popup. Defaults to false.
+  alreadyRegisteredIsError?: boolean;
 }
 
 export function CheckinScanPanel(props: CheckinScanPanelProps) {
@@ -28,18 +31,32 @@ export function CheckinScanPanel(props: CheckinScanPanelProps) {
 function CheckinScanPanelContent({
   namespace,
   checkin,
+  alreadyRegisteredIsError = false,
 }: CheckinScanPanelProps) {
   const t = useT();
 
   async function checkIn(studentId: string): Promise<ScanEntryResult> {
     try {
       await checkin(studentId);
-      return { title: t(`${namespace}.successTitle`), message: studentId };
+      // Optional greeting line above the id (e.g. Freshmen Night "ยินดีต้อนรับ").
+      // Empty for panels that don't want it, leaving just the id.
+      const welcome = t(`${namespace}.welcome`);
+      return {
+        title: t(`${namespace}.successTitle`),
+        message: welcome ? `${welcome}\n${studentId}` : studentId,
+      };
     } catch (error) {
       if (error instanceof APIError) {
         switch (error.code) {
-          // Student is checked in either way — show the success popup.
+          // Already registered. Freshmen Night shows the alert (error) dialog;
+          // other panels keep the friendly green "already saved" popup.
           case "ALREADY_CHECKED_IN":
+            if (alreadyRegisteredIsError) {
+              throw new ScanEntryError(
+                t(`${namespace}.alreadyCheckedInTitle`),
+                studentId,
+              );
+            }
             return {
               title: t(`${namespace}.alreadyCheckedInTitle`),
               message: studentId,
