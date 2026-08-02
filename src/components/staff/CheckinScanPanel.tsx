@@ -49,18 +49,31 @@ function CheckinScanPanelContent({
       if (error instanceof APIError) {
         switch (error.code) {
           // Already registered. Freshmen Night shows the alert (error) dialog;
-          // other panels keep the friendly green "already saved" popup.
-          case "ALREADY_CHECKED_IN":
+          // other panels keep the friendly green "already saved" popup. Either
+          // way, tell staff when the original check-in happened.
+          case "ALREADY_CHECKED_IN": {
+            const scannedAt = error.context?.scannedAt;
+            const date =
+              typeof scannedAt === "string"
+                ? new Intl.DateTimeFormat("en-US", {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  }).format(new Date(scannedAt))
+                : "";
+            const message = date
+              ? t(`${namespace}.alreadyCheckedInMessage`, { studentId, date })
+              : studentId;
             if (alreadyRegisteredIsError) {
               throw new ScanEntryError(
                 t(`${namespace}.alreadyCheckedInTitle`),
-                studentId,
+                message,
               );
             }
             return {
               title: t(`${namespace}.alreadyCheckedInTitle`),
-              message: studentId,
+              message,
             };
+          }
           case "STUDENT_NOT_FOUND":
             throw new ScanEntryError(
               t(`${namespace}.failTitle`),
